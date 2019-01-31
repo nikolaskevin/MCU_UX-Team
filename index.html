@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<!--#30B400#339933#99CC00#FFFFCC-->
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>LTC-TMS</title>
+		<link rel="icon" type="image/jpg" href="Frontend/image\logo.jpg">
+		<link rel="stylesheet" type="text/css" href="Frontend/statics/css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="Frontend/statics/css/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+    <script type = 'text/javascript' src = "Frontend\Config.js"></script>
+    <script type="text/javascript" src="Frontend\LoginJS.js"></script>
+	</head>
+	<style>
+
+	#policyPop{
+		width:100%;
+    height:100%;
+    opacity:.95;
+    top:0px;
+    left:0px;
+    display:none;
+    position:fixed;
+    background-color:#313131;
+		z-index:3;
+	}
+	#expand{
+	position:absolute;
+	padding-top: 6px;
+	 top:95%;
+	 left:75%;
+	 width:15%;
+	font-family: "Times New Roman", Times, serif;
+	 height:5%;
+	 box-sizing:border-box;
+	 background:#6699CC;
+	text-align: center;
+
+	}
+	#expand:hover{
+		background: #336699;
+	}
+	#im{
+	  position:absolute;
+	  top:50%;
+	  left:58%;
+	  margin:0 auto;
+	  width:45%;
+	  max-width:600px;
+	  height:50%;
+	  box-sizing:border-box;
+	  background:rgba(0,0,0,0.3);
+	  display: none;
+
+	}
+	#cover{
+	position:absolute;
+	 z-index:2;
+	 height:30px;
+	 width:100%;
+	 left:0;
+	 bottom:40;
+	 margin:0;
+	 padding:15px;
+	 box-sizing:border-box;
+	 background:#339933;
+	 color:#fff;
+	}
+	#input{
+	  position:absolute;
+	  z-index:2;
+	  height:90px;
+	  width:100%;
+	  left:0;
+	  bottom:0;
+	  margin:0;
+	  padding:15px;
+	  box-sizing:border-box;
+	  background:#339933;
+	  color:#000;
+	}
+
+
+
+	#input input, #input span{
+	  display:inline-block;
+	  margin:5px 0;
+	}
+
+	#input input{
+	  width:75%;
+	  border:none;
+	  padding:5px;
+	}
+
+	#input span{
+	  width:10%;
+	  min-width:50px;
+	  color:#fff;
+	}
+
+	#input div{
+	  width:80%;
+	  float:left;
+	}
+
+	#input button{
+	  float:right;
+	  height:90%;
+	  width:20%;
+	  margin:5px 0;
+	  border:none;
+	  padding:0;
+	  background:#369;
+	  font-size:16px;
+	  color:#fff;
+	}
+
+	#show{
+	  position:absolute;
+	  top:0;
+	  left:0;
+	  z-index:1;
+	  width:100%;
+	  height:calc(100% - 90px);
+	  overflow-y:scroll;
+	  padding:20px;
+	  box-sizing:border-box;
+	}
+
+	#show>div{
+	  position:relative;
+	  margin:0 0 20px 0;
+	  clear:both;
+	  height:40px;
+	}
+
+	#show>div>div{
+	  display:inline-block;
+	}
+
+	#show .time{
+	  position:absolute;
+	  top:-2px;
+	  font-size:10px;
+	  color:#777;
+	}
+
+	#show .name{
+	  color:#fff;
+	  vertical-align:middle;
+	}
+
+	#show .content{
+	  background:rgba(255,255,255,.8);
+	  padding:10px;
+	  margin-top:15px;
+	  margin-left:10px;
+	  border-radius:5px;
+	  vertical-align:middle;
+	}
+	#show .contentI{
+	  background:#6699CC;
+	  padding:10px;
+	  margin-top:15px;
+	  margin-left:10px;
+	  border-radius:5px;
+	  vertical-align:middle;
+	}
+
+	#show::-webkit-scrollbar {
+	  width:5px;
+	}
+	#show::-webkit-scrollbar-track {
+	  background:rgba(255,255,255,.1);
+	  border-radius: 5px;
+	}
+	#show::-webkit-scrollbar-thumb {
+	  background:rgba(255,255,255,.2);
+	  border-radius: 2px;
+	}
+	#cover button{
+	padding: 0;
+	border: none;
+	background: none;
+	}
+  #forgot{
+    width:100%;
+    height:100%;
+    opacity:.95;
+    top:0px;
+    left:0px;
+    display:none;
+    position:fixed;
+    background-color:#313131;
+		z-index:3;
+  }
+  .create_popup_forgetpass{
+    position:fixed;
+    width:420px;
+    height:375px;
+    left:550px;
+    top:100px;
+    background-color:white;
+    z-index:3;
+  }
+.closeforgotpassword{
+  position:relative;
+  left:95%;
+  top:-20px;
+  font-size:20px;
+	background-color:white;
+	border-style:none;
+}
+.closeforgotpassword:hover{
+  color:red;
+}
+
+.link:hover{
+	color:blue;
+}
+.forgotbutton:hover{
+	color:#2134E6;
+}
+.openmenu:hover{
+	opacity:.6;
+}
+.selected:hover{
+	background-color:#1591F0;
+}
+.selected-user:hover{
+	background-color:#E91414;
+}
+	</style>
+	<body style="height:100px;">
+		<div class="header">
+			<div class="bar">
+				<div class="w1200">
+					<span class="l"><img style="position:relative; top:3px; width:45px;height:45px;" src="Frontend/statics/images/v2ltctmslogo.png"><font style="text-align:center;position:relative; top:-10px;">Welcome To LTC-TMS</font></span>
+					<i class="setting"><img style="filter:invert(100%); width:20px; height:20px;position:relative; left:700px; top:4px;" src="Frontend/statics/images/settings.png"><p style="position:relative; left:725px; top:-50px;">Settings</p><img onclick="openmenu()" id="openmenu" style="filter:invert(100%); width:10px; height:10px;position:relative; left:1105px; top:-98px;cursor:pointer;" class="openmenu" src="Frontend/statics/images/openmenu.png"></i>
+				</div>
+			</div>
+    </div>
+
+
+		<div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:80px;width:200px;z-index:5;">
+			<table style="width:100%;">
+				<tr>
+					<td style="background-color:#ddd;"> Language </td>
+				</tr>
+				<tr>
+					<td class="selected" style="cursor:pointer;"> &nbsp English </td>
+				</tr>
+				<tr>
+					<td class="selected" style="cursor:pointer;" onclick="window.location.href='//share-b7589.firebaseapp.com/ChineseLogin.html'">	 &nbsp Chinese </td>
+				</tr>
+			</table>
+		</div>
+
+
+
+    <img src="Frontend/statics/images/v2ltctmslogin.jpg" style="position:relative;width:600px;left:100px;opacity:.6;">
+		<!-- <a href="https://www.freepik.com/free-photos-vectors/people">People vector created by Rawpixel.com - Freepik.com</a> -->
+      <div style="position:relative; width:350px; height:350px;;left:800px;top:-400px; background-color:#78c869ff;    border-radius: 25px;">
+           <br> <h2 style="font-size:26px;"><center> Login </center></h2>
+          <div style="background-color:black; width:100%; height:0.5%;position:relative;top:20px;"></div>
+          <center>
+            <form onsubmit="LoginUser();return false">
+             <label for="Email"><b style="position:relative; top:30px; left:0px;font-size:20px;">Email</b></label>
+             <br>
+             <input style="position:relative; top:50px;left:0px;width:250px;height:5%;" id="txtEmail" type="text" placeholder="Enter Email" >
+             <br>
+             <label for="Password"><b style="position:relative; top:70px; left:0px; font-size:20px;">Password</b></label>
+             <br>
+             <input style="position:relative; top:90px; left:0px; width:250px; height:5%;" id="txtPassword" type="password" placeholder="Enter Password" >
+             <br>
+             <input type="submit" value="Login" style="position:relative;cursor:pointer; top:110px; left:0px; width:20%" id="btnLogin" style="margin-left:100px;" ></input>
+           </form>
+           <button id = "forgetPassword" onclick="document.getElementById('forgot').style.display = 'block'" style="cursor:pointer;position:relative;top:120px;border-style:none;background-color:#78c869ff;"> <font class="forgotbutton"><u>Forgot Password?</u></font> </button>
+           </center>
+      </div>
+
+      <div id="forgot">
+      <div class = "create_popup_forgetpass">
+      <h3 style="position:relative;left:130px;top:15px;">Forgot Password?</h3>
+      <button style="cursor:pointer;" onclick="document.getElementById('forgot').style.display = 'none'" class="closeforgotpassword">x</button>
+      <br>
+      <p style="position:relative;left:122px;top:15px;">Please Enter Your Email:</p><br>
+      <input type="text" id= "forgetP" placeholder="abc123@gmail.com" style="position:relative;left:35px;top:15px;width:345px;"/>
+      <br><br>
+      <p style="position:relative;left:115px;top:15px;">Please Enter Your Position:</p><br>
+      <input type="text" id= "fposition" placeholder="Role/Postion" style="position:relative;left:140px;top:15px;width:150px;"/>
+      <br><br>
+      <p style="position:relative;left:120px;top:15px;">Please Enter Your Staff ID: </p><br>
+      <input type="text" id= "fid" placeholder="000001" style="position:relative;left:140px;top:15px;width:150px;"/>
+      <br><br>
+      <input type="button" id= "fsubmit" value="Enter" onclick="forgetPass()" style="position:relative;left:185px;top:15px;width:50px;cursor:pointer;"/>
+      </div>
+      </div>
+
+
+        <font style="position:relative;top:-320px;left:50px;font-size:18px;">English Android
+        </font>
+				<div style="width:200px;">
+        <font style="position:relative;top:-320px;left:50px;font-size:12px;" class="link"><br><br><a href="https://drive.google.com/open?id=1-lWH1-s3p4DZ4siGLSVl6W1qIpzPT40h">https://drive.google.com/open?id=1-lWH1-s3p4DZ4siGLSVl6W1qIpzPT40h</a>
+				</div>
+				</font>
+				<img src="Frontend/statics/images/androidenglish.png" style="width:100px;height:100px;position:relative;left:250px;top:-420px;">
+
+        <font style="position:relative;top:-530px;left:300px;font-size:18px;">English iOS
+        </font>
+				<div style="width:200px;">
+        <font style="position:relative;top:-530px;left:400px;font-size:12px;" class="link"> <br><br> <a href="https://drive.google.com/open?id=1UPPpo7K8ikw-E_ujKuMvXCZg5418TMXX">https://drive.google.com/open?id=1UPPpo7K8ikw-E_ujKuMvXCZg5418TMXX</a>
+				</div>
+				</font>
+
+
+
+
+        <font style="position:relative;top:-660px;left:750px;font-size:18px;">Chinese Android
+        </font>
+				<div style="width:200px;">
+        <font style="position:relative;top:-660px;left:750px;font-size:12px;" class="link"><br><br> <a href="https://drive.google.com/open?id=1d75ZM1pJQ5I5knEyEtU4LGL35nXDRmX3">https://drive.google.com/open?id=1d75ZM1pJQ5I5knEyEtU4LGL35nXDRmX3</a>
+				</div>
+				</font>
+				<img src="Frontend/statics/images/androidchinese.png" style="width:100px; height:100px; position:relative;top:-735px;left:1020px;">
+
+
+
+        <font style="position:relative;top:-850px;left:1065px;font-size:18px;">Chinese iOS
+        </font>
+				<div style="width:200px;">
+        <font style="position:relative;top:-850px;left:1170px;font-size:12px;" class="link"><br><br> <a href="https://drive.google.com/open?id=1UPPpo7K8ikw-E_ujKuMvXCZg5418TMXX">https://drive.google.com/open?id=1UPPpo7K8ikw-E_ujKuMvXCZg5418TMXX</a>
+				</div>
+				</font>
+
+
+
+      <div style="background-color:#f1f1f1;z-index:2;">
+        <table style="background-color:#f1f1f1;z-index:2;position:fixed; left:0%;width:100%; top:90%;height:10%; border-style:hidden;border-top:2px solid black;font-size:18px;">
+          <tr>
+            <td colspan="8" style="border-style:hidden;text-align:center;font-size:16px;"> <b>Center Contact Information </b></td>
+          </tr>
+          <tr>
+            <td style="border-style:hidden;width:10%;text-align:center;font-size:12px;"><b> Name </b></td>
+            <td id="contactname" style="border-style:hidden;width:10%;text-align:center;font-size:12px;"></td>
+            <td style="border-style:hidden;width:10%;text-align:center;font-size:12px;"><b> Email Address </b></td>
+            <td id="contactemail" style="border-style:hidden;width:10%;text-align:center;font-size:12px;"></td>
+            <td style="border-style:hidden;width:10%;text-align:center;font-size:12px;"><b> Contact No </b></td>
+            <td id="contactno" style="border-style:hidden;width:10%;text-align:center;font-size:12px;"></td>
+            <td style="border-style:hidden;width:10%;text-align:center;font-size:12px;"><b> Address </b></td>
+            <td id="contactaddress" style="border-style:hidden;width:15%;text-align:center;font-size:12px;"></td>
+          </tr>
+        </table>
+      </div>
+
+			<div id = 'policyPop'>
+				<div class = "create_popup_forgetpass">
+					<iframe id = 'policyid' style='height:90%;width:100%;'></iframe>
+					<center><input type='button' onclick = 'policyPopup()' value='Understood'/>
+					<input type='button' onclick = 'policyPopupClose()' value='Cancel' /></center>
+			</div>
+			</div>
+	</body>
+
+</html>

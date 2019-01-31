@@ -1,0 +1,26 @@
+[debug] [2019-01-30T17:28:51.986Z] ----------------------------------------------------------------------
+[debug] [2019-01-30T17:28:51.989Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2019-01-30T17:28:51.989Z] CLI Version:   6.3.0
+[debug] [2019-01-30T17:28:51.989Z] Platform:      darwin
+[debug] [2019-01-30T17:28:51.989Z] Node Version:  v10.15.0
+[debug] [2019-01-30T17:28:51.990Z] Time:          Wed Jan 30 2019 12:28:51 GMT-0500 (Eastern Standard Time)
+[debug] [2019-01-30T17:28:51.990Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-01-30T17:28:52.003Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-01-30T17:28:52.004Z] > authorizing via signed-in user
+[debug] [2019-01-30T17:28:52.004Z] [iam] checking project browserteam for permissions ["firebase.projects.get"]
+[debug] [2019-01-30T17:28:52.006Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/browserteam:testIamPermissions  
+
+[debug] [2019-01-30T17:28:52.361Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-30T17:28:52.363Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/browserteam  
+ 
+[debug] [2019-01-30T17:28:52.730Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/DVera2/Desktop/LTC-TMS-master/Browser-LTCTMS(Version1.1.0)'...
+[info] 
+[debug] [2019-01-30T17:28:52.733Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/917274264132/clients/_:getWebAppConfig  
+ 
+[debug] [2019-01-30T17:28:53.296Z] <<< HTTP RESPONSE 200
+[warn] ⚠  hosting: Port 5000 is not available. Trying another port...
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5005
