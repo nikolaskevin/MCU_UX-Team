@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<!--#30B400#339933#99CC00#FFFFCC-->
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>LTCTMS</title>
+		<link rel="icon" type="image/jpg" href="image\logo.jpg">
+		<link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="statics/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="statics/css/chat.css" />
+		<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
+		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	</head>
+	<style>
+
+
+	.portfolio_display {
+	  position:relative;
+	  top:-130px;
+	  left:12px;
+	  width:975px;
+		height:415px;
+	  overflow-x: auto;
+	  overflow-y: auto;
+	  background-color:rgba(255, 255, 255, .8);
+	  border: 5px solid rgba(255, 255, 255, .4);
+	}
+
+	.portfolio_display_table {
+	  width:965px;
+	  height:100px;
+	  border-style:hidden;
+	}
+	table, th, td
+	{
+			padding: 5px;
+			border: 1px solid black;
+			width:400px;
+			text-align: center;
+			word-wrap: break-word;
+	}
+	table th {
+		background-color: #B0C4DE;
+		color: #000;
+	}
+	table td {
+		text-shadow: 2px 2px #FFFFFF;
+	}
+	.portfolio_keyword_search {
+	  position:relative;
+		top:25px;
+		left:20px;
+	}
+	.portfolio_search_position {
+	  position:relative;
+		top:40px;
+		left:35px;
+	}
+	.portfolio_search_background {
+	  background-color: rgba(122, 122, 122,0.40);
+		width:105px;
+	}
+	.portfolio_search_word {
+	  font-weight:600;
+	  font-size:15px;
+	  color:#000;
+	  opacity:.95;
+	}
+	.editformselectcreate {
+	  max-width:800px;
+	  min-width:250px;
+	  padding:10px 50px;
+	  border:2px solid black;
+	  border-radius:10px;
+	  font-family:raleway;
+	  background-color:#fff;
+	  position:absolute;
+	  left:600px;
+	  top:200px;
+	}
+	.selectpatientorstaff{
+	  width:100px;
+	  height:30px;
+	}
+	.editformcreatestaff{
+	  max-width:900px;
+	  min-width:250px;
+	  padding:10px 50px;
+	  border:2px solid black;
+	  border-radius:10px;
+	  font-family:raleway;
+	  background-color:#fff;
+	  position:absolute;
+	  top:60px;
+	  left:25%;
+	  width:960px;
+	  height:650px;
+	}
+	.editformcreatepatient {
+	  max-width:900px;
+	  min-width:250px;
+	  padding:10px 50px;
+	  border:2px solid black;
+	  border-radius:10px;
+	  font-family:raleway;
+	  background-color:#fff;
+	  position:absolute;
+	  top:40px;
+	  left:25%;
+	  width:960px;
+	  height:650px;
+	}
+	.editformview {
+	  max-width:900px;
+	  min-width:250px;
+	  padding:10px 50px;
+	  border:2px solid black;
+	  border-radius:10px;
+	  font-family:raleway;
+	  background-color:#fff;
+	  position:absolute;
+	  top:40px;
+	  left:25%;
+	  width:960px;
+	  height:840px;
+	}
+	.editformedit {
+	  max-width:900px;
+	  min-width:250px;
+	  padding:10px 50px;
+	  border:2px solid black;
+	  border-radius:10px;
+	  font-family:raleway;
+	  background-color:#fff;
+	  position:absolute;
+	  top:40px;
+	  left:25%;
+	  width:960px;
+	  height:800px;
+	}
+	.portfolio_table {
+	  text-align:center;
+	  width:800px;
+	}
+	.add_button{
+		position:relative;
+		left:22%;
+	}
+	#newPortfolioSeletion{
+	  width:100%;
+	  height:100%;
+	  opacity:.95;
+	  top:0px;
+	  left:0px;
+	  display:none;
+	  position:fixed;
+	  background-color:#313131;
+	  overflow:auto
+	}
+	#newStaffPortfolio{
+	  width:100%;
+	  height:100%;
+	  opacity:.95;
+	  top:0;
+	  left:0;
+	  display:none;
+	  position:fixed;
+	  background-color:#313131;
+	  overflow:auto
+	}
+	#newPatientPortfolio{
+	  width:100%;
+	  height:100%;
+	  opacity:.95;
+	  top:0;
+	  left:0;
+	  display:none;
+	  position:fixed;
+	  background-color:#313131;
+	  overflow:auto
+	}
+	#viewStaffPortfolio{
+	  width:100%;
+	  height:100%;
+	  opacity:.95;
+	  top:0;
+	  left:0;
+	  display:none;
+	  position:fixed;
+	  background-color:#313131;
+	  overflow:auto;
+	}
+	#viewStaffPortfolioTable{
+	  width:800px;
+	  padding: 10px;
+	  top: 0px;
+	  left: 0px;
+	  border: 1px solid black;
+	  text-align: center;
+	}
+	#viewPatientPortfolio{
+	  width:100%;
+	  height:100%;
+	  opacity:.95;
+	  top:0;
+	  left:0;
+	  display:none;
+	  position:fixed;
+	  background-color:#313131;
+	  overflow:auto;
+	}
+	#viewPatientPortfolioTable{
+	  width:800px;
+	  padding: 10px;
+	  top: 0px;
+	  left: 0px;
+	  border: 1px solid black;
+	  text-align: center;
+	}
+	#editStaffPortfolio{
+	  width:100%;
+	  height:100%;
+	  opacity:.95;
+	  top:0;
+	  left:0;
+	  display:none;
+	  position:fixed;
+	  background-color:#313131;
+	  overflow:auto
+	}
+	#editPatientPortfolio{
+	  width:100%;
+	  height:100%;
+	  opacity:.95;
+	  top:0;
+	  left:0;
+	  display:none;
+	  position:fixed;
+	  background-color:#313131;
+	  overflow:auto
+	}
+	.library_form {
+	  display: none;
+	  position: relative;
+	  top: -124px;
+	  left: 0%;
+	  border-style:hidden;
+	  z-index: 9;
+	  padding: 10px;
+	  background-color: white;
+	  height:101%;
+	  width:21%;
+	  animation: library_pop 2s;
+	}
+	@keyframes library_pop {
+	    from {left: -20%;}
+	    to {left: 0%;}
+	}
+
+@keyframes portfolio_pop {
+		from {left: 0%;}
+		to {left: -20%;}
+}
+
+@keyframes bounce {
+0%, 20%, 60%, 100% {
+	-webkit-transform: translateY(0);
+	transform: translateY(0);
+}
+
+40% {
+	-webkit-transform: translateY(-5px);
+	transform: translateY(-5px);
+}
+
+80% {
+	-webkit-transform: translateY(-3px);
+	transform: translateY(-3px);
+}
+}
+	</style>
+	<body>
+		<div class="header">
+			<div class="bar">
+				<div class="w1200">
+					<span class="l"><img style="position:relative; top:3px; width:45px;height:45px;" src="statics/images/v2ltctmslogo.png"><font style="text-align:center;position:relative; top:-10px;">LTCTMS</font></span>
+					<i class="setting"><img style="filter:invert(100%); width:20px; height:20px;position:relative; left:835px; top:4px;" src="statics/images/settings.png"><p style="position:relative; left:860px; top:-50px;">Settings</p><img onclick="openmenu()" id="openmenu" style="filter:invert(100%); width:10px; height:10px;position:relative; left:1105px; top:-98px;cursor:pointer;" class="openmenu" src="statics/images/openmenu.png"></i>
+				</div>
+			</div>
+			<div class="user-info">
+				<div class="w1200">
+					<div class="user-headface" onmouseover="bigImg(this)" onmouseout="normalImg(this)">
+						<img src="statics/images/edit.png" id="photoword" style="position:relative;top:20px;left:20px;text-align:center;display:none;width:40px;height:40px;" onclick ="document.getElementById('newPic').click();">
+						<img style="cursor:pointer;" id="Profilepic" onclick ="document.getElementById('newPic').click();" />
+						<input id="newPic" type='file' accept="image/*" onchange="uploadPicProfile()" required  style="display:none;"/>
+					</div>
+					<div class="user-account">
+						<p class="tip" id="time123"></p>
+						<img style="position:relative; left:140px;top:-25px;cursor:pointer;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
+						<p class="account" style="position:relative; top:-20px;">
+							<span>Name : <span id="displayProfilename"></span></span>
+							<span>UserID : <span id="displayProfileid"></span></span>
+							<span>Role : <span id="displayProfileposition"></span></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="main w1200">
+			<div class="left">
+				<ul>
+					<li>
+						<a href="01Aboutus2.html">
+							<i><img src="statics/images/aboutus.png" style="width:20px;height:20px;"></i>
+							About Us
+						</a>
+					</li>
+					<li>
+						<a href="02Schedule2.html">
+							<i><img src="statics/images/schedule.png" style="width:20px;height:20px;"></i>
+							Schedule
+						</a>
+					</li>
+					<li>
+						<a href="03Memo2.html">
+							<i><img src="statics/images/memo.png" style="width:20px;height:20px;"></i>
+							Memo
+						</a>
+					</li>
+					<li>
+						<a href="04Statusrecord2.html">
+							<i><img src="statics/images/statusrecord.png" style="width:20px;height:20px;"></i>
+							Status Record
+						</a>
+					</li>
+					<li>
+						<a href="05Library2.html">
+							<i><img src="statics/images/library.png" style="width:20px;height:20px;"></i>
+							Library
+						</a>
+					</li>
+					<li>
+						<a href="06Taskeditor2.html">
+							<i><img src="statics/images/taskeditor.png" style="width:20px;height:20px;"></i>
+							Task Editor
+						</a>
+					</li>
+					<li>
+						<a href="07E-portfolio2.html" class="active">
+							<i><img src="statics/images/e-portfolio.png" style="width:20px;height:20px;"></i>
+							E-Portfolio
+						</a>
+					</li>
+					<li>
+						<a href="08Helpandsupport2.html">
+							<i><img src="statics/images/helpandsupport.png" style="width:20px;height:20px;"></i>
+							Help and Support
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="right" style="width:980px;">
+				<div class="tap">
+					<span>E-Portfolio</span>
+				</div>
+
+				<div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
+							<div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
+							<p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;">&nbsp English<br></p>
+							<p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='file:///C:/Users/Gama/Documents/GitHub/shared-LTC-TMS/LTCTMS/%E4%B8%AD%E6%96%87%E7%89%88Chinese%20version/07E-portfolio2.html'">&nbsp 中文<br></p>
+							<p class="logoutselected" onclick = "Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
+				</div>
+
+<div class="container">
+
+
+
+	<div style="position:relative;top:135px;left:0px;z-index:3;width:50px;" id="portfoliofilter">
+	<button type="button" onclick="viewportfoliofilter()" style="width:20px; height:120px;background-color:white;border-top:5px solid gray;border-bottom:5px solid gray;border-left:hidden; border-right:hidden;cursor:pointer;"><p style="position:relative; top:-2px; left:-0.5px;">F<br>I<br>L<br>T<br>E<br>R</p></button>
+	</div>
+
+
+	<div class="library_form" id="form">
+		<button style="position:relative;cursor:pointer; left:175px; background-color:white; border-style:none;" onclick="closefilter()" class="xfilter">X</button>
+	<input type="text" name="search" placeholder="Search" id="searchInput"  class="portfolio_keyword_search">
+<div class="portfolio_search_position">
+  <div class="portfolio_search_background">
+  <div class="portfolio_search_word">
+    <h3> Position: </h3>
+  </div>
+  </div>
+
+  <select id="filterPosition">
+   <option value="all">All</option>
+   <option value="DIR">Director</option>
+   <option value="CNO">CNO</option>
+   <option value="CNA">CNA</option>
+   <option value="Patient">Patient</option>
+ </select>
+<br><br>
+<div id = 'Roomhide' style= 'display:none;'>
+<div class="portfolio_search_background">
+  <div class="portfolio_search_word">
+    <h3> Room No. </h3>
+  </div>
+ </div>
+<select id = "filterRoomNo" onchange ="filterRoomNo()" >
+    <option value="all"> All </option>
+</select>
+</div>
+<br>
+<div id = 'Nationalhide' style= 'display:block;'>
+<div class="portfolio_search_background">
+<div class="portfolio_search_word">
+    <h3> Nationality </h3>
+</div>
+</div>
+   <select id="filterNationality">
+    <option value="all">All</option>
+
+</select>
+</div>
+<br>
+<div id = 'Genderhide' style= 'display:block;'>
+<div class="portfolio_search_background">
+<div class="portfolio_search_word">
+    <h3> Gender </h3>
+</div>
+</div>
+   <select id="filterGender">
+    <option value="all"> All </option>
+	  <option value="M">Male</option>
+    <option value="F">Female</option>
+    <option value="Others">Others</option>
+</select>
+</div>
+<br>
+<button onclick= 'Cancel()' style="cursor:pointer;"> Refresh</button>
+</div>
+</div>
+
+					<div class="portfolio_display" id="shortportfolio">
+					<table class="portfolio_display_table">
+					    <tr>
+					        <th style="width:12%"> I.D. </th>
+					        <th style="width:16%"> Name </th>
+					        <th style="width:12%"> National ID </th>
+					        <th style="width:12%"> Nationality </th>
+					        <th style="width:3%"> Gender</th>
+					        <th style="width:15%"> Contact number</th>
+					        <th style="width:15%"> Email</th>
+					        <th style="width:6%"> Role</th>
+					        <th style="width:6%"> <button  id = "newPortfolio"  style="cursor:pointer;display:none;"type="button" onclick = "addNewPortfolio()" class="add_button"><img src="statics\images\add.png" height="15px" width="15px"/></button> </th>
+					    </tr>
+					    <tbody id = "briefPortfolio">
+					       <tr>
+					      </tr>
+					    </tbody>
+					</table>
+				</div>
+
+
+		</div>
+		<div id="newPortfolioSeletion">
+		  <div class="editformselectcreate">
+		    <center><h2>Select Role</h2><br></center><br>
+		    <center><button style="cursor:pointer;" class="selectpatientorstaff" id="btnStaff" onclick="staffPortfolio()">STAFF</button>
+		    &nbsp&nbsp&nbsp&nbsp
+		    <button style="cursor:pointer;" class="selectpatientorstaff" id="btnPatient" onclick="patientPortfolio()">PATIENT</button>
+		    </center><br><br>
+		    <center><button style="cursor:pointer;" onclick="Cancel()">Back</button></center>
+		  </div>
+		</div>
+		</div>
+
+		<div id="newStaffPortfolio">
+		  <div class="editformcreatestaff">
+		    <br><center><h2>Staff Portfolio</h2></center><br>
+		    <table class="portfolio_table">
+		   <tr>
+		       <td rowspan="3"> Insert Photo: <br><br><input  id="btnPicture" type="file" accept="image/*" required/> </td>
+					 <td> <p style="position:relative;left:-50px;display:inline;">Position:</p>
+					<select style="position:relative;display:inline;left:20px;" id="staffPosition" onchange="pass123()" required>
+						<option value="">Please Select</option>
+    		 		<option value="DIR">Director</option>
+    				<option value="CNO">CNO</option>
+						<option value="CNA">CNA</option>
+					</select>
+				<tr>
+						<td> Staff ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id ='StaffID'></span></td>
+		   </tr>
+		   <tr>
+		       <td>Name: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffName" placeholder="Name" required/></td>
+		   </tr>
+		   <tr>
+		       <td colspan="2" id="passtable" style="display:none;"> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffPassword" placeholder="give a password" /></td>
+		   </tr>
+		   <tr>
+		       <td> Date of Birth: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffDOB" placeholder="yyyy/mm/dd" required/></td>
+					 <td> Initial Date: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffInitialDate" placeholder="Enter Date" required/></td>
+			 </tr>
+		   <tr>
+		       <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffNID" placeholder="National ID" required/></td>
+		       <td> Nationality: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffNationality" placeholder="Nationality" required/></td>
+		   </tr>
+		   <tr>
+		       <td> Email Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffEmail" placeholder="Email" required/></td>
+		       <td> Gender: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffGender" placeholder="M/F" required/></td>
+		   </tr>
+		   <tr>
+		       <td> Contact No: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffContact" placeholder="0123-456-780" required/></td>
+		       <td> Emergency Contact No: <input type="text" id="staffEContact" placeholder="0123-456-780" required/></td>
+		   </tr>
+		   <tr>
+		       <td> Emergency Contact Name: <input type="text" id="staffEName" placeholder="Name" required/></td>
+		       <td> Emergency Contact Relationship: <input type="text" id="staffERelationship" placeholder="Relationship" required/></td>
+		   </tr>
+		    <tr>
+		       <td colspan="2"> Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffAddress" placeholder="Address" size="80" required/></td>
+		   </tr>
+		   <tr>
+		       <td colspan="2">Brief Description:<input type="textarea" id="staffbriefdescription" placeholder="Please enter here" size="85"/></td>
+		   </tr>
+		   <tr>
+		     <td> Insert CV: &nbsp&nbsp&nbsp&nbsp<input  id="staffCV" type="file" accept="image/*" required/></td>
+		     <td> Insert License: &nbsp&nbsp<input  id="staffLicense" type="file" accept="image/*" required/></td>
+		   </tr>
+		</table><br>
+		    <center><button style="cursor:pointer;" id ="btnSubmitP"> Submit</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		    <button style="cursor:pointer;" id ="btnPCancel" onclick="Cancel()">Cancel</button></center>
+		  </div>
+		</div>
+		</div>
+
+
+		<div id="newPatientPortfolio">
+		  <div class="editformcreatepatient">
+		    <br><center><h2>Patient Portfolio</h2></center><br>
+		    <table class="portfolio_table">
+		   <tr>
+		       <td rowspan="2"> Insert Photo <br><br><input  id="btnPicture2" type="file" accept="image/*" required/> </td>
+		       <td> Patient ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id = PatientID></span></td>
+		   </tr>
+		   <tr>
+		       <td>Name: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientName" placeholder="Name" required/></td>
+		   </tr>
+		   <tr>
+		       <td> Room number: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientRoomNo" placeholder="101.." required/></td>
+		       <td> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientPassword" placeholder="give a password" required/></td>
+		   </tr>
+		   <tr>
+		       <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNID" placeholder="National ID" required/></td>
+		       <td> Nationality: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNationality" placeholder="Nationality" required/></td>
+		   </tr>
+		   <tr>
+		       <td> Date of Birth:  &nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientDOB" placeholder="yyyy/mm/dd" required/></td>
+		       <td> Gender: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientGender" placeholder="M/F" required/></td>
+		   </tr>
+		   <tr>
+		       <td> Admission Date: &nbsp&nbsp<input type="text" id="patientAdmissionDate" placeholder="Enter Date" required/></td>
+		       <td> Email Address: &nbsp&nbsp<input type="text" id="patientEmail" placeholder="Email" required/></td>
+		   </tr>
+		   <tr>
+		       <td> Contact No: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientContact" placeholder="0123-456-780" required/></td>
+		       <td> Emergency Contact No: <input type="text" id="patientEContact" placeholder="0123-456-780" required/></td>
+		   </tr>
+		   <tr>
+		       <td> Emergency Contact Name: &nbsp<input type="text" id="patientEName" placeholder="Enter Name" required/></td>
+		       <td> Emergency Contact Relationship: <input type="text" id="patientERelationship" placeholder="Enter Relationship" required/></td>
+		   </tr>
+		    <tr>
+		       <td colspan="2"> Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientAddress" placeholder="Address" size="80" required/></td>
+		   </tr>
+		   <tr>
+		      <td colspan="2"> Admission Reason: &nbsp&nbsp<input type="text" id="patientAdmissionReason" placeholder="Enter Here" size="85" required/></td>
+		  </tr>
+		   <tr>
+		       <td colspan="2">Appointment Record:<input type="textarea" id="AppointmentRecord" placeholder="Appointment Record..." size="85"/></td>
+		   </tr>
+		   <tr>
+		       <td colspan="2">Medical Record:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="textarea" id="MedicalRecord" placeholder="Medical Record..." size="85"/></td>
+		   </tr>
+		   <tr>
+		       <td colspan="2">Brief Description:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="textarea" id="BriefDescription" placeholder="Brief Description..." size="85"/></td>
+		   </tr>
+		</table>
+		    Upload:<progress value="0" max="100" id="Uploader2">0%</progress>
+		    <center><button style="cursor:pointer;" id ="btnSubmitP2"> Submit</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		    <button style="cursor:pointer;" id ="btnPCancel" onclick="Cancel()">Cancel</button></center>
+		  </div>
+		</div>
+		</div>
+
+		<div id="viewPatientPortfolio">
+		  <div class="editformview">
+		    <center><h2>Patient Portfolio</h2></center><br>
+		    <div><button style="cursor:pointer;" id="btnEditPP" onclick="editPP()" style="display:inline;" >Edit</button>
+		    <button style="cursor:pointer;" id="btnDeletePP" onclick = "deletePP()" style="display:inline;">Delete</button>
+		    </div>
+		    <br>
+		    <table id="viewPatientPortfolioTable">
+		   <tr>
+		       <td rowspan="2" colspan="2" width="50%"><img id='img1' height="150" width="150"/></td>
+		       <td width="25%"> Patient ID </td>
+		       <td width="25%" id ="PID"></td>
+		   </tr>
+		   <tr>
+		      <td> Name </td>
+		       <td id ="Name">Name:</td>
+		   </tr>
+		   <tr>
+		     <td width="25%"> Room No </td>
+		     <td width="25%" id="Room"> Room No.</td>
+		     <td width="25%"> Password </td>
+		     <td width="25%" id ="Password">Password</td>
+		   </tr>
+		   <tr>
+		      <td> National ID </td>
+		      <td id="NID"> National ID </td>
+		      <td> Nationality </td>
+		      <td id="Nationality"> Nationality</td>
+		   </tr>
+		   <tr>
+		       <td> Date of Birth </td>
+		       <td id="DOB"> </td>
+		       <td> Gender </td>
+		       <td id="Gender"> Gender</td>
+		   </tr>
+
+		   <tr>
+		      <td> Admission Date </td>
+		      <td id="AdmissionDate"> Admission Date</td>
+		      <td> Email Address </td>
+		      <td id= "Email"> Email Address</td>
+		   </tr>
+		   <tr>
+		      <td> Contact No </td>
+		      <td id="Contactno"> Contact No. </td>
+		      <td> Emergency Contact No </td>
+		      <td id="EContactnoV"> Emergency Contact No</td>
+		   </tr>
+		   <tr>
+		      <td> Emergency Contact Name </td>
+		      <td id="EName"> Emergency Contact Name </td>
+		      <td> Emergency Contact Relationship </td>
+		      <td id="ERelationship"> Emergency Contact Relationship</td>
+		   </tr>
+		    <tr>
+		      <td> Address </td>
+		       <td colspan="3" id= "AddressV"></td>
+		   </tr>
+		   <tr>
+		     <td> Admission Reason </td>
+		      <td colspan="3" id= "AdmissionReason"></td>
+		  </tr>
+		   <tr>
+		     <td> Appointment Record </td>
+		       <td colspan="3" id = "ARV"> </td>
+		   </tr>
+		   <tr>
+		     <td> Medical Record </td>
+		       <td colspan="3" id= "MRV"> </td>
+		   </tr>
+		   <tr>
+		     <td> Brief Description </td>
+		       <td colspan="3"id= "BDV"> </td>
+		   </tr>
+		</table><br>
+		<button type="button" onclick="Cancel()" style="cursor:pointer;">Back</button>
+		  </div>
+		</div>
+		</div>
+
+		<div id="viewStaffPortfolio">
+		  <div class="editformview" style="height:1020px;">
+		    <center><h2>Staff Portfolio</h2></center><br>
+		    <div><button id="btnEditSP" onclick="editSP()" style="display:inline;cursor:pointer;">Edit</button>
+		    <button id="btnDeleteSP" onclick = "deleteSP()" style="display:inline;cursor:pointer;">Delete</button>
+		    </div>
+		    <br>
+		    <table id="viewStaffPortfolioTable">
+		    <tr>
+		      <td rowspan="2" colspan="2" width="50%"><img id='imgS' height="150" width="150"/></td>
+		       <td width="25%"> Staff ID </td>
+		       <td width="25%" id ="SID"></td>
+		    </tr>
+		    <tr>
+		      <td> Name </td>
+		       <td id ="sName">Name:</td>
+		    </tr>
+		    <tr>
+		      <td width="25%" > Inital Date </td>
+		      <td width="25%" id = "sInitialDate"> </td>
+		      <td width="25%" id = "ssP"> Password </td>
+		      <td width="25%" id ="ssPassword"> </td>
+		    </tr>
+		    <tr>
+		       <td> Date of Birth </td>
+		       <td id="sDOB"> </td>
+		       <td> Position </td>
+		       <td id = "sPosition"> </td>
+		    </tr>
+		    <tr>
+		        <td> National ID </td>
+		        <td id = "sNID"> </td>
+		        <td> Nationality</td>
+		        <td id = "sNationality"> </td>
+		    </tr>
+		    <tr>
+		        <td> Email Address</td>
+		        <td id ="sEmail"> </td>
+		        <td> Gender</td>
+		        <td id ="sGender">  </td>
+		    </tr>
+		    <tr>
+		        <td> Contact No. </td>
+		        <td id ="sContact"> </td>
+		        <td> Emergency Contact No.</td>
+		        <td id="sEContact"> </td>
+		    </tr>
+		    <tr>
+		        <td> Emergency Contact Name </td>
+		        <td id ="sEName"> </td>
+		        <td> Emergency Contact Relationship</td>
+		        <td id="sERelationship"> </td>
+		    </tr>
+		    <tr>
+		       <td> Address</td>
+		       <td colspan="3" id = "sAddress"></td>
+		   </tr>
+		   <tr>
+		       <td> Brief Description </td>
+		       <td colspan="3" id = "sBriefDescription"> </td>
+		   </tr>
+		   <tr>
+		       <td> CV </td>
+		       <td colspan="3" ><img id ="sCV" height="150" width="150"/></td>
+		   </tr>
+		   <tr>
+		       <td> License </td>
+		       <td colspan="3" ><img id ="sLicense" height="150" width="150"/></td>
+		   </tr>
+		    </table><br>
+		 <button type="button" onclick="Cancel()" style="cursor:pointer;">Back</button>
+		</div>
+		</div>
+		</div>
+
+		<div id="editPatientPortfolio">
+		  <div class="editformedit">
+		    <br><center><h2>Patient Portfolio</h2></center><br>
+		    <table class="portfolio_table">
+		    <tr>
+		      <td rowspan="2" width="50%"> Patient Picture URL:<p type="text" id="PictureP" required></p></td>
+		      <td width="50%"> Patient ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id='PatientID2'></span></td>
+		    </tr>
+		    <tr>
+		      <td>Name: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientName2" placeholder="Name" required/></td>
+		    </tr>
+		    <tr>
+		       <td> Room number: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientRoomNo2" placeholder="101.." required/></td>
+		       <td> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp    <input type="text" id="patientPassword2" placeholder="give a password" required/></td>
+		    </tr>
+		    <tr>
+		       <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNID2" placeholder="National ID" required/></td>
+		       <td> Nationality: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNationality2" placeholder="Nationality" required/></td>
+		    </tr>
+		    <tr>
+		       <td> Date of Birth: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientDOB2" placeholder="yyyy/mm/dd" required/></td>
+		       <td> Gender: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientGender2" placeholder="M/F" required/></td>
+		    </tr>
+		    <tr>
+		       <td> Admission Date: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientAdmissionDate2" placeholder="Date" required/></td>
+		       <td> Email Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientEmail2" placeholder="Email" required/></td>
+		    </tr>
+		    <tr>
+		       <td> Contact No: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientContact2" placeholder="0123-456-780" required/></td>
+		       <td> Emergency Contact No: <input type="text" id="patientEContact2" placeholder="0123-456-780" required/></td>
+		    </tr>
+		    <tr>
+		       <td> Emergency Contact Name: &nbsp&nbsp&nbsp<input type="text" id="patientEName2" placeholder="Enter Name" required/></td>
+		       <td> Emergency Contact Relationship: <input type="text" id="patientERelationship2" placeholder="Enter Relationship" required/></td>
+		    </tr>
+		    <tr>
+		       <td colspan="2"> Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientAddress2" placeholder="Address" size="80" required/></td>
+		    </tr>
+		    <tr>
+		       <td colspan="2"> Admission Reason: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientAdmissionReason2" placeholder="Enter Here" size="85" required/></td>
+		    </tr>
+		    <tr>
+		       <td colspan="2">Appointment Record:<input type="textarea" id="AppointmentRecord2" placeholder="Appointment Record..." size="85"/></td>
+		    </tr>
+		    <tr>
+		       <td colspan="2">Medical Record:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="textarea" id="MedicalRecord2" placeholder="Medical Record..." size="85"/></td>
+		    </tr>
+		    <tr>
+		       <td colspan="2">Brief Description:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="textarea" id="BriefDescription2" placeholder="Brief Description..." size="85"/></td>
+		    </tr>
+				<tr>
+					<td colspan='2' >Orginal Picture Folder: <span id ='patientpicFilename'></span></td>
+				</tr>
+		  </table> <br>
+		    <center><button style="cursor:pointer;" id ="btnSubmitPP" onclick="SubmitPPPP()"> Submit</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		    <button style="cursor:pointer;" id ="btnPCancel" onclick="Cancel()">Cancel</button></center>
+		</div>
+		</div>
+		</div>
+
+
+		<div id="editStaffPortfolio">
+		  <div class="editformedit">
+		    <br>	<center><h2>Staff Portfolio</h2></center><br>
+		    <table class="portfolio_table">
+		      <tr>
+		        <td colspan="2"> Staff Picture URL:<p type="text" id="PictureS" required></p></td>
+		   </tr>
+		   <tr>
+		       <td width="50%">Name: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffName2" placeholder="Name" required/></td>
+		       <td width="50%"> Staff ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id="StaffID2"></span></td>
+		   </tr>
+		   <tr>
+			   <td  colspan="2" id = "ssBD2"> Initial Date: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffInitialDate2" placeholder="Enter Date" required/></td>
+		     <td id = "ssP2"> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffPassword2" placeholder="give a password" required/></td>
+		   </tr>
+		   <tr>
+		       <td> Position: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffPosition2" placeholder="Position" required/></td>
+		       <td> Date of Birth: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffDOB2" placeholder="yyyy/mm/dd" required/></td>
+		   </tr>
+		   <tr>
+		       <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffNID2" placeholder="National ID" required/></td>
+		       <td> Nationality: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffNationality2" placeholder="Nationality" required/></td>
+		   </tr>
+		   <tr>
+		       <td> Email Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffEmail2" placeholder="Email" required/></td>
+		       <td> Gender: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffGender2" placeholder="M/F" required/></td>
+		   </tr>
+		   <tr>
+		       <td> Contact No: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffContact2" placeholder="0123-456-780" required/></td>
+		       <td> Emergency Contact No: <input type="text" id="staffEContact2" placeholder="0123-456-780" required/></td>
+		   </tr>
+		   <tr>
+		       <td> Emergency Contact Name: &nbsp&nbsp&nbsp<input type="text" id="staffEName2" placeholder="Enter Name" required/></td>
+		       <td> Emergency Contact Relationship: <input type="text" id="staffERelationship2" placeholder="Enter Relationship" required/></td>
+		   </tr>
+		    <tr>
+		       <td colspan="2"> Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffAddress2" placeholder="Address" size="80" required/></td>
+		   </tr>
+		   <tr>
+		      <td colspan="2"> Brief Description: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffBriefDescription2" placeholder="Enter Here" size="90"/></td>
+		  </tr>
+		   <tr>
+		       <td colspan='2'>CV: <span id='staffCV2'> </span></td>
+		   </tr>
+		   <tr>
+				 <td colspan='2'>License: <span id='stafflicense2'> </span></td>
+		   </tr>
+			 <tr>
+				 <td colspan='2' >Orginal Picture Folder: <span id ='staffpicfilename'></span></td>
+			 </tr>
+			 <tr>
+				 <td colspan='2' >Orginal CV Folder: <span id ='staffcvfilename'></span></td>
+			 </tr>
+			 <tr>
+				 <td colspan='2' >Orginal License Folder: <span id ='stafflicensefilename'></span></td>
+			 </tr>
+		</table><br>
+		    <center><button style="cursor:pointer;" id ="btnSubmitSP" onclick="submitSP()"> Submit</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		    <button style="cursor:pointer;" id ="btnPCancel" onclick="Cancel()">Cancel</button></center>
+		  </div>
+		</div>
+
+
+
+		<div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA;border-style: solid;
+				border-width: 2px; z-index:3;">
+		<div style="background-color:#E4EACD;position:relative;height:75px;">
+			<h2  id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
+
+
+			<button onclick="editprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
+			<button onclick="closeprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
+			<button onclick="changePassword()" style="position:relative; left:520px;top:45px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>
+
+		</div>
+		<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
+		<div style="position:relative; left:220px;top:-110px;">
+			<p>Position: &nbsp<span id = "positionProfile"></span> </p><br>
+			<p>User ID: &nbsp <span id = "idProfile"></span></p><br>
+			<p>Display Name: &nbsp <span id = "nameProfile"></span></p><br>
+			<p>Email Address: &nbsp <span id = "emailProfile"></p><br>
+		</div>
+		</div>
+
+
+
+		<div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;border-style: solid;
+				border-width: 2px;">
+		<div style="background-color:#E4EACD;position:relative;height:75px;">
+			<h2 id="nameProfileTE"style="position:relative; left:210px;top:20px;"></h2>
+			<h3 style="position:relative; left:300px;top:-10px;color:gray;">	</h3>
+			<button onclick="submitprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
+			<button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
+		</div>
+		<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="editpic">
+		<div style="position:relative; left:220px;top:-110px;">
+			<p>Position: &nbsp <span id = positionProfileE> </span> </p><br>
+			<p >User ID: &nbsp <span id = "idProfileE"> </span>  </p><br>
+			<p>Display Name: <input type="text" id = "nameProfileE" style="width:200px;"></p><br>
+			<p>Email Address: <input type="text" id = "emailProfileE" style="width:300px;"></p><br>
+
+		</div>
+		</div>
+		<div id="changePass" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;">
+		<div style="background-color:#E4EACD;position:relative;height:75px;">
+		<h2 style="position:relative; left:210px;top:20px;">Changing Password</h2>
+		<button onclick="submitNewPass()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
+		<button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
+		</div>
+		<div style="position:relative; left:220px;top:110px;">
+		<p>Current Password: <input type="password" id = "oldPassword"></p><br>
+		<p>New Password: <input type="password" id = "newPassword"></p><br>
+		<p>Confirm Password: <input type="password" id = "confirmnewPassword"></p><br>
+
+		</div>
+		</div>
+
+
+		<div id="expand" onclick="expand()" >Chat</div>
+		<div id= "leftList">
+			<ul>
+				<li id= "chatAll" onclick="displayChat('0')">Center & System</li>
+				<li id = "chatPart" onclick="displayChat('1')">Center</li>
+			</ul>
+		</div>
+
+
+			<script type = 'text/javascript' src = 'Config.js'></script>
+			<script type = 'text/javascript' src = 'PortfolioJS.js'></script>
+			<script type = 'text/javascript' src = 'chat.js'></script>
+			<script type = 'text/javascript' src = 'Profile.js'></script>
+	</body>
+</html>
