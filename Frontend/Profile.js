@@ -1,24 +1,36 @@
 firebase.auth().onAuthStateChanged(function (firebaseUser){
 if(firebaseUser){
+  console.log("firebaseUser: " + firebaseUser);
   console.log(firebaseUser);
   var userid = firebaseUser.uid;
+  firebaseUser.displayName = "asdf";
+  //var newID = firebase.child("uAccount").child(userid).StaffID;
+
+
   var displayName = firebaseUser.displayName;
   var pic = firebaseUser.photoURL;
   console.log(pic);
-  var fbP = firebase.database().ref('uAccount/'+userid).child('Position');
-  fbP.once('value',function(snapshot){
-    var position = snapshot.val();
-    document.getElementById('displayProfilename').innerHTML=displayName;
-    document.getElementById('displayProfileid').innerHTML=userid;
-    document.getElementById('displayProfileposition').innerHTML=position;
-    document.getElementById('Profilepic').src=pic;
-    document.getElementById('viewpic').src=pic;
-    document.getElementById('editpic').src=pic;
-    Profilepic.setAttribute('value',pic);
-  });
+
+  var fbP = firebase.database().ref('uAccount/'+userid);
+  fbP.once("value")
+    .then(function(snapshot){
+      var position = snapshot.val();
+      var staffID = position.StaffID;
+      /* Set the top bar's HTML to show information about the user */
+      document.getElementById('displayProfilename').innerHTML=displayName;
+      document.getElementById('displayProfileid').innerHTML=staffID;
+      document.getElementById('displayProfileposition').innerHTML=position;
+      document.getElementById('Profilepic').src=pic;
+      document.getElementById('viewpic').src=pic;
+      document.getElementById('editpic').src=pic;
+      Profilepic.setAttribute('value',pic);
+    });
+
+
+
 }else{
  alert("You're Logged out now! Please Login again if you need to use this system!");
- window.location.href = "//share-b7589.firebaseapp.com/";
+ window.location.href = "./0
 }
 });
 //console.log(document.getElementById('Profilepic').value);
