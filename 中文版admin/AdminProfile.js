@@ -18,7 +18,7 @@ if(firebaseUser){
   });
 }else{
   alert("你現在已登出此系統，請重新登入!");
- // window.location.href = "//share-b7589.firebaseapp.com/";
+ // window.location.href = "../";
 }
 });
 //console.log(document.getElementById('Profilepic').value);

@@ -7,7 +7,7 @@ if(firebaseUser){
   console.log(userid);
 }else{
   alert("You're Logged out now! Please Login again if you need to use this system!");
-  window.location.href = "//C:/Users/Gama/Documents/GitHub/shared-LTC-TMS/LTCTMS/Frontend/00Login2.html";
+  window.location.href = "../Frontend/00Login2.html";
 }
 });
 
