@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<!--#30B400#339933#99CC00#FFFFCC-->
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>LTC-TMS</title>
+		<link rel="icon" type="image/jpg" href="image\logo.jpg">
+		<link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="statics/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="statics/css/chat.css" />
+		<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
+		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+		<script type = 'text/javascript' src="vanillatree.js"></script>
+		<script type = 'text/javascript' src="vanillatree.min.js"></script>
+		<link href="vanillatree.css" rel="stylesheet">
+	</head>
+	<style>
+
+
+	@keyframes bounce {
+	0%, 20%, 60%, 100% {
+		-webkit-transform: translateY(0);
+		transform: translateY(0);
+	}
+
+	40% {
+		-webkit-transform: translateY(-5px);
+		transform: translateY(-5px);
+	}
+
+	80% {
+		-webkit-transform: translateY(-3px);
+		transform: translateY(-3px);
+	}
+}
+	</style>
+	<body>
+		<div class="header">
+			<div class="bar">
+				<div class="w1200">
+					<span class="l"><img style="position:relative; top:3px; width:45px;height:45px;" src="statics/images/v2ltctmslogo.png"><font style="text-align:center;position:relative; top:-10px;">LTC-TMS</font></span>
+					<i class="setting"><img style="filter:invert(100%); width:20px; height:20px;position:relative; left:835px; top:4px;" src="statics/images/settings.png"><p style="position:relative; left:860px; top:-50px;">Settings</p><img onclick="openmenu()" id="openmenu" style="filter:invert(100%); width:10px; height:10px;position:relative; left:1105px; top:-98px;cursor:pointer;" class="openmenu" src="statics/images/openmenu.png"></i>
+				</div>
+			</div>
+			<div class="user-info">
+				<div class="w1200">
+					<div class="user-headface" onmouseover="bigImg(this)" onmouseout="normalImg(this)">
+						<img src="statics/images/edit.png" id="photoword" style="position:relative;top:20px;left:20px;text-align:center;display:none;width:40px;height:40px;" onclick ="document.getElementById('newPic').click();">
+						<img style="cursor:pointer;" id="Profilepic" onclick ="document.getElementById('newPic').click();" />
+						<input id="newPic" type='file' accept="image/*" onchange="uploadPicProfile()" required  style="display:none;"/>
+					</div>
+					<div class="user-account">
+						<p class="tip" id="time123"></p>
+						<img style="position:relative; left:140px;top:-25px;cursor:pointer;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
+						<p class="account" style="position:relative; top:-20px;">
+							<span>Name : <span id="displayProfilename"></span></span>
+							<span>UserID : <span id="displayProfileid"></span></span>
+							<span>Role : <span id="displayProfileposition"></span></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="main w1200">
+			<div class="left">
+				<ul>
+					<li>
+						<a href="01Aboutus2.html">
+							<i><img src="statics/images/aboutus.png" style="width:20px;height:20px;"></i>
+							About Us
+						</a>
+					</li>
+					<li>
+						<a href="02Schedule2.html">
+							<i><img src="statics/images/schedule.png" style="width:20px;height:20px;"></i>
+							Schedule
+						</a>
+					</li>
+					<li>
+						<a href="03Memo2.html">
+							<i><img src="statics/images/memo.png" style="width:20px;height:20px;"></i>
+							Memo
+						</a>
+					</li>
+					<li>
+						<a href="04Statusrecord2.html">
+							<i><img src="statics/images/statusrecord.png" style="width:20px;height:20px;"></i>
+							Status Record
+						</a>
+					</li>
+					<li>
+						<a href="05Library2.html">
+							<i><img src="statics/images/library.png" style="width:20px;height:20px;"></i>
+							Library
+						</a>
+					</li>
+					<li>
+						<a href="06Taskeditor2.html"  class="active">
+							<i><img src="statics/images/taskeditor.png" style="width:20px;height:20px;"></i>
+							Task Editor
+						</a>
+					</li>
+					<li>
+						<a href="07E-portfolio2.html">
+							<i><img src="statics/images/e-portfolio.png" style="width:20px;height:20px;"></i>
+							E-Portfolio
+						</a>
+					</li>
+					<li>
+						<a href="08Helpandsupport2.html">
+							<i><img src="statics/images/helpandsupport.png" style="width:20px;height:20px;"></i>
+							Help and Support
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="right">
+				<div class="tap">
+					<span id="span">Task Instruction</span>
+				</div>
+
+				<div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
+							<div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
+							<p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;">&nbsp English<br></p>
+							<p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../中文版Chinese version/06Taskeditor2.html'">&nbsp Chinese<br></p>
+							<p class="logoutselected" onclick = "Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
+				</div>
+
+				<div style="position:relative;left:22%;width:78%;height:90%;background-color:#fff;border-left:2px solid black;overflow:scroll;">
+					<div id="showbox">
+					  <table style="border:hidden; width:89%;height:100%;opacity:1;">
+					    <tr>
+					        <th colspan="2" style="background-color:#aaa;">Task Name:<textarea id="Ttitle" row ="2" cols="65"></textarea> </th>
+					    </tr>
+					    <tr>
+					        <td style="text-align:center;"> <br>Category:
+					        <input name="category" id = "selectCat" list="CatOption">
+					        <datalist id="CatOption">
+
+					        </datalist>
+					        </td>
+					        <td style="text-align:center;">
+					        <br>Video URL:
+					        <input id="videoURL" type="text"/>
+					      </td>
+					      </tr>
+					    <tr>
+					        <td colspan="2" style="text-align:center;"><br>Outline:
+					        <textarea id="Outline" rows="6" cols="80"></textarea>
+					        </td>
+					    </tr>
+					    <tr>
+					        <td colspan="2" style="text-align:center;"><br>Note:
+					        <textarea id="Note" rows="6" cols="83"></textarea>
+									<br><br>
+					        <button onclick="TaskSubmit()" style="cursor:pointer;">Save </button>
+					        <button id="createNewMainstep" onclick="onClick(clicks);" style="cursor:pointer;">Add MainStep</button>
+					        <button onclick = "deleteT()" style="cursor:pointer;"> Delete Task </button>
+									<br>
+					        <p id = 'deslist' style = 'display : none;'>There are <span id = "MstepCount"></span> Mainstep(s) in this Task.</p>
+					        </td>
+					    </tr>
+					</table>
+
+					</div>
+				</div>
+
+
+				<div style="position:relative; top:-90%; left:0%; background-color:#ddd;width:22%; height:90%;">
+					Category:
+					<select id="CategoryFilter" onchange = "filterCategory()">
+					<option> Select Category</option>
+					</select>
+					<button id="createNewTask" onclick='$("#showbox").html(task_html);' style="position:relative; top:395px;left:65%;cursor:pointer;">New Task</button>
+					<div id="treemenu2" class="treeview">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA;border-style: solid;
+				border-width: 2px; z-index:3;">
+		<div style="background-color:#E4EACD;position:relative;height:75px;">
+			<h2  id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
+
+
+			<button onclick="editprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
+			<button onclick="closeprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
+			<button onclick="changePassword()" style="position:relative; left:520px;top:45px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>
+
+		</div>
+		<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
+		<div style="position:relative; left:220px;top:-110px;">
+			<p>Position: &nbsp<span id = "positionProfile"></span> </p><br>
+			<p>User ID: &nbsp <span id = "idProfile"></span></p><br>
+			<p>Display Name: &nbsp <span id = "nameProfile"></span></p><br>
+			<p>Email Address: &nbsp <span id = "emailProfile"></p><br>
+		</div>
+		</div>
+
+
+
+		<div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;border-style: solid;
+				border-width: 2px;">
+		<div style="background-color:#E4EACD;position:relative;height:75px;">
+			<h2 id="nameProfileTE"style="position:relative; left:210px;top:20px;"></h2>
+			<h3 style="position:relative; left:300px;top:-10px;color:gray;">	</h3>
+			<button onclick="submitprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
+			<button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
+		</div>
+		<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="editpic">
+		<div style="position:relative; left:220px;top:-110px;">
+			<p>Position: &nbsp <span id = positionProfileE> </span> </p><br>
+			<p >User ID: &nbsp <span id = "idProfileE"> </span>  </p><br>
+			<p>Display Name: <input type="text" id = "nameProfileE" style="width:200px;"></p><br>
+			<p>Email Address: <input type="text" id = "emailProfileE" style="width:300px;"></p><br>
+
+		</div>
+		</div>
+		<div id="changePass" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;">
+		<div style="background-color:#E4EACD;position:relative;height:75px;">
+		<h2 style="position:relative; left:210px;top:20px;">Changing Password</h2>
+		<button onclick="submitNewPass()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
+		<button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
+		</div>
+		<div style="position:relative; left:220px;top:110px;">
+		<p>Current Password: <input type="password" id = "oldPassword"></p><br>
+		<p>New Password: <input type="password" id = "newPassword"></p><br>
+		<p>Confirm Password: <input type="password" id = "confirmnewPassword"></p><br>
+
+		</div>
+		</div>
+
+
+		<div id="expand" onclick="expand()" >Chat
+			<div  id ="notification" ></div>
+		</div>
+				<div id= "leftList">
+					<div  id ="notificationAll" ></div>
+					<div  id ="notificationPart"></div>
+			<ul>
+				<li id= "chatAll" onclick="displayChat('0')">Center & System</li>
+				<li id = "chatPart" onclick="displayChat('1')">Center</li>
+			</ul>
+		</div>
+
+			<script type = 'text/javascript' src = 'Config.js'></script>
+			<script type= 'text/javascript' src = 'TaskEditorJS.js'></script>
+
+			<script type = 'text/javascript' src = 'chat.js'></script>
+			<script type = 'text/javascript' src = 'Profile.js'></script>
+	</body>
+
+</html>

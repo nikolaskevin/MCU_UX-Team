@@ -1,0 +1,410 @@
+﻿<!DOCTYPE html>
+<!--#30B400#339933#99CC00#FFFFCC-->
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>LTC-TMS</title>
+		<link rel="icon" type="image/jpg" href="image\logo.jpg">
+		<link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="statics/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="statics/css/chat.css" />
+		<script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
+		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script type = 'text/javascript' src = 'Config.js'></script>
+		<script type = 'text/javascript' src = 'chat.js'></script>
+		<script type = 'text/javascript' src = 'Profile.js'></script>
+		<script type = 'text/javascript' src = 'memo.js'></script>
+
+	</head>
+	<style>
+
+
+	.memo_month_title{
+	    background-color: #B0C4DE ;
+	    border-style:double;
+	    width:65%;
+	    height:12%;
+	    position:relative;
+	    top:2%;
+	    left:29%;
+	    text-align:center;
+	    border: 5px solid rgba(255, 255, 255, .4);
+	}
+	.memo_display ,td,th{
+		 border: 1px solid black;
+	}
+	.memo_display {
+	  width:638px;
+	  border-collapse:collapse;
+	  position:relative;
+	  top:-180%;
+	  left:29%;
+	  height:75%;
+	  display: block;
+	  overflow-x: hidden;
+	  overflow-y: auto;
+	  background-color:rgba(215, 233, 184, .8);
+	  border: 5px solid rgba(255, 255, 255, .4);
+	}
+	.memo_table_head {
+	  padding: 0px 0px;
+	  border: 1px solid black;
+	  text-align:left;
+	  word-wrap: break-word;
+	}
+	.memo_form-popup {
+	  display: none;
+	  position: fixed;
+	  top: 30%;
+	  left: 69.5%;
+	  border: 5px solid #f1f1f1;
+	  z-index: 9;
+	  max-width: 300px;
+	  padding: 10px;
+	  background-color: white;
+	  height:45%;
+	}
+	.memo_form-popup .btn {
+	  background-color: #4CAF50;
+	  color: white;
+	  padding: 16px 20px;
+	  border: none;
+	  cursor: pointer;
+	  width: 100%;
+	  margin-bottom:10px;
+	  opacity: 0.8;
+	}
+	.memo_form-popup .cancel {
+	  background-color: red;
+	}
+	.memo_form-popup .btn:hover, .open-button:hover {
+	  opacity: 1;
+	}
+
+	.add_memo_button {
+	  position:relative;
+	  top:-715px;
+	  left:825px;
+	  border-radius: 20%;
+	  background-color: #b6d7a8;
+	  width:150px;
+	  height:40px;
+	  font-size: 20px;
+		cursor:pointer;
+	}
+	.add_memo_button:hover {
+	  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.5), 0 17px 50px 0 rgba(0,0,0,0.5);
+	}
+
+	.add_memo_button:before {
+	  position: absolute;
+	  content: '';
+	  height: 0;
+	  width: 0;
+	  bottom: 5px;
+	  right: 0;
+	  background: linear-gradient(315deg, white 45%, #aaa 50%, #ccc 56%, white 80%);
+	  transition-duration: 0.3s;
+	  border-radius: 20%;
+	}
+
+	.add_memo_button:hover:before, .add_memo_button:focus:before, .add_memo_button:active:before {
+	  width: 25px;
+	  height: 25px;
+	}
+	.today_memo{
+	    position:relative;
+	    top:0%;
+	    left:3%;
+	    width :18%;
+			height: 160px;
+	    overflow-y : auto;
+	    background-color:#F0E68C;
+	    word-wrap:break-word;
+			padding-left:25px;
+	}
+	#current_date {
+		top:-5%;
+		left:7%;
+	  font-size:60px;
+	  color:#2F4F4F;
+	}
+	#current_month {
+		top:-5%;
+		left:8%;
+	  font-size:25px;
+	  color:#A0522D;
+	}
+	#current_year {
+		top:-5%;
+		left:12.5%;
+	  font-size:15px;
+	  color:#A0522D;
+	}
+	#current_week {
+		top:-5%;
+		left:5%;
+	  font-size:25px;
+	  color:#000;
+	}
+	.previous_memo_month {
+	  position:relative;
+	  left:45%;
+	  top:-1080px;
+	  background-color: #B0C4DE;
+	  border:hidden;
+	  transition: transform .2s;
+		z-index:3;
+		cursor:pointer;
+	}
+	.previous_memo_month:hover {
+	  transform: scale(1.3);
+	}
+
+	.next_memo_month {
+	  position:relative;
+	  left:70%;
+	  background-color: #B0C4DE;
+	  border:hidden;
+	  transition: transform .2s;
+		top:-1060px;
+		cursor:pointer;
+	}
+	.next_memo_month:hover {
+	  transform: scale(1.3);
+	}
+
+	@keyframes bounce {
+	0%, 20%, 60%, 100% {
+		-webkit-transform: translateY(0);
+		transform: translateY(0);
+	}
+
+	40% {
+		-webkit-transform: translateY(-5px);
+		transform: translateY(-5px);
+	}
+
+	80% {
+		-webkit-transform: translateY(-3px);
+		transform: translateY(-3px);
+	}
+}
+	</style>
+	<body>
+		<div class="header">
+			<div class="bar">
+				<div class="w1200">
+					<span class="l"><img style="position:relative; top:3px; width:45px;height:45px;" src="statics/images/v2ltctmslogo.png"><font style="text-align:center;position:relative; top:-10px;">LTC-TMS</font></span>
+					<i class="setting"><img style="filter:invert(100%); width:20px; height:20px;position:relative; left:835px; top:4px;" src="statics/images/settings.png"><p style="position:relative; left:860px; top:-50px;">Settings</p><img onclick="openmenu()" id="openmenu" style="filter:invert(100%); width:10px; height:10px;position:relative; left:1105px; top:-98px;cursor:pointer;" class="openmenu" src="statics/images/openmenu.png"></i>
+				</div>
+			</div>
+			<div class="user-info">
+				<div class="w1200">
+					<div class="user-headface" onmouseover="bigImg(this)" onmouseout="normalImg(this)">
+						<img src="statics/images/edit.png" id="photoword" style="position:relative;top:20px;left:20px;text-align:center;display:none;width:40px;height:40px;" onclick ="document.getElementById('newPic').click();">
+						<img style="cursor:pointer;" id="Profilepic" onclick ="document.getElementById('newPic').click();" />
+						<input id="newPic" type='file' accept="image/*" onchange="uploadPicProfile()" required  style="display:none;"/>
+					</div>
+					<div class="user-account">
+						<p class="tip" id="time123"></p>
+						<img style="position:relative; left:140px;top:-25px;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
+						<p class="account" style="position:relative; top:-20px;">
+							<span>Name : <span id="displayProfilename"></span></span>
+							<span>UserID : <span id="displayProfileid"></span></span>
+							<span>Role : <span id="displayProfileposition"></span></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="main w1200">
+			<div class="left">
+				<ul>
+					<li>
+						<a href="01Aboutus2.html">
+							<i><img src="statics/images/aboutus.png" style="width:20px;height:20px;"></i>
+							About Us
+						</a>
+					</li>
+					<li>
+						<a href="02Schedule2.html">
+							<i><img src="statics/images/schedule.png" style="width:20px;height:20px;"></i>
+							Schedule
+						</a>
+					</li>
+					<li>
+						<a href="03Memo2.html" class="active">
+							<i><img src="statics/images/memo.png" style="width:20px;height:20px;"></i>
+							Memo
+						</a>
+					</li>
+					<li>
+						<a href="04Statusrecord2.html">
+							<i><img src="statics/images/statusrecord.png" style="width:20px;height:20px;"></i>
+							Status Record
+						</a>
+					</li>
+					<li>
+						<a href="05Library2.html">
+							<i><img src="statics/images/library.png" style="width:20px;height:20px;"></i>
+							Library
+						</a>
+					</li>
+					<li>
+						<a href="06Taskeditor2.html">
+							<i><img src="statics/images/taskeditor.png" style="width:20px;height:20px;"></i>
+							Task Editor
+						</a>
+					</li>
+					<li>
+						<a href="07E-portfolio2.html">
+							<i><img src="statics/images/e-portfolio.png" style="width:20px;height:20px;"></i>
+							E-Portfolio
+						</a>
+					</li>
+					<li>
+						<a href="08Helpandsupport2.html">
+							<i><img src="statics/images/helpandsupport.png" style="width:20px;height:20px;"></i>
+							Help and Support
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="right">
+				<div class="tap">
+					<span>Memo</span>
+				</div>
+
+				<div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
+							<div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
+							<p class="selected" style="margin-top:3px;margin-bottom:3px;">&nbsp English<br></p>
+							<p class="selected" style="margin-top:3px;margin-bottom:3px;" onclick="window.location.href='/../中文版Chinese version/03Memo2.html'">&nbsp Chinese<br></p>
+							<p class="logoutselected" onclick = "Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
+				</div>
+
+				<div class="container">
+					<div class="memo_month_title">
+					  <table style="position:absolute; top:-25%;left:30%;border-style:hidden;margin-bottom:0px;">
+					    <tr>
+					    <td style="border-style:hidden;text-align:right;"><h1 id="fullName_Month" ></h1>
+					    <td style="border-style:hidden;text-align:left;"><h4 id="years"></h4>
+					    </tr>
+					  </table>
+					</div>
+
+					<h2 id="current_year" style="position:relative;"></h2>
+					<h2 id='current_date' style="position:relative;"></h2>
+					<h2 id="current_month" style="position:relative;"></h2>
+					<h2 id="current_week" style="position:relative;"></h2>
+					<div class = "today_memo" id="today_memo"></div>
+
+					<div style="position:relative; top:-100%; left:22%; width:0.3%; height:100%; background-color:#000;"></div>
+					<table id = "memo_table" class="memo_display">
+						<tr>
+						    <th class="memo_table_head" style="width:100px;background-color:#ddd;text-align:center;">Date</th>
+						    <th class="memo_table_head" style="width:400px;background-color:#ddd;text-align:center;">Content</th>
+						    <th class="memo_table_head" style="width:100px;background-color:#ddd;text-align:center;">Delete </th>
+						</tr>
+						<tbody id = "context_table" style="text-align:center;"></tbody>
+					</table>
+
+					<div class="memo_form-popup" id="form">
+					    <h2>New Memo</h2>
+					    <input type ="date"  id = "selected_date"/>
+					    <textarea id ="memo_text" rows="8" cols="40" ></textarea>
+					    <button onclick ="submit()" type="button" class="btn" >Submit</button>
+					    <button type="button" class="btn cancel" onclick="close_form()">Close</button>
+					</div>
+
+					<div class="memo_form-popup" id="edit_form" style="left:58%;">
+						<h2>Edit Memo</h2>
+						<input type ="date"  id = "edited_date"/>
+						<textarea id ="memoedited" rows="8" cols="40" ></textarea>
+						<button onclick ="esubmit()" type="button" class="btn" >Submit</button>
+						<button type="button" class="btn cancel" onclick="closeform()">Close</button>
+					</div>
+
+					<button class ="add_memo_button"  onclick = "popup_form()">Add Memo</button>
+					<div style = "position:relative; top:-6%; left:30%;"><button  onclick = "viewTable('last');" ><img  class="previous_memo_month" src="statics\images\left-arrow.png"  height="25px" width="30px" /></button></div>
+					<div style = "position:relative; top:-18.5%; left:86%;"><button  onclick = "viewTable('next')" ><img class="next_memo_month" src="statics\images\right-arrow.png" height="25px" width="30px"/></button></div>
+					</div>
+
+
+				</div>
+
+			</div>
+
+
+
+			<div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA;border-style: solid;
+					border-width: 2px; z-index:3;">
+			<div style="background-color:#E4EACD;position:relative;height:75px;">
+				<h2  id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
+
+
+				<button onclick="editprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
+				<button onclick="closeprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
+				<button onclick="changePassword()" style="position:relative; left:520px;top:45px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>
+
+			</div>
+			<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
+			<div style="position:relative; left:220px;top:-110px;">
+				<p>Position: &nbsp<span id = "positionProfile"></span> </p><br>
+				<p>User ID: &nbsp <span id = "idProfile"></span></p><br>
+				<p>Display Name: &nbsp <span id = "nameProfile"></span></p><br>
+				<p>Email Address: &nbsp <span id = "emailProfile"></p><br>
+			</div>
+			</div>
+
+
+
+			<div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;border-style: solid;
+					border-width: 2px;">
+			<div style="background-color:#E4EACD;position:relative;height:75px;">
+				<h2 id="nameProfileTE"style="position:relative; left:210px;top:20px;"></h2>
+				<h3 style="position:relative; left:300px;top:-10px;color:gray;">	</h3>
+				<button onclick="submitprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
+				<button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
+			</div>
+			<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="editpic">
+			<div style="position:relative; left:220px;top:-110px;">
+				<p>Position: &nbsp <span id = positionProfileE> </span> </p><br>
+				<p >User ID: &nbsp <span id = "idProfileE"> </span>  </p><br>
+				<p>Display Name: <input type="text" id = "nameProfileE" style="width:200px;"></p><br>
+				<p>Email Address: <input type="text" id = "emailProfileE" style="width:300px;"></p><br>
+
+			</div>
+			</div>
+	<div id="changePass" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;">
+		<div style="background-color:#E4EACD;position:relative;height:75px;">
+		<h2 style="position:relative; left:210px;top:20px;">Changing Password</h2>
+		<button onclick="submitNewPass()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
+		<button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
+	</div>
+	<div style="position:relative; left:220px;top:110px;">
+		<p>Current Password: <input type="password" id = "oldPassword"></p><br>
+		<p>New Password: <input type="password" id = "newPassword"></p><br>
+		<p>Confirm Password: <input type="password" id = "confirmnewPassword"></p><br>
+
+	</div>
+	</div>
+
+		</div>
+		<div id="expand" onclick="expand()" >Chat
+			<div  id ="notification" ></div>
+		</div>
+				<div id= "leftList">
+					<div  id ="notificationAll" ></div>
+					<div  id ="notificationPart"></div>
+			<ul>
+				<li id= "chatAll" onclick="displayChat('0')">Center & System</li>
+				<li id = "chatPart" onclick="displayChat('1')">Center</li>
+			</ul>
+		</div>
+
+	</body>
+
+</html>

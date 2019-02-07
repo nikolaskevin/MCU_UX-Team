@@ -1,0 +1,146 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>即時聊天室</title>
+  <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type = 'text/javascript' src = '/Users/ian50408/Documents/GitHub/shared-LTC-TMS/LTCTMS/Config.js'></script>
+  <script type = 'text/javascript' src = '/Users/ian50408/Documents/GitHub/shared-LTC-TMS/LTCTMS/Backend/chat.js'></script>
+  </head>
+  <style >
+  body,html{
+width:100%;
+height:100%;
+margin:0;
+padding:0;
+background:url(http://www.oxxostudio.tw/firebase-webduino-im/bg2.jpg);
+background-size:cover;
+}
+#im{
+position:relative;
+margin:0 auto;
+width:100%;
+max-width:600px;
+height:100%;
+box-sizing:border-box;
+background:rgba(0,0,0,.4);
+}
+
+#input{
+position:absolute;
+z-index:2;
+height:90px;
+width:100%;
+left:0;
+bottom:0;
+margin:0;
+padding:15px;
+box-sizing:border-box;
+background:#222;
+color:#fff;
+}
+
+#input input, #input span{
+display:inline-block;
+margin:5px 0;
+}
+
+#input input{
+width:75%;
+border:none;
+padding:5px;
+}
+
+#input span{
+width:10%;
+min-width:50px;
+}
+
+#input div{
+width:80%;
+float:left;
+}
+
+#input button{
+float:right;
+height:90%;
+width:20%;
+margin:5px 0;
+border:none;
+padding:0;
+background:#369;
+font-size:16px;
+color:#fff;
+}
+
+#show{
+position:absolute;
+top:0;
+left:0;
+z-index:1;
+width:100%;
+height:calc(100% - 90px);
+overflow-y:scroll;
+padding:20px;
+box-sizing:border-box;
+}
+
+#show>div{
+position:relative;
+margin:0 0 20px 0;
+clear:both;
+height:40px;
+}
+
+#show>div>div{
+display:inline-block;
+}
+
+#show .time{
+position:absolute;
+top:-2px;
+font-size:10px;
+color:#777;
+}
+
+#show .name{
+color:#fff;
+vertical-align:middle;
+}
+
+#show .content{
+background:rgba(255,255,255,.8);
+padding:10px;
+margin-top:15px;
+margin-left:10px;
+border-radius:5px;
+vertical-align:middle;
+}
+
+#show::-webkit-scrollbar {
+width:5px;
+}
+#show::-webkit-scrollbar-track {
+background:rgba(255,255,255,.1);
+border-radius: 5px;
+}
+#show::-webkit-scrollbar-thumb {
+background:rgba(255,255,255,.2);
+border-radius: 2px;
+}
+  </style>
+
+<body>
+  <div id="im">
+    <div id="input">
+      <div>
+        <span>姓名：</span><input id="name"><br/>
+        <span>內容：</span><input id="content">
+      </div>
+      <button id="btn">送出訊息</button>
+    </div>
+    <div id="show"></div>
+  </div>
+</body>
+</html>

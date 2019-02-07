@@ -1,0 +1,413 @@
+﻿<!DOCTYPE html>
+<!--#30B400#339933#99CC00#FFFFCC-->
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>LTC-TMS</title>
+		<link rel="icon" type="image/jpg" href="image\logo.jpg">
+		<link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="statics/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="statics/css/chat.css" />
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,500" rel="stylesheet">
+		<script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
+		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script type = 'text/javascript' src = 'Config.js'></script>
+		<script type = 'text/javascript' src = 'DVSR.js'></script>
+		<script type = 'text/javascript' src = 'chat.js'></script>
+		<script type = 'text/javascript' src = 'Profile.js'></script>
+	</head>
+	<style>
+
+
+	#current_date {
+		top:7%;
+		left:31%;
+	  font-size:60px;
+	  color:#2F4F4F;
+	}
+	#current_month {
+		top:7%;
+		left:35%;
+	  font-size:25px;
+	  color:#A0522D;
+	}
+	#current_year {
+		top:7%;
+		left:56%;
+	  font-size:15px;
+	  color:#A0522D;
+	}
+	#current_week {
+		top:8%;
+		left:28%;
+	  font-size:25px;
+	  color:#000;
+	}
+	.status_record_option {
+	  position:relative;
+	  top:15%;
+	  left:0%;
+	  text-align:center;
+	}
+	.status_record_date_option {
+	  position:relative;
+	  top:15%;
+	  left:0%;
+	  text-align:center;
+	}
+	.status_record_display_button {
+	  position:relative;
+	  left:40%;
+	  text-align:center;
+	}
+	table, th, td
+	{
+	    padding: 10px;
+	    border: 1px solid black;
+	    width:600px;
+	    text-align: center;
+	    word-wrap: break-word;
+	}
+	table th {
+	  background-color: #B0C4DE;
+	  color: #000;
+	}
+	table td {
+	  text-shadow: 2px 2px #FFFFFF;
+	}
+	.dvsr_form-popup {
+	  display: none;
+	  position: fixed;
+	  top: 45%;
+	  left: 48%;
+	  border: 5px solid #f1f1f1;
+	  z-index: 9;
+	  padding: 10px;
+	  background-color: white;
+	  height:80%;
+	  width:80% ;
+	}
+	.dvsr_form-popup .btn {
+	  background-color: #4CAF50;
+	  color: white;
+	  padding: 16px 20px;
+	  border: none;
+	  cursor: pointer;
+	  width: 100%;
+	  margin-bottom:10px;
+	  opacity: 0.8;
+	}
+	.dvsr_form-popup .cancel {
+	  background-color: red;
+	  position:fixed;
+	  top:9.5%;
+	  width:0px;
+	  z-index:2;
+	  left:92.2%;
+	  height:0px;
+	}
+	.dvsr_form-popup .btn:hover, .open-button:hover {
+	  opacity: 1;
+	}
+
+	@keyframes bounce {
+	0%, 20%, 60%, 100% {
+		-webkit-transform: translateY(0);
+		transform: translateY(0);
+	}
+
+	40% {
+		-webkit-transform: translateY(-5px);
+		transform: translateY(-5px);
+	}
+
+	80% {
+		-webkit-transform: translateY(-3px);
+		transform: translateY(-3px);
+	}
+}
+	</style>
+	<body>
+		<div class="header">
+			<div class="bar">
+				<div class="w1200">
+					<span class="l"><img style="position:relative; top:3px; width:45px;height:45px;" src="statics/images/v2ltctmslogo.png"><font style="text-align:center;position:relative; top:-10px;">LTC-TMS</font></span>
+					<i class="setting"><img style="filter:invert(100%); width:20px; height:20px;position:relative; left:835px; top:4px;" src="statics/images/settings.png"><p style="position:relative; left:860px; top:-50px;">Settings</p><img onclick="openmenu()" id="openmenu" style="filter:invert(100%); width:10px; height:10px;position:relative; left:1105px; top:-98px;cursor:pointer;" class="openmenu" src="statics/images/openmenu.png"></i>
+				</div>
+			</div>
+			<div class="user-info">
+				<div class="w1200">
+					<div class="user-headface" onmouseover="bigImg(this)" onmouseout="normalImg(this)">
+						<img src="statics/images/edit.png" id="photoword" style="position:relative;top:20px;left:20px;text-align:center;display:none;width:40px;height:40px;" onclick ="document.getElementById('newPic').click();">
+						<img style="cursor:pointer;"id="Profilepic" onclick ="document.getElementById('newPic').click();" />
+						<input id="newPic" type='file' accept="image/*" onchange="uploadPicProfile()" required  style="display:none;"/>
+					</div>
+					<div class="user-account">
+						<p class="tip" id="time123"></p>
+						<img style="position:relative; left:140px;top:-25px;cursor:pointer;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
+						<p class="account" style="position:relative; top:-20px;">
+							<span>Name : <span id="displayProfilename"></span></span>
+							<span>UserID : <span id="displayProfileid"></span></span>
+							<span>Role : <span id="displayProfileposition"></span></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="main w1200">
+			<div class="left">
+				<ul>
+					<li>
+						<a href="01Aboutus2.html">
+							<i><img src="statics/images/aboutus.png" style="width:20px;height:20px;"></i>
+							About Us
+						</a>
+					</li>
+					<li>
+						<a href="02Schedule2.html">
+							<i><img src="statics/images/schedule.png" style="width:20px;height:20px;"></i>
+							Schedule
+						</a>
+					</li>
+					<li>
+						<a href="03Memo2.html">
+							<i><img src="statics/images/memo.png" style="width:20px;height:20px;"></i>
+							Memo
+						</a>
+					</li>
+					<li>
+						<a href="04Statusrecord2.html"  class="active">
+							<i><img src="statics/images/statusrecord.png" style="width:20px;height:20px;"></i>
+							Status Record
+						</a>
+					</li>
+					<li>
+						<a href="05Library2.html">
+							<i><img src="statics/images/library.png" style="width:20px;height:20px;"></i>
+							Library
+						</a>
+					</li>
+					<li>
+						<a href="06Taskeditor2.html">
+							<i><img src="statics/images/taskeditor.png" style="width:20px;height:20px;"></i>
+							Task Editor
+						</a>
+					</li>
+					<li>
+						<a href="07E-portfolio2.html">
+							<i><img src="statics/images/e-portfolio.png" style="width:20px;height:20px;"></i>
+							E-Portfolio
+						</a>
+					</li>
+					<li>
+						<a href="08Helpandsupport2.html">
+							<i><img src="statics/images/helpandsupport.png" style="width:20px;height:20px;"></i>
+							Help and Support
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="right">
+				<div class="tap">
+					<span id="dsrspan" onclick="showdsr()" style="opacity:1;cursor:pointer;">Daily Status</span>
+          <span id="vsrspan" onclick="showvsr()" style="opacity:.8;cursor:pointer;">Vital Status</span>
+          <span id="aisspan" onclick="showais()" style="opacity:.8;cursor:pointer;">AI Status</span>
+          <span id="scspan" onclick="showsc()" style="opacity:.8;cursor:pointer;">Special Care</span>
+          <span id="ecspan" onclick="showec()" style="opacity:.8;cursor:pointer;">Env. Condition</span>
+				</div>
+
+				<div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
+							<div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
+							<p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;">&nbsp English<br></p>
+							<p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../中文版Chinese version/04Statusrecord2.html'">&nbsp Chinese<br></p>
+							<p class="logoutselected" onclick = "Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
+				</div>
+
+				<div id="data1" style="position:relative;left:22%;width:78%;height:80%;background-color:#fff;border-left:2px solid black;overflow-x:hidden; overflow-y:scroll;">
+					<table  id="DSR_table" class="daily_status_record" onclick="sortDSR()" style="position:relative;width:100%;border-style:hidden;">
+					    <tr>
+					        <th colspan="3"> Daily Status Record </th>
+					    </tr>
+					</table>
+				<div class="no-doc" id="no-doc1">
+					<br><br>
+					<center><img src="statics/images/no_doc.jpg"/>
+					<p> Please Select Date, PatientID and CNAID </p></center>
+				</div>
+				</div>
+
+				<div id="data2" style="display:none;position:relative;left:22%;width:78%;height:80%;background-color:#fff;border-left:2px solid black;overflow-x:hidden; overflow-y:scroll;">
+					<table id="VSR_table" class="vital_status_record" onclick="sortVSR()" style="position:relative;width:100%;border-style:hidden;">
+					    <tr>
+					        <th colspan="3"> Vital Status Record </th>
+					    </tr>
+					</table>
+					<div class="no-doc" id="no-doc2">
+						<br><br>
+						<center><img src="statics/images/no_doc.jpg"/>
+						<p> Please Select Date, PatientID and CNAID </p></center>
+					</div>
+				</div>
+
+				<div id="data3" style="display:none;position:relative;left:22%;width:78%;height:80%;background-color:#fff;border-left:2px solid black;overflow-x:hidden; overflow-y:scroll;">
+					<table id="AI_table" class="a_i_status" onclick="sortAI()" style="position:relative;width:100%;border-style:hidden;">
+					    <tr>
+					        <th colspan="3"> A.I. Status<input type = "button" onclick="viewMore()" value="view more" style="position:relative;left:38%;cursor:pointer;"></th>
+					    </tr>
+					</table>
+					<div class="no-doc" id="no-doc3">
+						<br><br>
+						<center><img src="statics/images/no_doc.jpg"/>
+						<p> Please Select Date, PatientID and CNAID </p></center>
+					</div>
+				</div>
+
+				<div id="data4" style="display:none;position:relative;left:22%;width:78%;height:80%;background-color:#fff;border-left:2px solid black;overflow-x:hidden; overflow-y:scroll;">
+					<table id="SC_table" class="special_care" style="position:relative;width:100%;border-style:hidden;">
+					    <tr>
+					        <th colspan="3"> Special Care</th>
+					    </tr>
+					</table>
+					<div class="no-doc" id="no-doc4">
+						<br><br>
+						<center><img src="statics/images/no_doc.jpg"/>
+						<p> Please Select Date, PatientID and CNAID </p></center>
+					</div>
+				</div>
+
+				<div id="data5" style="display:none;position:relative;left:22%;width:78%;height:80%;background-color:#fff;border-left:2px solid black;overflow-x:hidden; overflow-y:scroll;">
+					<table  id="Environmenttable" class="environment_table" onclick="sortENV()" style="position:relative;width:100%;border-style:hidden;">
+					    <tr>
+					        <th colspan="3"> Environment Condition </th>
+					    </tr>
+					</table>
+					<div class="no-doc" id="no-doc5">
+						<br><br>
+						<center><img src="statics/images/no_doc.jpg"/>
+						<p> Please Select Date, PatientID and CNAID </p></center>
+					</div>
+				</div>
+
+
+				<div class="dvsr_form-popup" id="form" style="position:absolute;left:250px; top:100px;display:none;overflow-y:scroll;">
+				<div style="position:absolute; left:10px;top:18px;">
+				<table id = "heartRateRecord" style="border-style:hidden;" onclick="sortHRR()">
+				        <tr>
+				            <th colspan="3"> Heart Rate Record</th>
+				        </tr>
+				</table>
+				</div>
+				<div style="position:absolute; left:620px;top:18px;">
+				<table id="VisitRecord" style="border-style:hidden;">
+				  <tr>
+				      <th colspan="3" onclick="sortvisitrecord()"> Visit Record</th>
+				  </tr>
+				</table>
+				</div>
+				    <button type="button" class="btn cancel" onclick="close_form()"><p style="position:relative;top:-15px;left:-6px;font-size:20px;"> x </p></button>
+				</div>
+
+
+
+<div style="position:relative; top:-80%; left:0%; background-color:#ddd;width:22%; height:80%;">
+	<h2 id="current_year" style="position:relative;top:-80%"></h2>
+	<h2 id='current_date' style="position:relative;"></h2>
+	<h2 id="current_month" style="position:relative;"></h2>
+	<h2 id="current_week" style="position:relative;"></h2>
+
+
+
+					<div class="status_record_date_option">
+					  <input type="date" id="bday">
+					<br><br>
+					</div>
+
+
+				<div class="status_record_option">
+				<select id="selectPAT" onclick = "clearBox()"  onchange = "selectPatient()" >
+				<option>Patient ID</option>
+				</select>
+				<select id="selectCNA" style="width:70px;">
+				    <option>CNA ID</option>
+				</select>
+				<br><br><br>
+				</div>
+				<br><br>
+				<input class="status_record_display_button" type = "button" value="Display"  onclick = " display_button (this);" style="cursor:pointer;"/>
+
+			</div>
+</div>
+</div>
+
+
+<div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA;border-style: solid;
+		border-width: 2px; z-index:3;">
+<div style="background-color:#E4EACD;position:relative;height:75px;">
+	<h2  id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
+
+
+	<button onclick="editprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
+	<button onclick="closeprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
+	<button onclick="changePassword()" style="position:relative; left:520px;top:45px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>
+
+</div>
+<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
+<div style="position:relative; left:220px;top:-110px;">
+	<p>Position: &nbsp<span id = "positionProfile"></span> </p><br>
+	<p>User ID: &nbsp <span id = "idProfile"></span></p><br>
+	<p>Display Name: &nbsp <span id = "nameProfile"></span></p><br>
+	<p>Email Address: &nbsp <span id = "emailProfile"></p><br>
+</div>
+</div>
+
+
+
+<div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;border-style: solid;
+		border-width: 2px;">
+<div style="background-color:#E4EACD;position:relative;height:75px;">
+	<h2 id="nameProfileTE"style="position:relative; left:210px;top:20px;"></h2>
+	<h3 style="position:relative; left:300px;top:-10px;color:gray;">	</h3>
+	<button onclick="submitprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
+	<button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
+</div>
+<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="editpic">
+<div style="position:relative; left:220px;top:-110px;">
+	<p>Position: &nbsp <span id = positionProfileE> </span> </p><br>
+	<p >User ID: &nbsp <span id = "idProfileE"> </span>  </p><br>
+	<p>Display Name: <input type="text" id = "nameProfileE" style="width:200px;"></p><br>
+	<p>Email Address: <input type="text" id = "emailProfileE" style="width:300px;"></p><br>
+
+</div>
+</div>
+<div id="changePass" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;">
+<div style="background-color:#E4EACD;position:relative;height:75px;">
+<h2 style="position:relative; left:210px;top:20px;">Changing Password</h2>
+<button onclick="submitNewPass()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
+<button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
+</div>
+<div style="position:relative; left:220px;top:110px;">
+<p>Current Password: <input type="password" id = "oldPassword"></p><br>
+<p>New Password: <input type="password" id = "newPassword"></p><br>
+<p>Confirm Password: <input type="password" id = "confirmnewPassword"></p><br>
+
+</div>
+</div>
+
+
+<div id="expand" onclick="expand()" >Chat
+	<div  id ="notification" ></div>
+</div>
+		<div id= "leftList">
+			<div  id ="notificationAll" ></div>
+			<div  id ="notificationPart"></div>
+			<ul>
+				<li id= "chatAll" onclick="displayChat('0')">Center & System</li>
+				<li id = "chatPart" onclick="displayChat('1')">Center</li>
+			</ul>
+		</div>
+
+	</body>
+
+</html>
