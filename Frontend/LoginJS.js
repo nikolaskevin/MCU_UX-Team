@@ -28,6 +28,8 @@ function getContactInfo(){
     if (childSnapshot.key == "Email"){
       document.getElementById('contactemail').innerHTML=childSnapshot.val();
     }
+
+    
     if (childSnapshot.key == "Contact No"){
       document.getElementById('contactno').innerHTML=childSnapshot.val();
     }

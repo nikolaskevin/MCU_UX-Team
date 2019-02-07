@@ -129,7 +129,7 @@ function btnpopUp(){
 
 }
 
-//Center Schedule
+//Events
 function AddNewCS(){
 document.getElementById('newCSBlock').style.display ='block';
 }
