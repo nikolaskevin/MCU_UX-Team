@@ -18,7 +18,7 @@ if(firebaseUser){
   });
 }else{
   alert("You're Logged out now! Please Login again if you need to use this system!");
-  window.location.href = "/../Frontend/00Login2.html";
+  window.location.href = "../Frontend/00Login2.html";
 }
 });
 //console.log(document.getElementById('Profilepic').value);

@@ -777,7 +777,7 @@ function directTask(){
     sessionStorage.setItem("category",cat);
     sessionStorage.setItem("taskname",taskN);
 
-    location.href ="/../Frontend/06Taskeditor2.html";
+    location.href ="../Frontend/06Taskeditor2.html";
 
 }
 

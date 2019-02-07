@@ -1,83 +1,74 @@
 firebase.auth().onAuthStateChanged(function (firebaseUser){
-  if(firebaseUser){
-    console.log("firebaseUser: " + firebaseUser);
-    console.log(firebaseUser);
-    var userid = firebaseUser.uid;
-    firebaseUser.displayName = "asdf";
-    //var newID = firebase.child("uAccount").child(userid).StaffID;
-  
-  
-    var displayName = firebaseUser.displayName;
-    var pic = firebaseUser.photoURL;
-    console.log(pic);
-  
-    var fbP = firebase.database().ref('uAccount/'+userid);
-    fbP.once("value")
-      .then(function(snapshot){
-        var position = snapshot.val();
-        var staffID = position.StaffID;
-        /* Set the top bar's HTML to show information about the user */
-        document.getElementById('displayProfilename').innerHTML=displayName;
-        document.getElementById('displayProfileid').innerHTML=staffID;
-        document.getElementById('displayProfileposition').innerHTML=position;
-        document.getElementById('Profilepic').src=pic;
-        document.getElementById('viewpic').src=pic;
-        document.getElementById('editpic').src=pic;
-        Profilepic.setAttribute('value',pic);
-      });
-  
-  
-  
-  }else{
-   alert("You're Logged out now! Please Login again if you need to use this system!");
-   window.location.href = "/../Frontend/00Login2.html"
-  }
-  });
-  //console.log(document.getElementById('Profilepic').value);
-  function profile(){
-    document.getElementById("profile").style.display = "block";
-    displayProfile();
-  }
-  
-  function closeprofile(){
-    document.getElementById("profile").style.display = "none";
-    document.getElementById("editprofile").style.display = "none";
-  }
-  
-  function editprofile(){
-    document.getElementById("editprofile").style.display = "block";
-    document.getElementById('nameProfileE').value = document.getElementById('nameProfile').innerHTML;
-    document.getElementById('idProfileE').innerHTML= document.getElementById('idProfile').innerHTML;
-    document.getElementById('emailProfileE').value = document.getElementById('emailProfile').innerHTML;
-    document.getElementById('nameProfileTE').innerHTML = document.getElementById('nameProfileT').innerHTML;
-    document.getElementById('positionProfileE').innerHTML = document.getElementById('positionProfile').innerHTML;
-    document.getElementById("profile").style.display = "none";
-  }
-  
-  function cancelprofile(){
-    document.getElementById("profile").style.display = "none";
-    document.getElementById("editprofile").style.display = "none";
-    document.getElementById("changePass").style.display = "none";
-  }
-  
-  function submitprofile(){
-    var name=document.getElementById('nameProfileE').value;
-    var id =document.getElementById('idProfileE').innerHTML;
-    var email=document.getElementById('emailProfileE').value;
-    firebase.auth().onAuthStateChanged(function(user){
-      if(user){
-        if(user.email != email){
-          user.updateEmail(email).then(function(){
-            alert("Email Changed!");
-          }).catch(function(error){
-            console.log(error.message);
-          });
-        }
-        user.updateProfile({
-          displayName:name
-        }).then(function(){
-          alert("Profile have been updated!");
-          window.location.reload();
+if(firebaseUser){
+  console.log("firebaseUser: " + firebaseUser);
+  console.log(firebaseUser);
+  var userid = firebaseUser.uid;
+  firebaseUser.displayName = "asdf";
+  //var newID = firebase.child("uAccount").child(userid).StaffID;
+
+
+  var displayName = firebaseUser.displayName;
+  var pic = firebaseUser.photoURL;
+  console.log(pic);
+
+  var fbP = firebase.database().ref('uAccount/'+userid);
+  fbP.once("value")
+    .then(function(snapshot){
+      var position = snapshot.val();
+      var staffID = position.StaffID;
+      /* Set the top bar's HTML to show information about the user */
+      document.getElementById('displayProfilename').innerHTML=displayName;
+      document.getElementById('displayProfileid').innerHTML=staffID;
+      document.getElementById('displayProfileposition').innerHTML=position;
+      document.getElementById('Profilepic').src=pic;
+      document.getElementById('viewpic').src=pic;
+      document.getElementById('editpic').src=pic;
+      Profilepic.setAttribute('value',pic);
+    });
+
+
+
+}else{
+ alert("You're Logged out now! Please Login again if you need to use this system!");
+ window.location.href = "./0
+}
+});
+//console.log(document.getElementById('Profilepic').value);
+function profile(){
+  document.getElementById("profile").style.display = "block";
+  displayProfile();
+}
+
+function closeprofile(){
+  document.getElementById("profile").style.display = "none";
+  document.getElementById("editprofile").style.display = "none";
+}
+
+function editprofile(){
+  document.getElementById("editprofile").style.display = "block";
+  document.getElementById('nameProfileE').value = document.getElementById('nameProfile').innerHTML;
+  document.getElementById('idProfileE').innerHTML= document.getElementById('idProfile').innerHTML;
+  document.getElementById('emailProfileE').value = document.getElementById('emailProfile').innerHTML;
+  document.getElementById('nameProfileTE').innerHTML = document.getElementById('nameProfileT').innerHTML;
+  document.getElementById('positionProfileE').innerHTML = document.getElementById('positionProfile').innerHTML;
+  document.getElementById("profile").style.display = "none";
+}
+
+function cancelprofile(){
+  document.getElementById("profile").style.display = "none";
+  document.getElementById("editprofile").style.display = "none";
+  document.getElementById("changePass").style.display = "none";
+}
+
+function submitprofile(){
+  var name=document.getElementById('nameProfileE').value;
+  var id =document.getElementById('idProfileE').innerHTML;
+  var email=document.getElementById('emailProfileE').value;
+  firebase.auth().onAuthStateChanged(function(user){
+    if(user){
+      if(user.email != email){
+        user.updateEmail(email).then(function(){
+          alert("Email Changed!");
         }).catch(function(error){
           console.log('Profile update Failed'+ error.message);
         });
