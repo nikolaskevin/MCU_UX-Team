@@ -1,0 +1,25 @@
+[debug] [2019-02-07T17:29:12.817Z] ----------------------------------------------------------------------
+[debug] [2019-02-07T17:29:12.820Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-07T17:29:12.820Z] CLI Version:   6.3.1
+[debug] [2019-02-07T17:29:12.820Z] Platform:      darwin
+[debug] [2019-02-07T17:29:12.820Z] Node Version:  v10.15.1
+[debug] [2019-02-07T17:29:12.821Z] Time:          Thu Feb 07 2019 12:29:12 GMT-0500 (Eastern Standard Time)
+[debug] [2019-02-07T17:29:12.821Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-07T17:29:12.834Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-07T17:29:12.835Z] > authorizing via signed-in user
+[debug] [2019-02-07T17:29:12.835Z] [iam] checking project browserteam for permissions ["firebase.projects.get"]
+[debug] [2019-02-07T17:29:12.837Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/browserteam:testIamPermissions  
+
+[debug] [2019-02-07T17:29:13.128Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-07T17:29:13.130Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/browserteam  
+ 
+[debug] [2019-02-07T17:29:13.395Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/DVera2/Desktop/LTC-TMS-master/BrowserTestVersion'...
+[info] 
+[debug] [2019-02-07T17:29:13.398Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/917274264132/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-07T17:29:13.693Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
