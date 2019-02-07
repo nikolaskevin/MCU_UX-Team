@@ -17,7 +17,7 @@ var serviceAccount = require("/Users/Gama/Documents/GitHub/shared-LTC-TMS/LTCTMS
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://browserteam.firebaseio.com"
+  databaseURL: "https://share-b7589.firebaseio.com"
 });
 
 //Functions
