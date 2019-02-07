@@ -1,3 +1,10 @@
+    
+ /**
+ * @file LoginJS.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */   
     var today = new Date();
     var dd = today.getDate();
     var mm_index = today.getMonth(); //January is 0!
@@ -5,8 +12,8 @@
     var weekday =  ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var Month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-     var wk_index = today.getDay();
-     var d = dd;
+    var wk_index = today.getDay();
+    var d = dd;
 
      var mm = mm_index+1; // to make the month correct; For example: January is 0 , so add 1;
      // in order to have same format with "bday". orignal is 2018-9-13
@@ -38,16 +45,28 @@
     var time = hour+":"+minute+":"+second;
      console.log(time);
 
-
+/**
+ * @function popup_form
+ * @description Open form for making a memo.
+ */
 function popup_form(){
     document.getElementById("memo_text").value = "";
     document.getElementById("selected_date").value = year+"-"+mm+"-"+dd;
     document.getElementById("form").style.display = "block";
 }
+
+/**
+ * @function close_form
+ * @description Hide form for making a memo.
+ */
 function close_form(){
     document.getElementById("form").style.display = "none";
 }
 
+/**
+ * @function submit
+ * @description Submit memo form content.
+ */
 function submit(){
     var userID = document.getElementById("displayProfileid").innerHTML;
     var text = $("#memo_text").val();
@@ -78,7 +97,11 @@ function submit(){
 }
 
 
-
+/**
+ * @function viewTable
+ * @description View table containing Memo contents.
+ * @param {*} value 
+ */
 function viewTable(value){
     var userID = document.getElementById("displayProfileid").innerHTML;
     document.getElementById("years").innerHTML = year;
@@ -164,7 +187,12 @@ function viewTable(value){
 
 }
 
-function deleteha(num){
+/**
+ * @function deleteha
+ * @description Remove a memo from the database.
+ * @param {*} num 
+ */
+function deleteha(num){ 
     var userID = document.getElementById("displayProfileid").innerHTML;
     var fbCS= firebase.database().ref('MEMO/'+userID+"/"+year_m);
     fbCS.once("value")
@@ -185,6 +213,11 @@ function deleteha(num){
     })
 }
 
+/**
+ * @function editha
+ * @description Edit an existing memo.
+ * @param {*} num 
+ */
 function editha(num){
     var userID = document.getElementById("displayProfileid").innerHTML;
     var Fbe= firebase.database().ref('MEMO/'+userID+"/"+year_m);
@@ -211,7 +244,10 @@ function editha(num){
      })
  }
 
-
+ /**
+  * @function esubmit
+  * @description Submit memo to database.
+  */
  function esubmit(){
      var userID = document.getElementById("displayProfileid").innerHTML;
      var text = $("#memoedited").val();
@@ -231,7 +267,7 @@ function editha(num){
      }
      else {
        var r = confirm("Are you sure you want to enter this data?");
-       if (r == true) {
+       if (r == true) { //Memo is ready to submit to database
          firebase.database().ref(fb).child(key).remove();
          firebase.database().ref("MEMO/"+userID+"/"+year_m+"/"+dd+"-"+time).set(text);
          close_form();
@@ -239,10 +275,19 @@ function editha(num){
        }
    }
 }
+
+/**
+ * @function closeform
+ * @description Close memo edit form.
+ */
 function closeform(){
     document.getElementById("edit_form").style.display="none";
 }
 
+/**
+ * @function openmenu
+ * @description Open the menu. (TODO: what menu?)
+ */
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";
@@ -274,6 +319,10 @@ $(document).ready(function() {
 
 
 });
+/**
+ * @function setTimeout
+ * @description Sets the timeout for viewing the table
+ */
 setTimeout(function(){
     viewTable();
 }, 2000);
