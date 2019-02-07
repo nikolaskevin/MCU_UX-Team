@@ -28,6 +28,8 @@ function getContactInfo(){
     if (childSnapshot.key == "Email"){
       document.getElementById('contactemail').innerHTML=childSnapshot.val();
     }
+
+    
     if (childSnapshot.key == "Contact No"){
       document.getElementById('contactno').innerHTML=childSnapshot.val();
     }
@@ -65,7 +67,7 @@ function authenticateLogin(){
       console.log(firebaseUser);
       if(firebaseUser.email == "ltctmsapp2018@gmail.com"){
         alert('You are logged in as Admin!');
-        window.location.href = "https://share-b7589.firebaseapp.com/Backend/Policy.html"
+        window.location.href = "/../Backend/Policy.html"
 
       }else{
         var today = new Date();
@@ -245,7 +247,7 @@ fbPolicy.once('value', function(snapshot){
  */
 function policyPopup(){
   alert('You are logged in!');
-  window.location.href = "https://share-b7589.firebaseapp.com/Frontend/01Aboutus2.html";
+  window.location.href = "/../Frontend/01Aboutus2.html";
 }
 
 /**
