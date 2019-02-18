@@ -1,3 +1,5 @@
+//var admin = require("../node_modules/firebase-admin");
+
 //Create account
 function newAccount(){
   var name = document.getElementById('Name').value;
@@ -31,6 +33,7 @@ function newAccount(){
         else if(boolean == "false"){
             alert("ID should be number!");
         }
+        //CNO ID Format: 22xxxx, Director ID Format: 11xxxx.  They must be 6 characters
         else if((sid.charAt(0)+sid.charAt(1) =="22" && position == "CNO" || sid.charAt(0)+sid.charAt(1) =="11" && position == "Director") == false){
             alert(" Director:11XXXX,CNO:22XXXX");
         }
@@ -45,20 +48,39 @@ function newAccount(){
             alert("Please use @xxxxx.com format!!");
         }
         else{
-                var data = {
-                 Name : name,
-                 Email: email,
-                 Password : pass,
+          //Create the user in Firebase Authentication
+          firebase.auth().createUserWithEmailAndPassword(email, pass).then(function(authData){  //Firebase authentication created for user successfully
+              console.log("User created successfully with payload-", authData.user.uid);
+              userID = authData.user.uid;
+              var data = {
+                Name : name,
+                Email: email,
+                Password : pass,
                 Position : position,
                 StaffID : sid
+               }
+               var updates={}
+               if(position =="CNO"){
+                   updates['No_Portfolio/'+position+'/'+sid] =data;
+               }
+               updates['uAccount/'+ sid]=data;
+               updates['UID/'+ userID ] = data.StaffID;
+               firebase.database().ref().update(updates);
+               //location.reload();
+            }).catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                if (errorCode == 'auth/weak-password') {
+                  alert('The password is too weak.');
+                } else {
+                  alert(errorMessage);
                 }
-                var updates={}
-                if(position =="CNO"){
-                    updates['No_Portfolio/'+position+'/'+sid] =data;
-                }
-                updates['uAccount/'+ sid]=data;
-                firebase.database().ref().update(updates);
-                location.reload();
+                console.log(error);
+              });
+            console.log(userInfo);
+            console.log(userInfo.i.uid);
+               
       }
     }
   });
