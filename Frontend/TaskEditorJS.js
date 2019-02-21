@@ -1,3 +1,10 @@
+/**
+ * @file TaskEditorJS.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
 // Task Tree View
 var main = document.getElementById('treemenu2'),
   tree = new VanillaTree(main,{
@@ -82,6 +89,16 @@ var main = document.getElementById('treemenu2'),
       }]
   });
 
+  /**
+   * @function swapStep
+   * @description 
+   * @param {*} realid 
+   * @param {*} temp 
+   * @param {*} fbti 
+   * @param {*} stepref 
+   * @param {*} parentId 
+   * @param {*} cat 
+   */
   function swapStep(realid,temp,fbti,stepref,parentId,cat){
     fbti.child(stepref).once('value')
     .then(function(snapshot){
@@ -158,6 +175,12 @@ fbCat.once("value").then(function(snapshot){
 });
 
 var old_html = $('.vtree').html();
+
+/**
+ * @function filterCategory
+ * @description
+ * @param {*} cat 
+ */
 function filterCategory(cat){
   if(document.getElementById('treemenu2').innerText != ""){
   $('.vtree').html(old_html);
@@ -234,6 +257,10 @@ fbCat.once("value")
       });
 });
 
+/**
+ * @function TaskSubmit
+ * @description
+ */
 //Input the Content of Task
 function TaskSubmit(){
   var Ttitle  = document.getElementById('Ttitle').value;
@@ -270,12 +297,33 @@ function TaskSubmit(){
 
 var j = 1;
 let file;
+
+/**
+ * @function handleuploadfile
+ * @description
+ * @param {*} e 
+ */
 function handleuploadfile(e) {
     console.log(e);
     file=$('#uploader'+e).get(0).files[0];
     console.log(file);
 }
 
+/**
+ * @function handleuploadfileSubmit
+ * @description
+ * @param {*} pid 
+ * @param {*} cat 
+ * @param {*} Mtitle 
+ * @param {*} Mtitle2 
+ * @param {*} videoURL 
+ * @param {*} MstepNo 
+ * @param {*} MD 
+ * @param {*} MD2 
+ * @param {*} uploader 
+ * @param {*} updates 
+ * @param {*} j 
+ */
 function handleuploadfileSubmit(pid,cat,Mtitle,Mtitle2,videoURL,MstepNo,MD,MD2,uploader,updates,j){
   console.log(file);
   var storageRef=firebase.storage().ref('Task/'+file.name);
@@ -284,6 +332,11 @@ function handleuploadfileSubmit(pid,cat,Mtitle,Mtitle2,videoURL,MstepNo,MD,MD2,u
   //  function error(err){
   //    console.log("failed");
   //  },
+
+  /**
+   * @function complete
+   * @description
+   */
     function complete(){
       storageRef.getDownloadURL()
         .then(function(url){
@@ -322,6 +375,12 @@ function handleuploadfileSubmit(pid,cat,Mtitle,Mtitle2,videoURL,MstepNo,MD,MD2,u
   );
 }
 
+
+/**
+ * @function MainstepSubmit
+ * @description
+ * @param {*} j 
+ */
 function MainstepSubmit(j){
   //console.log(j);
   var pid = document.getElementById('Ttitle').value;
@@ -386,6 +445,13 @@ main.addEventListener('vtree-select', function(evt) {
   treeSelection(evt.detail.id);
 });
 
+/**
+ * @function displayMainsteps
+ * @description
+ * @param {*} j 
+ * @param {*} path 
+ * @param {*} cat 
+ */
 function displayMainsteps(j,path,cat){
   //console.log('==='+j);
   var fbTI = firebase.database().ref('TaskInstruction/'+cat+'/'+path);
@@ -408,6 +474,13 @@ function displayMainsteps(j,path,cat){
   });
 }
 
+/**
+ * @function displayTask
+ * @description
+ * @param {*} id 
+ * @param {*} parentId 
+ * @param {*} parentId2 
+ */
 function displayTask(id,parentId,parentId2){
     document.getElementById('deslist').style.display = 'block';
     var cat =  document.getElementById('CategoryFilter').value;
@@ -423,6 +496,13 @@ function displayTask(id,parentId,parentId2){
     });
 }
 
+/**
+ * @function treeSelection
+ * @description
+ * @param {*} id 
+ * @param {*} parentId 
+ * @param {*} parentId2 
+ */
 function treeSelection(id,parentId,parentId2){
   var x = tree.getLeaf(id);
   var parentId = x.parentNode.parentNode.getAttribute('data-vtree-id');
@@ -448,6 +528,11 @@ function treeSelection(id,parentId,parentId2){
   }
 }
 
+/**
+ * @function MainstepPageGenerator
+ * @description 
+ * @param {*} j 
+ */
 //table for Mainstep is below
 function MainstepPageGenerator(j){
 var body = document.getElementById("showbox");
@@ -552,6 +637,11 @@ i+=1;
 }
 //count mainsteps
 var clicks = 0;
+
+/**
+ * @function onClick
+ * @description
+ */
 function onClick(){
   document.getElementById('deslist').style.display = 'block';
   console.log(document.getElementById('MstepCount').innerText);
@@ -568,6 +658,11 @@ function onClick(){
   return MainstepPageGenerator(j);
 }
 
+/**
+ * @function deleteM
+ * @description
+ * @param {*} j 
+ */
 //delete Mainstep
 function deleteM(j){
   var task = document.getElementById("Ttitle").value;
@@ -594,6 +689,10 @@ function deleteM(j){
 
 }
 
+/**
+ * @function deleteT
+ * @description 
+ */
 //delete Task
 function deleteT(){
   var task = document.getElementById('Ttitle').value;
@@ -610,6 +709,10 @@ function deleteT(){
   }
 }
 
+/**
+ * @function task_nextarrow
+ * @description
+ */
 function task_nextarrow(){
   console.log("ff");
   document.getElementById("nextmainstep").style.display = "block";
@@ -638,6 +741,10 @@ function task_nextarrow(){
         //tree.select(parentId);
     }
 
+    /**
+     * @function openmenu
+     * @description
+     */
     function openmenu(){
       if(document.getElementById("menu").style.display== "block"){
         document.getElementById("menu").style.display = "none";
