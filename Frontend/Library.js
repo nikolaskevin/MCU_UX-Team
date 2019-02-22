@@ -60,8 +60,9 @@ fbTask.once("value")
 
  /**
   * @function toggleTask
-  * @description
-  * @param {*} source 
+  * @description when check box in the header row in the task list table in Library > Assign Task is clicked
+  *   all of the tasks are either selected or deselected
+  * @param {*} source status of checkbox - checked or unchecked
   */
 function toggleTask(source) {
 var table = document.getElementById("assigningTask");
@@ -95,8 +96,9 @@ console.log(length);
 
 /**
  * @function toggleCF
- * @description
- * @param {*} source 
+ * @description when check box in the header row in the assignee list table in Library > Assign Task is clicked
+  *   all of the people are either selected or deselected
+ * @param {*} source status of checkbox - checked or unchecked
  */
 function toggleCF(source) {
     var table = document.getElementById("assigningCF");
@@ -130,8 +132,9 @@ function toggleCF(source) {
 
 /**
  * @function toggleList
- * @description
- * @param {*} source 
+ * @description when check box in the header row in the task list table in Library > Task History is clicked
+  *   all of the rows are either selected or deselected
+ * @param {*} source status of checkbox - checked or unchecked
  */
 function toggleList(source) {
     var table = document.getElementById("assigningList");
@@ -166,7 +169,7 @@ function toggleList(source) {
 
 /**
  * @function assign
- * @description
+ * @description selected task is assigned to selected assignees
  */
 function assign(){
     var table = document.getElementById("assigningTask");
@@ -466,8 +469,8 @@ $("#searchInput").on("keyup", function() {
 
     /**
      * @function sortingCF
-     * @description
-     * @param {*} n 
+     * @description sorts the assignee table in Library > Assign Task
+     * @param {*} n number of the column that the table is being sorted by
      */
     function sortingCF(n){
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -526,8 +529,8 @@ $("#searchInput").on("keyup", function() {
 
     /**
      * @function sortingTask
-     * @description
-     * @param {*} n 
+     * @description sorts the task table in Library > Assign Task
+     * @param {*} n number of the column that the table is being sorted by
      */
     function sortingTask(n){
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -586,8 +589,8 @@ $("#searchInput").on("keyup", function() {
 
     /**
      * @function sortingList
-     * @description
-     * @param {*} n 
+     * @description sorts the task table in Library > Task History
+     * @param {*} n number of the column that the table is being sorted by
      */
     function sortingList(n){
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -646,7 +649,8 @@ $("#searchInput").on("keyup", function() {
     
     /**
      * @function filter_Category
-     * @description 
+     * @description filters task list in Library > Assign Task according
+     *  to the selected task category
      */
     function filter_Category(){
      var val = document.getElementById("filterCategory").value;
@@ -684,7 +688,8 @@ $("#searchInput").on("keyup", function() {
 
     /**
      * @function filter_Position
-     * @description
+     * @description filters assignee list in Library > Assign Task according
+     *  to the selected position
      */
     function filter_Position(){
      var val = document.getElementById("filterPosition").value;
@@ -720,7 +725,8 @@ $("#searchInput").on("keyup", function() {
 
     /**
      * @function filterNameList
-     * @description
+     * @description filters task table in Library > Task History according
+     *  to the selected name
      */
     function filterNameList(){
      var val = document.getElementById("filterNameList").value;
@@ -749,7 +755,8 @@ $("#searchInput").on("keyup", function() {
     
     /**
      * @function filterTaskList
-     * @description
+     * @description filters task table in Library > Task History according
+     *  to the selected task name
      */
     function filterTaskList(){
      var val = document.getElementById("filterTaskList").value;
@@ -786,7 +793,8 @@ $("#searchInput").on("keyup", function() {
 
     /**
      * @function close_form
-     * @description
+     * @description close details pop up box
+     * THIS ISN'T CALLED IN 05Library2.html
      */
     function close_form(){
         document.getElementById("form").style.display = "none";
@@ -795,7 +803,7 @@ $("#searchInput").on("keyup", function() {
 
     /**
      * @function submit
-     * @description
+     * @description in Library > Task History unassigns selected task
      */
     function submit(){
     var table = document.getElementById("assigningList");
@@ -828,7 +836,8 @@ $("#searchInput").on("keyup", function() {
 
 /**
  * @function closeclose_form
- * @description
+ * @description close details pop up box
+ * This doesn't work as of 2/21/19
  */
 function closeclose_form(){
     document.getElementById('form1').style.display ='none';
@@ -838,8 +847,9 @@ function closeclose_form(){
 
 /**
  * @function display_Detail
- * @description
- * @param {*} num 
+ * @description in Library > Assign Task, task details are displayed in a pop
+ *  up window
+ * @param {*} num row number of task in displayed task list
  */
 function display_Detail(num){
   document.getElementById('form1').style.display ='block';
@@ -874,7 +884,7 @@ function display_Detail(num){
 
 /**
  * @function directTask
- * @description
+ * @description redirects to task editor for selected task to view more info
  */
 function directTask(){
     var cat = document.getElementById("category").innerHTML;
@@ -889,7 +899,7 @@ function directTask(){
 
 /**
  * @function showassigntask
- * @description
+ * @description shows Assign Task tab on Library page
  */
 function showassigntask(){
   document.getElementById("data1").style.display = "block";
@@ -900,7 +910,7 @@ function showassigntask(){
 
 /**
  * @function showtaskhistory
- * @description
+ * @description shows Task History tab on Library page
  */
 function showtaskhistory(){
   document.getElementById("data1").style.display = "none";
@@ -912,6 +922,7 @@ function showtaskhistory(){
 /**
  * @function openmenu
  * @description
+ * can't find this function in 05Library2.html
  */
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
@@ -926,7 +937,7 @@ function openmenu(){
 
 /**
  * @function profile
- * @description
+ * @description function definition is in Profile.js
  */
 function profile(){
   document.getElementById("profile").style.display = "block";
@@ -934,7 +945,7 @@ function profile(){
 
 /**
  * @function closeprofile
- * @description
+ * @description function definition is in Profile.js
  */
 function closeprofile(){
   document.getElementById("profile").style.display = "none";
@@ -943,7 +954,7 @@ function closeprofile(){
 
 /**
  * @function editprofile
- * @description
+ * @description function definition is in Profile.js
  */
 function editprofile(){
   document.getElementById("profile").style.display = "none";
@@ -952,7 +963,7 @@ function editprofile(){
 
 /**
  * @function cancelprofile
- * @description
+ * @description function definition is in Profile.js
  */
 function cancelprofile(){
   window.location.reload()
@@ -960,7 +971,7 @@ function cancelprofile(){
 
 /**
  * @function submitprofile
- * @description
+ * @description function definition is in Profile.js
  */
 function submitprofile(){
 
