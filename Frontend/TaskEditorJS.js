@@ -178,10 +178,11 @@ var old_html = $('.vtree').html();
 
 /**
  * @function filterCategory
- * @description
- * @param {*} cat 
+ * @description filter tasks by category
+ * //param {*} cat 
  */
-function filterCategory(cat){
+//function filterCategory(cat){
+function filterCategory(){
   if(document.getElementById('treemenu2').innerText != ""){
   $('.vtree').html(old_html);
   }
@@ -259,7 +260,7 @@ fbCat.once("value")
 
 /**
  * @function TaskSubmit
- * @description
+ * @description save a new task
  */
 //Input the Content of Task
 function TaskSubmit(){
@@ -300,29 +301,30 @@ let file;
 
 /**
  * @function handleuploadfile
- * @description
- * @param {*} e 
+ * @description upload image to step
+ * @param {*} e the number of the main step with which the image is associated
  */
 function handleuploadfile(e) {
     console.log(e);
     file=$('#uploader'+e).get(0).files[0];
     console.log(file);
+    console.log("handleuploadfile");
 }
 
 /**
  * @function handleuploadfileSubmit
- * @description
+ * @description upload task info to database
  * @param {*} pid 
- * @param {*} cat 
- * @param {*} Mtitle 
- * @param {*} Mtitle2 
- * @param {*} videoURL 
- * @param {*} MstepNo 
- * @param {*} MD 
- * @param {*} MD2 
- * @param {*} uploader 
+ * @param {*} cat category
+ * @param {*} Mtitle Main step title for iOS
+ * @param {*} Mtitle2 Main step title for Android
+ * @param {*} videoURL video URL
+ * @param {*} MstepNo main step number
+ * @param {*} MD main step description for iOS
+ * @param {*} MD2 main step description for Android
+ * @param {*} uploader main step image
  * @param {*} updates 
- * @param {*} j 
+ * @param {*} j number of the main step
  */
 function handleuploadfileSubmit(pid,cat,Mtitle,Mtitle2,videoURL,MstepNo,MD,MD2,uploader,updates,j){
   console.log(file);
@@ -378,8 +380,8 @@ function handleuploadfileSubmit(pid,cat,Mtitle,Mtitle2,videoURL,MstepNo,MD,MD2,u
 
 /**
  * @function MainstepSubmit
- * @description
- * @param {*} j 
+ * @description submit main step data to database
+ * @param {*} j number of the main step being submitted
  */
 function MainstepSubmit(j){
   //console.log(j);
@@ -447,10 +449,10 @@ main.addEventListener('vtree-select', function(evt) {
 
 /**
  * @function displayMainsteps
- * @description
- * @param {*} j 
- * @param {*} path 
- * @param {*} cat 
+ * @description show the main step of a task
+ * @param {*} j task number
+ * @param {*} path where to find step in the database
+ * @param {*} cat category
  */
 function displayMainsteps(j,path,cat){
   //console.log('==='+j);
@@ -477,7 +479,7 @@ function displayMainsteps(j,path,cat){
 /**
  * @function displayTask
  * @description
- * @param {*} id 
+ * @param {*} id id of task in the tree
  * @param {*} parentId 
  * @param {*} parentId2 
  */
@@ -498,10 +500,10 @@ function displayTask(id,parentId,parentId2){
 
 /**
  * @function treeSelection
- * @description
- * @param {*} id 
- * @param {*} parentId 
- * @param {*} parentId2 
+ * @description view tasks in a category in a tree structure 
+ * @param {*} id id of task in the tree
+ * @param {*} parentId data vtree id
+ * @param {*} parentId2 task title
  */
 function treeSelection(id,parentId,parentId2){
   var x = tree.getLeaf(id);
@@ -530,8 +532,8 @@ function treeSelection(id,parentId,parentId2){
 
 /**
  * @function MainstepPageGenerator
- * @description 
- * @param {*} j 
+ * @description create add main step form
+ * @param {*} j number of main step
  */
 //table for Mainstep is below
 function MainstepPageGenerator(j){
@@ -640,7 +642,7 @@ var clicks = 0;
 
 /**
  * @function onClick
- * @description
+ * @description show add main step form
  */
 function onClick(){
   document.getElementById('deslist').style.display = 'block';
@@ -660,8 +662,8 @@ function onClick(){
 
 /**
  * @function deleteM
- * @description
- * @param {*} j 
+ * @description delete main step
+ * @param {*} j number of the main step to be deleted
  */
 //delete Mainstep
 function deleteM(j){
@@ -691,7 +693,7 @@ function deleteM(j){
 
 /**
  * @function deleteT
- * @description 
+ * @description delete task
  */
 //delete Task
 function deleteT(){
