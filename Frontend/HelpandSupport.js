@@ -1,3 +1,9 @@
+/**
+ * @file HelpandSupport.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
 
     var fbFeedback = firebase.database().ref("Feedback/");
     var num = 0;
@@ -9,6 +15,12 @@
        });
     });
 
+/**
+ * @function match_id
+ * @description
+ * @param {*} id 
+ * @param {*} fbFeedback 
+ */
 function match_id(id,fbFeedback){
 
     if (id.charAt(0) == "3"){
@@ -53,6 +65,14 @@ function match_id(id,fbFeedback){
 
 }
 var index = 0;
+/**
+ * @function tableform
+ * @description
+ * @param {*} id 
+ * @param {*} name 
+ * @param {*} fbFeedback 
+ * @param {*} picture 
+ */
 function tableform(id,name,fbFeedback,picture){
     fbFeedback.child(id+"/Center/").once('value')
     .then(function(childSnapshot2){//Center
@@ -208,6 +228,20 @@ function tableform(id,name,fbFeedback,picture){
     });
 
 }
+
+/**
+ * @function getReply
+ * @description
+ * @param {*} id 
+ * @param {*} index 
+ * @param {*} year 
+ * @param {*} month 
+ * @param {*} date 
+ * @param {*} h 
+ * @param {*} m 
+ * @param {*} s 
+ * @param {*} feedbackID 
+ */
 function getReply(id,index,year,month,date,h,m,s,feedbackID){
     var lastDate = year+"-"+month+"-"+date;
     var time = h+":"+m+":"+s;
@@ -227,6 +261,11 @@ function getReply(id,index,year,month,date,h,m,s,feedbackID){
     })
 }
 
+/**
+ * @function replyToggle
+ * @description
+ * @param {*} index 
+ */
 function replyToggle(index){
     if(document.getElementById("message["+index+"]").style.display =="inline"){
         document.getElementById("message["+index+"]").style.display = "none";
@@ -242,6 +281,19 @@ function replyToggle(index){
     }
 }
 
+/**
+ * @function sendMess
+ * @description
+ * @param {*} id 
+ * @param {*} year 
+ * @param {*} month 
+ * @param {*} index 
+ * @param {*} date 
+ * @param {*} h 
+ * @param {*} m 
+ * @param {*} s 
+ * @param {*} feedbackID 
+ */
 function sendMess(id,year,month,index,date,h,m,s,feedbackID){
 
   console.log(year,month,date);
@@ -286,6 +338,12 @@ setTimeout(function(){
     sorting(pat);
     sorting(staff)
 }, 3000);
+
+/**
+ * @function sorting
+ * @description
+ * @param {*} table 
+ */
 function sorting(table){
   var  rows, switching, i, x, y, s, shouldSwitch, dir, switchcount = 0;
 
@@ -323,6 +381,10 @@ function sorting(table){
   }
 }
 
+/**
+ * @function showsf
+ * @description
+ */
 function showsf(){
   document.getElementById("container").style.display = "block";
   document.getElementById("container1").style.display = "none";
@@ -330,8 +392,10 @@ function showsf(){
   document.getElementById("patientfeedbackspan").style.opacity = ".8";
 }
 
-
-
+/**
+ * @function showpf
+ * @description
+ */
 function showpf(){
   document.getElementById("container").style.display = "none";
   document.getElementById("container1").style.display = "block";
@@ -339,6 +403,10 @@ function showpf(){
   document.getElementById("patientfeedbackspan").style.opacity = "1";
 }
 
+/**
+ * @function openmenu
+ * @description
+ */
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";
@@ -350,25 +418,44 @@ function openmenu(){
 }
 }
 
-
+/**
+ * @function profile
+ * @description
+ */
 function profile(){
   document.getElementById("profile").style.display = "block";
 }
 
+/**
+ * @function closeprofile
+ * @description
+ */
 function closeprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "none";
 }
 
+/**
+ * @function editprofile
+ * @description
+ */
 function editprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "block";
 }
 
+/**
+ * @function cancelprofile
+ * @description
+ */
 function cancelprofile(){
   window.location.reload()
 }
 
+/**
+ * @function submitprofile
+ * @description
+ */
 function submitprofile(){
 
 }

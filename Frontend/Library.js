@@ -1,3 +1,10 @@
+/**
+ * @file Library.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
 var fbTask = firebase.database().ref("TaskInstruction/");
 var num = 0;
 var checkbox_name = [];
@@ -51,6 +58,12 @@ fbTask.once("value")
                 })
             })
 
+ /**
+  * @function toggleTask
+  * @description when check box in the header row in the task list table in Library > Assign Task is clicked
+  *   all of the tasks are either selected or deselected
+  * @param {*} source status of checkbox - checked or unchecked
+  */
 function toggleTask(source) {
 var table = document.getElementById("assigningTask");
 var tr = table.getElementsByTagName("tr");
@@ -80,6 +93,13 @@ console.log(length);
         }
     }
 }
+
+/**
+ * @function toggleCF
+ * @description when check box in the header row in the assignee list table in Library > Assign Task is clicked
+  *   all of the people are either selected or deselected
+ * @param {*} source status of checkbox - checked or unchecked
+ */
 function toggleCF(source) {
     var table = document.getElementById("assigningCF");
     var tr = table.getElementsByTagName("tr");
@@ -109,6 +129,13 @@ function toggleCF(source) {
     }
 
 }
+
+/**
+ * @function toggleList
+ * @description when check box in the header row in the task list table in Library > Task History is clicked
+  *   all of the rows are either selected or deselected
+ * @param {*} source status of checkbox - checked or unchecked
+ */
 function toggleList(source) {
     var table = document.getElementById("assigningList");
     var tr = table.getElementsByTagName("tr");
@@ -139,6 +166,11 @@ function toggleList(source) {
         }
     }
 }
+
+/**
+ * @function assign
+ * @description selected task is assigned to selected assignees
+ */
 function assign(){
     var table = document.getElementById("assigningTask");
     var tr = table.getElementsByTagName("tr");
@@ -274,6 +306,12 @@ display_List(fbList_CNA);
 display_List(fbList_PAT);
 var checkBox_index = 0;
 var x = 0;
+
+/**
+ * @function display_List
+ * @description
+ * @param {*} fbList 
+ */
 function display_List(fbList){
     fbList.once("value")
     .then(function(snapshot){
@@ -359,6 +397,13 @@ function display_List(fbList){
             })
         })
 }
+
+/**
+ * @function deleteNotExist
+ * @description
+ * @param {*} fbList 
+ * @param {*} path 
+ */
 function deleteNotExist(fbList,path){
         fbList.once("value")
         .then(function(snapshot){
@@ -422,6 +467,11 @@ $("#searchInput").on("keyup", function() {
     });
 
 
+    /**
+     * @function sortingCF
+     * @description sorts the assignee table in Library > Assign Task
+     * @param {*} n number of the column that the table is being sorted by
+     */
     function sortingCF(n){
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
       table = document.getElementById("assigningCF");
@@ -476,6 +526,12 @@ $("#searchInput").on("keyup", function() {
         }
       }
     }
+
+    /**
+     * @function sortingTask
+     * @description sorts the task table in Library > Assign Task
+     * @param {*} n number of the column that the table is being sorted by
+     */
     function sortingTask(n){
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
       table = document.getElementById("assigningTask");
@@ -531,6 +587,11 @@ $("#searchInput").on("keyup", function() {
       }
     }
 
+    /**
+     * @function sortingList
+     * @description sorts the task table in Library > Task History
+     * @param {*} n number of the column that the table is being sorted by
+     */
     function sortingList(n){
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
       table = document.getElementById("assigningList");
@@ -585,8 +646,12 @@ $("#searchInput").on("keyup", function() {
         }
       }
     }
-
-
+    
+    /**
+     * @function filter_Category
+     * @description filters task list in Library > Assign Task according
+     *  to the selected task category
+     */
     function filter_Category(){
      var val = document.getElementById("filterCategory").value;
       var table = document.getElementById("assigningTask");
@@ -620,6 +685,12 @@ $("#searchInput").on("keyup", function() {
           }
       }
     }
+
+    /**
+     * @function filter_Position
+     * @description filters assignee list in Library > Assign Task according
+     *  to the selected position
+     */
     function filter_Position(){
      var val = document.getElementById("filterPosition").value;
       var table = document.getElementById("assigningCF");
@@ -651,6 +722,12 @@ $("#searchInput").on("keyup", function() {
           }
       }
     }
+
+    /**
+     * @function filterNameList
+     * @description filters task table in Library > Task History according
+     *  to the selected name
+     */
     function filterNameList(){
      var val = document.getElementById("filterNameList").value;
       var table = document.getElementById("assigningList");
@@ -675,6 +752,12 @@ $("#searchInput").on("keyup", function() {
           }
       }
     }
+    
+    /**
+     * @function filterTaskList
+     * @description filters task table in Library > Task History according
+     *  to the selected task name
+     */
     function filterTaskList(){
      var val = document.getElementById("filterTaskList").value;
       var table = document.getElementById("assigningList");
@@ -699,13 +782,29 @@ $("#searchInput").on("keyup", function() {
           }
       }
     }
+
+    /**
+     * @function viewassignedtask
+     * @description
+     */
     function viewassignedtask(){
         document.getElementById("form").style.display = "block";
     }
+
+    /**
+     * @function close_form
+     * @description close details pop up box
+     * THIS ISN'T CALLED IN 05Library2.html
+     */
     function close_form(){
         document.getElementById("form").style.display = "none";
         document.getElementById("popup_detail").style.display = "none";
     }
+
+    /**
+     * @function submit
+     * @description in Library > Task History unassigns selected task
+     */
     function submit(){
     var table = document.getElementById("assigningList");
     var tr = table.getElementsByTagName("tr");
@@ -735,11 +834,23 @@ $("#searchInput").on("keyup", function() {
              }
 }
 
+/**
+ * @function closeclose_form
+ * @description close details pop up box
+ * This doesn't work as of 2/21/19
+ */
 function closeclose_form(){
     document.getElementById('form1').style.display ='none';
     var Table = document.getElementById("content");
     Table.innerHTML = ""
 }
+
+/**
+ * @function display_Detail
+ * @description in Library > Assign Task, task details are displayed in a pop
+ *  up window
+ * @param {*} num row number of task in displayed task list
+ */
 function display_Detail(num){
   document.getElementById('form1').style.display ='block';
   var table = document.getElementById("assigningTask");
@@ -770,6 +881,11 @@ function display_Detail(num){
       })
   });
 }
+
+/**
+ * @function directTask
+ * @description redirects to task editor for selected task to view more info
+ */
 function directTask(){
     var cat = document.getElementById("category").innerHTML;
     var taskN = document.getElementById("taskname").innerHTML;
@@ -781,7 +897,10 @@ function directTask(){
 
 }
 
-
+/**
+ * @function showassigntask
+ * @description shows Assign Task tab on Library page
+ */
 function showassigntask(){
   document.getElementById("data1").style.display = "block";
   document.getElementById("data2").style.display = "none";
@@ -789,6 +908,10 @@ function showassigntask(){
   document.getElementById("taskhistoryspan").style.opacity = ".8";
 }
 
+/**
+ * @function showtaskhistory
+ * @description shows Task History tab on Library page
+ */
 function showtaskhistory(){
   document.getElementById("data1").style.display = "none";
   document.getElementById("data2").style.display = "block";
@@ -796,6 +919,11 @@ function showtaskhistory(){
   document.getElementById("taskhistoryspan").style.opacity = "1";
 }
 
+/**
+ * @function openmenu
+ * @description
+ * can't find this function in 05Library2.html
+ */
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";
@@ -807,25 +935,44 @@ function openmenu(){
 }
 }
 
-
+/**
+ * @function profile
+ * @description function definition is in Profile.js
+ */
 function profile(){
   document.getElementById("profile").style.display = "block";
 }
 
+/**
+ * @function closeprofile
+ * @description function definition is in Profile.js
+ */
 function closeprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "none";
 }
 
+/**
+ * @function editprofile
+ * @description function definition is in Profile.js
+ */
 function editprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "block";
 }
 
+/**
+ * @function cancelprofile
+ * @description function definition is in Profile.js
+ */
 function cancelprofile(){
   window.location.reload()
 }
 
+/**
+ * @function submitprofile
+ * @description function definition is in Profile.js
+ */
 function submitprofile(){
 
 }
