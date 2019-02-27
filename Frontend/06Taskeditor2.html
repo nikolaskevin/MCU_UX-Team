@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--#30B400#339933#99CC00#FFFFCC-->
 <html>
 
@@ -206,12 +206,16 @@
                                 <tr>
                                     <td style="text-align:center;">
                                         <br>Category:
-                                        <input name="category" id="selectCat" list="CatOption">
+                                        <form autocomplete="off">
+                                            <input name="category" id="selectCat" list="CatOption" autocomplete="off">
+                                        </form>
                                         <datalist id="CatOption"></datalist>
                                     </td>
                                     <td style="text-align:center;">
                                         <br>Video URL:
-                                        <input id="videoURL" type="text" />
+                                        <form autocomplete="off">
+                                            <input id="videoURL" type="text" autocomplete="off" />
+                                        </form>
                                     </td>
                                 </tr>
                                 <tr>
