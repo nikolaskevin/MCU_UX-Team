@@ -1,0 +1,95 @@
+.sortableContainer{
+    height: 100vh;
+    width:70%;
+}
+
+.myContent{
+    height: 800px;
+    width: 100%;
+    
+}
+
+.sortable {
+    margin: 0 auto;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.taskStep {
+    background-color: #90bd91;
+    background-color: #74a832;
+    margin: 10px;
+    min-height:200px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    border-radius: 20px;
+}
+
+.nestedSortable{
+   background-color:black;
+}
+
+.detailedStep{
+    background-color: #74a832;
+    background-color: white;
+    display:flex;
+    flex-direction: row;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    width: 75%;
+    margin-left: 12.5%;
+    margin-right: 12.5;
+    position: center;
+}
+
+.detailedStepButtonContainer{
+    display:flex;
+    flex-direction: column;
+    flex: 0.5;
+}
+
+.detailedStepRightContainer{
+    display:flex;
+    flex-direction: column;
+    flex:9;
+}
+.stepNameInput{
+    text-align: center;
+    width: 50%;
+}
+
+.stepDescriptionInput{
+    width: 100%;
+}
+
+.containerDive{
+    width: 100%;
+}
+
+.inputField{
+    margin-left: 12.5%;
+    margin-right: 12.5%;
+}
+
+.detailedStepButton{
+    font-size: 8px;
+    padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+}
+
+.taskContent{
+    width: 100%;
+}
+
+#addStep{
+    width: auto;
+    height: auto;
+    margin-bottom: 5em;
+}
