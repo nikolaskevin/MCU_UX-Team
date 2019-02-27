@@ -273,14 +273,14 @@
                         <!-- Bootstrap navigation bar -->
                         <div class="container-fluid">
 
-                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 3ex;padding-top:1.5ex;padding-bottom:1.5ex; background-color:green;outline-color:darkgreen">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 1.5ex;padding-top:1.5ex;padding-bottom:1.5ex;padding-left:2px;padding-right:2px; background-color:green;outline-color:darkgreen">
                                 <i class="fas fa-align-left"></i>
-                                <span>Toggle Sidebar</span>
+                                <span id="toggleSide">Hide sidebar</span>
                             </button>
 
                             <div class="navbar-header">
 
-                                <a href="../Frontend/01Aboutus2.html" style="padding-left:4px">
+                                <a href="../Frontend/01Aboutus2.html">
                                     <img src="statics/images/v2ltctmslogo.png" height="50" width="60" />
                                 </a>
 
@@ -344,12 +344,6 @@
                         <div class="tap">
                             <span id="stafffeedbackspan" onclick="showsf()" style="opacity:1;cursor:pointer;">Staff Feedback</span>
                             <span id="patientfeedbackspan" onclick="showpf()" style="opacity:.8;cursor:pointer;">Family Feedback</span>
-                        </div>
-                        <div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
-                            <div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
-                            <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;">&nbsp English<br></p>
-                            <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Frontend-Chinese/08Helpandsupport2.html'">&nbsp 中文<br></p>
-                            <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
                         </div>
                         <div id="container" class="container" style="overflow-y:scroll;">
                             <!--usermessag  Please don't delete
@@ -468,17 +462,22 @@
         <!-- jQuery Custom Scroller CDN -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
         <script type="text/javascript">
-            $(document).ready(function () {
-                $("#sidebar").mCustomScrollbar({
-                    theme: "minimal"
-                });
-
-                $('#sidebarCollapse').on('click', function () {
-                    $('#sidebar, #content').toggleClass('active');
-                    $('.collapse.in').toggleClass('in');
-                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                });
+        $(document).ready(function () {
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
             });
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar, #content').toggleClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                if(document.getElementById("toggleSide").innerHTML=="Hide sidebar"){
+                    document.getElementById("toggleSide").innerHTML = "Show sidebar";
+                } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
+                    document.getElementById("toggleSide").innerHTML = "Hide sidebar";
+                }
+            });
+        });
         </script>
         <!-- END COPY FOR SIDEBAR JAVASCRIPT-->
 </body>

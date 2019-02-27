@@ -20,7 +20,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type='text/javascript' src="Config.js"></script>
-    <script type='text/javascript' src='Library.js'></script>
+    <script type='text/javascript' src='Mytask.js'></script>
     <script type='text/javascript' src='chat.js'></script>
     <script type='text/javascript' src='Profile.js'></script>
 </head>
@@ -208,14 +208,14 @@
                         <!-- Bootstrap navigation bar -->
                         <div class="container-fluid">
 
-                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 3ex;padding-top:1.5ex;padding-bottom:1.5ex; background-color:green;outline-color:darkgreen">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 1.5ex;padding-top:1.5ex;padding-bottom:1.5ex;padding-left:2px;padding-right:2px; background-color:green;outline-color:darkgreen">
                                 <i class="fas fa-align-left"></i>
-                                <span>Toggle Sidebar</span>
+                                <span id="toggleSide">Hide sidebar</span>
                             </button>
 
                             <div class="navbar-header">
 
-                                <a href="../Frontend/01Aboutus2.html" style="padding-left:4px">
+                                <a href="../Frontend/01Aboutus2.html">
                                     <img src="statics/images/v2ltctmslogo.png" height="50" width="60" />
                                 </a>
 
@@ -276,21 +276,15 @@
                 <!-- START OF MIDDLE CONTENT-->
                 <div class="right" style="transform:translateY(-13ex)">
                     <div class="tap">
-                        <span id="assigntaskspan" onclick="showassigntask()" style="opacity:1;cursor:pointer;">Assign Task</span>
-                        <span id="taskhistoryspan" onclick="showtaskhistory()" style="opacity:.8;cursor:pointer;">Task History</span>
-                    </div>
-                    <div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;">
-                        <div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
-                        <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;">&nbsp English<br></p>
-                        <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Frontend-Chinese/05Library2.html'">&nbsp 中文<br></p>
-                        <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
-                    </div>
+                        <span id="assigntaskspan" onclick="showassigntask()" style="opacity:1;cursor:pointer;">My Task</span>
                     <div class="container" id="data1">
-                        <div class="library_tasktable" style="position:relative;top:20px;left:10px;background-color:white;width:465px;height:300px;">
+                        <div class="library_tasktable" style="position:relative;top:20px;left:10px;background-color:white;width:100%;height:300px;">
                             <select class="library_filter" id="filterCategory" onchange="filter_Category()">
                                 <option>Category</option>
                             </select>
-                            <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput">
+                            <form autocomplete="off" style="display:inline">
+                                <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
+                            </form>
                             <br><br>
                             <div style="overflow:auto;height:300px;">
                                 <table class="library_tasktable_display" id="assigningTask" style="border-style:hidden;width:100%;">
@@ -303,36 +297,6 @@
                                 </table>
                             </div>
                         </div>
-                        <div style="position:relative;left:50%;top:-120%;background-color:#000; height:155%;width:0.2%;"></div>
-                        <div class="library_usertable" style="position:relative;top:-900px;left:500px;background-color:white;width:465px;height:300px;">
-                            <select class="library_filter" id="filterPosition" onchange="filter_Position()">
-                                <option>Position</option>
-                                <option>CNA</option>
-                                <option>Patient</option>
-                            </select>
-                            <input class="library_search" type="text" name="search" placeholder="Search" id="searchkeyin">
-                            <br><br>
-                            <div style="overflow:auto;height:300px;">
-                                <table class="library_tasktable_display" id="assigningCF" style="border-style:hidden;width:100%;">
-                                    <tr>
-                                        <th style="width:25%" onclick="sortingCF(0)" class="library_table_firstbox"> Position </th>
-                                        <th style="width:35%" onclick="sortingCF(1)" class="library_table_secondbox"> Name  </th>
-                                        <th style="width:30%" onclick="sortingCF(2)" class="library_table_thirdbox"> I.D </th>
-                                        <th style="width:10%"><input type="checkbox" id="toggleCF" onclick="toggleCF(this)"></th>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="library_assigntask">
-                            <div class="library_assigntask-inner">
-                                <div class="library_assigntask-front">
-                                    <button style="cursor:pointer;" class="library_assigntaskbutton" type="button" onclick="assign()">Assign Task</button>
-                                </div>
-                                <div class="library_assigntask-back">
-                                    <button style="cursor:pointer;" class="library_assigntaskbutton" type="button" onclick="assign()"> Go! </button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="container" id="data2" style="display:none;">
@@ -343,7 +307,7 @@
                         <select class="library_historyfiltertask" id="filterTaskList" onchange="filterTaskList()" style="position:relative;left:2%;">
                             <option>Task Name</option>
                         </select>
-                        <input class="library_historysearch" type="text" name="search" placeholder="Search" id="searchKeyword" style="position:relative;left:2%;">
+                        <input class="library_historysearch" type="text" name="search" placeholder="Search" id="searchKeyword" style="position:relative;left:2%;" autocomplete="off">
                         <div class="library_historyoverflow">
                             <br>
                             <div style="overflow:auto;height:300px;">
@@ -463,7 +427,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
         <!-- jQuery Custom Scroller CDN -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-        <script type="text/javascript">
+            <script type="text/javascript">
         $(document).ready(function () {
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"
@@ -473,9 +437,14 @@
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                if(document.getElementById("toggleSide").innerHTML=="Hide sidebar"){
+                    document.getElementById("toggleSide").innerHTML = "Show sidebar";
+                } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
+                    document.getElementById("toggleSide").innerHTML = "Hide sidebar";
+                }
             });
         });
-        </script>
+            </script>
         <!-- END COPY FOR SIDEBAR JAVASCRIPT-->
 </body>
 </html>

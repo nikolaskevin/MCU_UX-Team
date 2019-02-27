@@ -107,6 +107,7 @@ function tableform(id,name,fbFeedback,picture){
                   var span2 = document.createElement('span');
                   var span3 = document.createElement("span");
                   var span4 = document.createElement("span");
+                  var staffReply = document.createElement("span");
 
                   var span5 = document.createElement("span");
 
@@ -179,7 +180,7 @@ function tableform(id,name,fbFeedback,picture){
                           document.getElementById("photo["+index+"]").src = picture;
                           document.getElementById("username["+index+"]").innerHTML = name +"  said:";
                           document.getElementById("comment["+index+"]").innerHTML = childSnapshot6.val();
-                          getReply(id,index,a[0],a[1],a[2],time[0],time[1],time[2],feedbackID);
+                          getReply(id, index, a[0], a[1], a[2], time[0], time[1], time[2], feedbackID);
                           console.log(index);
                           index++;
                       }
@@ -216,6 +217,13 @@ function tableform(id,name,fbFeedback,picture){
                           console.log(index);
 
                           index++;
+                      }
+                  }
+                  if (childSnapshot5.key == "Replied") {
+                      if (id.charAt(0) == "3") {
+
+                      } else {
+
                       }
                   }
                 })
@@ -257,6 +265,38 @@ function getReply(id,index,year,month,date,h,m,s,feedbackID){
             var tim = snapshot1.key;
             tim = tim.replace (/[?]/g,"-");
             document.getElementById("replyTime["+index+"]").innerHTML = tim;
+        })
+    })
+}
+
+/**
+ * @function getReply
+ * @description
+ * @param {*} id 
+ * @param {*} index 
+ * @param {*} year 
+ * @param {*} month 
+ * @param {*} date 
+ * @param {*} h 
+ * @param {*} m 
+ * @param {*} s 
+ * @param {*} feedbackID 
+ */
+function getDirectorReply(id, index, year, month, date, h, m, s, feedbackID) {
+    var lastDate = year + "-" + month + "-" + date;
+    var time = h + ":" + m + ":" + s;
+    var fbReply = firebase.database().ref("Feedback/" + id + "/Center" + "/" + lastDate + "/" + feedbackID + "/Replied/");
+    fbReply.once('value').
+    then(function (snapshot) {
+        snapshot.forEach(function (snapshot1) {
+            var com = snapshot1.val();
+            com = com.replace(/[~]/g, " ");
+            document.getElementById("replyComment[" + index + "]").innerHTML = com;
+            console.log(snapshot1.key);
+
+            var tim = snapshot1.key;
+            tim = tim.replace(/[?]/g, "-");
+            document.getElementById("replyTime[" + index + "]").innerHTML = tim;
         })
     })
 }
@@ -330,6 +370,9 @@ function sendMess(id,year,month,index,date,h,m,s,feedbackID){
     document.getElementById("replyComment["+index+"]").innerHTML = comment;
     replyToggle(index);
 
+}
+function reply(id) {
+    
 }
 
 setTimeout(function(){

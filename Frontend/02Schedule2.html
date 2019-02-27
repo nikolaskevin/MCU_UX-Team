@@ -257,14 +257,14 @@
                         <!-- Bootstrap navigation bar -->
                         <div class="container-fluid">
 
-                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 3ex;padding-top:1.5ex;padding-bottom:1.5ex; background-color:green;outline-color:darkgreen">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 1.5ex;padding-top:1.5ex;padding-bottom:1.5ex;padding-left:2px;padding-right:2px; background-color:green;outline-color:darkgreen">
                                 <i class="fas fa-align-left"></i>
-                                <span>Toggle Sidebar</span>
+                                <span id="toggleSide">Hide sidebar</span>
                             </button>
 
                             <div class="navbar-header">
 
-                                <a href="../Frontend/01Aboutus2.html" style="padding-left:4px">
+                                <a href="../Frontend/01Aboutus2.html">
                                     <img src="statics/images/v2ltctmslogo.png" height="50" width="60" />
                                 </a>
 
@@ -550,6 +550,11 @@
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                if(document.getElementById("toggleSide").innerHTML=="Hide sidebar"){
+                    document.getElementById("toggleSide").innerHTML = "Show sidebar";
+                } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
+                    document.getElementById("toggleSide").innerHTML = "Hide sidebar";
+                }
             });
         });
     </script>
