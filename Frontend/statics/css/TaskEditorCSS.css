@@ -29,6 +29,10 @@
     border-radius: 20px;
 }
 
+.taskStepTop {
+    display: flex;
+    flex-direction: row;
+}
 .nestedSortable{
    background-color:black;
 }
@@ -58,6 +62,27 @@
     flex-direction: column;
     flex:9;
 }
+
+.deleteDetailedStepButtonContainer{
+    display:flex;
+    flex-direction: row;
+    flex: 0.8;
+    align-content: left;
+    justify-content: center;
+    
+}
+
+.deleteDetailedStepButton{
+    font-size: 1em;
+    padding: 0px;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    background-color: transparent;
+    border-style: none;
+}
 .stepNameInput{
     text-align: center;
     width: 50%;
@@ -76,7 +101,16 @@
     margin-right: 12.5%;
 }
 
-.detailedStepButton{
+.detailedStepUpButton{
+    font-size: 8px;
+    padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    margin-left: 10px;
+}
+
+.detailedStepDownButton{
     font-size: 8px;
     padding: 0px;
     margin-top: 0px;
@@ -92,4 +126,20 @@
     width: auto;
     height: auto;
     margin-bottom: 5em;
+}
+
+.mainStepDeleteButton{
+    background-color: transparent;
+    border-style: none;
+    font-size: 1.2em;
+}
+
+.newDetailedStepButton{
+    background-color: transparent;
+    border-style: none;
+    font-size: 1.2em;
+}
+
+.saveButton{
+    margin-bottom: 10em;
 }
