@@ -1,3 +1,10 @@
+/**
+ * @file Library.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
 var fbTask = firebase.database().ref("TaskInstruction/");
 var copy = document.getElementById("library_requestCopy");
 var num = 0;
@@ -52,6 +59,13 @@ fbTask.once("value")
                 })
             })
 
+
+ /**
+  * @function toggleTask
+  * @description when check box in the header row in the task list table in Library > Assign Task is clicked
+  *   all of the tasks are either selected or deselected
+  * @param {*} source status of checkbox - checked or unchecked
+  */
 function toggleTask(source) {
 var table = document.getElementById("assigningTask");
 var tr = table.getElementsByTagName("tr");
@@ -81,6 +95,14 @@ console.log(length);
         }
     }
 }
+
+
+/**
+ * @function toggleCF
+ * @description when check box in the header row in the assignee list table in Library > Assign Task is clicked
+  *   all of the people are either selected or deselected
+ * @param {*} source status of checkbox - checked or unchecked
+ */
 function toggleCF(source) {
     var table = document.getElementById("assigningCF");
     var tr = table.getElementsByTagName("tr");
@@ -108,8 +130,14 @@ function toggleCF(source) {
             }
         }
     }
-
 }
+
+/**
+ * @function toggleList
+ * @description when check box in the header row in the task list table in Library > Task History is clicked
+  *   all of the rows are either selected or deselected
+ * @param {*} source status of checkbox - checked or unchecked
+ */
 function toggleList(source) {
     var table = document.getElementById("assigningList");
     var tr = table.getElementsByTagName("tr");
@@ -140,6 +168,11 @@ function toggleList(source) {
         }
     }
 }
+
+/**
+ * @function assign
+ * @description selected task is assigned to selected assignees
+ */
 function assign(){
     document.getElementById("library_requestCopy")
     var table = document.getElementById("assigningTask");
@@ -423,7 +456,11 @@ $(document).ready(function(){
       });
     });
 
-
+   /**
+     * @function sortingCF
+     * @description sorts the assignee table in Library > Assign Task
+     * @param {*} n number of the column that the table is being sorted by
+     */
     function sortingCF(n){
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
       table = document.getElementById("assigningCF");
@@ -478,6 +515,13 @@ $(document).ready(function(){
         }
       }
     }
+
+
+    /**
+     * @function sortingTask
+     * @description sorts the task table in Library > Assign Task
+     * @param {*} n number of the column that the table is being sorted by
+     */
     function sortingTask(n){
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
       table = document.getElementById("assigningTask");
@@ -533,6 +577,11 @@ $(document).ready(function(){
       }
     }
 
+      /**
+     * @function sortingList
+     * @description sorts the task table in Library > Task History
+     * @param {*} n number of the column that the table is being sorted by
+     */
     function sortingList(n){
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
       table = document.getElementById("assigningList");
@@ -588,7 +637,11 @@ $(document).ready(function(){
       }
     }
 
-
+    /**
+     * @function filter_Category
+     * @description filters task list in Library > Assign Task according
+     *  to the selected task category
+     */
     function filter_Category(){
      var val = document.getElementById("filterCategory").value;
       var table = document.getElementById("assigningTask");
@@ -622,6 +675,12 @@ $(document).ready(function(){
           }
       }
     }
+
+      /**
+     * @function filter_Position
+     * @description filters assignee list in Library > Assign Task according
+     *  to the selected position
+     */
     function filter_Position(){
      var val = document.getElementById("filterPosition").value;
       var table = document.getElementById("assigningCF");
@@ -653,6 +712,12 @@ $(document).ready(function(){
           }
       }
     }
+
+      /**
+     * @function filterNameList
+     * @description filters task table in Library > Task History according
+     *  to the selected name
+     */
     function filterNameList(){
      var val = document.getElementById("filterNameList").value;
       var table = document.getElementById("assigningList");
@@ -677,6 +742,12 @@ $(document).ready(function(){
           }
       }
     }
+
+      /**
+     * @function filterTaskList
+     * @description filters task table in Library > Task History according
+     *  to the selected task name
+     */
     function filterTaskList(){
      var val = document.getElementById("filterTaskList").value;
       var table = document.getElementById("assigningList");
@@ -701,13 +772,29 @@ $(document).ready(function(){
           }
       }
     }
+
+      /**
+     * @function viewassignedtask
+     * @description
+     */
     function viewassignedtask(){
         document.getElementById("form").style.display = "block";
     }
+
+    /**
+     * @function close_form
+     * @description close details pop up box
+     * THIS ISN'T CALLED IN 05Library2.html
+     */
     function close_form(){
         document.getElementById("form").style.display = "none";
         document.getElementById("popup_detail").style.display = "none";
     }
+
+    /**
+     * @function submit
+     * @description in Library > Task History unassigns selected task
+     */
     function submit(){
     var table = document.getElementById("assigningList");
     var tr = table.getElementsByTagName("tr");
