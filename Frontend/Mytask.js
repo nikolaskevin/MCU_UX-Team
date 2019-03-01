@@ -212,6 +212,7 @@ function assign(){
     window.location.reload();
   }
 }
+}
 
 
 $(document).ready(function(){
