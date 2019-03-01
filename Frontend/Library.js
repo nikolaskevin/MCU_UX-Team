@@ -980,7 +980,7 @@ function submitClick(){
   document.getElementById("library_requestCopy")
   var counter = 0, // counter for checked checkboxes
       i = 0,       // loop variable
-      url = '../Frontend/10MyTasks.html',    // final url string
+      url = '../Frontend/10MyTasks2.html',    // final url string
       // get a collection of objects with the specified 'input' TAGNAME
       input_obj = document.getElementsByTagName('input');
   // loop through all collected objects
