@@ -91,7 +91,7 @@ var main = document.getElementById('treemenu2'),
 
   /**
    * @function swapStep
-   * @description 
+   * @description allows the steps to be moved around
    * @param {*} realid 
    * @param {*} temp 
    * @param {*} fbti 

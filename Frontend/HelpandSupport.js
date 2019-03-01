@@ -17,7 +17,7 @@
 
 /**
  * @function match_id
- * @description
+ * @description verifys wheter the user is a CNA or Patient/Family member
  * @param {*} id 
  * @param {*} fbFeedback 
  */
@@ -63,11 +63,11 @@ function match_id(id,fbFeedback){
            });
     }
 
-}
+} // end match_id
 var index = 0;
 /**
  * @function tableform
- * @description
+ * @description fills the table for the feedback
  * @param {*} id 
  * @param {*} name 
  * @param {*} fbFeedback 
@@ -235,11 +235,11 @@ function tableform(id,name,fbFeedback,picture){
         })
     });
 
-}
+}// end tableform
 
 /**
  * @function getReply
- * @description
+ * @description displays the reply to the feedback
  * @param {*} id 
  * @param {*} index 
  * @param {*} year 
@@ -267,11 +267,11 @@ function getReply(id,index,year,month,date,h,m,s,feedbackID){
             document.getElementById("replyTime["+index+"]").innerHTML = tim;
         })
     })
-}
+}// end getreply
 
 /**
- * @function getReply
- * @description
+ * @function getDirectorReply
+ * @description displays the reply to staff feedback from teh director
  * @param {*} id 
  * @param {*} index 
  * @param {*} year 
@@ -299,11 +299,11 @@ function getDirectorReply(id, index, year, month, date, h, m, s, feedbackID) {
             document.getElementById("replyTime[" + index + "]").innerHTML = tim;
         })
     })
-}
+}// end getDirectorReply
 
 /**
  * @function replyToggle
- * @description
+ * @description opens/closes the text box where the reply will be written
  * @param {*} index 
  */
 function replyToggle(index){
@@ -319,11 +319,11 @@ function replyToggle(index){
         document.getElementById("reply["+index+"]").innerHTML = "Collapse";
         document.getElementById("btn["+index+"]").style.display = "inline";
     }
-}
+}// end replyToggle
 
 /**
  * @function sendMess
- * @description
+ * @description send a reply to the feedback
  * @param {*} id 
  * @param {*} year 
  * @param {*} month 
@@ -370,17 +370,27 @@ function sendMess(id,year,month,index,date,h,m,s,feedbackID){
     document.getElementById("replyComment["+index+"]").innerHTML = comment;
     replyToggle(index);
 
-}
+}// end sendmess
+
+/**
+* @function reply
+* @description not sure it's needed, not deleting since it's so close to a sprint end
+* @param {*} id 
+*/
 function reply(id) {
     
 }
 
+/**
+* @function setTimeout
+* @description sets a timer for inactivity of user
+*/
 setTimeout(function(){
     pat = document.getElementById("container");
     staff = document.getElementById("container1");
     sorting(pat);
     sorting(staff)
-}, 3000);
+}, 3000); //end setTimeout
 
 /**
  * @function sorting
@@ -425,9 +435,9 @@ function sorting(table){
 }
 
 /**
- * @function showsf
- * @description
- */
+* @function showsf
+* @description gets the staff feedback
+*/
 function showsf(){
   document.getElementById("container").style.display = "block";
   document.getElementById("container1").style.display = "none";
@@ -437,7 +447,7 @@ function showsf(){
 
 /**
  * @function showpf
- * @description
+ * @description gets the family(patient) feedback
  */
 function showpf(){
   document.getElementById("container").style.display = "none";
@@ -447,9 +457,9 @@ function showpf(){
 }
 
 /**
- * @function openmenu
- * @description
- */
+* @function openmenu
+* @description allows user to open the menu that switches languages and logout (?)
+*/
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";
@@ -462,43 +472,44 @@ function openmenu(){
 }
 
 /**
- * @function profile
- * @description
- */
+* @function profile
+* @description gets the profile information of current user
+*/
 function profile(){
   document.getElementById("profile").style.display = "block";
 }
 
 /**
- * @function closeprofile
- * @description
- */
+* @function closeprofile
+* @description allows the user to close the profile information
+*/
 function closeprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "none";
 }
 
 /**
- * @function editprofile
- * @description
- */
+* @function editprofile
+* @description allows the user to edit their basic profile information
+*/
 function editprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "block";
 }
 
 /**
- * @function cancelprofile
- * @description
- */
+* @function cancelprofile
+* @description allows the user to cancel out of editing their information
+*/
 function cancelprofile(){
   window.location.reload()
 }
 
 /**
- * @function submitprofile
- * @description
- */
+* @function submitprofile
+* @description allows the user to submit the edits to their profile
+* not completed, but not getting rid of until next sprint
+*/
 function submitprofile(){
 
 }

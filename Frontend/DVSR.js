@@ -1,4 +1,11 @@
-// have to fix the filter function //
+/**
+ * @file DVSR.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
+ // have to fix the filter function //
 //get the patient's id and put in the seleted boxs
 var fbPAT = firebase.database().ref("Activities");
 //grab the Patient's ID from database and put into the selected box

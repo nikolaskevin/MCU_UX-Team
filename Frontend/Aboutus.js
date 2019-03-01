@@ -1,3 +1,9 @@
+/**
+ * @file Aboutus.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
 
 var fbAboutus = firebase.database().ref("CenterInformation/ContactInfo/Aboutus");
 fbAboutus.once("value")
@@ -5,12 +11,19 @@ fbAboutus.once("value")
     document.getElementById("aboutus_text").innerHTML = snapshot.val();
 })
 
-
+/**
+* @function aboutus_edit
+* @description allows user to edit the "About Us" text
+*/
 function aboutus_edit(){
     document.getElementById("aboutus_text").disabled = false;
     document.getElementById("aboutus_button").style.display = "block";
-}
+}// end aboutus_edit
 
+/**
+* @function aboutus_submit
+* @description allows user to submit their edits to the "About Us" text
+*/
 function aboutus_submit(){
     var text = $("#aboutus_text").val();
     document.getElementById("aboutus_text").disabled = true;
@@ -20,7 +33,7 @@ function aboutus_submit(){
     firebase.database().ref("CenterInformation/ContactInfo/AboutusAndroid").set(text+"(end)");
     alert("Succesfully entered");
 
-}
+}// end aboutus_edit
 
 var fbCI = firebase.database().ref("CenterInformation/ContactInfo");
 fbCI.once("value")
@@ -53,6 +66,10 @@ fbCI.once("value")
     }
 })
 
+/**
+* @function CI_edit
+* @description allows the user to edit the "Center Contact Information" text
+*/
 function CI_edit(){
     document.getElementById("CI_button").style.display = "block";
     document.getElementById("Name1").style.display = "block";
@@ -60,7 +77,12 @@ function CI_edit(){
     document.getElementById("Email_Address1").style.display = "block";
     document.getElementById("Address1").style.display = "block";
 
-}
+}//end CI_edit
+
+/**
+* @function CI_submit
+* @description allows user to submit their edits to the "Center Contact Information" text
+*/
 function CI_submit(){
     var name = $("#Name1").val();
     var contact_no = $("#Contact_No1").val();
@@ -86,8 +108,12 @@ function CI_submit(){
     alert ("Succesfully entered")
     location.reload();
   }
-}
+}//end CI_submit
 
+/**
+* @function upload
+* @description allows the user to add a sponser name and link
+*/
 function upload(){
     var text = $("#url_text").val();
     var name = $("#sponsorName").val();
@@ -126,7 +152,7 @@ function upload(){
 
 
   }
-}
+}// end upload
 
 
 var sp = [];
@@ -178,6 +204,11 @@ fbSponsor.once("value")
     });
 })
 
+/**
+* @function remove
+* @description allows the user to remove a sponser
+* @param sponsor
+*/
 function remove(sponsor){
     var fbSP= firebase.database().ref("CenterInformation/"+"Sponsor/"+sp[sponsor]);
     var r = confirm("Are you sure you want to remove a sponsor?");
@@ -194,8 +225,12 @@ function remove(sponsor){
     }
     else {
     }
-}
+}// end remove
 
+/**
+* @function sponsor_delete
+* @description deletes the sponser after the Remove button is pushed
+*/
 function sponsor_delete(){
 
         if(document.getElementById("deleteBTN").innerHTML !="Remove"){
@@ -211,9 +246,12 @@ function sponsor_delete(){
             document.getElementById("button_id["+i+"]").style.display = "inline";
         }
     }
-}
+}// end sponsor_delete
 
-
+/**
+* @function showintroduction
+* @description allows the user to click on the "Introduction" tab to swith to see the "About Us" text
+*/
 function showintroduction(){
   document.getElementById("data1").style.display = "block";
   document.getElementById("data2").style.display = "none";
@@ -221,8 +259,12 @@ function showintroduction(){
   document.getElementById("introductionspan").style.opacity = "1";
   document.getElementById("centerinfospan").style.opacity = ".8";
   document.getElementById("sponsoredspan").style.opacity = ".8";
-}
+}// end showintroduction
 
+/**
+* @function showcenterinfo
+* @description allows the user to click on the "Center Info" tab to switch to see the "Center Contact Information" text
+*/
 function showcenterinfo(){
   document.getElementById("data1").style.display = "none";
   document.getElementById("data2").style.display = "block";
@@ -230,8 +272,12 @@ function showcenterinfo(){
   document.getElementById("introductionspan").style.opacity = ".8";
   document.getElementById("centerinfospan").style.opacity = "1";
   document.getElementById("sponsoredspan").style.opacity = ".8";
-}
+}// end showcneterinfo
 
+/**
+* @function showsponsored
+* @description allows the user to click on teh "Sponsored" tab to switch to see the "Sponsored" images
+*/
 function showsponsored(){
   document.getElementById("data1").style.display = "none";
   document.getElementById("data2").style.display = "none";
@@ -239,8 +285,12 @@ function showsponsored(){
   document.getElementById("introductionspan").style.opacity = ".8";
   document.getElementById("centerinfospan").style.opacity = ".8";
   document.getElementById("sponsoredspan").style.opacity = "1";
-}
+}// end showsponsored
 
+/**
+* @function openmenu
+* @description allows user to open the menu that switches languages and logout (?)
+*/
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";
@@ -250,4 +300,4 @@ function openmenu(){
   document.getElementById("menu").style.display = "block";
   document.getElementById("openmenu").style.opacity = ".6";
 }
-}
+}// end openmenu

@@ -1,4 +1,11 @@
-"use strict";
+/**
+ * @file LoginJS.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
+ "use strict";
 
 /**
  * @file LoginJS.js

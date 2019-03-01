@@ -1,3 +1,10 @@
+/**
+ * @file memo.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
     var today = new Date();
     var dd = today.getDate();
     var mm_index = today.getMonth(); //January is 0!
@@ -18,7 +25,6 @@
          dd = "0"+dd;
      }
 
-
      var date = mm_index+1;
      var year_m = year+"-"+date;
      var a = new Date();
@@ -38,16 +44,29 @@
     var time = hour+":"+minute+":"+second;
      console.log(time);
 
-
+/**
+* @function popup_form
+* @description brings up a text box to type in the memo
+*/
 function popup_form(){
     document.getElementById("memo_text").value = "";
     document.getElementById("selected_date").value = year+"-"+mm+"-"+dd;
     document.getElementById("form").style.display = "block";
 }
+
+/**
+* @function close_form
+* @description closes the popup of new memo text
+*/
 function close_form(){
     document.getElementById("form").style.display = "none";
 }
 
+/**
+* @function submit
+* @description allows for submiting the memo as well as check to make sure it's within
+*               a reasonable amount of time
+*/
 function submit(){
     var userID = document.getElementById("displayProfileid").innerHTML;
     var text = $("#memo_text").val();
@@ -75,15 +94,18 @@ function submit(){
         location.reload();
       }
   }
-}
+}// end submit
 
-
-
+/**
+* @function viewTable
+* @description shows the memos in a table format, allows for scrolling through months 
+* @param value
+*/
 function viewTable(value){
     var userID = document.getElementById("displayProfileid").innerHTML;
     document.getElementById("years").innerHTML = year;
     var a = year_m.split("-");
-
+    // allows for scrolling though past months
     if(value == "last"){
         a[1] = a[1]-1;
         if(a[1]== 0){
@@ -94,6 +116,7 @@ function viewTable(value){
         document.getElementById("context_table").innerHTML = "";
 
     }
+    // allows for scrolling through upcoming months
     if(value == "next"){
         a[1] =  parseInt(a[1]) +1;
         if(a[1]==13){
@@ -162,8 +185,13 @@ function viewTable(value){
         })
     })
 
-}
+}// end viewTable
 
+/**
+* @function deleteha
+* @description allows for the deletion of a memo
+* @param num
+*/
 function deleteha(num){
     var userID = document.getElementById("displayProfileid").innerHTML;
     var fbCS= firebase.database().ref('MEMO/'+userID+"/"+year_m);
@@ -183,8 +211,13 @@ function deleteha(num){
                     }
         })
     })
-}
+}// end deleteha
 
+/**
+* @function editha
+* @description allows for editing of a memo
+* @param num
+*/
 function editha(num){
     var userID = document.getElementById("displayProfileid").innerHTML;
     var Fbe= firebase.database().ref('MEMO/'+userID+"/"+year_m);
@@ -209,9 +242,12 @@ function editha(num){
              }
          })
      })
- }
+ }// end editha
 
-
+/**
+* @function esubmit
+* @description allows for submiting of the edited memo 
+*/
  function esubmit(){
      var userID = document.getElementById("displayProfileid").innerHTML;
      var text = $("#memoedited").val();
@@ -239,10 +275,19 @@ function editha(num){
        }
    }
 }
+
+/**
+* @function closeform
+* @description closes the popup of edit memo text
+*/
 function closeform(){
     document.getElementById("edit_form").style.display="none";
 }
 
+/**
+* @function openmenu
+* @description 
+*/
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";
@@ -254,15 +299,12 @@ function openmenu(){
 }
 }
 
-
-
 var a = new Date();
 var hour = a.getHours();
 var minute = a.getMinutes();
 var second = a.getSeconds();
 
 var time = hour+":"+minute+":"+second;
-
 
 $(document).ready(function() {
     document.getElementById("fullName_Month").innerHTML = Month[mm_index];
@@ -271,7 +313,6 @@ $(document).ready(function() {
     document.getElementById("current_week").innerHTML = weekday[wk_index];
     document.getElementById("current_year").innerHTML = year;
     var userID = document.getElementById("displayProfileid").innerHTML;
-
 
 });
 setTimeout(function(){

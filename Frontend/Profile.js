@@ -1,4 +1,12 @@
-firebase.auth().onAuthStateChanged(function (firebaseUser){
+/**
+ * @file Profile.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
+// contact firebase to varify and display admin information and 
+ firebase.auth().onAuthStateChanged(function (firebaseUser){
 if(firebaseUser){
   console.log(firebaseUser);
   var userid = firebaseUser.uid;
@@ -22,16 +30,29 @@ if(firebaseUser){
 }
 });
 //console.log(document.getElementById('Profilepic').value);
+
+/**
+* @function profile
+* @description gets the profile information of current user
+*/
 function profile(){
   document.getElementById("profile").style.display = "block";
   displayProfile();
-}
+}// end profile
 
+/**
+* @function closeprofile
+* @description allows the user to close the profile information
+*/
 function closeprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "none";
-}
+}// end closeprofile
 
+/**
+* @function editprofile
+* @description allows the user to edit their basic profile information
+*/
 function editprofile(){
   document.getElementById("editprofile").style.display = "block";
   document.getElementById('nameProfileE').value = document.getElementById('nameProfile').innerHTML;
@@ -40,14 +61,23 @@ function editprofile(){
   document.getElementById('nameProfileTE').innerHTML = document.getElementById('nameProfileT').innerHTML;
   document.getElementById('positionProfileE').innerHTML = document.getElementById('positionProfile').innerHTML;
   document.getElementById("profile").style.display = "none";
-}
+}// end editprofile
 
+/**
+* @function cancelprofile
+* @description allows the user to cancel out of editing their information
+*/
 function cancelprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "none";
   document.getElementById("changePass").style.display = "none";
-}
+}// end cancelprofile
 
+/**
+* @function submitprofile
+* @description allows the user to submit the edits to their profile
+* not completed, but not getting rid of until next sprint
+*/
 function submitprofile(){
   var name=document.getElementById('nameProfileE').value;
   var id =document.getElementById('idProfileE').innerHTML;
@@ -71,8 +101,12 @@ function submitprofile(){
       });
     }
   });
-}
+}// end submitprofile
 
+/**
+* @function displayProfile
+* @description shows the profile information of the current user
+*/
 function displayProfile(){
   firebase.auth().onAuthStateChanged(function(user){
     if(user){
@@ -90,11 +124,19 @@ function displayProfile(){
   });
 }
 
+/**
+* @function changePassword
+* @description allows the change of a password
+*/
 function changePassword(){
   document.getElementById("changePass").style.display="block";
 
-}
+}// end changePassword
 
+/**
+* @function submitNewPass
+* @description takes care of the process of verifying the new password
+*/
 function submitNewPass(){
   var newPass= document.getElementById('newPassword').value;
   var cnewPass=document.getElementById('confirmnewPassword').value;
@@ -145,10 +187,12 @@ function submitNewPass(){
     alert("Your Password are not match!")
   }
 
-}
+}// end submitNewPass
 
-
-
+/**
+* @function Logout
+* @description allows the user to log out of the site
+*/ 
 function Logout(){
   var today = new Date();
   var currentYear = today.getFullYear();
@@ -179,8 +223,13 @@ function Logout(){
   firebase.auth().signOut();
   console.log('logout');
   window.location.href = "/../Frontend/00Login2.html";
-}
+}// end Logout
 
+/**
+* @function uploadPicProfile
+* @description allows the user to upload a profile picture and
+*               alerts them if something went wrong
+*/
 function uploadPicProfile(){
   var file = $('#newPic').get(0).files[0];
   var id = document.getElementById('displayProfileid').innerHTML
@@ -207,8 +256,13 @@ function uploadPicProfile(){
       });
 
 
-}
+}// end uploadPicProfile
 
+/**
+* @function bigImg
+* @description displays the profile picture in a bigger format
+*               if clicked on
+*/
 function bigImg(x) {
     photoword.style.display = "inline";
     Profilepic.style.position = "relative"
@@ -217,15 +271,19 @@ function bigImg(x) {
     $("#Profilepic").css("filter", "grayscale(100%)");
     $("#Profilepic").css("filter", "blur(2px)");
 
-  }
+  }// end bigImg
 
+/**
+* @function normalImg
+* @description displays the profile picture in a thumbnail size
+*/
 function normalImg(x) {
     photoword.style.display = "none";
     Profilepic.style.display = "inline";
     Profilepic.style.position = "relative";
     $("#Profilepic").css("filter", "grayscale(0%)");
 
-}
+}// end normalImg
 
 
 var a = new Date();

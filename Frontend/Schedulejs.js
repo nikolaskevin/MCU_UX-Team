@@ -1,13 +1,23 @@
-var btnLogout = document.getElementById('btnLogout')
+/**
+ * @file Schedulejs.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
+ var btnLogout = document.getElementById('btnLogout')
 /*btnLogout.addEventListener('click', e => {
   firebase.auth().signOut();
   window.location = 'Login.html';
 });*/
 
-//Create new Announcement button
+/**
+* @function AddNewA
+* @description makes the creat new announcement button
+*/
 function AddNewA(){
     document.getElementById('newABlock').style.display ='block';
-}
+}//end AddNewA
 
 //Read firebase Announcements
 var an =[];
@@ -42,7 +52,10 @@ fbA.once('value',function(snapshot){
   });
 });
 
-//createNew Announcement Data
+/**
+* @function createNewAnnouncement
+* @description creates the new announcement data
+*/
 function createNewAnnouncement(){
   var data = $('#Announcement').val();
   var title1= $('#Atitle').val();
@@ -66,9 +79,12 @@ function createNewAnnouncement(){
   alert('Successfully Entered');
   window.location.reload();
 }
-}
+}// end createNewAnnouncement 
 
-//Deleting Announcements
+/**
+* @function  deleteA
+* @description deletes the announcement data
+*/
 function deleteA(rowIndex){
   var fbB= firebase.database().ref('Announcements');
 
@@ -82,9 +98,12 @@ function deleteA(rowIndex){
     }
     else {
     }
-}
+}// end deleteA
 
-//View/Editing Announcement
+/**
+* @function editA
+* @description allows viewing/editing of annoucements
+*/
 function editA(rowIndex){
   document.getElementById('editABlock').style.display ='block';
   var Ukey = an[rowIndex];
@@ -97,8 +116,12 @@ function editA(rowIndex){
     document.getElementById('keyname').innerHTML = Ukey;
   });
 
-}
+}// end editA
 
+/**
+* @function editSave
+* @description allows saving of the edits
+*/
 function editSave(rowIndex){
   var editedData = $("#Amsg").val();
   var editedData2 = 'xasx' + editedData + 'xaex';
@@ -122,14 +145,21 @@ else {
   firebase.database().ref().update(updates);
   window.location.reload();
 }
-}
+}// end editSave
 
+/**
+* @function btnpopUp
+* @description allows the detail button to give a pop up window
+*/
 function btnpopUp(){
   document.getElementById('Esave').style.display = "inline";
 
 }
 
-//Events
+/**
+* @function AddNewCS
+* @description the button for adding events
+*/
 function AddNewCS(){
 document.getElementById('newCSBlock').style.display ='block';
 }
@@ -144,29 +174,53 @@ submitfileButton3.addEventListener('click', handleuploadfileSubmit3);
 
 let file3;
 
+/**
+* @function handleuploadfile3
+* @description uploads the ___ file
+*/
 function handleuploadfile3(e) {
  file3=e.target.files[0];
 
-}
+}// end handleuploadfile3
 
+/**
+* @function handleuploadfileSubmit
+* @description lets the user know if they enetered data or not
+* @param e
+*/
 function handleuploadfileSubmit3(e) {
   if(file3 == undefined){
     alert ("Please enter data!")
-  }
+  }// end handleuploadfileSubmit3
 var storageRef=firebase.storage().ref('CenterSchedule/'+file3.name);
 var uploadtask3 = storageRef.put(file3);
 
 uploadtask3.on('state_changed',
 
+/**
+* @function progress
+* @description shows the user the percentage of the upload
+* @param snapshot
+*/
   function progress(snapshot){
     var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
     uploader.value = percentage;
-  },
+  },//end progress
 
+/**
+* @function error 
+* @description lets the user know that this has failed with a message
+* @param err
+*/
   function error(err){
     console.log("failed");
-  },
+  },// end error
 
+/**
+* @function complete
+* @description lets the user know that the upload is complete with a message and
+* and creates urls for the information 
+*/
   function complete(){
     console.log('Successful');
      var postKey = firebase.database().ref('CenterSchedule/').push().key;
@@ -193,9 +247,9 @@ uploadtask3.on('state_changed',
      window.location.reload();
    //}
      });
-  }
+  }// end complete
 );
-}
+}// end handleuploadfileSubmit3
 
 //Display CS table
 var cs = [];
@@ -235,7 +289,10 @@ console.log(rowIndexCS);
 });
 });
 
-//CS deletion
+/**
+* @function deleteCS
+* @description allows for the deletion of a center schedule
+*/
 function deleteCS(rowIndexCS){
 var fbCS= firebase.database().ref('CenterSchedule');
 var Ukey = cs[rowIndexCS];
@@ -255,9 +312,13 @@ if (r == true) {
 }
 else {
 }
-}
+}// end deleteCS
 
 //CS download
+/**
+* @function downloadCS
+* @description allows for a user to download a center schedule
+*/
 function downloadCS(rowIndexCS){
 var fbCS= firebase.database().ref('CenterSchedule');
 var Ukey = cs[rowIndexCS];
@@ -270,21 +331,26 @@ url.once("value").then(function(snapshot){
   // console.log(downloadURL);
    window.open(downloadURL,'_blank') ;
 });
-}
+}// end downloadCS
 
-
+/**
+* @function DownloadNewCS
+* @description allows for the user to download a newer version of the center schedule
+*/
 function DownloadNewCS(){
 var url= firebase.storage().ref('CenterSchedule/csnew.xlsx');
 url.getDownloadURL().then(function(ur2) {
       window.location = ur2;
    });
-   }
+   }//end DownloadNewCS
 
-
-//Working Schedule table
+/**
+* @function AddNewWS
+* @description allows adding a new work schedule 
+*/
 function AddNewWS(){
 document.getElementById('newWSBlock').style.display ='block';
-}
+}// end AddNewWS
 
 //Create new Working Schedule - Upload folder into firebase
 var uploader = document.getElementById('uploader');
@@ -296,10 +362,18 @@ submitfileButton.addEventListener('click', handleuploadfileSubmit);
 
 let file;
 
+/**
+* @function handleuploadfile
+* @description 
+*/
 function handleuploadfile(e) {
  file=e.target.files[0];
 }
 
+/**
+* @function handleuploadfileSubmit
+* @description 
+*/
 function handleuploadfileSubmit(e) {
   if(file == undefined){
     alert ("Please enter data!")
@@ -309,15 +383,30 @@ var uploadtask = storageRef.put(file);
 
 uploadtask.on('state_changed',
 
+/**
+* @function progress
+* @description shows the user the percentage of the upload
+* @param snapshot
+*/
   function progress(snapshot){
     var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
     uploader.value = percentage;
   },
 
+/**
+* @function error 
+* @description lets the user know that this has failed with a message
+* @param err
+*/
   function error(err){
     console.log("failed");
   },
 
+/**
+* @function complete
+* @description lets the user know that the upload is complete with a message and
+* and creates urls for the information 
+*/
   function complete(){
     console.log('Successful');
      var postKey = firebase.database().ref('WorkingSchedule/').push().key;
@@ -379,7 +468,11 @@ snapshot.forEach(function(childSnapshot){
 
 });
 });
-//WS deletion
+
+/**
+* @function deleteWS
+* @description deletes the work schedule
+*/
 function deleteWS(rowIndexWS){
 var fbWS= firebase.database().ref('WorkingSchedule');
 //var Ukey = $(this).closest('tr').children('td:first').text();
@@ -400,7 +493,11 @@ if (r == true) {
 else {
 }
 }
-//WS download
+
+/**
+* @function downloadWS
+* @description allows downloading a work schedule
+*/
 function downloadWS(rowIndexWS){
 var fbWS= firebase.database().ref('WorkingSchedule');
 console.log(rowIndexWS);
@@ -414,6 +511,11 @@ url.once("value").then(function(snapshot){
    window.open(downloadURL,'_blank');
 });
 }
+
+/**
+* @function DownloadNewWS
+* @description allows you to download a new work schedule
+*/
 function DownloadNewWS(){
 var url= firebase.storage().ref('CenterSchedule/wsnew.xlsx');
 url.getDownloadURL().then(function(ur2) {
@@ -423,10 +525,19 @@ url.getDownloadURL().then(function(ur2) {
 
 
 //Working hour
+
+/**
+* @function AddNewWH
+* @description allows adding new work hours
+*/
 function AddNewWH(){
 document.getElementById('newWHBlock').style.display ='block';
 }
 
+/**
+* @function DownloadNewWH
+* @description allows one to down load the new work hours
+*/
 function DownloadNewWH(){
 var url= firebase.storage().ref('CenterSchedule/whnew.xlsx');
 url.getDownloadURL().then(function(ur2) {
@@ -444,10 +555,20 @@ submitfileButton2.addEventListener('click', handleuploadfileSubmit2);
 
 let file2;
 
+/**
+* @function handleuploadfile2
+* @description 
+* @param e
+*/
 function handleuploadfile2(e) {
  file2=e.target.files[0];
 }
 
+/**
+* @function handleuploadfileSubmit2
+* @description 
+* @param e
+*/
 function handleuploadfileSubmit2(e) {
   if(file2 == undefined){
     alert ("Please enter data!")
@@ -457,15 +578,30 @@ var uploadtask = storageRef.put(file2);
 
 uploadtask.on('state_changed',
 
+/**
+* @function progress
+* @description shows the user the percentage of the upload
+* @param snapshot
+*/
   function progress(snapshot){
     var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
     uploader2.value = percentage;
   },
 
+/**
+* @function error 
+* @description lets the user know that this has failed with a message
+* @param err
+*/
   function error(err){
     console.log("failed");
   },
 
+/**
+* @function complete
+* @description lets the user know that the upload is complete with a message and
+* and creates urls for the information 
+*/
   function complete(){
     console.log('Successful');
      var postKey = firebase.database().ref('WorkingHourRecord/').push().key;
@@ -528,7 +664,10 @@ wh[rowIndexWH] = childSnapshot.key;
 });
 });
 
-//WH deletion
+/**
+* @function deleteWH
+* @description allows for deletion of work hours
+*/
 function deleteWH(rowIndexWH){
 var fbWH= firebase.database().ref('WorkingHourRecord');
 var Ukey = wh[rowIndexWH];
@@ -547,7 +686,10 @@ if (r == true) {
 }
 }
 
-//WH download
+/**
+* @function downloadWH
+* @description allows for work hour deletion
+*/
 function downloadWH(rowIndexWH){
 var fbWH= firebase.database().ref('WorkingHourRecord');
 var Ukey = wh[rowIndexWH];
@@ -560,7 +702,10 @@ url.once("value").then(function(snapshot){
 });
 }
 
-
+/**
+* @function showannouncement
+* @description uh, shows announcments
+*/
 function showannouncement(){
   document.getElementById("data1").style.display = "block";
   document.getElementById("data2").style.display = "none";
@@ -572,6 +717,10 @@ function showannouncement(){
   document.getElementById("whspan").style.opacity = ".8";
 }
 
+/**
+* @function showcs
+* @description shows center schedule
+*/
 function showcs(){
   document.getElementById("data1").style.display = "none";
   document.getElementById("data2").style.display = "block";
@@ -582,6 +731,11 @@ function showcs(){
   document.getElementById("wsspan").style.opacity = ".8";
   document.getElementById("whspan").style.opacity = ".8";
 }
+
+/**
+* @function showws
+* @description shows work schedule 
+*/
 function showws(){
   document.getElementById("data1").style.display = "none";
   document.getElementById("data2").style.display = "none";
@@ -592,6 +746,11 @@ function showws(){
   document.getElementById("wsspan").style.opacity = "1";
   document.getElementById("whspan").style.opacity = ".8";
 }
+
+/**
+* @function showwh
+* @description shows work hours
+*/
 function showwh(){
   document.getElementById("data1").style.display = "none";
   document.getElementById("data2").style.display = "none";
@@ -603,7 +762,10 @@ function showwh(){
   document.getElementById("whspan").style.opacity = "1";
 }
 
-
+/**
+* @function openmenu
+* @description opens the menu
+*/
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";

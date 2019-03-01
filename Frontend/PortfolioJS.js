@@ -1,17 +1,34 @@
+/**
+ * @file PortfolioJS.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
 
-//Add new Portfolio
+ /**
+* @function addNewPortfolio
+* @description allows the creation of a new portfolio
+*/
 function addNewPortfolio(){
   document.getElementById('newPortfolioSeletion').style.display ='block';
   document.getElementById('portfoliofilter').style.display ='none';
   document.getElementById('form').style.display ='none';
 
-}
+} //end addNewPortfolip
 
+/**
+* @function staffPortfolio
+* @description for creating a new staff member's portfolio
+*/
 function staffPortfolio(){
   document.getElementById('newStaffPortfolio').style.display = 'block';
   document.getElementById('newPortfolioSeletion').style.display ='none';
-}
+}// end staffPortfolio
 
+/**
+* @function patientPortfolio 
+* @description for creating a new patient portfolio
+*/
 function patientPortfolio(){
   document.getElementById('newPatientPortfolio').style.display = 'block';
   document.getElementById('newPortfolioSeletion').style.display ='none';
@@ -33,6 +50,10 @@ function patientPortfolio(){
   });
 }
 
+/**
+* @function Cancel
+* @description allows for exiting the portfolio creation
+*/
 function Cancel(){
   window.location.reload();
 }
@@ -47,8 +68,10 @@ var btnSubmitP = document.getElementById('btnSubmitP')
 
 btnPicture.addEventListener('change', handleuploadfile1);
 staffLicense.addEventListener('change', handleuploadfile5);
+// changing or adding  a staff members staff licens
 console.log(staffLicense);
 staffCV.addEventListener('change', handleuploadfile3);
+// changing or adding a staff members CV
 console.log(staffCV);
 
 //btnLicense.addEventListener('change', handleuploadfile2);
@@ -57,22 +80,40 @@ let file1 = [];
 let file4 = [];
 let file3 = [];
 
+/**
+* @function handleuploadfile1
+* @description 
+* @param e
+*/
 function handleuploadfile1(e) {
      file1=e.target.files[0];
      console.log(file1.name);
-
 }
+
+/**
+* @function handleuploadfile5
+* @description for uploaidng or changing the staff member's staff licens
+*/
 function handleuploadfile5(e) {
      file4=e.target.files[0];
      console.log(file4.name);
 }
+
+/**
+* @function handleuploadfile3
+* @description for uploading or changing a staff member's CV
+* @param e
+*/
 function handleuploadfile3(e) {
        file3=e.target.files[0];
        console.log(file3.name);
 }
 
-
-
+/**
+* @function handleuploadfileSubmit
+* @description pushes all the information that was given into the firebase
+* @param e
+*/
 function handleuploadfileSubmit(e) {
   var staffName = document.getElementById('staffName').value;
   var staffNID = document.getElementById('staffNID').value;
@@ -113,15 +154,30 @@ function handleuploadfileSubmit(e) {
 
     uploadtask.on('state_changed',
 
+/**
+* @function progress
+* @description shows the user the percentage of the upload
+* @param snapshot
+*/
   function progress(snapshot){
     var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
     Uploader.value = percentage;
-  },
+  },// end progress
 
+/**
+* @function error 
+* @description lets the user know that this has failed with a message
+* @param err
+*/
   function error(err){
     console.log("failed");
-  },
+  },// end error
 
+/**
+* @function complete
+* @description lets the user know that the upload is complete with a message and
+* and creates urls for the information 
+*/
   function complete(){
     console.log('Successful');
 
@@ -189,8 +245,8 @@ function handleuploadfileSubmit(e) {
              alert("Successfully Created: "+ staffName +"'s Portfolio");
              location.reload();
          });
-  });
-}
+  }/* end complete*/);
+}// end handeluploadSubmit
 
 
 //Patient Portfolio Database Storing
@@ -204,13 +260,20 @@ btnSubmitP2.addEventListener('click', handleuploadfileSubmit6);
 
 let file6 = [];
 
-
+/**
+* @function handleuploadfile6
+* @description 
+* @param e
+*/
 function handleuploadfile6(e) {
     file6=e.target.files[0];
      console.log(file6.name);
 }
 
-//upload files
+/**
+* @function handleuploadfileSubmit6
+* @description upload files 
+*/
 function handleuploadfileSubmit6(e) {
   var PatientID = document.getElementById('PatientID').innerHTML;
   var patientName = document.getElementById('patientName').value;
@@ -239,15 +302,30 @@ var uploadtask = storageRef6.put(file6);
 
 uploadtask.on('state_changed',
 
+/**
+* @function progress
+* @description shows the user the percentage of the upload
+* @param snapshot
+*/
   function progress(snapshot){
     var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
     Uploader2.value = percentage;
   },
 
+/**
+* @function error 
+* @description lets the user know that this has failed with a message
+* @param err
+*/
   function error(err){
     console.log("failed");
   },
 
+/**
+* @function complete
+* @description lets the user know that the upload is complete with a message and
+* and creates urls for the information 
+*/
   function complete(){
     console.log('Successful');
 
@@ -309,6 +387,12 @@ portfolio_Table(fbCNO);
 portfolio_Table(fbDIR);
 portfolio_Table(fbCNA);
 portfolio_Table(fbPAT);
+
+/**
+* @function portfolio_Table
+* @description displays the portfolios in a table
+* @param fb
+*/
 function portfolio_Table(fb){
     fb.once('value',function(snapshot){
 
@@ -409,8 +493,12 @@ function portfolio_Table(fb){
           });
       });
     });
-}
+}// end portfolio_Table
 
+/**
+* @function setTimeout
+* @description idk? Kicks you out after a while
+*/
 setTimeout(function(){
   var role = document.getElementById('displayProfileposition').innerHTML;
   console.log('ROLE='+role);
@@ -423,10 +511,13 @@ setTimeout(function(){
   if(role =="Director"){
      document.getElementById("newPortfolio").style.display = "block";
   }
-},2000);
+},2000);// end setTimeout
 
 
-//view portfolio
+/**
+* @function viewP
+* @description allows user to view the portfolio of who they clicked on
+*/
 function viewP(){
   var table = document.getElementById("briefPortfolio");
   var td = $(this).closest('tr').children('td:nth-last-child(2)').text();
@@ -553,9 +644,12 @@ function viewP(){
 
     });
   }
-}
+}//end viewP
 
-//edit Patient Portfolio
+/**
+* @function editPP
+* @description allows the user to edit the Patient Portfolio
+*/
 function editPP(){
   document.getElementById('editPatientPortfolio').style.display ='block';
   var id = document.getElementById('PID').innerHTML;
@@ -612,7 +706,12 @@ function editPP(){
     document.getElementById('patientAdmissionReason2').value= AdmissionReason;
     document.getElementById('patientpicFilename').innerHTML = picfilename;
   });
-}
+}// end editPP
+
+/**
+* @function editSP
+* @description allows the user to edit the Staff Portfolio
+*/
 function editSP(){
   document.getElementById('editStaffPortfolio').style.display ='block';
   var id = document.getElementById('SID').innerHTML;
@@ -677,9 +776,12 @@ console.log(position);
     document.getElementById('staffcvfilename').innerHTML= cvfilename;
     document.getElementById('stafflicensefilename').innerHTML= licensefilename;
   });
-}
+}// end editSP
 
-//Updating patient portfolio
+/**
+* @function SubmitPPPP
+* @description takes care of updating the patient portfolio
+*/
 function SubmitPPPP(){
 
   var photo = document.getElementById('PictureP').innerHTML;
@@ -736,12 +838,23 @@ function SubmitPPPP(){
   firebase.database().ref('Room').child(Room+'/'+id).set(Name);
   window.location.reload();
 
-}
+}// end SubmitPPPP
+
+/**
+* @function keypresshandler
+* @description if the keys pressed with in any of these ranges, it returns false
+* @param event
+*/
 function keypresshandler(event){
          var charCode = event.keyCode;
          if ((charCode > 31 && charCode < 48)||(charCode > 57 && charCode < 65)||(charCode > 90  && charCode < 97)||(charCode>122))
          return false;
 }
+
+/**
+* @function submitSP
+* @description takes care of updating the staff portfolio
+*/
 function submitSP(){
   var pic = document.getElementById('PictureS').innerHTML;
   var id = document.getElementById('StaffID2').innerHTML;
@@ -800,9 +913,12 @@ function submitSP(){
   firebase.database().ref('uAccount/'+id+'/StaffID/').set(id);
 
   window.location.reload();
-}
+}// end submitSP
 
-//Patient Portfolio deletion
+/**
+* @function deletePP
+* @description deletes a patient portfolio
+*/
 function deletePP(){
   var fbPP = firebase.database().ref('Patient');
   var id = document.getElementById('PID').innerHTML;
@@ -825,8 +941,12 @@ function deletePP(){
       });
         alert("successfully deleted!");
     }
-}
+}// end deletePP
 
+/**
+* @function deleteSp
+* @description deletes a staff members portfolio
+*/
 function deleteSP(){
  var position = document.getElementById('sPosition').innerHTML;
  var id = document.getElementById('SID').innerHTML;
@@ -855,7 +975,8 @@ function deleteSP(){
 	    alert("Succesfully Deleted!");
 }
 
-}
+}// end deleteSP
+
 //Keyword search
 $(document).ready(function(){
   $("#searchInput").on("keyup", function() {
@@ -867,7 +988,10 @@ $(document).ready(function(){
   });
 });
 
-//Room number filter
+/**
+* @function filterRoomNo
+* @description filters the portfolios by the room number
+*/
 function filterRoomNo() {
 
     var table = document.getElementById("briefPortfolio");
@@ -958,7 +1082,7 @@ function updateTable(){
     return result;
   }).show();
 }
-
+// will get the portfolios that meet the filter and update table
 $('#filterPosition').on('change', function() {
   positionF = this.value;
   if(positionF !="Patient"){
@@ -971,7 +1095,7 @@ $('#filterPosition').on('change', function() {
 
   updateTable();
 });
-
+// will get the portfolios that meet the filter and update table
 $('#filterNationality').on('change', function() {
   nationalityF = this.value;
   if(nationalityF != 'all'){
@@ -980,7 +1104,7 @@ $('#filterNationality').on('change', function() {
 
   updateTable();
 });
-
+// will get the portfolios that meet the filter and update table
 $('#filterGender').on('change', function() {
   genderF = this.value;
   if(genderF != 'all'){
@@ -990,21 +1114,32 @@ $('#filterGender').on('change', function() {
   updateTable();
 });
 
+/**
+* @function viewportfoliofilter
+* @description opens the filter menu
+*/
 function viewportfoliofilter(){
     document.getElementById("form").style.display = "inline-block";
     portport.setAttribute("style","top:-534px;")
-}
+}// end viewportfoliofilter
 
 var portport = document.getElementById("shortportfolio");
 
+/**
+* @function closefilter
+* @description closes the filter menu
+*/
 function closefilter(){
   portfilter.setAttribute("style","display:none;");
   portport.setAttribute("style","top:-130px;");
-}
+}// end closefilter
 
 var portfilter = document.getElementById("form");
 
-
+/**
+* @function openmenu
+* @description allows the user to open a menu
+*/
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";
@@ -1014,8 +1149,12 @@ function openmenu(){
   document.getElementById("menu").style.display = "block";
   document.getElementById("openmenu").style.opacity = ".6";
 }
-}
+}// end openmenu
 
+/**
+* @function pass123
+* @description 
+*/
 function pass123(){
 var work123  = document.getElementById("staffPosition").value;
   if(work123 == "CNA"){
@@ -1079,8 +1218,13 @@ var work123  = document.getElementById("staffPosition").value;
       });
     }
   }
-}
+}// end pass123
 
+/**
+* @function cnoID
+* @description checks to see if the cnoID is new or not
+* if new, will add it to firebase
+*/
 function cnoID(){
   var id = document.getElementById('StaffIDCNO').value;
   if(id == 'NewID'){
@@ -1099,8 +1243,12 @@ function cnoID(){
     });
   }
 
-}
+}// end cnoID
 
+/**
+* @function checkCNOID
+* @description cheks to see if the cnoID exists
+*/
 function checkCNOID(){
   var fb = firebase.database().ref();
   var fbPro = firebase.database().ref('No_Portfolio').child('CNO');
@@ -1147,4 +1295,4 @@ function checkCNOID(){
       }
     }
   });
-}
+}// end checkCNOID

@@ -431,11 +431,6 @@ function deleteNotExist(fbList,path){
 }
 
 
-
-
-
-
-
 $(document).ready(function(){
 $("#searchInput").on("keyup", function() {
     var table = document.getElementById("assigningTask");
