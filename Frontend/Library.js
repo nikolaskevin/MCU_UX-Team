@@ -888,7 +888,10 @@ function directTask(){
     sessionStorage.setItem("from","Library.html");
     sessionStorage.setItem("category",cat);
     sessionStorage.setItem("taskname",taskN);
-
+    window.path = "TaskInstruction/" + cat + "/" + taskN;
+    localStorage.setItem("taskPath", "TaskInstruction/" + cat + "/" + taskN);
+    localStorage.setItem("taskN", taskN);
+    //alert("HI" + localStorage.getItem("taskPath"));
     location.href ="/../Frontend/06Taskeditor2.html";
 
 }

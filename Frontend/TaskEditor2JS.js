@@ -1,11 +1,18 @@
 
 var taskDetails=[];
 var steps=[];
-
+var goodPath = "";
 var taskSearch = "0000000000000000001";
 var a;
 var b;
-
+var goodPath = localStorage.getItem("taskPath");
+var taskN = localStorage.getItem("taskN");
+taskPath = goodPath;
+//var goodPath = window.path;
+if (goodPath  == null){
+    alert("No valid task chosen from library");
+    location.href ="/../Frontend/05Library2.html";
+}
 getTaskPath(taskSearch, getTaskPathCallback);
 
 function getTaskPathCallback(task){
@@ -80,8 +87,8 @@ $('.sortable').sortable({
     }
 });
 
-var taskPath = "";
-var goodPath;
+//var taskPath = "";
+//var goodPath;
 //Get task with a certain ID from the database
 function getTaskPath(taskID, callback){
     var listOfTasks = "";
@@ -101,13 +108,15 @@ function getTaskPath(taskID, callback){
             catSnapshot.forEach(function(taskSnapshot){
                 console.log(taskSnapshot.val());
                 var task = taskSnapshot.key;
-                if (taskSnapshot.val()['TaskID'] == taskID){
-                    taskPath += taskSnapshot.key;
-                    goodPath = taskPath;
-                    callback(taskSnapshot.val()); //callback function after getting the path to the task we're looking for.
-                    return;
-                }
-                listOfTasks += "\n" +  task;
+               // if (taskSnapshot.val()['TaskID'] == taskID){
+                if (task == taskN){
+                    if (taskSnapshot.val())
+                        taskPath += taskSnapshot.key;
+                        goodPath = taskPath;
+                        callback(taskSnapshot.val()); //callback function after getting the path to the task we're looking for.
+                        return;
+                    }
+                    listOfTasks += "\n" +  task;
             });
         });
         taskPath = "";
