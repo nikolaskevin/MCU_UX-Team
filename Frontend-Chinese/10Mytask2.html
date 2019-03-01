@@ -1,5 +1,5 @@
 ﻿<!--
-  @file 08Helpandsupport2.html
+  @file 10Mytask2.html
   @author  MCU
   @author  Kutztown University
   @license
@@ -26,8 +26,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type='text/javascript' src="Config.js"></script>
-    <script type='text/javascript' src='HelpandSupport.js'></script>
-    <script type='text/javascript' src='chat.js'></script>
+    <script type='text/javascript' src='Mytask.js'></script>
     <script type='text/javascript' src='Profile.js'></script>
 </head>
 <style>
@@ -47,144 +46,79 @@
         table td {
             text-shadow: 2px 2px #FFFFFF;
         }
-    <!-- usermessage-- > * {
-        margin: 0px;
-        padding: 0px;
-    }
 
-    .liuyan {
-        margin: 10px;
-        height: auto;
-        border: 1px solid #EEEEEE;
-        background-color: #EEEEEE;
-        box-shadow: 5px 5px 10px #EEEEEE;
-        padding: 5px;
+    .library_assigntask {
+        background-color: transparent;
+        width: 80px;
+        height: 60px;
+        border: hidden;
+        perspective: 1000px;
         position: relative;
-        top: 0%;
-        width: 91%;
-        display: block;
-        left: 3%;
+        top: -850px;
+        left: 880px;
     }
 
-    .information {
-        margin-top: 50px;
-        height: 500px;
-        border: 1px solid #EEEEEE;
-        background-color: #EEEEEE;
-        box-shadow: 5px 5px 10px #EEEEEE;
-        padding: 5px;
-    }
-
-    .time {
-        display: inline;
-        color: #666666;
-        font-size: 7px;
+    .library_assigntask-inner {
         position: absolute;
-        left: 88%;
-        top: 10%;
-        font-size: 10px;
-    }
-
-    .usermessage {
-        width: 750px;
-    }
-
-    .replyComment {
-        word-wrap: break-word;
-    }
-
-    #nav > li > a {
-        color: white;
-    }
-
-    #user-fa, .user-fa {
-        display: inline-block;
-        width: 36px;
-        height: 36px;
-        border: 1px solid #EEEEEE;
-        background-color: #EEEEEE;
-        box-shadow: 1px 1px 5px;
-        border-radius: 18px;
+        width: 100%;
+        height: 100%;
         text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
     }
 
-        #user-fa > i {
-            font-size: 20px;
-            margin-top: 5px;
-        }
-
-    #user > a {
-        padding-top: 5px;
-        text-decoration: none;
+    .library_assigntask:hover .library_assigntask-inner {
+        transform: rotateY(180deg);
     }
 
-    .edit {
+    .library_assigntask-front, .library_assigntask-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+    }
+
+    .library_assigntask-front {
+        color: black;
+        font-size: 14px;
+    }
+
+    .library_assigntask-back {
+        color: black;
+        transform: rotateY(180deg);
+    }
+
+    .library_form-popup {
+        display: none;
+        position: absolute;
+        top: 40%;
+        left: 55%;
+        border: 5px solid gray;
         padding: 10px;
-        margin-top: 20px;
-        border-bottom: 1px solid #C7254E;
+        background-color: white;
+        height: 60%;
+        width: 45%;
+        overflow-y: auto;
     }
 
-        .edit > a {
-            color: #000000;
-            margin: 2px;
+        .library_form-popup .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            opacity: 0.8;
         }
 
-            .edit > a:hover {
-                color: #999999;
-                background-color: #D9EDF7;
-            }
+        .library_form-popup .cancel {
+            background-color: red;
+        }
 
-    .text-success {
-        display: none;
-        width: 500px;
-        height: 30px;
-        word-wrap: break-word;
-    }
-
-    #message {
-        width: 40%;
-        height: 40px;
-        display: none;
-    }
-
-    .comment {
-        display: block;
-    }
-
-    .replyTime {
-        display: block;
-        position: relative;
-        left: 88%;
-        top: -10px;
-        font-size: 10px;
-    }
-
-    .reply {
-        font-size: 6px;
-        color: blue;
-        display: inline;
-        font-size: 8px;
-    }
-
-    .btn-success {
-        position: relative;
-        left: 10px;
-        display: none;
-        width: 50px;
-    }
-
-    .h4 {
-        width: auto;
-        font-size: 25px;
-    }
-
-    .mess {
-        border: 1px solid #E4B9B9;
-        padding: 15px;
-        box-shadow: 2px 2px 15px #EEEEEE;
-        font-family: "微软雅黑";
-        font-size: medium;
-    }
+        .library_form-popup .btn:hover, .open-button:hover {
+            opacity: 1;
+        }
 
     @keyframes bounce {
         0%, 20%, 60%, 100% {
@@ -203,62 +137,62 @@
         }
     }
 </style>
-<body style="height:900px;">
+<body>
     <div class="wrapper">
         <!-- Contain EVERYTHING THING IN WRAPPER CLASS -->
         <nav id="sidebar">
             <!-- SIDEBAR -->
             <ul class="list-unstyled components">
                 <li>
-                    <a href="../Frontend/01Aboutus2.html">
+                    <a href="../Frontend-Chinese/01Aboutus2.html">
                         <i class="glyphicon glyphicon-info-sign"></i>
                         About Us
                     </a>
                 </li>
                 <li>
-                    <a href="../Frontend/02Schedule2.html">
+                    <a href="../Frontend-Chinese/02Schedule2.html">
                         <i class="glyphicon glyphicon-calendar"></i>
                         Schedule
                     </a>
                 </li>
                 <li>
-                    <a href="../Frontend/03Memo2.html">
+                    <a href="../Frontend-Chinese/03Memo2.html">
                         <i class="glyphicon glyphicon-folder-close"></i>
                         Memo
                     </a>
                 </li>
                 <li>
-                    <a href="../Frontend/04Statusrecord2.html">
+                    <a href="../Frontend-Chinese/04Statusrecord2.html">
                         <i class="glyphicon glyphicon-heart-empty"></i>
                         Status Record
                     </a>
                 </li>
-                <li>
-                    <a href="../Frontend/05Library2.html">
+                <li >
+                    <a href="../Frontend-Chinese/05Library2.html">
                         <i class="glyphicon glyphicon-book"></i>
                         Library
                     </a>
                 </li>
-                <li>
-                    <a href="../Frontend/10Mytask2.html">
-                        <i class="glyphicon glyphicon-wrench"></i>
-                        My Task
+                <li class="current">
+                    <a href="../Frontend-Chinese/10MyTasks.html">
+                        <i class="glyphicon glyphicon-book"></i>
+                        My Tasks
                     </a>
                 </li>
                 <li>
-                    <a href="../Frontend/06Taskeditor2.html">
+                    <a href="../Frontend-Chinese/06Taskeditor2.html">
                         <i class="glyphicon glyphicon-tasks"></i>
                         Task Editor
                     </a>
                 </li>
                 <li>
-                    <a href="../Frontend/07E-portfolio2.html">
+                    <a href="../Frontend-Chinese/07E-portfolio2.html">
                         <i class="glyphicon glyphicon-user"></i>
                         E-Portfolio
                     </a>
                 </li>
-                <li class="current">
-                    <a href="../Frontend/08Helpandsupport2.html">
+                <li>
+                    <a href="../Frontend-Chinese/08Helpandsupport2.html">
                         <i class="glyphicon glyphicon-question-sign"></i>
                         Help and Support
                     </a>
@@ -279,14 +213,14 @@
                         <!-- Bootstrap navigation bar -->
                         <div class="container-fluid">
 
-                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 1.5ex;padding-top:1.5ex;padding-bottom:1.5ex;padding-left:2px;padding-right:2px; background-color:green;outline-color:darkgreen">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 3ex;padding-top:1.5ex;padding-bottom:1.5ex; background-color:green;outline-color:darkgreen">
                                 <i class="fas fa-align-left"></i>
-                                <span id="toggleSide">Hide sidebar</span>
+                                <span>Toggle Sidebar</span>
                             </button>
 
                             <div class="navbar-header">
 
-                                <a href="../Frontend/01Aboutus2.html">
+                                <a href="../Frontend-Chinese/01Aboutus2.html" style="padding-left:4px">
                                     <img src="statics/images/v2ltctmslogo.png" height="50" width="60" />
                                 </a>
 
@@ -299,9 +233,9 @@
                                 <li class="dropdown">
                                     <a href="javascript:void(0)" class="dropbtn"><span class="glyphicon glyphicon-cog white-text"></span></a>
                                     <div class="dropdown-content">
-                                        <a href="#">English</a>
-                                        <a href="/../Frontend-Chinese/08Helpandsupport2.html">Chinese</a>
-                                        <a onClick="Logout(); return false;" href="../Frontend/00Login2.html">Logout</a>
+                                        <a href="/../Frontend/01Aboutus2.html">English</a>
+                                        <a href="#">Chinese</a>
+                                        <a onClick="Logout(); return false;" href="../Frontend-Chinese/00Login2.html">Logout</a>
                                     </div>
                                 </li>
                             </ul>
@@ -345,62 +279,93 @@
 
             <div class="main container-fluid wrapper">
                 <!-- START OF MIDDLE CONTENT-->
-                <div class="row" style="display:block">
-                    <div class="right" style="transform:translateY(-13ex)">
-                        <div class="tap">
-                            <span id="stafffeedbackspan" onclick="showsf()" style="opacity:1;cursor:pointer;">Staff Feedback</span>
-                            <span id="patientfeedbackspan" onclick="showpf()" style="opacity:.8;cursor:pointer;">Family Feedback</span>
-                        </div>
-                        <div id="container" class="container" style="overflow-y:scroll;">
-                            <!--usermessag  Please don't delete
-                    <div class="liuyan" >
-                        <span id="user-fa" ><i class="fa fa-user"><img  class="user-fa" src="statics/images/user_face.jpg"/></i></span>
-                        <div  id="user">
-                           <span href="#" id="usename" >ZengXiaoYa</span>
-                       </div>
-                        <span  id ="comment" ></span>
-                        <span id = "reply" onclick="reply()">Reply</span>
+                <div class="right" style="transform:translateY(-13ex)">
 
-                        <div id="usermessage">
-                            <div class="content">
-                                <input id="message" class="text-success" type="text">
-                                </input>
-                                <button id="btn" class="btn btn-success" ="sendMess()">发表</button>
+                    <div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;">
+                        <div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
+                        <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;">&nbsp English<br></p>
+                        <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Frontend-Chinese/05Library2.html'">&nbsp 中文<br></p>
+                        <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
+                    </div>
+                    <div class="container" id="data1">
+                        <div class="library_tasktable" >
+                            <select class="library_filter" id="filterCategory" onchange="filter_Category()">
+                                <option>Category</option>
+                            </select>
+                            <form>
+                                <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
+                            </form>
+                            <br><br>
+                            <div style="overflow:auto;height:300px;">
+                                <table class="library_tasktable_display" id="assigningTask" style="border-style:hidden;width:100%;">
+                                    <tr>
+                                        <th style="width:25%" onclick="sortingTask(0)" class="library_table_firstbox"> Category </th>
+                                        <th style="width:55%" onclick="sortingTask(1)" class="library_table_secondbox"> Task Name  </th>
+                                        <th style="width:10%"></th>
+                                        <th style="width:10%"><input type="checkbox" id="all_checked" onclick="toggleTask(this)"></th>
+                                    </tr>
+                                </table>
+                                <!--<button id ="library_requestCopy" type="button" onclick="submitClick()">Request Copy</button>-->
+
+                        
+                            </div>
+                        </div>
+                        
+
+                    </div>
+
+                    <div class="container" id="data2" style="display:none;">
+                        <br>
+                        <select class="library_historyfiltername" id="filterNameList" onchange="filterNameList()" style="position:relative;left:2%;">
+                            <option>Name</option>
+                        </select>
+                        <select class="library_historyfiltertask" id="filterTaskList" onchange="filterTaskList()" style="position:relative;left:2%;">
+                            <option>Task Name</option>
+                        </select>
+                        <input class="library_historysearch" type="text" name="search" placeholder="Search" id="searchKeyword" style="position:relative;left:2%;">
+                        <div class="library_historyoverflow">
+                            <br>
+                            <div style="overflow:auto;height:300px;">
+
                             </div>
                         </div>
                     </div>
-                -->
-                        </div>
-                        <div id="container1" class="container" style="display:none;overflow-y:scroll;"></div>
-                    </div>
-                </div>
-                <div style="position:absolute;left:40px;bottom:0;">
-                            <p style="position:relative;font-size:10px;left:57%;z-index:3;top:10px;">*Please Contact Development Team for Further Assistance</p>
-                            <table id="Contact_information" style="width:80%">
-                                <tr>
-                                    <th colspan="4"> <h3 style="padding:10px 10px;"><i>Development Team Contact Information</i></h3></th>
-                                </tr>
-                                <tr>
-                                    <th style="padding:6px 6px;">Name </th>
-                                    <td style="padding:6px 6px;">Ming Chuan AC IV </td>
-                                    <th style="padding:6px 6px;">Email Address </th>
-                                    <td style="padding:6px 6px;">ltctmscenter2018@gmail.com </td>
-                                </tr>
-                                <tr>
-                                    <th style="padding:6px 6px;">Contact No </th>
-                                    <td style="padding:6px 6px;">+886911223344 </td>
-                                    <th style="padding:6px 6px;">Address </th>
-                                    <td style="padding:6px 6px;">No. 5, Deming Road, Guishan District, Taoyuan City, 333 </td>
-                                </tr>
-                            </table>
                 </div>
             </div>
         </div>
-
-
+        <div class="library_form-popup" id="form1">
+            <table style="width:100%; height:100%;">
+                <tr>
+                    <td colspan="2" style="background-color:#ddd;"><h3 id="taskname"></h3> </td>
+                </tr>
+                <tr>
+                    <td style="border-style:hidden;width:25%;"> Category:</td>
+                    <td id="category" style="border-style:hidden;width:75%;"> </td>
+                </tr>
+                <tr>
+                    <td style="border-style:hidden;width:25%;"> Video URL:</td>
+                    <td id="video" style="border-style:hidden;width:75%;"> </td>
+                </tr>
+                <tr>
+                    <td style="border-style:hidden;width:25%;"> Outline:</td>
+                    <td id="outline" style="border-style:hidden;width:75%;"> </td>
+                </tr>
+                <tr>
+                    <td style="border-style:hidden;width:25%;">Note:</td>
+                    <td id="note" style="border-style:hidden;width:75%;"> </td>
+                </tr>
+                <tr>
+                    <td style="border-style:hidden;" colspan="2"> <button type="button" class="btn cancel" onclick="closeclose_form()">Close</button> </td>
+                </tr>
+                <tr>
+                    <td style="border-style:hidden;"></td>
+                    <td style="border-style:hidden;text-align:right"> For more details, click <button style="cursor:pointer;" onclick="directTask()">Here</button></td>
+                </tr>
+            </table>
+        </div>
 
         <div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA;border-style: solid;
-						border-width: 2px; z-index:3;">
+					border-width: 2px; z-index:3;">
             <div style="background-color:#E4EACD;position:relative;height:75px;">
                 <h2 id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
 
@@ -418,7 +383,7 @@
         </div>
 
         <div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;border-style: solid;
-						border-width: 2px;">
+					border-width: 2px;">
             <div style="background-color:#E4EACD;position:relative;height:75px;">
                 <h2 id="nameProfileTE" style="position:relative; left:210px;top:20px;"></h2>
                 <h3 style="position:relative; left:300px;top:-10px;color:gray;">	</h3>
@@ -446,7 +411,7 @@
             </div>
         </div>
 
-        <div id="expand" onclick="expand()">
+        <div id="expand" onclick="">
             Chat
             <div id="notification"></div>
         </div>
@@ -477,11 +442,6 @@
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                if(document.getElementById("toggleSide").innerHTML=="Hide sidebar"){
-                    document.getElementById("toggleSide").innerHTML = "Show sidebar";
-                } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
-                    document.getElementById("toggleSide").innerHTML = "Hide sidebar";
-                }
             });
         });
         </script>
