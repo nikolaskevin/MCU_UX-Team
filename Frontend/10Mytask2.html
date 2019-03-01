@@ -21,7 +21,6 @@
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type='text/javascript' src="Config.js"></script>
     <script type='text/javascript' src='Mytask.js'></script>
-    <script type='text/javascript' src='chat.js'></script>
     <script type='text/javascript' src='Profile.js'></script>
 </head>
 <style>
@@ -156,7 +155,7 @@
                         Memo
                     </a>
                 </li>
-                <li >
+                <li>
                     <a href="../Frontend/04Statusrecord2.html">
                         <i class="glyphicon glyphicon-heart-empty"></i>
                         Status Record
@@ -169,9 +168,9 @@
                     </a>
                 </li>
                 <li class="current">
-                    <a href="../Frontend/10Mytask2.html">
-                        <i class="glyphicon glyphicon-wrench"></i>
-                        My Task
+                    <a href="../Frontend/10MyTasks.html">
+                        <i class="glyphicon glyphicon-book"></i>
+                        My Tasks
                     </a>
                 </li>
                 <li>
@@ -208,14 +207,14 @@
                         <!-- Bootstrap navigation bar -->
                         <div class="container-fluid">
 
-                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 1.5ex;padding-top:1.5ex;padding-bottom:1.5ex;padding-left:2px;padding-right:2px; background-color:green;outline-color:darkgreen">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 3ex;padding-top:1.5ex;padding-bottom:1.5ex; background-color:green;outline-color:darkgreen">
                                 <i class="fas fa-align-left"></i>
-                                <span id="toggleSide">Hide sidebar</span>
+                                <span>Toggle Sidebar</span>
                             </button>
 
                             <div class="navbar-header">
 
-                                <a href="../Frontend/01Aboutus2.html">
+                                <a href="../Frontend/01Aboutus2.html" style="padding-left:4px">
                                     <img src="statics/images/v2ltctmslogo.png" height="50" width="60" />
                                 </a>
 
@@ -275,14 +274,19 @@
             <div class="main container-fluid wrapper">
                 <!-- START OF MIDDLE CONTENT-->
                 <div class="right" style="transform:translateY(-13ex)">
-                    <div class="tap">
-                        <span id="assigntaskspan" onclick="showassigntask()" style="opacity:1;cursor:pointer;">My Task</span>
+
+                    <div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;">
+                        <div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
+                        <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;">&nbsp English<br></p>
+                        <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Frontend-Chinese/05Library2.html'">&nbsp 中文<br></p>
+                        <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
+                    </div>
                     <div class="container" id="data1">
-                        <div class="library_tasktable" style="position:relative;top:20px;left:10px;background-color:white;width:100%;height:300px;">
+                        <div class="library_tasktable" >
                             <select class="library_filter" id="filterCategory" onchange="filter_Category()">
                                 <option>Category</option>
                             </select>
-                            <form autocomplete="off" style="display:inline">
+                            <form>
                                 <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
                             </form>
                             <br><br>
@@ -295,8 +299,13 @@
                                         <th style="width:10%"><input type="checkbox" id="all_checked" onclick="toggleTask(this)"></th>
                                     </tr>
                                 </table>
+                                <!--<button id ="library_requestCopy" type="button" onclick="submitClick()">Request Copy</button>-->
+
+                        
                             </div>
                         </div>
+                        
+
                     </div>
 
                     <div class="container" id="data2" style="display:none;">
@@ -307,23 +316,13 @@
                         <select class="library_historyfiltertask" id="filterTaskList" onchange="filterTaskList()" style="position:relative;left:2%;">
                             <option>Task Name</option>
                         </select>
-                        <input class="library_historysearch" type="text" name="search" placeholder="Search" id="searchKeyword" style="position:relative;left:2%;" autocomplete="off">
+                        <input class="library_historysearch" type="text" name="search" placeholder="Search" id="searchKeyword" style="position:relative;left:2%;">
                         <div class="library_historyoverflow">
                             <br>
                             <div style="overflow:auto;height:300px;">
-                                <table class="library_historytable" id="assigningList" style="position:relative;width:100%;border-style:hidden;">
-                                    <tr>
-                                        <th onclick="sortingList(0)" style="padding:0px 40px;width:15%;"> Position </th>
-                                        <th onclick="sortingList(1)" style="padding:0px 50px;width:15%;"> I.D </th>
-                                        <th onclick="sortingList(2)" style="padding:0px 80px;width:20%;"> Name  </th>
-                                        <th onclick="sortingList(3)" style="padding:0px 40px;width:15%;"> Category </th>
-                                        <th onclick="sortingList(4)" style="padding:0px 80px;width:30%;"> Task Name  </th>
-                                        <th style="width:5%;"><input type="checkbox" id="all_unchecked" checked="checked" onclick="toggleList(this)"</th>
-                                    </tr>
-                                </table>
+
                             </div>
                         </div>
-                        <button class="library_historysubmit" onclick="submit()" type="button" class="btn" style="position:relative;left:88.5%;top:10px;cursor:pointer;">Unassign Task</button>
                     </div>
                 </div>
             </div>
@@ -406,7 +405,7 @@
             </div>
         </div>
 
-        <div id="expand" onclick="expand()">
+        <div id="expand" onclick="">
             Chat
             <div id="notification"></div>
         </div>
@@ -427,7 +426,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
         <!-- jQuery Custom Scroller CDN -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-            <script type="text/javascript">
+        <script type="text/javascript">
         $(document).ready(function () {
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"
@@ -437,14 +436,9 @@
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                if(document.getElementById("toggleSide").innerHTML=="Hide sidebar"){
-                    document.getElementById("toggleSide").innerHTML = "Show sidebar";
-                } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
-                    document.getElementById("toggleSide").innerHTML = "Hide sidebar";
-                }
             });
         });
-            </script>
+        </script>
         <!-- END COPY FOR SIDEBAR JAVASCRIPT-->
 </body>
 </html>
