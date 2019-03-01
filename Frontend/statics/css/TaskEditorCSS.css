@@ -143,3 +143,13 @@
 .saveButton{
     margin-bottom: 10em;
 }
+
+.detailedStepInput {
+
+    border-style: none;
+}
+
+.taskName {
+    width: 100%;
+    height: 100px;
+}

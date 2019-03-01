@@ -25,7 +25,7 @@ function populateArray(task){
         note: task["Info"]["NoteIOS"]
     }
     taskDetails = taskData;
-    alert("OK");
+
     console.log(taskData);
     while (true){
         var stepF = "Step"+counter;
@@ -136,8 +136,12 @@ function generateStructure(){
 */
 function injectToDOM(){
     var htmlInjection;
-
+    
     htmlInjection = "";
+
+    htmlInjection += '<div style="text-align:center;"> Task Outline: </div>';
+    htmlInjection += '<div>' + '<textarea class="taskName" >' + taskDetails["outline"] + ' </textarea>' + '</div>';
+
     // Write the HTML for each individual task step
     for (var i = 0; i < steps.length; i++){
         //Task steps
@@ -159,79 +163,164 @@ function injectToDOM(){
 
         //Task description
         htmlInjection += "<div class='inputField' width='100%'>";
-        htmlInjection += "Description: <div class='containerDiv'> <textarea class = 'stepDescriptionInput'  >"+ steps[i].description + "</textarea> </div>";
+        htmlInjection += "Description: <div class='containerDiv'> <textarea class = 'stepDescriptionInput' id='" + i + "'>"+ steps[i].description + "</textarea> </div>";
         htmlInjection += "</div>";
 
-        //Detailed steps
-        htmlInjection += '<div class = "detailedStepContainer">';
-    
-        for (var j = 0; j < steps[i]["detailedSteps"].length; j++){ //Loop through the detailed steps, insert them into the page
-            htmlInjection += '<div class = "detailedStep">';
-                //move up/move down buttons
-                htmlInjection += '<div class="detailedStepButtonContainer" id=' + i + '>';
-                htmlInjection +=  "<button class='detailedStepUpButton' id=" + j + ">▲</button>";
-                htmlInjection += "<button class='detailedStepDownButton' id =" + j + ">▼</button>";
-                htmlInjection += "</div>";
-                
-                //Right side of detailed step
-                htmlInjection += '<div class="detailedStepRightContainer">';
-                htmlInjection += steps[i]["detailedSteps"][j];
-                htmlInjection += '</div>';
-
-                //delete button for detailed step
-                htmlInjection += '<div class="deleteDetailedStepButtonContainer" id= ' + i + '>';
-                htmlInjection += '<button class = "deleteDetailedStepButton" id="' + j + '">[X]</button>';
-                htmlInjection += '</div>';
-
-            htmlInjection += '</div>'
-        }   
-        htmlInjection += '<button class = "newDetailedStepButton" style="margin:10px;" id="' + i + '">[+]</button>';
-        htmlInjection += '</div>'  // End detailed steps
-
-        //Delete button on main step
-        //htmlInjection += '<button>' + "Delete step " + (i+1) + '</button>';
+        //insert detailed steps
+        htmlInjection += getDetailedStepHTML(steps, i);
 
         htmlInjection += '</div>';   // close taskStep div
     }   //End loop
    
     htmlInjection+= '<button type="button" id="addStep" val="Add Step">Add Step</button>';
     htmlInjection += '<button class="saveButton"> Save Task </button>';
-   
-    //document.writeln('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>');
-    //document.writeln("<script src='//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js' type='text/javascript'></script>");
-    //htmlInjection+=    '<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>';
-    $("#sort").html(htmlInjection);
 
-    
+    $("#sort").html(htmlInjection); //Insert the HTML for the tasks into the DOM
+
+    installEventHandlers(steps, taskDetails);
+}   // end injectToDom
+
+
+/**
+ * @function installEventHandlers
+ * @description Install the event handlers needed for the page to work correctly.
+ * @param {*} steps 
+ */
+function installEventHandlers(steps, taskDetails){
+    updateStepOutlineHandler(taskDetails);
+    updateStepNameHandler(steps);
+    updateStepDescriptionHandler(steps);
+    addStepButtonHandler(steps);
+    deleteDetailedStepButtonHandler(steps);
+    detailedStepUpButtonHandler(steps);
+    detailedStepDownButtonHandler(steps);
+    mainStepDeleteButtonHandler(steps);
+    newDetailedStepButtonHandler(steps);
+    saveButtonHandler(steps);
+    updateDetailedStepHandler(steps)
+}
+
+
+
+/**
+ * @function getDetailedStepHTML
+ * @description return the HTML to render detailed steps to teh DOM
+ * @param {*} steps 
+ * @param {*} stepNum 
+ */
+function getDetailedStepHTML(steps, stepNum){
+    var i = parseInt(stepNum);
+    var detailHTML = "";
+    detailHTML += '<div class = "detailedStepContainer">';
+    for (var j = 0; j < steps[i]["detailedSteps"].length; j++){ //Loop through the detailed steps, insert them into the page
+        detailHTML += '<div class = "detailedStep">';
+            //move up/move down buttons
+            detailHTML += '<div class="detailedStepButtonContainer" id=' + i + '>';
+            detailHTML +=  "<button class='detailedStepUpButton' id=" + j + ">▲</button>";
+            detailHTML += "<button class='detailedStepDownButton' id =" + j + ">▼</button>";
+            detailHTML += "</div>";
+            
+            //Right side of detailed step
+            detailHTML += '<div class="detailedStepRightContainer" id= "' + i + '">';
+            detailHTML += '<input type="text" class = "detailedStepInput" value = "' + steps[i]["detailedSteps"][j] + ' " id= " ' + parseInt(j) +  '"> </input>';
+            detailHTML += '</div>';
+
+            //delete button for detailed step
+            detailHTML += '<div class="deleteDetailedStepButtonContainer" id= ' + i + '>';
+            detailHTML += '<button class = "deleteDetailedStepButton" id="' + j + '">[X]</button>';
+            detailHTML += '</div>';
+
+            detailHTML += '</div>'
+    }   
+    detailHTML += '<button class = "newDetailedStepButton" style="margin:10px;" id="' + i + '">[+]</button>';
+    detailHTML += '</div>'  // End detailed steps
+    return detailHTML;
+}
+
+function updateDetailedStepHandler(steps){
+    $(".detailedStepInput").keyup(function(event){
+        var detailedNum = parseInt(event.target.id);
+        var mainStepNum = parseInt(event.target.parentElement.id);
+        steps[mainStepNum]["detailedSteps"][detailedNum] = $(event.target).val();
+    });
+}
+
+/**
+ * @function updateStepOutlineHandler
+ * @param {*} taskDetails 
+ */
+function updateStepOutlineHandler(taskDetails){
+    $( ".taskName" ).keyup(function(event) {
+        //alert( "Handler for .keyup() called." + event.target.id );
+        taskDetails["outline"] = $(event.target).val();
+        console.log(taskDetails["outline"]);
+    });
+}
+
+/**
+ * @function updateStepNameHandler
+ * @description updates the state of the steps array when a user types in a a step's name input box.
+ * @param {*} steps 
+ */
+function updateStepNameHandler(steps){
     //Event handler for updating what's input on step name textboxes.
     $( ".stepNameInput" ).keyup(function(event) {
         //alert( "Handler for .keyup() called." + event.target.id );
         steps[event.target.id].name = $(event.target).val();
-        console.log(steps[event.target.id]);
     });
+}
 
-    // Event handler for updating what's input on the step description textboxes.
+/**
+ * @function updateStepDescriptionHandler
+ * @description Update the state of the steps array when a user types in a step's description input box.
+ * @param {*} steps 
+ */
+function updateStepDescriptionHandler(steps){
     $( ".stepDescriptionInput" ).keyup(function(event) {
-        //alert( "Handler for .keyup() called." + event.target.id );
-        steps[event.target.id].description = $(event.target).val();
-        console.log(steps[event.target.id]);
+        steps[parseInt(event.target.id)].description = $(event.target).val();
+        console.log(steps[parseInt(event.target.id)]);
     });
+}
 
+/**
+ * @function addStepButtonHandler
+ * @description Adds new step to the steps array when the add step button is pressed.
+ * @param {*} steps 
+ */
+function addStepButtonHandler(steps){
     $( "#addStep").click( function(event){
         //alert("You pressed the button!");
         steps[steps.length] = newStep();
         console.log(steps);
         injectToDOM(steps);
     });
+}
 
+function deleteDetailedStepButtonHandler(steps){
+    // Event handler for detailed task delete button
+    $( ".deleteDetailedStepButton" ).click (function(event){
+        var stepNum;
+        var detailedStepNum;
+        detailedStepNum = parseInt(event.target.id);
+        stepNum = parseInt(event.target.parentElement.id);
+        //move every element to the right of this detailed step left
+        for (var i = parseInt(detailedStepNum); i < steps[stepNum]["detailedSteps"][detailedStepNum]-1; i++){
+            steps[parseInt(stepNum)]["detailedSteps"][parseInt(i)] =  steps[parseInt(stepNum)]["detailedSteps"][parseInt(i)+1];
+        }
+        steps[stepNum]["detailedSteps"].length -= 1; //Decrease the length of the array to remove the last item
+
+        injectToDOM(steps);
+    });
+}
+
+function  detailedStepUpButtonHandler(steps){
     // Event listener for the button that swaps a detailed step up
     $( ".detailedStepUpButton").click (function(event){
         var detailedStepNum;
         var stepNum;
         detailedStepNum = event.target.id;
         stepNum = event.target.parentElement.id;
-        //alert("Step num: " + stepNum + "detailed step num: " + detailedStepNum);
-        //alert("You pressed an up button!");
+      
         if (detailedStepNum > 0){   
             //Swap the detailed steps
             var temp;
@@ -241,14 +330,16 @@ function injectToDOM(){
             injectToDOM(steps);
         }
     });
+}
 
+function detailedStepDownButtonHandler(steps){
     // Event handler for the button that swaps a detailed step down
     $( ".detailedStepDownButton").click (function(event){
         var detailedStepNum;
         var stepNum;
         detailedStepNum = event.target.id;
         stepNum = event.target.parentElement.id;
-       // alert(detailedStepNum);
+
         if (detailedStepNum < steps[stepNum]["detailedSteps"].length-1){
             temp = steps[stepNum]["detailedSteps"][detailedStepNum];
             steps[stepNum]["detailedSteps"][detailedStepNum] = steps[stepNum]["detailedSteps"][parseInt(detailedStepNum)+1] ;
@@ -256,67 +347,39 @@ function injectToDOM(){
             injectToDOM(steps);
         }
     });
+}
 
-    // Event handler for detailed task delete button
-    $( ".deleteDetailedStepButton" ).click (function(event){
-        alert("Delete button pressed " + event.target.id);
-        var stepNum;
-        var detailedStepNum;
-        detailedStepNum = event.target.id;
-        stepNum = event.target.parentElement.id;
-        //move every element to the right of this detailed step left
-        for (var i = detailedStepNum; i < steps[stepNum]["detailedSteps"][detailedStepNum]-1; i++){
-            steps[stepNum]["detailedSteps"][i] =  steps[stepNum]["detailedSteps"][i+1];
-        }
-        steps[stepNum]["detailedSteps"].length -= 1; //Decrease the length of the array to remove the last item
+function mainStepDeleteButtonHandler(steps){
+   // Event handler for main task step delete button
+   $ ( ".mainStepDeleteButton" ).click(function(event){
+    var stepNum;
+    stepNum = event.target.id;
+    
+    for (var i = parseInt(stepNum); i < steps.length-1; i++){
+        steps[parseInt(i)] = steps[parseInt(i)+1];
+    }
+    steps.length -= 1;
+    injectToDOM(steps);
+});
+}
 
-        injectToDOM(steps);
+function saveButtonHandler(steps){
+    $ (".saveButton").click(function(event){
+        
+        saveTask(steps, goodPath);
     });
+}
 
-    // Event handler for main task step delete button
-    $ ( ".mainStepDeleteButton" ).click(function(event){
-        var stepNum;
-        stepNum = event.target.id;
-        //alert("Target id: " + event.target.id);
-        for (var i = stepNum; i < steps.length-1; i++){
-            steps[i] = steps[parseInt(i)+1];
-        }
-        steps.length -= 1;
-        injectToDOM(steps);
-    });
-
+function newDetailedStepButtonHandler(steps){
     $ (".newDetailedStepButton").click(function(event){
         var stepNum;
         stepNum = event.target.id;
         newDetailedStep(stepNum);
         injectToDOM(steps);
-        //alert(event.target.id);
     });
-
-    $ (".saveButton").click(function(event){
-        alert("Save button pressed");
-        saveTask(steps, goodPath);
-    });
-
-
-}   // end injectToDom
-
+}
 
 function saveTask(steps, goodPath, taskData){
-                /*
-                description: task[stepF]["MDescriptionIOS"],
-                name: task[stepF]["MtitleIOS"],
-                number: task[stepF]["Step"],
-                detailedSteps: detailedStepsJSON
-             
-
-               var taskData = {
-                category: task["Info"]["Category"],
-                outline: task["Info"]["OutlineIOS"],
-                videoURL: task["Info"]["videoURL"],
-                note: task["Info"]["NoteIOS"]
-                 }
-                */
     insertToDatabase = {};
 
     insertToDatabase["Info"] = {};
@@ -360,15 +423,16 @@ function newStep(){
     return data;
 }
 
+/**
+ * @function newDetailedStep
+ * @description adds new generic detail step to the detailedSteps array within the steps array
+ * @param {*} stepNum 
+ */
 function newDetailedStep(stepNum){
     var num = steps[stepNum]["detailedSteps"].length;
     steps[stepNum]["detailedSteps"][ num ] = "Detailed Step";
 }
 
-function makeTaskBlock(){
-    var retStr = "";
-    retStr += "<div class = 'taskStep'>";
-    retStr += "<div";
-}
+
 
 
