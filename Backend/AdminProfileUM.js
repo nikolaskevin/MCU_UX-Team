@@ -1,3 +1,11 @@
+/**
+ * @file AdminProfileUM.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
+ // contact firebase to varify and display admin information and 
 firebase.auth().onAuthStateChanged(function (firebaseUser){
 if(firebaseUser){
   console.log(firebaseUser);

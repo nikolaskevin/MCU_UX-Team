@@ -1,3 +1,10 @@
+/**
+ * @file Config.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
 var config = {
     apiKey: "AIzaSyAMnEOZj1JB52QOEFPwbS274MX3wQWYCeM",
     authDomain: "browserteam.firebaseapp.com",

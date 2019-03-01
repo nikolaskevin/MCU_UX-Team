@@ -1,4 +1,11 @@
-//Firebase DB
+/**
+ * @file Server.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
+// contact firebase to varify and display admin information and 
 var firebase=require("firebase");
 var config = {
     apiKey: "AIzaSyAMnEOZj1JB52QOEFPwbS274MX3wQWYCeM",

@@ -1,4 +1,15 @@
+/**
+ * @file chat.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
 var firebase;
+/**
+* @function $
+* @description 
+*/
 $(function(){
   var $name = $('#name'),
       $content = $('#content'),
@@ -14,7 +25,12 @@ $(function(){
       write();
     }
   });
-
+  
+/**
+* @function write
+* @description allows user to write and attatches the time
+*               written and sent
+*/
   function write(){
     var date = new Date();
     var h = date.getHours();
@@ -38,7 +54,7 @@ $(function(){
     };
     database.push(postData);
     $content.val('');
-  }
+  } // end write
 
   database.once('value', function(snapshot) {
     $show.html('');
@@ -68,11 +84,20 @@ $(function(){
       'color':'#777'
     });
   });
-});
+}); // end $
 
+/**
+* @function cancel 
+* @description allows the user to exit the chat
+*/
 function cancel(){
     document.getElementById("im").style.display = "none";
 }
+
+/**
+* @function expand
+* @description allows the user to open the chat
+*/
 function expand(){
     document.getElementById("im").style.display = "block";
 }

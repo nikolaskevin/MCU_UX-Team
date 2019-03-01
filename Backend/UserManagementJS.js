@@ -1,6 +1,17 @@
+/**
+ * @file UserManagementJS.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
+// contact firebase to varify and display admin information and 
 //var admin = require("../node_modules/firebase-admin");
 
-//Create account
+/**
+* @function newAccount
+* @description allows the admin to make a new account
+*/
 function newAccount(){
   var name = document.getElementById('Name').value;
   var sid = document.getElementById('SID').value;
@@ -84,8 +95,12 @@ function newAccount(){
       }
     }
   });
-}
-//Delete account
+}// end newAccount
+
+/**
+* @function deleteUserAccount
+* @description allows the admin to delete an accout
+*/
 function deleteUserAccount(i){
   var sid = document.getElementById('cellId['+i+']').innerHTML;
   var table = document.getElementById('UserListBody');
@@ -100,9 +115,12 @@ function deleteUserAccount(i){
     alert("successfully removed the account!");
     location.reload();
   }
-}
+}// end deleteUserAccount
 
-//Edit account
+/**
+* @function editUserAccount
+* @description allows the admin to edit an account
+*/
 function editUserAccount(i){
   var sid = document.getElementById('cellId['+i+']').innerHTML;
   var fbACCE= firebase.database().ref('uAccount').child(sid);
@@ -123,8 +141,13 @@ function editUserAccount(i){
   });
 
 
-}
-//Submit edited data
+}// end editUserAccount
+
+/**
+* @function editedUserAccount
+* @description this is where the admin submits the edited data,
+*               checks to see if the information is correct/ already exists
+*/
 function editedUserAccount(){
   var sid = document.getElementById('SIDE').value;
   var name= document.getElementById('NameE').value;
@@ -187,12 +210,16 @@ function editedUserAccount(){
       }
     }
   });
-}
+}// end eidtedUserAccount
 
 //Display UM table - UID, NAME, STATUS, EDIT button, DELETE button
 var rowIndex=0;
 var fbACC = firebase.database().ref('uAccount');
 
+/**
+* @function tableNewRow
+* @description adds a new row to the User Management table
+*/
 function tableNewRow(fb){
   var tablelist =document.getElementById('UserListBody');
   console.log(tablelist);
@@ -238,8 +265,12 @@ function tableNewRow(fb){
 
   });
 
-}
+}// end tableNewRow
 
+/**
+* @function showusermanagement
+* @description 
+*/
 function showusermanagement(){
   document.getElementById("data1").style.display = "block";
   document.getElementById("data2").style.display = "none";
@@ -247,8 +278,12 @@ function showusermanagement(){
   document.getElementById("User Management").style.opacity = "1";
   document.getElementById("LoginTime").style.opacity = ".8";
   document.getElementById("LogoutTime").style.opacity = ".8";
-}
+}// end showuseremanagement
 
+/**
+* @function showlogintime
+* @description shows the login time of the browser and app accounts
+*/
 function showlogintime(){
   document.getElementById("data1").style.display = "none";
   document.getElementById("data2").style.display = "block";
@@ -256,8 +291,12 @@ function showlogintime(){
   document.getElementById("User Management").style.opacity = ".8";
   document.getElementById("LoginTime").style.opacity = "1";
   document.getElementById("LogoutTime").style.opacity = ".8";
-}
+}// end showlogintime
 
+/**
+* @function showlogouttime
+* @description shows the logout time of the browser and app accounts
+*/
 function showlogouttime(){
   document.getElementById("data1").style.display = "none";
   document.getElementById("data2").style.display = "none";
@@ -265,8 +304,12 @@ function showlogouttime(){
   document.getElementById("User Management").style.opacity = ".8";
   document.getElementById("LoginTime").style.opacity = ".8";
   document.getElementById("LogoutTime").style.opacity = "1";
-}
+} //end showlogouttime
 
+/**
+* @function showchangepassword
+* @description shows when a user has changed their passwrod to
+*/
 function showchangepassword(){
   document.getElementById("data1").style.display = "none";
   document.getElementById("data2").style.display = "none";
@@ -274,9 +317,13 @@ function showchangepassword(){
   document.getElementById("User Management").style.opacity = ".8";
   document.getElementById("LoginTime").style.opacity = ".8";
   document.getElementById("LogoutTime").style.opacity = ".8";
-}
+}// end showchangepassword
 
 
+/**
+* @function openmenu
+* @description allows user to open the menu that switches languages and logout (?)
+*/
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";
@@ -286,10 +333,15 @@ function openmenu(){
   document.getElementById("menu").style.display = "block";
   document.getElementById("openmenu").style.opacity = ".6";
 }
-}
+}// end openmenu
 
 var fbStatus = firebase.database().ref('AccountStatus/Browser');
 var rowIndex2 = 0;
+
+/**
+* @function tableBrowserLogging
+* @description makes the table for the browser accounts table
+*/
 function tableBrowserLogging(fb){
   var tablelist =document.getElementById('browseraccountbody');
   fb.once("value",function(snapshot){
@@ -322,18 +374,24 @@ function tableBrowserLogging(fb){
     });
   });
 
-}
+}// end tableBrowserLogging
 
+/**
+* @function closeHistory
+* @description allows the admin to close out of the history menu
+*/
 function closeHistory(){
   document.getElementById('browsaccountname').style.display='none';
   document.getElementById('viewbacchistory').style.display='none';
   document.getElementById('appaccountname').style.display='none';
   document.getElementById('viewapphistory').style.display='none';
 
-}
+}// end closeHistory
 
-
-
+/**
+* @function historyBrowserLogging
+* @description allows the admin to open the history menu for browser users
+*/
 function historyBrowserLogging(n){
   var hisrow = 0;
   var hisrowout = 0;
@@ -397,10 +455,15 @@ function historyBrowserLogging(n){
 
   });
 
-}
+}// end historyBrowserLogging
 
 var fbStatus2 = firebase.database().ref('AccountStatus/App');
 var rowIndex3 = 0;
+
+/**
+* @function tableAppLogging
+* @description makes the table for the app account tab
+*/
 function tableAppLogging(fb){
   var tablelist =document.getElementById('appaccountbody');
   fb.once("value",function(snapshot){
@@ -433,8 +496,12 @@ function tableAppLogging(fb){
     });
   });
 
-}
+}// end tableAppLogging
 
+/**
+* @function historyAppLogging
+* @description allows the admin to open the history menu for app users
+*/
 function historyAppLogging(n){
   var rowin = 0;
   var rowout = 0;
@@ -498,8 +565,12 @@ function historyAppLogging(n){
 
   });
 
-}
+}// end historyAppLogging
 
+/**
+* @function sortDateandTime
+* @description sorts the logins by time
+*/
 function sortDateandTime(n,m){
   var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
   table = document.getElementById(n);

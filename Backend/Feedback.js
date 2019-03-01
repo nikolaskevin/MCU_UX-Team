@@ -1,4 +1,11 @@
+/**
+ * @file Feedback.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
 
+// backbone for the feedback page
     var fbFeedback = firebase.database().ref("Feedback/");
     var num = 0;
     fbFeedback.once("value")
@@ -8,7 +15,10 @@
             match_id(id,fbFeedback);
        });
     });
-
+/**
+* @function match_id
+* @description verifys whether the user in is a CNA or patient/family member
+*/
 function match_id(id,fbFeedback){
 
     if (id.charAt(0) == "3"){
@@ -51,8 +61,17 @@ function match_id(id,fbFeedback){
            });
     }
 
-}
+} //end matchId
 var index = 0;
+
+/**
+* @function tableform
+* @description fills the table for the feedback
+* @param {*} id 
+* @param {*} name 
+* @param {*} fbFeedback 
+* @param {*} picture 
+*/
 function tableform(id,name,fbFeedback,picture){
     fbFeedback.child(id+"/System/").once('value')
     .then(function(childSnapshot2){//System
@@ -205,7 +224,21 @@ function tableform(id,name,fbFeedback,picture){
         })
     });
 
-}
+} //end tableform
+
+/**
+* @function getReply
+* @description displays the reply to the feedback
+* @param {*} id 
+* @param {*} index 
+* @param {*} year 
+* @param {*} month 
+* @param {*} date 
+* @param {*} h 
+* @param {*} m 
+* @param {*} s 
+* @param {*} feedbackID 
+*/
 function getReply(id,index,year,month,date,h,m,s,feedbackID){
     console.log("123");
     console.log(feedbackID);
@@ -227,8 +260,13 @@ function getReply(id,index,year,month,date,h,m,s,feedbackID){
             document.getElementById("replyTime["+index+"]").innerHTML = tim;
         })
     })
-}
+} //end getReply
 
+/**
+* @function replyToggle
+* @description opens/closes the text box where the reply will be written
+* @param {*} index 
+*/
 function replyToggle(index){
     if(document.getElementById("message["+index+"]").style.display =="inline"){
         document.getElementById("message["+index+"]").style.display = "none";
@@ -241,8 +279,21 @@ function replyToggle(index){
         document.getElementById("reply["+index+"]").innerHTML = "Collapse";
         document.getElementById("btn["+index+"]").style.display = "inline";
     }
-}
+} // end replyToggle
 
+/**
+* @function sendMess
+* @description send a reply to the feedback
+* @param {*} id 
+* @param {*} year 
+* @param {*} month 
+* @param {*} index 
+* @param {*} date 
+* @param {*} h 
+* @param {*} m 
+* @param {*} s 
+* @param {*} feedbackID 
+*/
 function sendMess(id,year,month,index,date,h,m,s,feedbackID){
 
     var today = new Date();
@@ -276,14 +327,24 @@ function sendMess(id,year,month,index,date,h,m,s,feedbackID){
     document.getElementById("replyComment["+index+"]").innerHTML = comment;
     replyToggle(index);
 
-}
+} //end sendMess
 
+/**
+* @function setTimeout
+* @description sets a timer for inactivity of user
+*/
 setTimeout(function(){
     pat = document.getElementById("container");
     staff = document.getElementById("container1");
     sorting(pat);
     sorting(staff)
-}, 3000);
+}, 3000); //end setTimeout
+
+/**
+* @function sorting
+* @description 
+* @param {*} table
+*/
 function sorting(table){
   var  rows, switching, i, x, y, s, shouldSwitch, dir, switchcount = 0;
 
@@ -318,7 +379,10 @@ function sorting(table){
   }
 }
 
-
+/**
+* @function showsf
+* @description gets the staff feedback
+*/
 function showsf(){
   document.getElementById("container").style.display = "block";
   document.getElementById("container1").style.display = "none";
@@ -326,8 +390,10 @@ function showsf(){
   document.getElementById("patientfeedbackspan").style.opacity = ".8";
 }
 
-
-
+/**
+* @function showpf
+* @description gets the family(patient) feedback
+*/
 function showpf(){
   document.getElementById("container").style.display = "none";
   document.getElementById("container1").style.display = "block";
@@ -335,6 +401,10 @@ function showpf(){
   document.getElementById("patientfeedbackspan").style.opacity = "1";
 }
 
+/**
+* @function openmenu
+* @description allows user to open the menu that switches languages and logout (?)
+*/
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";
@@ -346,30 +416,50 @@ function openmenu(){
 }
 }
 
-
+/**
+* @function profile
+* @description gets the profile information of current user
+*/
 function profile(){
   document.getElementById("profile").style.display = "block";
 }
 
+/**
+* @function closeprofile
+* @description allows the user to close the profile information
+*/
 function closeprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "none";
 }
 
+/**
+* @function editprofile
+* @description allows the user to edit their basic profile information
+*/
 function editprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "block";
 }
 
+/**
+* @function cancelprofile
+* @description allows the user to cancel out of editing their information
+*/
 function cancelprofile(){
   window.location.reload()
 }
 
+/**
+* @function submitprofile
+* @description allows the user to submit the edits to their profile
+* not completed, but not getting rid of until next sprint
+*/
 function submitprofile(){
 
 }
 
-
+//gets the current time and stores in a variable
 var a = new Date();
 var hour = a.getHours();
 var minute = a.getMinutes();

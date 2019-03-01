@@ -1,3 +1,11 @@
+/**
+ * @file Policy.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
+// contact firebase to varify and display admin information and 
 firebase.auth().onAuthStateChanged(function (firebaseUser){
 if(firebaseUser){
   console.log(firebaseUser);
@@ -11,9 +19,13 @@ if(firebaseUser){
 }
 });
 
+/**
+* @function Logout
+* @description allows the user to log out of the site
+*/
 function Logout(){
   firebase.auth().signOut();
-}
+} //end logout
 
 var storageRef = firebase.storage().ref('Policy/policy.html');
   storageRef.getDownloadURL().then(function (url) {
@@ -21,6 +33,10 @@ var storageRef = firebase.storage().ref('Policy/policy.html');
   document.getElementById("policy").src=url
 });
 
+/**
+* @function openmenu
+* @description allows user to open the menu that switches languages and logout (?)
+*/
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";
@@ -30,34 +46,52 @@ function openmenu(){
   document.getElementById("menu").style.display = "block";
   document.getElementById("openmenu").style.opacity = ".6";
 }
-}
+} //end openmenu
 
-
-
+/**
+* @function profile
+* @description gets the profile information of current user
+*/
 function profile(){
   document.getElementById("profile").style.display = "block";
   displayProfile();
-}
+}// end profile
 
+/**
+* @function closeprofile
+* @description allows the user to close the profile information
+*/
 function closeprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "none";
-}
+}// end closeprofile
 
+/**
+* @function editprofile
+* @description allows the user to edit their basic profile information
+*/
 function editprofile(){
   document.getElementById("editprofile").style.display = "block";
   document.getElementById('nameProfileE').value = document.getElementById('nameProfile').innerHTML;
   document.getElementById('idProfileE').innerHTML= document.getElementById('idProfile').innerHTML;
   document.getElementById('emailProfileE').value = document.getElementById('emailProfile').innerHTML;
   document.getElementById("profile").style.display = "none";
-}
+}// end editprofile
 
+/**
+* @function cancelprofile
+* @description allows the user to cancel out of editing their information
+*/
 function cancelprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "none";
   document.getElementById("changePass").style.display = "none";
-}
+}// end cacelprofile
 
+/**
+* @function submitprofile
+* @description allows the user to submit the edits to their profile
+*/
 function submitprofile(){
   var name=document.getElementById('nameProfileE').value;
   var id =document.getElementById('idProfileE').value;
@@ -81,9 +115,9 @@ function submitprofile(){
       });
     }
   });
-}
+}// end submitprofile
 
-
+//gets the current time and stores in a variable
 var a = new Date();
 var hour = a.getHours();
 var minute = a.getMinutes();
@@ -92,7 +126,10 @@ var second = a.getSeconds();
 var time = hour+":"+minute+":"+second;
  console.log(time);
 
-
+/**
+* @function displayProfile
+* @description displays a user profile
+*/
 function displayProfile(){
   firebase.auth().onAuthStateChanged(function(user){
     if(user){
@@ -105,13 +142,21 @@ function displayProfile(){
       document.getElementById('emailProfile').innerHTML=email;
     }
   });
-}
+} //end displayProfile
 
+/**
+* @function changePassword
+* @description allows the change of a password
+*/
 function changePassword(){
   document.getElementById("changePass").style.display="block";
 
-}
+} // end changePassword
 
+/**
+* @function submitNewPass
+* @description takes care of the process of verifying the new password
+*/
 function submitNewPass(){
   var newPass= document.getElementById('newPassword').value;
   var cnewPass=document.getElementById('confirmnewPassword').value;
@@ -138,4 +183,4 @@ function submitNewPass(){
     alert("Your Password are not match!")
   }
 
-}
+}// end submitNewPass
