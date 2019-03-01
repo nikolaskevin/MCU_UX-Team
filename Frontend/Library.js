@@ -394,6 +394,13 @@ function display_List(fbList){
             })
         })
 }
+
+/**
+ * @function deleteNotExist
+ * @description
+ * @param {*} fbList 
+ * @param {*} path 
+ */
 function deleteNotExist(fbList,path){
   fbList.once("value")
   .then(function(snapshot){
@@ -824,12 +831,22 @@ $(document).ready(function(){
              }
 }
 
+/**
+ * @function closeclose_form
+ * @description
+ */
 function closeclose_form(){
     document.getElementById('form1').style.display ='none';
     console.log("Close");
     var Table = document.getElementById("data2");
     Table.innerHTML = ""
 }
+
+/**
+ * @function display_Detail
+ * @description
+ * @param {*} num 
+ */
 function display_Detail(num){
   document.getElementById('form1').style.display ='block';
   var table = document.getElementById("assigningTask");
@@ -860,6 +877,11 @@ function display_Detail(num){
       })
   });
 }
+
+/**
+ * @function directTask
+ * @description
+ */
 function directTask(){
     var cat = document.getElementById("category").innerHTML;
     var taskN = document.getElementById("taskname").innerHTML;
@@ -871,7 +893,10 @@ function directTask(){
 
 }
 
-
+/**
+ * @function showassigntask
+ * @description
+ */
 function showassigntask(){
   document.getElementById("data1").style.display = "block";
   document.getElementById("data2").style.display = "none";
@@ -879,6 +904,10 @@ function showassigntask(){
   document.getElementById("taskhistoryspan").style.opacity = ".8";
 }
 
+/**
+ * @function showtaskhistory
+ * @description
+ */
 function showtaskhistory(){
   document.getElementById("data1").style.display = "none";
   document.getElementById("data2").style.display = "block";
@@ -886,6 +915,10 @@ function showtaskhistory(){
   document.getElementById("taskhistoryspan").style.opacity = "1";
 }
 
+/**
+ * @function openmenu
+ * @description
+ */
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";
@@ -897,29 +930,52 @@ function openmenu(){
 }
 }
 
-
+/**
+ * @function profile
+ * @description
+ */
 function profile(){
   document.getElementById("profile").style.display = "block";
 }
 
+/**
+ * @function closeprofile
+ * @description
+ */
 function closeprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "none";
 }
 
+/**
+ * @function editprofile
+ * @description
+ */
 function editprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "block";
 }
 
+/**
+ * @function cancelprofile
+ * @description
+ */
 function cancelprofile(){
   window.location.reload()
 }
 
+/**
+ * @function submitprofile
+ * @description
+ */
 function submitprofile(){
 
 }
 
+/**
+ * @function submitClick
+ * @description
+ */
 function submitClick(){
   document.getElementById("library_requestCopy")
   var counter = 0, // counter for checked checkboxes
