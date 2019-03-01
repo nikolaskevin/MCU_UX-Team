@@ -17,7 +17,7 @@
 
 /**
  * @function match_id
- * @description
+ * @description verifys wheter the user is a CNA or Patient/Family member
  * @param {*} id 
  * @param {*} fbFeedback 
  */
@@ -67,7 +67,7 @@ function match_id(id,fbFeedback){
 var index = 0;
 /**
  * @function tableform
- * @description
+ * @description  fills the table for the feedback
  * @param {*} id 
  * @param {*} name 
  * @param {*} fbFeedback 
@@ -239,7 +239,7 @@ function tableform(id,name,fbFeedback,picture){
 
 /**
  * @function getReply
- * @description
+ * @description displays the reply to the feedback
  * @param {*} id 
  * @param {*} index 
  * @param {*} year 
@@ -270,8 +270,8 @@ function getReply(id,index,year,month,date,h,m,s,feedbackID){
 }
 
 /**
- * @function getReply
- * @description
+ * @function getDirectorReply
+ * @description displays the reply to staff feedback from teh director
  * @param {*} id 
  * @param {*} index 
  * @param {*} year 
@@ -303,7 +303,7 @@ function getDirectorReply(id, index, year, month, date, h, m, s, feedbackID) {
 
 /**
  * @function replyToggle
- * @description
+ * @description opens/closes the text box where the reply will be written
  * @param {*} index 
  */
 function replyToggle(index){
@@ -323,7 +323,7 @@ function replyToggle(index){
 
 /**
  * @function sendMess
- * @description
+ * @description  send a reply to the feedback
  * @param {*} id 
  * @param {*} year 
  * @param {*} month 
@@ -371,10 +371,20 @@ function sendMess(id,year,month,index,date,h,m,s,feedbackID){
     replyToggle(index);
 
 }
+
+/**
+* @function reply
+* @description not sure it's needed, not deleting since it's so close to a sprint end
+* @param {*} id 
+*/
 function reply(id) {
     
 }
 
+/**
+* @function setTimeout
+* @description sets a timer for inactivity of user
+*/
 setTimeout(function(){
     pat = document.getElementById("container");
     staff = document.getElementById("container1");
@@ -426,7 +436,7 @@ function sorting(table){
 
 /**
  * @function showsf
- * @description
+ * @description gets the staff feedback
  */
 function showsf(){
   document.getElementById("container").style.display = "block";
@@ -437,7 +447,7 @@ function showsf(){
 
 /**
  * @function showpf
- * @description
+ * @description gets the family(patient) feedback
  */
 function showpf(){
   document.getElementById("container").style.display = "none";
@@ -448,7 +458,7 @@ function showpf(){
 
 /**
  * @function openmenu
- * @description
+ * @description allows user to open the menu that switches languages and logout (?)
  */
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
@@ -463,7 +473,7 @@ function openmenu(){
 
 /**
  * @function profile
- * @description
+ * @description gets the profile information of current user
  */
 function profile(){
   document.getElementById("profile").style.display = "block";
@@ -471,7 +481,7 @@ function profile(){
 
 /**
  * @function closeprofile
- * @description
+ * @description allows the user to close the profile information
  */
 function closeprofile(){
   document.getElementById("profile").style.display = "none";
@@ -480,7 +490,7 @@ function closeprofile(){
 
 /**
  * @function editprofile
- * @description
+ * @description allows the user to edit their basic profile information
  */
 function editprofile(){
   document.getElementById("profile").style.display = "none";
@@ -489,7 +499,8 @@ function editprofile(){
 
 /**
  * @function cancelprofile
- * @description
+ * @description allows the user to cancel out of editing their information
+
  */
 function cancelprofile(){
   window.location.reload()
@@ -497,7 +508,7 @@ function cancelprofile(){
 
 /**
  * @function submitprofile
- * @description
+ * @description allows the user to submit the edits to their profile not completed, but not getting rid of until next sprint
  */
 function submitprofile(){
 
