@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿<!--
+  @file 06Taskeditor2.html
+  @author  MCU
+  @author  Kutztown University
+  @license
+-->
+<!DOCTYPE html>
 <!--#30B400#339933#99CC00#FFFFCC-->
 <html>
 <head>
@@ -63,6 +69,12 @@
                     Library</a>
                 </li>
                 <li>
+                    <a href="../Frontend/10Mytask2.html">
+                        <i class="glyphicon glyphicon-book"></i>
+                        My Tasks
+                    </a>
+                </li>
+                <li>
                     <a href="../Frontend/06Taskeditor2.html">
                         <i class="glyphicon glyphicon-tasks"></i>
                     Task Editor</a>
@@ -110,7 +122,7 @@
                                     <a href="javascript:void(0)" class="dropbtn"><span class="glyphicon glyphicon-cog white-text"></span></a>
                                     <div class="dropdown-content">
                                         <a href="#">English</a>
-                                        <a href="/../Frontend-Chinese/01Aboutus2.html">Chinese</a>
+                                        <a href="/../Frontend-Chinese/06TaskEditor2.html">Chinese</a>
                                         <a onClick="Logout(); return false;" href="../Frontend/00Login2.html">Logout</a>
                                     </div>
                                 </li>
@@ -153,6 +165,7 @@
                 </div>
             </div> <!-- END OF THE TWO HEADER!! -->
 
+
             <!---<div class="main container-fluid wrapper">-->
             <div style="display: flex; width:100%; height:80%;">
                 <!-- START OF MIDDLE CONTENT-->
@@ -160,9 +173,19 @@
                         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
                         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>
 
+                        <div class = "taskInfoContainer">
+                            <div class = "taskEditorContent" id="taskHeader"> </div>
+                        </div>
+
                         <div class="sortableContainer" id="sortableContainer">
                             <div class="sortable" id="sort"></div>
+                            <div class = "taskEditorContent" id="taskFooter"> </div>
                         </div>
+
+                        <div class = "taskInfoContainer">
+                            
+                        </div>
+                        
                         <script type='text/javascript' src='./TaskEditor2JS.js'></script>
                         
              

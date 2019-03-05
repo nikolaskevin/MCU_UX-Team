@@ -1,11 +1,18 @@
 
 var taskDetails=[];
 var steps=[];
-
+var goodPath = "";
 var taskSearch = "0000000000000000001";
 var a;
 var b;
-
+var goodPath = localStorage.getItem("taskPath");
+var taskN = localStorage.getItem("taskN");
+taskPath = goodPath;
+//var goodPath = window.path;
+if (goodPath  == null){
+    alert("No valid task chosen from library");
+    location.href ="/../Frontend/05Library2.html";
+}
 getTaskPath(taskSearch, getTaskPathCallback);
 
 function getTaskPathCallback(task){
@@ -68,7 +75,7 @@ $('.sortable').sortable({
     },
     stop: function(event, ui){
         b = ui.item.index();
-        //alert("was: " + a + " is now: " + b);
+        alert("was: " + a + " is now: " + b);
         var temp;
         temp = steps[a];
         steps[a] = steps[b];
@@ -76,12 +83,11 @@ $('.sortable').sortable({
         console.log(steps);
         injectToDOM();
         $(".nestedSortable").sortable( {axis:"y"});
-       
     }
 });
 
-var taskPath = "";
-var goodPath;
+//var taskPath = "";
+//var goodPath;
 //Get task with a certain ID from the database
 function getTaskPath(taskID, callback){
     var listOfTasks = "";
@@ -101,13 +107,15 @@ function getTaskPath(taskID, callback){
             catSnapshot.forEach(function(taskSnapshot){
                 console.log(taskSnapshot.val());
                 var task = taskSnapshot.key;
-                if (taskSnapshot.val()['TaskID'] == taskID){
-                    taskPath += taskSnapshot.key;
-                    goodPath = taskPath;
-                    callback(taskSnapshot.val()); //callback function after getting the path to the task we're looking for.
-                    return;
-                }
-                listOfTasks += "\n" +  task;
+               // if (taskSnapshot.val()['TaskID'] == taskID){
+                if (task == taskN){
+                    if (taskSnapshot.val())
+                        taskPath += taskSnapshot.key;
+                        goodPath = taskPath;
+                        callback(taskSnapshot.val()); //callback function after getting the path to the task we're looking for.
+                        return;
+                    }
+                    listOfTasks += "\n" +  task;
             });
         });
         taskPath = "";
@@ -141,7 +149,8 @@ function injectToDOM(){
 
     htmlInjection += '<div style="text-align:center;"> Task Outline: </div>';
     htmlInjection += '<div>' + '<textarea class="taskName" >' + taskDetails["outline"] + ' </textarea>' + '</div>';
-
+    $("#taskHeader").html(htmlInjection);
+    htmlInjection = "";
     // Write the HTML for each individual task step
     for (var i = 0; i < steps.length; i++){
         //Task steps
@@ -171,11 +180,11 @@ function injectToDOM(){
 
         htmlInjection += '</div>';   // close taskStep div
     }   //End loop
-   
+    $("#sort").html(htmlInjection); //Insert the HTML for the tasks into the DOM
+    htmlInjection = "";
     htmlInjection+= '<button type="button" id="addStep" val="Add Step">Add Step</button>';
     htmlInjection += '<button class="saveButton"> Save Task </button>';
-
-    $("#sort").html(htmlInjection); //Insert the HTML for the tasks into the DOM
+    $("#taskFooter").html(htmlInjection); //Insert the HTML for the tasks into the DOM
 
     installEventHandlers(steps, taskDetails);
 }   // end injectToDom
