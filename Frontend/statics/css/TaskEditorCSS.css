@@ -3,6 +3,24 @@
     width:70%;
 }
 
+.taskInfoContainer{
+
+    width:70%;
+}
+
+#taskHeader{
+    margin: 0 auto;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+}
+
+#taskFooter{
+    margin: 0 auto;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+}
 .myContent{
     height: 800px;
     width: 100%;
