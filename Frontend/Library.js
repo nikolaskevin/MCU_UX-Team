@@ -6,6 +6,7 @@
  */
 
 var fbTask = firebase.database().ref("TaskInstruction/");
+var copy = document.getElementById("library_requestCopy");
 var num = 0;
 var checkbox_name = [];
 fbTask.once("value")
@@ -48,15 +49,22 @@ fbTask.once("value")
             var cellCategory = row.insertCell(-1);
             cellCategory.appendChild(document.createTextNode(childSnapshot1.key));
             var cellName = row.insertCell(-1);
-            cellName.appendChild(document.createTextNode(childSnapshot2.key));
+            cellName.appendChild(document.createTextNode(childSnapshot2.val()["Info"]["Title"]));
+            var cellID = row.insertCell(-1);
+            
+            //Put the ID in a hidden cell in the table to access later
+            cellID.setAttribute("id","id_holder["+num+"]");
+            cellID.appendChild(document.createTextNode(childSnapshot2.val()["TaskID"]));
+            cellID.setAttribute("hidden", true);
             button.innerHTML="Detail";
             var cellButton= row.insertCell(-1);
             var cellCheckbox = row.insertCell(-1);
             cellButton.appendChild(button);
             cellCheckbox.appendChild(checkBox);
-                    })
-                })
-            })
+          })
+      })
+})
+
 
  /**
   * @function toggleTask
@@ -94,6 +102,7 @@ console.log(length);
     }
 }
 
+
 /**
  * @function toggleCF
  * @description when check box in the header row in the assignee list table in Library > Assign Task is clicked
@@ -127,7 +136,6 @@ function toggleCF(source) {
             }
         }
     }
-
 }
 
 /**
@@ -172,6 +180,7 @@ function toggleList(source) {
  * @description selected task is assigned to selected assignees
  */
 function assign(){
+    document.getElementById("library_requestCopy")
     var table = document.getElementById("assigningTask");
     var tr = table.getElementsByTagName("tr");
     var table1 = document.getElementById("assigningCF");
@@ -205,7 +214,7 @@ function assign(){
   }
   c++;
 }
-var r = alert("Task have been assigned!");
+var r = alert("Task have been copied!");
          if(true)
          {
            window.location.reload();
@@ -280,7 +289,7 @@ fbPAT.once("value")
         cellID.appendChild(document.createTextNode(childSnapshot1.key));
         childSnapshot1.forEach(function(childSnapshot2){
             childSnapshot2.forEach(function(childSnapshot3){
-                var childKey =childSnapshot3.key;
+                var childKey = childSnapshot3.key;
                 var childData = childSnapshot3.val();
                 if(childKey == "Name"){
                     var cellName = row.insertCell(0);
@@ -306,12 +315,6 @@ display_List(fbList_CNA);
 display_List(fbList_PAT);
 var checkBox_index = 0;
 var x = 0;
-
-/**
- * @function display_List
- * @description
- * @param {*} fbList 
- */
 function display_List(fbList){
     fbList.once("value")
     .then(function(snapshot){
@@ -405,29 +408,29 @@ function display_List(fbList){
  * @param {*} path 
  */
 function deleteNotExist(fbList,path){
-        fbList.once("value")
-        .then(function(snapshot){
-            var array = [];
-            var index = 0;
-            var a = [];
-            var i = 0;
-            snapshot.forEach(function(childSnapshot1){
-                var CF_Name;
-                    childSnapshot1.forEach(function(childSnapshot2){
-                        if(childSnapshot2.key == "Task"){
-                            childSnapshot2.forEach(function(childSnapshot3){
-                                childSnapshot3.forEach(function(childSnapshot4){
-                                    var childKey = childSnapshot4.key;
-                                    var childData = childSnapshot4.val();
-                                    if(childData == path){
-                                        fbList.child(childSnapshot1.key+"/"+"Task/"+childSnapshot3.key+"/"+childSnapshot4.key).remove();
-                                    }
-                                });
-                            });
-                        }
-                    });
-                });
-            });
+  fbList.once("value")
+  .then(function(snapshot){
+  var array = [];
+  var index = 0;
+  var a = [];
+  var i = 0;
+  napshot.forEach(function(childSnapshot1){
+    var CF_Name;
+    dhildSnapshot1.forEach(function(childSnapshot2){
+      if(childSnapshot2.key == "Task"){
+        childSnapshot2.forEach(function(childSnapshot3){
+          childSnapshot3.forEach(function(childSnapshot4){
+            var childKey = childSnapshot4.key;
+            var childData = childSnapshot4.val();
+            if(childData == path){
+              fbList.child(childSnapshot1.key+"/"+"Task/"+childSnapshot3.key+"/"+childSnapshot4.key).remove();
+            }
+          });
+        });
+      }
+    });
+  });
+});
 }
 
 
@@ -437,14 +440,14 @@ function deleteNotExist(fbList,path){
 
 
 $(document).ready(function(){
-$("#searchInput").on("keyup", function() {
+  $("#searchInput").on("keyup", function() {
     var table = document.getElementById("assigningTask");
     var value = $(this).val().toLowerCase();
     console.log(value);
-          $("#assigningTask tr:not(:first)").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-          });
+    $("#assigningTask tr:not(:first)").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
+  });
 });
 
     $(document).ready(function(){
@@ -466,8 +469,7 @@ $("#searchInput").on("keyup", function() {
       });
     });
 
-
-    /**
+   /**
      * @function sortingCF
      * @description sorts the assignee table in Library > Assign Task
      * @param {*} n number of the column that the table is being sorted by
@@ -526,6 +528,7 @@ $("#searchInput").on("keyup", function() {
         }
       }
     }
+
 
     /**
      * @function sortingTask
@@ -587,7 +590,7 @@ $("#searchInput").on("keyup", function() {
       }
     }
 
-    /**
+      /**
      * @function sortingList
      * @description sorts the task table in Library > Task History
      * @param {*} n number of the column that the table is being sorted by
@@ -646,7 +649,7 @@ $("#searchInput").on("keyup", function() {
         }
       }
     }
-    
+
     /**
      * @function filter_Category
      * @description filters task list in Library > Assign Task according
@@ -686,7 +689,7 @@ $("#searchInput").on("keyup", function() {
       }
     }
 
-    /**
+      /**
      * @function filter_Position
      * @description filters assignee list in Library > Assign Task according
      *  to the selected position
@@ -723,7 +726,7 @@ $("#searchInput").on("keyup", function() {
       }
     }
 
-    /**
+      /**
      * @function filterNameList
      * @description filters task table in Library > Task History according
      *  to the selected name
@@ -752,8 +755,8 @@ $("#searchInput").on("keyup", function() {
           }
       }
     }
-    
-    /**
+
+      /**
      * @function filterTaskList
      * @description filters task table in Library > Task History according
      *  to the selected task name
@@ -783,7 +786,7 @@ $("#searchInput").on("keyup", function() {
       }
     }
 
-    /**
+      /**
      * @function viewassignedtask
      * @description
      */
@@ -797,7 +800,7 @@ $("#searchInput").on("keyup", function() {
      * THIS ISN'T CALLED IN 05Library2.html
      */
     function close_form(){
-        document.getElementById("form1").style.display = "none";
+        document.getElementById("form").style.display = "none";
         document.getElementById("popup_detail").style.display = "none";
     }
 
@@ -836,19 +839,19 @@ $("#searchInput").on("keyup", function() {
 
 /**
  * @function closeclose_form
- * @description close details pop up box
- * This doesn't work as of 2/21/19
+ * @description
  */
 function closeclose_form(){
-    document.getElementById('form1').style.display = 'none';
-    
+    document.getElementById('form1').style.display ='none';
+    console.log("Close");
+    var Table = document.getElementById("data2");
+    Table.innerHTML = ""
 }
 
 /**
  * @function display_Detail
- * @description in Library > Assign Task, task details are displayed in a pop
- *  up window
- * @param {*} num row number of task in displayed task list
+ * @description
+ * @param {*} num 
  */
 function display_Detail(num){
   document.getElementById('form1').style.display ='block';
@@ -857,15 +860,20 @@ function display_Detail(num){
   var p = document.createElement('p');
   var Ukey = tr[num+1].cells[0].innerText;
   var Ukey1 = tr[num+1].cells[1].innerText;
+  var TID = tr[num+1].cells[2].innerText;
+  //TaskInstruction/[Category]/[Name] should be TaskInstruction/[category]/[ID]
   var fbTask= firebase.database().ref('TaskInstruction/'+Ukey+"/"+Ukey1);
   //document.getElementById("TaskName").innerHTML = Ukey1;
-  console.log(Ukey1);
+  console.log("UKey1: " + Ukey1);
+  console.log("TID: " + TID)
   var array = [];
   var i = 0;
+  //Ukey  - task category
+  //Ukey1 - task name?
   fbTask.on('value', function(snapshot){
       document.getElementById("taskname").innerHTML = Ukey1;
       document.getElementById("category").innerHTML = Ukey;
-
+      document.getElementById("taskID").innerHTML = TID;
       snapshot.forEach(function(snapshot1){
           console.log(snapshot1.key);
           if(snapshot1.key == "Info"){
@@ -883,22 +891,28 @@ function display_Detail(num){
 
 /**
  * @function directTask
- * @description redirects to task editor for selected task to view more info
+ * @description Generates a path to the task in the database and redirects to the task editor.
  */
 function directTask(){
     var cat = document.getElementById("category").innerHTML;
     var taskN = document.getElementById("taskname").innerHTML;
+    var taskID = document.getElementById("taskID").innerHTML;
+    var taskPath = "TaskInstruction/" + cat + "/" + taskID;
+    alert (taskPath);
     sessionStorage.setItem("from","Library.html");
     sessionStorage.setItem("category",cat);
     sessionStorage.setItem("taskname",taskN);
-
+    window.path = "TaskInstruction/" + cat + "/" + taskN;
+    localStorage.setItem("taskPath", taskPath);
+    localStorage.setItem("taskN", taskN);
+    //alert("HI" + localStorage.getItem("taskPath"));
     location.href ="/../Frontend/06Taskeditor2.html";
 
 }
 
 /**
  * @function showassigntask
- * @description shows Assign Task tab on Library page
+ * @description
  */
 function showassigntask(){
   document.getElementById("data1").style.display = "block";
@@ -909,7 +923,7 @@ function showassigntask(){
 
 /**
  * @function showtaskhistory
- * @description shows Task History tab on Library page
+ * @description
  */
 function showtaskhistory(){
   document.getElementById("data1").style.display = "none";
@@ -921,7 +935,6 @@ function showtaskhistory(){
 /**
  * @function openmenu
  * @description
- * can't find this function in 05Library2.html
  */
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
@@ -936,7 +949,7 @@ function openmenu(){
 
 /**
  * @function profile
- * @description function definition is in Profile.js
+ * @description
  */
 function profile(){
   document.getElementById("profile").style.display = "block";
@@ -944,7 +957,7 @@ function profile(){
 
 /**
  * @function closeprofile
- * @description function definition is in Profile.js
+ * @description
  */
 function closeprofile(){
   document.getElementById("profile").style.display = "none";
@@ -953,7 +966,7 @@ function closeprofile(){
 
 /**
  * @function editprofile
- * @description function definition is in Profile.js
+ * @description
  */
 function editprofile(){
   document.getElementById("profile").style.display = "none";
@@ -962,7 +975,7 @@ function editprofile(){
 
 /**
  * @function cancelprofile
- * @description function definition is in Profile.js
+ * @description
  */
 function cancelprofile(){
   window.location.reload()
@@ -970,8 +983,42 @@ function cancelprofile(){
 
 /**
  * @function submitprofile
- * @description function definition is in Profile.js
+ * @description
  */
 function submitprofile(){
 
+}
+
+/**
+ * @function submitClick
+ * @description
+ */
+function submitClick(){
+  document.getElementById("library_requestCopy")
+  var counter = 0, // counter for checked checkboxes
+      i = 0,       // loop variable
+      url = '../Frontend/10MyTasks2.html',    // final url string
+      // get a collection of objects with the specified 'input' TAGNAME
+      input_obj = document.getElementsByTagName('input');
+  // loop through all collected objects
+  for (i = 0; i < input_obj.length; i++) {
+      // if input object is checkbox and checkbox is checked then ...
+      if (input_obj[i].type === 'checkbox' && input_obj[i].checked === true) {
+          // ... increase counter and concatenate checkbox value to the url string
+          counter++;
+          url = url + '&c=' + input_obj[i].value;
+      }
+  }
+  // display url string or message if there is no checked checkboxes
+  if (counter > 0) {
+      // remove first "&" from the generated url string
+      url = url.substr(1);
+      // display final url string
+      alert(url);
+      // or you can send checkbox values
+      // window.location.href = 'my_page.php?' + url; 
+  }
+  else {
+      alert('There is no checked checkbox');
+  }
 }

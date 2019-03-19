@@ -13,7 +13,7 @@ if (goodPath  == null){
     alert("No valid task chosen from library");
     location.href ="/../Frontend/05Library2.html";
 }
-getTaskPath(taskSearch, getTaskPathCallback);
+getTaskFromPath(goodPath, getTaskPathCallback);
 
 function getTaskPathCallback(task){
     populateArray(task);
@@ -86,42 +86,25 @@ $('.sortable').sortable({
     }
 });
 
-//var taskPath = "";
-//var goodPath;
-//Get task with a certain ID from the database
-function getTaskPath(taskID, callback){
+/**
+ * @funciton getTaskFromPath
+ * @description Returns an object with the data in a task instruction, given a string containing the path to the task in the database.
+ * @param {*} taskPath The path to the task in the database.
+ * @param {*} callback The function to run once the task is retrieved.
+ */
+function getTaskFromPath(taskPath, callback){
     var listOfTasks = "";
-    var fbGet= firebase.database().ref('TaskInstruction')   //Get all the task categories
-
-    fbGet.once('value',function(snapshot){  //Get a snapshot of the data in the TaskInstruction part of the database.
-        console.log(snapshot.val());
-        taskPath = "TaskInstruction";
-
-        // Loop through each of the categories
-        snapshot.forEach(function(catSnapshot)  { 
-            console.log(catSnapshot.val());
-            var cat = catSnapshot.key;
-            taskPath = "TaskInstruction/" + cat + "/";
-
-            // Loop through each of the tasks
-            catSnapshot.forEach(function(taskSnapshot){
-                console.log(taskSnapshot.val());
-                var task = taskSnapshot.key;
-               // if (taskSnapshot.val()['TaskID'] == taskID){
-                if (task == taskN){
-                    if (taskSnapshot.val())
-                        taskPath += taskSnapshot.key;
-                        goodPath = taskPath;
-                        callback(taskSnapshot.val()); //callback function after getting the path to the task we're looking for.
-                        return;
-                    }
-                    listOfTasks += "\n" +  task;
-            });
-        });
-        taskPath = "";
-    })
+    var fbGet= firebase.database().ref(taskPath)   //Get all the task categories
+    fbGet.once('value', function(snapshot){
+        var taskDef = snapshot.val();
+        if (taskDef != null){
+            callback(taskDef);
+        } else {
+            //TODO: Failure routine
+        }
+        return;
+    });
 }
-
 /**
 * @function generateStructure()
 * @desciprtion generate the array that contains the state of the task being edited.

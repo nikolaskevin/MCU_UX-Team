@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+<!--
+  @file 05Library2.html
+  @author  MCU
+  @author  Kutztown University
+  @license
+-->
+<!DOCTYPE html>
 <!--#30B400#339933#99CC00#FFFFCC-->
 <html>
 <head>
@@ -21,6 +27,7 @@
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type='text/javascript' src="Config.js"></script>
     <script type='text/javascript' src='Library.js'></script>
+
     <script type='text/javascript' src='chat.js'></script>
     <script type='text/javascript' src='Profile.js'></script>
 </head>
@@ -169,9 +176,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../Frontend/10Mytask2.html">
-                        <i class="glyphicon glyphicon-wrench"></i>
-                        My Task
+                    <a href="../Frontend/10MyTask2.html">
+                        <i class="glyphicon glyphicon-book"></i>
+                        My Tasks
                     </a>
                 </li>
                 <li>
@@ -208,14 +215,14 @@
                         <!-- Bootstrap navigation bar -->
                         <div class="container-fluid">
 
-                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 1.5ex;padding-top:1.5ex;padding-bottom:1.5ex;padding-left:2px;padding-right:2px; background-color:green;outline-color:darkgreen">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 3ex;padding-top:1.5ex;padding-bottom:1.5ex; background-color:green;outline-color:darkgreen">
                                 <i class="fas fa-align-left"></i>
-                                <span id="toggleSide">Hide sidebar</span>
+                                <span>Toggle Sidebar</span>
                             </button>
 
                             <div class="navbar-header">
 
-                                <a href="../Frontend/01Aboutus2.html">
+                                <a href="../Frontend/01Aboutus2.html" style="padding-left:4px">
                                     <img src="statics/images/v2ltctmslogo.png" height="50" width="60" />
                                 </a>
 
@@ -229,7 +236,7 @@
                                     <a href="javascript:void(0)" class="dropbtn"><span class="glyphicon glyphicon-cog white-text"></span></a>
                                     <div class="dropdown-content">
                                         <a href="#">English</a>
-                                        <a href="/../Frontend-Chinese/01Aboutus2.html">Chinese</a>
+                                        <a href="/../Frontend-Chinese/05Library2.html">Chinese</a>
                                         <a onClick="Logout(); return false;" href="../Frontend/00Login2.html">Logout</a>
                                     </div>
                                 </li>
@@ -275,10 +282,7 @@
             <div class="main container-fluid wrapper">
                 <!-- START OF MIDDLE CONTENT-->
                 <div class="right" style="transform:translateY(-13ex)">
-                    <div class="tap">
-                        <span id="assigntaskspan" onclick="showassigntask()" style="opacity:1;cursor:pointer;">Assign Task</span>
-                        <span id="taskhistoryspan" onclick="showtaskhistory()" style="opacity:.8;cursor:pointer;">Task History</span>
-                    </div>
+
                     <div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;">
                         <div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
                         <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;">&nbsp English<br></p>
@@ -286,11 +290,13 @@
                         <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
                     </div>
                     <div class="container" id="data1">
-                        <div class="library_tasktable" style="position:relative;top:20px;left:10px;background-color:white;width:465px;height:300px;">
+                        <div class="library_tasktable" >
                             <select class="library_filter" id="filterCategory" onchange="filter_Category()">
                                 <option>Category</option>
                             </select>
-                            <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput">
+                            <form>
+                                <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
+                            </form>
                             <br><br>
                             <div style="overflow:auto;height:300px;">
                                 <table class="library_tasktable_display" id="assigningTask" style="border-style:hidden;width:100%;">
@@ -301,38 +307,13 @@
                                         <th style="width:10%"><input type="checkbox" id="all_checked" onclick="toggleTask(this)"></th>
                                     </tr>
                                 </table>
+                                <button id ="library_requestCopy" type="button" onclick="submitClick()">Request Copy</button>
+
+                        
                             </div>
                         </div>
-                        <div style="position:relative;left:50%;top:-120%;background-color:#000; height:155%;width:0.2%;"></div>
-                        <div class="library_usertable" style="position:relative;top:-900px;left:500px;background-color:white;width:465px;height:300px;">
-                            <select class="library_filter" id="filterPosition" onchange="filter_Position()">
-                                <option>Position</option>
-                                <option>CNA</option>
-                                <option>Patient</option>
-                            </select>
-                            <input class="library_search" type="text" name="search" placeholder="Search" id="searchkeyin">
-                            <br><br>
-                            <div style="overflow:auto;height:300px;">
-                                <table class="library_tasktable_display" id="assigningCF" style="border-style:hidden;width:100%;">
-                                    <tr>
-                                        <th style="width:25%" onclick="sortingCF(0)" class="library_table_firstbox"> Position </th>
-                                        <th style="width:35%" onclick="sortingCF(1)" class="library_table_secondbox"> Name  </th>
-                                        <th style="width:30%" onclick="sortingCF(2)" class="library_table_thirdbox"> I.D </th>
-                                        <th style="width:10%"><input type="checkbox" id="toggleCF" onclick="toggleCF(this)"></th>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="library_assigntask">
-                            <div class="library_assigntask-inner">
-                                <div class="library_assigntask-front">
-                                    <button style="cursor:pointer;" class="library_assigntaskbutton" type="button" onclick="assign()">Assign Task</button>
-                                </div>
-                                <div class="library_assigntask-back">
-                                    <button style="cursor:pointer;" class="library_assigntaskbutton" type="button" onclick="assign()"> Go! </button>
-                                </div>
-                            </div>
-                        </div>
+                        
+
                     </div>
 
                     <div class="container" id="data2" style="display:none;">
@@ -347,19 +328,9 @@
                         <div class="library_historyoverflow">
                             <br>
                             <div style="overflow:auto;height:300px;">
-                                <table class="library_historytable" id="assigningList" style="position:relative;width:100%;border-style:hidden;">
-                                    <tr>
-                                        <th onclick="sortingList(0)" style="padding:0px 40px;width:15%;"> Position </th>
-                                        <th onclick="sortingList(1)" style="padding:0px 50px;width:15%;"> I.D </th>
-                                        <th onclick="sortingList(2)" style="padding:0px 80px;width:20%;"> Name  </th>
-                                        <th onclick="sortingList(3)" style="padding:0px 40px;width:15%;"> Category </th>
-                                        <th onclick="sortingList(4)" style="padding:0px 80px;width:30%;"> Task Name  </th>
-                                        <th style="width:5%;"><input type="checkbox" id="all_unchecked" checked="checked" onclick="toggleList(this)"</th>
-                                    </tr>
-                                </table>
+
                             </div>
                         </div>
-                        <button class="library_historysubmit" onclick="submit()" type="button" class="btn" style="position:relative;left:88.5%;top:10px;cursor:pointer;">Unassign Task</button>
                     </div>
                 </div>
             </div>
@@ -392,6 +363,10 @@
                     <td style="border-style:hidden;"></td>
                     <td style="border-style:hidden;text-align:right"> For more details, click <button style="cursor:pointer;" onclick="directTask()">Here</button></td>
                 </tr>
+                <tr>
+                    <td id="taskID">Hello world</td>
+                </tr>
+
             </table>
         </div>
 
@@ -473,11 +448,6 @@
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                if(document.getElementById("toggleSide").innerHTML=="Hide sidebar"){
-                    document.getElementById("toggleSide").innerHTML = "Show sidebar";
-                } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
-                    document.getElementById("toggleSide").innerHTML = "Hide sidebar";
-                }
             });
         });
         </script>
