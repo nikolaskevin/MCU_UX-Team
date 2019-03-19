@@ -1,11 +1,10 @@
 /**
  * @file Config.js
- * @author  MCU
- * @author  Kutztown University
+ * @author MCU
+ * @author Kutztown university
  * @license
  */
-
- var config = {
+var config = {
   apiKey: "AIzaSyAMnEOZj1JB52QOEFPwbS274MX3wQWYCeM",
   authDomain: "browserteam.firebaseapp.com",
   databaseURL: "https://browserteam.firebaseio.com",

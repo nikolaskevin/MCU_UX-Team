@@ -1,10 +1,3 @@
-/**
- * @file chat1.js
- * @author  MCU
- * @author  Kutztown University
- * @license
- */
-
 function displayChat(i){
     var chatall = document.getElementById("chatAll");
     var chatpart = document.getElementById("chatPart");

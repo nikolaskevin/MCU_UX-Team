@@ -1,10 +1,3 @@
-/**
- * @file vanillatree.js
- * @author  MCU
- * @author  Kutztown University
- * @license
- */
-
 (function (root, factory) {
     if (typeof define == 'function' && define.amd) {
         define( factory );

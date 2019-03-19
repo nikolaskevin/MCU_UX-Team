@@ -1,10 +1,9 @@
-﻿<!--
+<!--
   @file 05Library2.html
   @author  MCU
   @author  Kutztown University
   @license
-        -->
-
+-->
 <!DOCTYPE html>
 <!--#30B400#339933#99CC00#FFFFCC-->
 <html>
@@ -178,7 +177,7 @@
                 </li>
                 <li>
                     <a href="../Frontend/10MyTask2.html">
-                        <i class="glyphicon glyphicon-book"></i>
+                        <i class="glyphicon glyphicon-wrench"></i>
                         My Tasks
                     </a>
                 </li>
@@ -237,7 +236,7 @@
                                     <a href="javascript:void(0)" class="dropbtn"><span class="glyphicon glyphicon-cog white-text"></span></a>
                                     <div class="dropdown-content">
                                         <a href="#">English</a>
-                                        <a href="/../Frontend-Chinese/01Aboutus2.html">Chinese</a>
+                                        <a href="/../Frontend-Chinese/05Library2.html">Chinese</a>
                                         <a onClick="Logout(); return false;" href="../Frontend/00Login2.html">Logout</a>
                                     </div>
                                 </li>
@@ -295,7 +294,7 @@
                             <select class="library_filter" id="filterCategory" onchange="filter_Category()">
                                 <option>Category</option>
                             </select>
-                            <form autocomplete="off" style="display:inline">
+                            <form>
                                 <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
                             </form>
                             <br><br>
@@ -372,10 +371,9 @@
             <div style="background-color:#E4EACD;position:relative;height:75px;">
                 <h2 id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
 
-                <button onclick="editprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
-                <button onclick="closeprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
-                <button onclick="changePassword()" style="position:relative; left:520px;top:45px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>
-            </div>
+                <button onclick="editprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
+                <button onclick="closeprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
+                <button onclick="changePassword()" style="position:relative; left:520px;top:75px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>            </div>
             <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
             <div style="position:relative; left:220px;top:-110px;">
                 <p>Position: &nbsp<span id="positionProfile"></span> </p><br>

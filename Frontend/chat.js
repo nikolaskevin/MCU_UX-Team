@@ -1,10 +1,3 @@
-/**
- * @file chat.js
- * @author  MCU
- * @author  Kutztown University
- * @license
- */
-
 // this code is really messy, I'll try my best to expain each function. Even though this code is coding by myself, I still can't totally understand every line;#2018/12/09
 var xxx ="false";
 function displayChat(i){// Click the different chat room and show that content.

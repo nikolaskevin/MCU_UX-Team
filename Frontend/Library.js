@@ -5,7 +5,7 @@
  * @license
  */
 
- var fbTask = firebase.database().ref("TaskInstruction/");
+var fbTask = firebase.database().ref("TaskInstruction/");
 var copy = document.getElementById("library_requestCopy");
 var num = 0;
 var checkbox_name = [];
@@ -59,11 +59,13 @@ fbTask.once("value")
                 })
             })
 
-/**
-* @function toggleTask
-* @description reorders the tasks in the library
-* @param source
-*/
+
+ /**
+  * @function toggleTask
+  * @description when check box in the header row in the task list table in Library > Assign Task is clicked
+  *   all of the tasks are either selected or deselected
+  * @param {*} source status of checkbox - checked or unchecked
+  */
 function toggleTask(source) {
 var table = document.getElementById("assigningTask");
 var tr = table.getElementsByTagName("tr");
@@ -92,13 +94,15 @@ console.log(length);
             }
         }
     }
-}// end toggleTask
+}
+
 
 /**
-* @function toggleCF
-* @description reorders based on category
-* @param source
-*/
+ * @function toggleCF
+ * @description when check box in the header row in the assignee list table in Library > Assign Task is clicked
+  *   all of the people are either selected or deselected
+ * @param {*} source status of checkbox - checked or unchecked
+ */
 function toggleCF(source) {
     var table = document.getElementById("assigningCF");
     var tr = table.getElementsByTagName("tr");
@@ -126,14 +130,14 @@ function toggleCF(source) {
             }
         }
     }
-
-}// end toggleCF
+}
 
 /**
-* @function toggleList
-* @description was for a something that was removed, keeping just incase it's important
-* @param source
-*/
+ * @function toggleList
+ * @description when check box in the header row in the task list table in Library > Task History is clicked
+  *   all of the rows are either selected or deselected
+ * @param {*} source status of checkbox - checked or unchecked
+ */
 function toggleList(source) {
     var table = document.getElementById("assigningList");
     var tr = table.getElementsByTagName("tr");
@@ -163,13 +167,14 @@ function toggleList(source) {
             }
         }
     }
-}// end toggleList
+}
 
 /**
-* @function assign
-* @description was for something that was removed, keeping just incase it's important
-*/
+ * @function assign
+ * @description selected task is assigned to selected assignees
+ */
 function assign(){
+    document.getElementById("library_requestCopy")
     var table = document.getElementById("assigningTask");
     var tr = table.getElementsByTagName("tr");
     var table1 = document.getElementById("assigningCF");
@@ -203,13 +208,14 @@ function assign(){
   }
   c++;
 }
-var r = alert("Task have been assigned!");
+var r = alert("Task have been copied!");
          if(true)
          {
            window.location.reload();
          }
 
-}// end assign
+}
+
 
 var fbCNA = firebase.database().ref("CNA/");
 var n = 0;
@@ -303,11 +309,6 @@ display_List(fbList_CNA);
 display_List(fbList_PAT);
 var checkBox_index = 0;
 var x = 0;
-
-/**
-* @function display_List
-* @description 
-*/
 function display_List(fbList){
     fbList.once("value")
     .then(function(snapshot){
@@ -395,44 +396,52 @@ function display_List(fbList){
 }
 
 /**
-* @function deleteNotExist
-* @description 
-*/
+ * @function deleteNotExist
+ * @description
+ * @param {*} fbList 
+ * @param {*} path 
+ */
 function deleteNotExist(fbList,path){
-        fbList.once("value")
-        .then(function(snapshot){
-            var array = [];
-            var index = 0;
-            var a = [];
-            var i = 0;
-            snapshot.forEach(function(childSnapshot1){
-                var CF_Name;
-                    childSnapshot1.forEach(function(childSnapshot2){
-                        if(childSnapshot2.key == "Task"){
-                            childSnapshot2.forEach(function(childSnapshot3){
-                                childSnapshot3.forEach(function(childSnapshot4){
-                                    var childKey = childSnapshot4.key;
-                                    var childData = childSnapshot4.val();
-                                    if(childData == path){
-                                        fbList.child(childSnapshot1.key+"/"+"Task/"+childSnapshot3.key+"/"+childSnapshot4.key).remove();
-                                    }
-                                });
-                            });
-                        }
-                    });
-                });
-            });
+  fbList.once("value")
+  .then(function(snapshot){
+  var array = [];
+  var index = 0;
+  var a = [];
+  var i = 0;
+  napshot.forEach(function(childSnapshot1){
+    var CF_Name;
+    dhildSnapshot1.forEach(function(childSnapshot2){
+      if(childSnapshot2.key == "Task"){
+        childSnapshot2.forEach(function(childSnapshot3){
+          childSnapshot3.forEach(function(childSnapshot4){
+            var childKey = childSnapshot4.key;
+            var childData = childSnapshot4.val();
+            if(childData == path){
+              fbList.child(childSnapshot1.key+"/"+"Task/"+childSnapshot3.key+"/"+childSnapshot4.key).remove();
+            }
+          });
+        });
+      }
+    });
+  });
+});
 }
 
+
+
+
+
+
+
 $(document).ready(function(){
-$("#searchInput").on("keyup", function() {
+  $("#searchInput").on("keyup", function() {
     var table = document.getElementById("assigningTask");
     var value = $(this).val().toLowerCase();
     console.log(value);
-          $("#assigningTask tr:not(:first)").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-          });
+    $("#assigningTask tr:not(:first)").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
+  });
 });
 
     $(document).ready(function(){
@@ -454,11 +463,11 @@ $("#searchInput").on("keyup", function() {
       });
     });
 
-/**
-* @function sortingCF
-* @description sorts the assignee table in Library > Assign Task
-* @param {*} n number of the column that the table is being sorted by
-*/
+   /**
+     * @function sortingCF
+     * @description sorts the assignee table in Library > Assign Task
+     * @param {*} n number of the column that the table is being sorted by
+     */
     function sortingCF(n){
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
       table = document.getElementById("assigningCF");
@@ -512,13 +521,14 @@ $("#searchInput").on("keyup", function() {
           }
         }
       }
-    }// end sortingCF
+    }
 
-/**
-* @function sortingTask
-* @description sorts the task table in Library > Assign Task
-* @param {*} n number of the column that the table is being sorted by
-*/
+
+    /**
+     * @function sortingTask
+     * @description sorts the task table in Library > Assign Task
+     * @param {*} n number of the column that the table is being sorted by
+     */
     function sortingTask(n){
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
       table = document.getElementById("assigningTask");
@@ -572,13 +582,13 @@ $("#searchInput").on("keyup", function() {
           }
         }
       }
-    }// end sortingTask
+    }
 
-/**
-* @function sortingList
-* @description sorts the task table in Library > Task History
-* @param {*} n number of the column that the table is being sorted by
-*/
+      /**
+     * @function sortingList
+     * @description sorts the task table in Library > Task History
+     * @param {*} n number of the column that the table is being sorted by
+     */
     function sortingList(n){
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
       table = document.getElementById("assigningList");
@@ -632,13 +642,13 @@ $("#searchInput").on("keyup", function() {
           }
         }
       }
-    }// end sortingList
+    }
 
-/**
-* @function filter_Category
-* @description filters task list in Library > Assign Task according
-*  to the selected task category
-*/
+    /**
+     * @function filter_Category
+     * @description filters task list in Library > Assign Task according
+     *  to the selected task category
+     */
     function filter_Category(){
      var val = document.getElementById("filterCategory").value;
       var table = document.getElementById("assigningTask");
@@ -673,10 +683,11 @@ $("#searchInput").on("keyup", function() {
       }
     }
 
-/**
-* @function filter_Position
-* @description 
-*/
+      /**
+     * @function filter_Position
+     * @description filters assignee list in Library > Assign Task according
+     *  to the selected position
+     */
     function filter_Position(){
      var val = document.getElementById("filterPosition").value;
       var table = document.getElementById("assigningCF");
@@ -707,13 +718,13 @@ $("#searchInput").on("keyup", function() {
             }
           }
       }
-    }// end filter_Position
-    
-/**
-* @function filterNameList
-* @description filters task table in Library > Task History according
-*  to the selected name
-*/
+    }
+
+      /**
+     * @function filterNameList
+     * @description filters task table in Library > Task History according
+     *  to the selected name
+     */
     function filterNameList(){
      var val = document.getElementById("filterNameList").value;
       var table = document.getElementById("assigningList");
@@ -737,13 +748,13 @@ $("#searchInput").on("keyup", function() {
             }
           }
       }
-    }// end filterNameList
-    
-/**
-* @function filterTaskList
-* @description filters task table in Library > Task History according
-*  to the selected task name
-*/
+    }
+
+      /**
+     * @function filterTaskList
+     * @description filters task table in Library > Task History according
+     *  to the selected task name
+     */
     function filterTaskList(){
      var val = document.getElementById("filterTaskList").value;
       var table = document.getElementById("assigningList");
@@ -767,29 +778,30 @@ $("#searchInput").on("keyup", function() {
             }
           }
       }
-    }// end filterTaskList
-    
-/**
-* @function viewassignedtask
-* @description 
-*/
+    }
+
+      /**
+     * @function viewassignedtask
+     * @description
+     */
     function viewassignedtask(){
         document.getElementById("form").style.display = "block";
-    }// end viewassignedtask
-    
-/**
-* @function close_form 
-* @description close details pop up box
-*/
+    }
+
+    /**
+     * @function close_form
+     * @description close details pop up box
+     * THIS ISN'T CALLED IN 05Library2.html
+     */
     function close_form(){
         document.getElementById("form").style.display = "none";
         document.getElementById("popup_detail").style.display = "none";
-    }// end clode_form
-    
-/**
-* @function submit
-* @description in Library > Task History unassigns selected task
-*/
+    }
+
+    /**
+     * @function submit
+     * @description in Library > Task History unassigns selected task
+     */
     function submit(){
     var table = document.getElementById("assigningList");
     var tr = table.getElementsByTagName("tr");
@@ -817,24 +829,24 @@ $("#searchInput").on("keyup", function() {
              {
                window.location.reload();
              }
-}// end submint
+}
 
 /**
-* @function closeclose_form
-* @description close details pop up box
-*/
+ * @function closeclose_form
+ * @description
+ */
 function closeclose_form(){
     document.getElementById('form1').style.display ='none';
-    var Table = document.getElementById("content");
+    console.log("Close");
+    var Table = document.getElementById("data2");
     Table.innerHTML = ""
-}// end closeclose_form
+}
 
 /**
-* @function display_Detail
-* @description in Library > Assign Task, task details are displayed in a pop
-*  up window
-* @param {*} num row number of task in displayed task list
-*/
+ * @function display_Detail
+ * @description
+ * @param {*} num 
+ */
 function display_Detail(num){
   document.getElementById('form1').style.display ='block';
   var table = document.getElementById("assigningTask");
@@ -864,37 +876,40 @@ function display_Detail(num){
           }
       })
   });
-}// end display_Detail
+}
 
 /**
-* @function directTask
-* @description redirects to task editor for selected task to view more info
-*/
+ * @function directTask
+ * @description
+ */
 function directTask(){
     var cat = document.getElementById("category").innerHTML;
     var taskN = document.getElementById("taskname").innerHTML;
     sessionStorage.setItem("from","Library.html");
     sessionStorage.setItem("category",cat);
     sessionStorage.setItem("taskname",taskN);
-
+    window.path = "TaskInstruction/" + cat + "/" + taskN;
+    localStorage.setItem("taskPath", "TaskInstruction/" + cat + "/" + taskN);
+    localStorage.setItem("taskN", taskN);
+    //alert("HI" + localStorage.getItem("taskPath"));
     location.href ="/../Frontend/06Taskeditor2.html";
 
-}// end directTask
+}
 
 /**
  * @function showassigntask
- * @description shows Assign Task tab on Library page
+ * @description
  */
 function showassigntask(){
   document.getElementById("data1").style.display = "block";
   document.getElementById("data2").style.display = "none";
   document.getElementById("assigntaskspan").style.opacity = "1";
   document.getElementById("taskhistoryspan").style.opacity = ".8";
-}// end showassigntask
+}
 
 /**
  * @function showtaskhistory
- * @description shows Task History tab on Library page
+ * @description
  */
 function showtaskhistory(){
   document.getElementById("data1").style.display = "none";
@@ -903,6 +918,10 @@ function showtaskhistory(){
   document.getElementById("taskhistoryspan").style.opacity = "1";
 }
 
+/**
+ * @function openmenu
+ * @description
+ */
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";
@@ -912,52 +931,80 @@ function openmenu(){
   document.getElementById("menu").style.display = "block";
   document.getElementById("openmenu").style.opacity = ".6";
 }
-}// end showtaskhistory
+}
 
 /**
  * @function profile
- * @description function definition is in Profile.js
+ * @description
  */
 function profile(){
   document.getElementById("profile").style.display = "block";
-}// end profile
+}
 
 /**
  * @function closeprofile
- * @description function definition is in Profile.js
+ * @description
  */
 function closeprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "none";
-}//end closeprofile
+}
 
 /**
  * @function editprofile
- * @description function definition is in Profile.js
+ * @description
  */
 function editprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "block";
-}// end editprofile
+}
 
 /**
  * @function cancelprofile
- * @description function definition is in Profile.js
+ * @description
  */
 function cancelprofile(){
   window.location.reload()
-}// end cancelprofile
+}
 
 /**
  * @function submitprofile
- * @description function definition is in Profile.js
+ * @description
  */
 function submitprofile(){
 
-}// end submitprofile
-
-function submitClick(){
-  document.getElementById("library_requestCopy")
-  window.alert("Copy");
 }
 
+/**
+ * @function submitClick
+ * @description
+ */
+function submitClick(){
+  document.getElementById("library_requestCopy")
+  var counter = 0, // counter for checked checkboxes
+      i = 0,       // loop variable
+      url = '../Frontend/10MyTasks2.html',    // final url string
+      // get a collection of objects with the specified 'input' TAGNAME
+      input_obj = document.getElementsByTagName('input');
+  // loop through all collected objects
+  for (i = 0; i < input_obj.length; i++) {
+      // if input object is checkbox and checkbox is checked then ...
+      if (input_obj[i].type === 'checkbox' && input_obj[i].checked === true) {
+          // ... increase counter and concatenate checkbox value to the url string
+          counter++;
+          url = url + '&c=' + input_obj[i].value;
+      }
+  }
+  // display url string or message if there is no checked checkboxes
+  if (counter > 0) {
+      // remove first "&" from the generated url string
+      url = url.substr(1);
+      // display final url string
+      alert(url);
+      // or you can send checkbox values
+      // window.location.href = 'my_page.php?' + url; 
+  }
+  else {
+      alert('There is no checked checkbox');
+  }
+}
