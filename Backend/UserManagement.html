@@ -3,8 +3,7 @@
   @author  MCU
   @author  Kutztown University
   @license
-        -->
-
+-->
 <!DOCTYPE html>
 <!--#30B400#339933#99CC00#FFFFCC-->
 <html>
@@ -243,7 +242,7 @@
 						<img style="position:relative; left:140px;top:-25px;cursor:pointer;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
 						<p class="account" style="position:relative; top:-20px;">
 							<span>Name : <span id="displayProfilename"></span></span>
-							<span>UserID : <span id="displayProfileid"></span></span>
+							
 							<span>Role : IT Admin<span id="displayProfileposition"></span></span>
 						</p>
 					</div>
@@ -305,7 +304,8 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="container" id="data2" style="display:none;position:relative;">
+				<!--Browser tab-->
+				<div class="container" id="data2" style="display:none;position:relative;  overflow: scroll;">
 					<p style="position:relative;left:270px;font-size:18px;font-weight:bold;color:#B53232;top:8px;">Latest Login</p>
 					<p style="position:relative;left:590px;top:-16px;font-size:18px;font-weight:bold;color:#B53232;">Latest Logout</p>
 						<table id="browseraccount" style="width:100%;border-style:hidden;position:relative;top:-10px;">
@@ -420,7 +420,6 @@
 				<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
 				<div style="position:relative; left:220px;top:-110px;">
 					<p>Position: &nbsp IT Admin </p><br>
-					<p>User ID: &nbsp <span id = "idProfile"></span></p><br>
 					<p>Display Name: &nbsp <span id = "nameProfile"></span></p><br>
 					<p>Email Address: &nbsp <span id = "emailProfile"></p><br>
 				</div>
@@ -439,7 +438,7 @@
 				<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="editpic">
 				<div style="position:relative; left:220px;top:-110px;">
 					<p>Position: &nbsp IT Admin </span> </p><br>
-					<p >User ID: &nbsp <span id = "idProfileE"> </span>  </p><br>
+					
 					<p>Display Name: <input type="text" id = "nameProfileE" style="width:200px;"></p><br>
 					<p>Email Address: <input type="text" id = "emailProfileE" style="width:300px;"></p><br>
 

@@ -4,8 +4,6 @@
  * @author  Kutztown University
  * @license
  */
-
-// contact firebase to varify and display admin information and 
 //var admin = require("../node_modules/firebase-admin");
 
 /**
@@ -95,7 +93,7 @@ function newAccount(){
       }
     }
   });
-}// end newAccount
+}
 
 /**
 * @function deleteUserAccount
@@ -115,11 +113,13 @@ function deleteUserAccount(i){
     alert("successfully removed the account!");
     location.reload();
   }
-}// end deleteUserAccount
+}
+
 
 /**
 * @function editUserAccount
 * @description allows the admin to edit an account
+* @param {*} i 
 */
 function editUserAccount(i){
   var sid = document.getElementById('cellId['+i+']').innerHTML;
@@ -141,7 +141,7 @@ function editUserAccount(i){
   });
 
 
-}// end editUserAccount
+}
 
 /**
 * @function editedUserAccount
@@ -210,7 +210,7 @@ function editedUserAccount(){
       }
     }
   });
-}// end eidtedUserAccount
+}
 
 //Display UM table - UID, NAME, STATUS, EDIT button, DELETE button
 var rowIndex=0;
@@ -265,7 +265,7 @@ function tableNewRow(fb){
 
   });
 
-}// end tableNewRow
+}
 
 /**
 * @function showusermanagement
@@ -278,7 +278,7 @@ function showusermanagement(){
   document.getElementById("User Management").style.opacity = "1";
   document.getElementById("LoginTime").style.opacity = ".8";
   document.getElementById("LogoutTime").style.opacity = ".8";
-}// end showuseremanagement
+}
 
 /**
 * @function showlogintime
@@ -291,7 +291,7 @@ function showlogintime(){
   document.getElementById("User Management").style.opacity = ".8";
   document.getElementById("LoginTime").style.opacity = "1";
   document.getElementById("LogoutTime").style.opacity = ".8";
-}// end showlogintime
+}
 
 /**
 * @function showlogouttime
@@ -304,7 +304,7 @@ function showlogouttime(){
   document.getElementById("User Management").style.opacity = ".8";
   document.getElementById("LoginTime").style.opacity = ".8";
   document.getElementById("LogoutTime").style.opacity = "1";
-} //end showlogouttime
+}
 
 /**
 * @function showchangepassword
@@ -317,8 +317,7 @@ function showchangepassword(){
   document.getElementById("User Management").style.opacity = ".8";
   document.getElementById("LoginTime").style.opacity = ".8";
   document.getElementById("LogoutTime").style.opacity = ".8";
-}// end showchangepassword
-
+}
 
 /**
 * @function openmenu
@@ -333,7 +332,7 @@ function openmenu(){
   document.getElementById("menu").style.display = "block";
   document.getElementById("openmenu").style.opacity = ".6";
 }
-}// end openmenu
+}
 
 var fbStatus = firebase.database().ref('AccountStatus/Browser');
 var rowIndex2 = 0;
@@ -374,7 +373,7 @@ function tableBrowserLogging(fb){
     });
   });
 
-}// end tableBrowserLogging
+}
 
 /**
 * @function closeHistory
@@ -386,7 +385,7 @@ function closeHistory(){
   document.getElementById('appaccountname').style.display='none';
   document.getElementById('viewapphistory').style.display='none';
 
-}// end closeHistory
+}
 
 /**
 * @function historyBrowserLogging
@@ -455,7 +454,7 @@ function historyBrowserLogging(n){
 
   });
 
-}// end historyBrowserLogging
+}
 
 var fbStatus2 = firebase.database().ref('AccountStatus/App');
 var rowIndex3 = 0;
@@ -496,7 +495,7 @@ function tableAppLogging(fb){
     });
   });
 
-}// end tableAppLogging
+}
 
 /**
 * @function historyAppLogging
@@ -565,7 +564,7 @@ function historyAppLogging(n){
 
   });
 
-}// end historyAppLogging
+}
 
 /**
 * @function sortDateandTime

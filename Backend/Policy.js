@@ -5,7 +5,7 @@
  * @license
  */
 
-// contact firebase to varify and display admin information and 
+// contact firebase to varify and display admin information
 firebase.auth().onAuthStateChanged(function (firebaseUser){
 if(firebaseUser){
   console.log(firebaseUser);
@@ -25,7 +25,7 @@ if(firebaseUser){
 */
 function Logout(){
   firebase.auth().signOut();
-} //end logout
+}
 
 var storageRef = firebase.storage().ref('Policy/policy.html');
   storageRef.getDownloadURL().then(function (url) {
@@ -46,7 +46,7 @@ function openmenu(){
   document.getElementById("menu").style.display = "block";
   document.getElementById("openmenu").style.opacity = ".6";
 }
-} //end openmenu
+}
 
 /**
 * @function profile
@@ -55,7 +55,7 @@ function openmenu(){
 function profile(){
   document.getElementById("profile").style.display = "block";
   displayProfile();
-}// end profile
+}
 
 /**
 * @function closeprofile
@@ -64,7 +64,7 @@ function profile(){
 function closeprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "none";
-}// end closeprofile
+}
 
 /**
 * @function editprofile
@@ -76,7 +76,7 @@ function editprofile(){
   document.getElementById('idProfileE').innerHTML= document.getElementById('idProfile').innerHTML;
   document.getElementById('emailProfileE').value = document.getElementById('emailProfile').innerHTML;
   document.getElementById("profile").style.display = "none";
-}// end editprofile
+}
 
 /**
 * @function cancelprofile
@@ -86,7 +86,7 @@ function cancelprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "none";
   document.getElementById("changePass").style.display = "none";
-}// end cacelprofile
+}
 
 /**
 * @function submitprofile
@@ -115,7 +115,7 @@ function submitprofile(){
       });
     }
   });
-}// end submitprofile
+}
 
 //gets the current time and stores in a variable
 var a = new Date();
@@ -142,7 +142,7 @@ function displayProfile(){
       document.getElementById('emailProfile').innerHTML=email;
     }
   });
-} //end displayProfile
+}
 
 /**
 * @function changePassword
@@ -151,7 +151,7 @@ function displayProfile(){
 function changePassword(){
   document.getElementById("changePass").style.display="block";
 
-} // end changePassword
+}
 
 /**
 * @function submitNewPass
@@ -183,4 +183,4 @@ function submitNewPass(){
     alert("Your Password are not match!")
   }
 
-}// end submitNewPass
+}

@@ -6,6 +6,7 @@
  */
 
 // contact firebase to varify and display admin information and 
+
 firebase.auth().onAuthStateChanged(function (firebaseUser){
 if(firebaseUser){
   console.log(firebaseUser);
@@ -28,7 +29,8 @@ if(firebaseUser){
   alert("You're Logged out now! Please Login again if you need to use this system!");
   window.location.href = "/../Frontend/00Login2.html";
 }
-}); // end contact firebase
+});
+//console.log(document.getElementById('Profilepic').value);
 
 /**
 * @function profile
@@ -130,7 +132,7 @@ function displayProfile(){
 function changePassword(){
   document.getElementById("changePass").style.display="block";
 
-}// end changePassword
+}
 
 /**
 * @function submitNewPass
@@ -140,7 +142,6 @@ function submitNewPass(){
   var newPass= document.getElementById('newPassword').value;
   var cnewPass=document.getElementById('confirmnewPassword').value;
   var oldPass = document.getElementById('oldPassword').value;
-  // security mesure to make sure the user knows what their new password is
   if (newPass==cnewPass){
       var user = firebase.auth().currentUser;
       var credentials = firebase.auth.EmailAuthProvider.credential(
@@ -163,7 +164,7 @@ function submitNewPass(){
     alert("Your Password are not match!")
   }
 
-}// end submitNewPass
+}
 
 //gets the current time and stores in a variable
 var a = new Date();
@@ -188,7 +189,7 @@ if(second < 10){
 var time123 = hour+":"+minute+":"+second;
  console.log(time123);
 
-// Determins what time of day it is so they can display the correct greeting
+ // Determines what time of day it is so they can display the correct greeting
 window.onload=function(){
 
     if(time123<"12:00:00" && time123>="04:00:00"){
@@ -211,7 +212,7 @@ function Logout(){
   firebase.auth().signOut();
   console.log('logout');
 
-}// end logout
+}
 
 /**
 * @function uploadPicProfile
@@ -259,7 +260,7 @@ function bigImg(x) {
     $("#Profilepic").css("filter", "grayscale(100%)");
     $("#Profilepic").css("filter", "blur(2px)");
 
-  }// end bigImg
+}
 
 /**
 * @function normalImg

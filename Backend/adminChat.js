@@ -1,13 +1,3 @@
-/**
- * @file adminChat.js
- * @author  MCU
- * @author  Kutztown University
- * @license
- */
-/**
-* @function chatForm
-* @description 
-*/
 function chatForm(){
     var body = document.getElementsByTagName('body')[0];
     var div1 =document.createElement('div');
@@ -65,12 +55,8 @@ function chatForm(){
     });
 
     callChatData(database,$show,userName,$content,$btn,ms);
-} // end chatForm
+}
 
-/**
-* @function callChatData
-* @description shows past messages in chat
-*/
 function callChatData(database,$show,userName,$btn,$content,ms){
     var database = firebase.database().ref(database);
     database.once('value', function(snapshot) {
@@ -210,12 +196,9 @@ function callChatData(database,$show,userName,$btn,$content,ms){
       });
       $show.scrollTop($show[0].scrollHeight);
     });
-} // end callChatData
+}
 
-/**
-* @function cancel
-* @description allows the user to close the chat window
-*/
+
 function cancel(){
     document.getElementById("im0").style.display = "none";
     document.getElementById("leftList").style.display = "none";
@@ -223,10 +206,7 @@ function cancel(){
     document.getElementById("notification").style.display = "none";
     count = 0;
 }
-/**
-* @function expand
-* @description allows the user to open chat window
-*/
+
 function expand(){
     var userName1 = firebase.auth().currentUser.displayName;
     var fbChat = firebase.database().ref("Chat/Allread");
@@ -247,11 +227,6 @@ function expand(){
         document.getElementById("im0").style.display = "block";
     }
 }
-
-/**
-* @function write
-* @description allows the user to type messages into the chat
-*/
 function write(ms,database,$content,userName){
     var database = firebase.database().ref(database);
     var database1 = firebase.database().ref("Chat/Allread");
@@ -283,21 +258,11 @@ function write(ms,database,$content,userName){
         })
     })
     $content.val('');
-}// end write
-
+}
 var count = 0;
-//Not entirly sure WHAT this function does - Phillip
-/**
-* @function setTimeout
-* @description sets a timer for inactivity of user
-*/
 setTimeout(function(){
     var user_name = document.getElementById("displayProfilename").innerHTML;
-    var allread = firebase.database().ref("Chat/Allread");  
-    /**
-    * @function checkRead
-    * @description notifies the user if there are unread messages
-    */
+    var allread = firebase.database().ref("Chat/Allread");
     function checkRead(){
         count = count +1;
         document.getElementById("notification").style.display = "block";
@@ -307,7 +272,7 @@ setTimeout(function(){
         else{
             document.getElementById("notification").innerHTML = count;
         }
-    }// end checkRead
+    }
     allread.once('value').then(function(snapshot){
         snapshot.forEach(function(childSnapshot1){
             if(childSnapshot1.hasChild(user_name)){
@@ -329,4 +294,4 @@ setTimeout(function(){
             }
         })
     })
- }, 3000); //end setTimeout
+ }, 3000);

@@ -15,6 +15,7 @@
             match_id(id,fbFeedback);
        });
     });
+
 /**
 * @function match_id
 * @description verifys whether the user in is a CNA or patient/family member
@@ -61,7 +62,7 @@ function match_id(id,fbFeedback){
            });
     }
 
-} //end matchId
+}
 var index = 0;
 
 /**
@@ -224,7 +225,7 @@ function tableform(id,name,fbFeedback,picture){
         })
     });
 
-} //end tableform
+}
 
 /**
 * @function getReply
@@ -260,7 +261,7 @@ function getReply(id,index,year,month,date,h,m,s,feedbackID){
             document.getElementById("replyTime["+index+"]").innerHTML = tim;
         })
     })
-} //end getReply
+}
 
 /**
 * @function replyToggle
@@ -279,7 +280,7 @@ function replyToggle(index){
         document.getElementById("reply["+index+"]").innerHTML = "Collapse";
         document.getElementById("btn["+index+"]").style.display = "inline";
     }
-} // end replyToggle
+}
 
 /**
 * @function sendMess
@@ -327,7 +328,7 @@ function sendMess(id,year,month,index,date,h,m,s,feedbackID){
     document.getElementById("replyComment["+index+"]").innerHTML = comment;
     replyToggle(index);
 
-} //end sendMess
+}
 
 /**
 * @function setTimeout
@@ -338,7 +339,7 @@ setTimeout(function(){
     staff = document.getElementById("container1");
     sorting(pat);
     sorting(staff)
-}, 3000); //end setTimeout
+}, 3000);
 
 /**
 * @function sorting

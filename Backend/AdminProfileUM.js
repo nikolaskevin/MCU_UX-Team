@@ -5,7 +5,7 @@
  * @license
  */
 
- // contact firebase to varify and display admin information and 
+ // contact firebase to varify and display admin information
 firebase.auth().onAuthStateChanged(function (firebaseUser){
 if(firebaseUser){
   console.log(firebaseUser);
