@@ -478,10 +478,9 @@
         <div style="background-color:#E4EACD;position:relative;height:75px;">
             <h2 id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
 
-            <button onclick="editprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
-            <button onclick="closeprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
-            <button onclick="changePassword()" style="position:relative; left:520px;top:45px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>
-        </div>
+            <button onclick="editprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
+            <button onclick="closeprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
+            <button onclick="changePassword()" style="position:relative; left:520px;top:75px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>        </div>
         <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
         <div style="position:relative; left:220px;top:-110px;">
             <p>Position: &nbsp<span id="positionProfile"></span> </p><br>
@@ -518,6 +517,19 @@
             <p>New Password: <input type="password" id="newPassword"></p><br>
             <p>Confirm Password: <input type="password" id="confirmnewPassword"></p><br>
         </div>
+    </div>
+
+    <div id="expand" onclick="expand()">
+        Chat
+        <div id="notification"></div>
+    </div>
+    <div id="leftList">
+        <div id="notificationAll"></div>
+        <div id="notificationPart"></div>
+        <ul>
+            <li id="chatAll" onclick="displayChat('0')">Center & System</li>
+            <li id="chatPart" onclick="displayChat('1')">Center</li>
+        </ul>
     </div>
 
     <script type='text/javascript' src='Config.js'></script>
