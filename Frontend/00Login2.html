@@ -1,4 +1,4 @@
-
+﻿<!--
   @file 00Login2.html
   @author  MCU
   @author  Kutztown University
@@ -43,6 +43,7 @@
         background-color: #313131;
         z-index: 3;
     }       
+
     #forgot {
         width: 100%;
         height: 100%;
@@ -54,6 +55,7 @@
         background-color: #313131;
         z-index: 3;
     }
+
     .create_popup_forgetpass {
         position: fixed;
         width: 50%;
@@ -63,6 +65,7 @@
         background-color: white;
         z-index: 3;
     }
+
     .closeforgotpassword {
         position: relative;
         left: 95%;
@@ -71,9 +74,15 @@
         background-color: white;
         border-style: none;
     }
+
         .closeforgotpassword:hover {
             color: red;
         }
+
+    .forgotbutton:hover {
+        color: #2134E6;
+    }
+
 </style>
 <body style="height:100%;">
     <div style="">
@@ -128,7 +137,11 @@
                     <center>
                         <form onsubmit="LoginUser();return false">
                             <label for="Email"><b style="position:relative; font-size:16px;">Email</b></label>
-
+                            <br>
+                            <input style="position:relative; width:75%;height:5%;" id="txtEmail" type="text" placeholder="Enter Email">
+                            <br>
+                            <label for="Password"><b style="position:relative; font-size:16px;">Password</b></label>
+                            <br>
                             <input style="position:relative; width:75%; height:5%;" id="txtPassword" type="password" placeholder="Enter Password">
                             <br><br/>
                             <input type="submit" value="Login" style="position:relative;cursor:pointer; width:20%" id="btnLogin" style="margin-left:100px;"></input>

@@ -28,7 +28,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type='text/javascript' src='Config.js'></script>
-    <script type='text/javascript' src='AboutusKU.js'></script>
+    <script type='text/javascript' src='Aboutus.js'></script>
     <script type='text/javascript' src='Profile.js'></script>
     <script type='text/javascript' src='chat.js'></script>
 </head>
@@ -161,12 +161,13 @@
 
             <div class="main container-fluid wrapper">
                 <!-- START OF MIDDLE CONTENT-->
-                <div class="right"  style="width:800ex; transform:translateY(-13ex); height:800ex;">
+                <div class="right"  style="width:800ex; transform:translateY(-13ex)">
                     <div class="tap">
-                        <span id="introductionspan" onclick="showintroductionKU()" style="opacity:1;cursor:pointer;">Introduction</span>
-                        <span id="centerinfospan" onclick="showcenterinfoKU()" style="opacity:.8;cursor:pointer;">Center Info</span>
+                        <span id="introductionspan" onclick="showintroduction()" style="opacity:1;cursor:pointer;">Introduction</span>
+                        <span id="centerinfospan" onclick="showcenterinfo()" style="opacity:.8;cursor:pointer;">Center Info</span>
                         <span id="sponsoredspan" onclick="showsponsored()" style="opacity:.8;cursor:pointer;">Sponsored</span>
                     </div>
+                    
                     <div class="container" id="data1" style="position:relative;top:0%; left:0%;">
                         <table style="height:100%;width:100%;border-style:hidden;">
                             <tr>
@@ -178,7 +179,6 @@
                             <button style="display:none; position:absolute; top:88%;left:88%;width:8%; height:8%;cursor:pointer;" id="aboutus_button" onclick="aboutus_submit()">OK</button>
                         </table>
                     </div>
-                    
                     <div class="container" id="data2" style="display:none; position:relative;">
                         <table id=ContactInfo_table style="width:100%; height:96%;border-style:hidden;">
                             <tr>
@@ -239,9 +239,9 @@
                     <div style="background-color:#E4EACD;position:relative;height:75px;">
                         <h2 id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
 
-                        <button onclick="editprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
-                        <button onclick="closeprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
-                        <button onclick="changePassword()" style="position:relative; left:520px;top:75px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>
+                        <button onclick="editprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
+                        <button onclick="closeprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
+                        <button onclick="changePassword()" style="position:relative; left:520px;top:45px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>
                     </div>
                     <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
                     <div style="position:relative; left:220px;top:-110px;">
