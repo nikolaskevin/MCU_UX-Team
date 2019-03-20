@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿<!--
+  @file 03Memo2.html
+  @author  MCU
+  @author  Kutztown University
+  @license
+-->
+<!DOCTYPE html>
 <!--#30B400#339933#99CC00#FFFFCC-->
 <html>
 <head>
@@ -250,6 +256,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="../Frontend/10Mytask2.html">
+                        <i class="glyphicon glyphicon-wrench"></i>
+                        My Task
+                    </a>
+                </li>
+                <li>
                     <a href="../Frontend/06Taskeditor2.html">
                         <i class="glyphicon glyphicon-tasks"></i>
                         Task Editor
@@ -283,14 +295,14 @@
                         <!-- Bootstrap navigation bar -->
                         <div class="container-fluid">
 
-                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 3ex;padding-top:1.5ex;padding-bottom:1.5ex; background-color:green;outline-color:darkgreen">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 1.5ex;padding-top:1.5ex;padding-bottom:1.5ex;padding-left:2px;padding-right:2px; background-color:green;outline-color:darkgreen">
                                 <i class="fas fa-align-left"></i>
-                                <span>Toggle Sidebar</span>
+                                <span id="toggleSide">Hide sidebar</span>
                             </button>
 
                             <div class="navbar-header">
 
-                                <a href="../Frontend/01Aboutus2.html" style="padding-left:4px">
+                                <a href="../Frontend/01Aboutus2.html">
                                     <img src="statics/images/v2ltctmslogo.png" height="50" width="60" />
                                 </a>
 
@@ -304,7 +316,7 @@
                                     <a href="javascript:void(0)" class="dropbtn"><span class="glyphicon glyphicon-cog white-text"></span></a>
                                     <div class="dropdown-content">
                                         <a href="#">English</a>
-                                        <a href="/../Frontend-Chinese/01Aboutus2.html">Chinese</a>
+                                        <a href="/../Frontend-Chinese/03Memo2.html">Chinese</a>
                                         <a onClick="Logout(); return false;" href="../Frontend/00Login2.html">Logout</a>
                                     </div>
                                 </li>
@@ -411,10 +423,9 @@
         <div style="background-color:#E4EACD;position:relative;height:75px;">
             <h2 id="nameProfileT" style="position: relative; left: 210px; top: 20px;"><h3 style="position: relative; color: gray; left: 300px; top: -10px;">	</h3></h2>
 
-            <button onclick="editprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
-            <button onclick="closeprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
-            <button onclick="changePassword()" style="position:relative; left:520px;top:45px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>
-        </div>
+            <button onclick="editprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
+            <button onclick="closeprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
+            <button onclick="changePassword()" style="position:relative; left:520px;top:75px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>        </div>
         <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
         <div style="position:relative; left:220px;top:-110px;">
             <p>Position: &nbsp<span id="positionProfile"></span> </p><br>
@@ -453,18 +464,6 @@
         </div>
     </div>
     </div>
-    <div id="expand" onclick="expand()">
-        Chat
-        <div id="notification"></div>
-    </div>
-    <div id="leftList">
-        <div id="notificationAll"></div>
-        <div id="notificationPart"></div>
-        <ul>
-            <li id="chatAll" onclick="displayChat('0')">Center & System</li>
-            <li id="chatPart" onclick="displayChat('1')">Center</li>
-        </ul>
-    </div>
 
     <!-- START COPY FOR SIDEBAR JAVASCRIPT -->
     <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -485,6 +484,11 @@
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                if(document.getElementById("toggleSide").innerHTML=="Hide sidebar"){
+                    document.getElementById("toggleSide").innerHTML = "Show sidebar";
+                } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
+                    document.getElementById("toggleSide").innerHTML = "Hide sidebar";
+                }
             });
         });
     </script>

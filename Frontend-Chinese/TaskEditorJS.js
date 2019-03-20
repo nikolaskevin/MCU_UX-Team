@@ -1,3 +1,10 @@
+/**
+ * @file TaskEditorJS.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
+
 // Task Tree View
 var main = document.getElementById('treemenu2'),
   tree = new VanillaTree(main,{
@@ -82,6 +89,16 @@ var main = document.getElementById('treemenu2'),
       }]
   });
 
+  /**
+   * @function swapStep
+   * @description 
+   * @param {*} realid 
+   * @param {*} temp 
+   * @param {*} fbti 
+   * @param {*} stepref 
+   * @param {*} parentId 
+   * @param {*} cat 
+   */
   function swapStep(realid,temp,fbti,stepref,parentId,cat){
     fbti.child(stepref).once('value')
     .then(function(snapshot){
@@ -158,7 +175,14 @@ fbCat.once("value").then(function(snapshot){
 });
 
 var old_html = $('.vtree').html();
-function filterCategory(cat){
+
+/**
+ * @function filterCategory
+ * @description filter tasks by category
+ * //param {*} cat 
+ */
+//function filterCategory(cat){
+function filterCategory(){
   if(document.getElementById('treemenu2').innerText != ""){
   $('.vtree').html(old_html);
   }
@@ -234,6 +258,10 @@ fbCat.once("value")
       });
 });
 
+/**
+ * @function TaskSubmit
+ * @description save a new task
+ */
 //Input the Content of Task
 function TaskSubmit(){
   var Ttitle  = document.getElementById('Ttitle').value;
@@ -270,12 +298,34 @@ function TaskSubmit(){
 
 var j = 1;
 let file;
+
+/**
+ * @function handleuploadfile
+ * @description upload image to step
+ * @param {*} e the number of the main step with which the image is associated
+ */
 function handleuploadfile(e) {
     console.log(e);
     file=$('#uploader'+e).get(0).files[0];
     console.log(file);
+    console.log("handleuploadfile");
 }
 
+/**
+ * @function handleuploadfileSubmit
+ * @description upload task info to database
+ * @param {*} pid 
+ * @param {*} cat category
+ * @param {*} Mtitle Main step title for iOS
+ * @param {*} Mtitle2 Main step title for Android
+ * @param {*} videoURL video URL
+ * @param {*} MstepNo main step number
+ * @param {*} MD main step description for iOS
+ * @param {*} MD2 main step description for Android
+ * @param {*} uploader main step image
+ * @param {*} updates 
+ * @param {*} j number of the main step
+ */
 function handleuploadfileSubmit(pid,cat,Mtitle,Mtitle2,videoURL,MstepNo,MD,MD2,uploader,updates,j){
   console.log(file);
   var storageRef=firebase.storage().ref('Task/'+file.name);
@@ -284,6 +334,11 @@ function handleuploadfileSubmit(pid,cat,Mtitle,Mtitle2,videoURL,MstepNo,MD,MD2,u
   //  function error(err){
   //    console.log("failed");
   //  },
+
+  /**
+   * @function complete
+   * @description
+   */
     function complete(){
       storageRef.getDownloadURL()
         .then(function(url){
@@ -322,6 +377,12 @@ function handleuploadfileSubmit(pid,cat,Mtitle,Mtitle2,videoURL,MstepNo,MD,MD2,u
   );
 }
 
+
+/**
+ * @function MainstepSubmit
+ * @description submit main step data to database
+ * @param {*} j number of the main step being submitted
+ */
 function MainstepSubmit(j){
   //console.log(j);
   var pid = document.getElementById('Ttitle').value;
@@ -386,6 +447,13 @@ main.addEventListener('vtree-select', function(evt) {
   treeSelection(evt.detail.id);
 });
 
+/**
+ * @function displayMainsteps
+ * @description show the main step of a task
+ * @param {*} j task number
+ * @param {*} path where to find step in the database
+ * @param {*} cat category
+ */
 function displayMainsteps(j,path,cat){
   //console.log('==='+j);
   var fbTI = firebase.database().ref('TaskInstruction/'+cat+'/'+path);
@@ -408,6 +476,13 @@ function displayMainsteps(j,path,cat){
   });
 }
 
+/**
+ * @function displayTask
+ * @description
+ * @param {*} id id of task in the tree
+ * @param {*} parentId 
+ * @param {*} parentId2 
+ */
 function displayTask(id,parentId,parentId2){
     document.getElementById('deslist').style.display = 'block';
     var cat =  document.getElementById('CategoryFilter').value;
@@ -423,6 +498,13 @@ function displayTask(id,parentId,parentId2){
     });
 }
 
+/**
+ * @function treeSelection
+ * @description view tasks in a category in a tree structure 
+ * @param {*} id id of task in the tree
+ * @param {*} parentId data vtree id
+ * @param {*} parentId2 task title
+ */
 function treeSelection(id,parentId,parentId2){
   var x = tree.getLeaf(id);
   var parentId = x.parentNode.parentNode.getAttribute('data-vtree-id');
@@ -448,6 +530,11 @@ function treeSelection(id,parentId,parentId2){
   }
 }
 
+/**
+ * @function MainstepPageGenerator
+ * @description create add main step form
+ * @param {*} j number of main step
+ */
 //table for Mainstep is below
 function MainstepPageGenerator(j){
 var body = document.getElementById("showbox");
@@ -552,6 +639,11 @@ i+=1;
 }
 //count mainsteps
 var clicks = 0;
+
+/**
+ * @function onClick
+ * @description show add main step form
+ */
 function onClick(){
   document.getElementById('deslist').style.display = 'block';
   console.log(document.getElementById('MstepCount').innerText);
@@ -568,6 +660,11 @@ function onClick(){
   return MainstepPageGenerator(j);
 }
 
+/**
+ * @function deleteM
+ * @description delete main step
+ * @param {*} j number of the main step to be deleted
+ */
 //delete Mainstep
 function deleteM(j){
   var task = document.getElementById("Ttitle").value;
@@ -594,6 +691,10 @@ function deleteM(j){
 
 }
 
+/**
+ * @function deleteT
+ * @description delete task
+ */
 //delete Task
 function deleteT(){
   var task = document.getElementById('Ttitle').value;
@@ -610,6 +711,10 @@ function deleteT(){
   }
 }
 
+/**
+ * @function task_nextarrow
+ * @description
+ */
 function task_nextarrow(){
   console.log("ff");
   document.getElementById("nextmainstep").style.display = "block";
@@ -638,6 +743,10 @@ function task_nextarrow(){
         //tree.select(parentId);
     }
 
+    /**
+     * @function openmenu
+     * @description
+     */
     function openmenu(){
       if(document.getElementById("menu").style.display== "block"){
         document.getElementById("menu").style.display = "none";

@@ -1,0 +1,150 @@
+<!--
+  @file 09TestTaskGUI.html
+  @author  MCU
+  @author  Kutztown University
+  @license
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>LTC-TMS Task Editor</title>
+
+
+    <style>
+        .sortableContainer{
+            background-color: lightyellow;
+            height: 100vh;
+        }
+        .sortable {
+            margin: 0 auto;
+            display: -ms-flexbox;
+            display: flex;
+            flex-direction: column;
+            background-color: darkgrey;
+            width: 50%;
+        }
+
+        .taskStep {
+            background-color: lightblue;
+            margin: 20px;
+            height:200px;
+            text-align: center;
+
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            border-radius: 20px;
+        }
+
+        .nestedSortable{
+            display: flex;
+            flex-direction: column;
+            width: 75%;
+            margin-left: 12.5%;
+            margin-right: 12.5%;
+        }
+        .detailedStep{
+            background-color: lightcyan;
+            display:flex;
+            flex-direction: column;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+
+        }
+    </style>
+
+    <!-- Include jQuery and jQuery UI-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>
+    <script>
+        $( function() {
+            $( ".sortable" ).sortable( {axis: "y"});
+            $( ".nestedSortable").sortable ({axis: "y"});
+            //$( "#sortable" ).enableSelection();
+            $( "#sortable" ).selectable();
+        });
+
+    </script>
+</head>
+
+
+<body>
+
+<div class="sortableContainer" id="sortableContainer">hello world
+    <div class="sortable" id="sort"></div>
+</div>
+<script>
+    var steps=[];
+    var a;
+    var b;
+
+    generateStructure();
+    injectToDOM();
+
+
+    $('.sortable').sortable({
+        start: function(event, ui){
+            a = ui.item.index();
+        },
+        stop: function(event, ui){
+            b = ui.item.index();
+            alert("was: " + a + " is now: " + b);
+            var temp;
+            temp = steps[a];
+            steps[a] = steps[b];
+            steps[b] = temp;
+            injectToDOM();
+            $( ".nestedSortable").sortable ({axis: "y"});
+        }
+    });
+
+    /**
+     * @function generateStructure()
+     * @desciprtion generate the array that contains the state of the task being edited.
+     */
+    function generateStructure(){
+        for (var i = 0; i < 10; i++){
+            var thing = {
+                name: "hi " + i,
+                description: "hi",
+                content: "",
+                num: i
+            }
+            steps[i] = thing;
+        }
+    }
+
+    /**
+     * @function injectToDOM
+     * @description insert the task editor GUI/HTML into the DOM, display its current state to the page.
+     */
+     
+    function injectToDOM(){
+        var htmlInjection;
+        //htmlInjection = '<div class= sortable>';    // The container for the sortable task steps
+        htmlInjection = "";
+        // Write the HTML for each individual task step
+        for (var i = 0; i < 10; i++){
+            //Task steps
+            htmlInjection += "<div class = 'taskStep'>";
+            htmlInjection += "Task Step " + i;
+            htmlInjection += "<div> Name: " + steps[i].name + "</div>";
+            //Detailed steps
+            htmlInjection += '<div class = "nestedSortable">';
+            htmlInjection += '<div class = "detailedStep">' + "Detailed Step 1" + '</div>';
+            htmlInjection += '<div class = "detailedStep">' + "Detailed Step 2" + '</div>';
+            htmlInjection += '</div>'    // Close nestedSortable div
+            htmlInjection += '</div>';   // close taskStep div
+        }
+        //htmlInjection += '</div>'   // Close out the sortable div
+
+        $("#sort").html(htmlInjection);
+
+        
+    }   // end injectToDom
+    
+</script>
+</body>
+</html>

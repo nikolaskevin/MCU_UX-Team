@@ -1,4 +1,4 @@
-var fbAboutus = firebase.database().ref("CenterInformation/ContactInfo/Aboutus");
+var fbAboutus = firebase.database().ref("CenterInformation/KUContactInfo/Aboutus");
 fbAboutus.once("value")
 .then(function(snapshot){
     document.getElementById("aboutus_text").innerHTML = snapshot.val();
@@ -15,17 +15,17 @@ function aboutus_submit(){
     document.getElementById("aboutus_text").disabled = true;
     document.getElementById("aboutus_button").style.display = "none";
 
-    firebase.database().ref("CenterInformation/ContactInfo/Aboutus").set(text);
-    firebase.database().ref("CenterInformation/ContactInfo/AboutusAndroid").set(text+"(end)");
+    firebase.database().ref("CenterInformation/KUContactInfo/Aboutus").set(text);
+    firebase.database().ref("CenterInformation/KUContactInfo/AboutusAndroid").set(text+"(end)");
     alert("Succesfully entered");
 
 }
 
-var fbCI = firebase.database().ref("CenterInformation/ContactInfo");
+var fbCI = firebase.database().ref("CenterInformation/KUContactInfo");
 fbCI.once("value")
 .then(function(snapshot){
     console.log(snapshot.key);
-    if(snapshot.key == "ContactInfo"){
+    if(snapshot.key == "KUContactInfo"){
         snapshot.forEach(function(childSnapshot1){
             console.log(childSnapshot1.key);
             if(childSnapshot1.key =="Name"){
@@ -70,10 +70,10 @@ function CI_submit(){
       alert ("Please enter all information")
     }
     else {
-    firebase.database().ref("CenterInformation/ContactInfo/Name").set(name);
-    firebase.database().ref("CenterInformation/ContactInfo/Contact No").set(contact_no);
-    firebase.database().ref("CenterInformation/ContactInfo/Email").set(email_address);
-    firebase.database().ref("CenterInformation/ContactInfo/Address").set(address);
+    firebase.database().ref("CenterInformation/KUContactInfo/Name").set(name);
+    firebase.database().ref("CenterInformation/KUContactInfo/Contact No").set(contact_no);
+    firebase.database().ref("CenterInformation/KUContactInfo/Email").set(email_address);
+    firebase.database().ref("CenterInformation/KUContactInfo/Address").set(address);
 
 
     document.getElementById("aboutus_text").disabled = true;
@@ -213,7 +213,7 @@ function sponsor_delete(){
 }
 
 
-function showintroduction(){
+function showintroductionKU(){
   document.getElementById("data1").style.display = "block";
   document.getElementById("data2").style.display = "none";
   document.getElementById("data3").style.display = "none";
@@ -222,7 +222,7 @@ function showintroduction(){
   document.getElementById("sponsoredspan").style.opacity = ".8";
 }
 
-function showcenterinfo(){
+function showcenterinfoKU(){
   document.getElementById("data1").style.display = "none";
   document.getElementById("data2").style.display = "block";
   document.getElementById("data3").style.display = "none";

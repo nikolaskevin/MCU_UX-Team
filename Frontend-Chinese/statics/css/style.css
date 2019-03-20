@@ -5,16 +5,15 @@ ul{list-style: none;}
 a{text-decoration: none;}
 .w1200{width: 1200px;height: auto;margin: 0 auto;overflow: hidden;font-size: 16px;}
 .header{width: 100%;height: auto;overflow: hidden;margin-bottom: 20px;}
-.header .bar{background:#62ab00;height: 50px;line-height: 50px;color: #fff;}
 .header .bar .l{float: left;}
 .header .bar .l font{font-size: 22px;border-left: 1px solid #fff;margin-left: 20px;padding-left: 20px;}
 .header .bar .r{float: right;}
 .header .bar .r i{padding-right: 10px;}
-.header .user-info{height: 100px;width: 100%;background: url(../images/user_info_bg.jpg) center center no-repeat;background-size: cover;}
+.header .user-info{height: 100px;width: 100%;}
 .header .user-info .user-headface{float: left;width: 75px;height: 75px;overflow: hidden;border-radius: 50%;margin-top: 12px;}
 .header .user-info .user-headface img{width: 100%;height: 100%;}
 .header .user-info .user-account{float: left;margin-top: 25px;padding-left: 20px;color: #666;}
-.header .user-info .user-account .tip{margin-bottom: 5px;}
+.header .user-info .user-account .tip{margin-bottom: 5px; display:block}
 .header .user-info .user-account .account span{font-size: 13px;padding-right: 20px;}
 .header .user-info .user-modify{float: right;margin-top: 30px;width: 110px;height: 40px;text-align: center;line-height: 40px;color: #fff;background: #62ab00;border-radius: 5px;}
 .main .left{float: left;width: 200px;height: auto;overflow: hidden;margin-right: 20px;background: #fff;}

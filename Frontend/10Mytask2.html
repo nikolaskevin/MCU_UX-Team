@@ -1,5 +1,5 @@
-
-  @file 05Library2.html
+﻿<!--
+  @file 10Mytask2.html
   @author  MCU
   @author  Kutztown University
   @license
@@ -26,9 +26,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type='text/javascript' src="Config.js"></script>
-    <script type='text/javascript' src='Library.js'></script>
-
-    <script type='text/javascript' src='chat.js'></script>
+    <script type='text/javascript' src='Mytask.js'></script>
     <script type='text/javascript' src='Profile.js'></script>
 </head>
 <style>
@@ -163,21 +161,20 @@
                         Memo
                     </a>
                 </li>
-                <li >
+                <li>
                     <a href="../Frontend/04Statusrecord2.html">
                         <i class="glyphicon glyphicon-heart-empty"></i>
                         Status Record
                     </a>
                 </li>
-                <li class="current">
+                <li >
                     <a href="../Frontend/05Library2.html">
                         <i class="glyphicon glyphicon-book"></i>
                         Library
                     </a>
                 </li>
-                <li>
-                    <a href="../Frontend/10MyTask2.html">
-
+                <li class="current">
+                    <a href="../Frontend/10Mytask2.html">
                         My Tasks
                     </a>
                 </li>
@@ -236,7 +233,7 @@
                                     <a href="javascript:void(0)" class="dropbtn"><span class="glyphicon glyphicon-cog white-text"></span></a>
                                     <div class="dropdown-content">
                                         <a href="#">English</a>
-                                        <a href="/../Frontend-Chinese/05Library2.html">Chinese</a>
+                                        <a href="/../Frontend-Chinese/10Mytask2.html">Chinese</a>
                                         <a onClick="Logout(); return false;" href="../Frontend/00Login2.html">Logout</a>
                                     </div>
                                 </li>
@@ -307,7 +304,7 @@
                                         <th style="width:10%"><input type="checkbox" id="all_checked" onclick="toggleTask(this)"></th>
                                     </tr>
                                 </table>
-                                <button id ="library_requestCopy" type="button" onclick="submitClick()">Request Copy</button>
+                                <!--<button id ="library_requestCopy" type="button" onclick="submitClick()">Request Copy</button>-->
 
                         
                             </div>

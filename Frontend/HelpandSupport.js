@@ -1,3 +1,9 @@
+/**
+ * @file HelpandSupport.js
+ * @author  MCU
+ * @author  Kutztown University
+ * @license
+ */
 
     var fbFeedback = firebase.database().ref("Feedback/");
     var num = 0;
@@ -9,6 +15,12 @@
        });
     });
 
+/**
+ * @function match_id
+ * @description verifys wheter the user is a CNA or Patient/Family member
+ * @param {*} id 
+ * @param {*} fbFeedback 
+ */
 function match_id(id,fbFeedback){
 
     if (id.charAt(0) == "3"){
@@ -53,6 +65,14 @@ function match_id(id,fbFeedback){
 
 }
 var index = 0;
+/**
+ * @function tableform
+ * @description  fills the table for the feedback
+ * @param {*} id 
+ * @param {*} name 
+ * @param {*} fbFeedback 
+ * @param {*} picture 
+ */
 function tableform(id,name,fbFeedback,picture){
     fbFeedback.child(id+"/Center/").once('value')
     .then(function(childSnapshot2){//Center
@@ -87,6 +107,7 @@ function tableform(id,name,fbFeedback,picture){
                   var span2 = document.createElement('span');
                   var span3 = document.createElement("span");
                   var span4 = document.createElement("span");
+                  var staffReply = document.createElement("span");
 
                   var span5 = document.createElement("span");
 
@@ -159,7 +180,7 @@ function tableform(id,name,fbFeedback,picture){
                           document.getElementById("photo["+index+"]").src = picture;
                           document.getElementById("username["+index+"]").innerHTML = name +"  said:";
                           document.getElementById("comment["+index+"]").innerHTML = childSnapshot6.val();
-                          getReply(id,index,a[0],a[1],a[2],time[0],time[1],time[2],feedbackID);
+                          getReply(id, index, a[0], a[1], a[2], time[0], time[1], time[2], feedbackID);
                           console.log(index);
                           index++;
                       }
@@ -198,6 +219,13 @@ function tableform(id,name,fbFeedback,picture){
                           index++;
                       }
                   }
+                  if (childSnapshot5.key == "Replied") {
+                      if (id.charAt(0) == "3") {
+
+                      } else {
+
+                      }
+                  }
                 })
 
 
@@ -208,6 +236,20 @@ function tableform(id,name,fbFeedback,picture){
     });
 
 }
+
+/**
+ * @function getReply
+ * @description displays the reply to the feedback
+ * @param {*} id 
+ * @param {*} index 
+ * @param {*} year 
+ * @param {*} month 
+ * @param {*} date 
+ * @param {*} h 
+ * @param {*} m 
+ * @param {*} s 
+ * @param {*} feedbackID 
+ */
 function getReply(id,index,year,month,date,h,m,s,feedbackID){
     var lastDate = year+"-"+month+"-"+date;
     var time = h+":"+m+":"+s;
@@ -227,6 +269,43 @@ function getReply(id,index,year,month,date,h,m,s,feedbackID){
     })
 }
 
+/**
+ * @function getDirectorReply
+ * @description displays the reply to staff feedback from teh director
+ * @param {*} id 
+ * @param {*} index 
+ * @param {*} year 
+ * @param {*} month 
+ * @param {*} date 
+ * @param {*} h 
+ * @param {*} m 
+ * @param {*} s 
+ * @param {*} feedbackID 
+ */
+function getDirectorReply(id, index, year, month, date, h, m, s, feedbackID) {
+    var lastDate = year + "-" + month + "-" + date;
+    var time = h + ":" + m + ":" + s;
+    var fbReply = firebase.database().ref("Feedback/" + id + "/Center" + "/" + lastDate + "/" + feedbackID + "/Replied/");
+    fbReply.once('value').
+    then(function (snapshot) {
+        snapshot.forEach(function (snapshot1) {
+            var com = snapshot1.val();
+            com = com.replace(/[~]/g, " ");
+            document.getElementById("replyComment[" + index + "]").innerHTML = com;
+            console.log(snapshot1.key);
+
+            var tim = snapshot1.key;
+            tim = tim.replace(/[?]/g, "-");
+            document.getElementById("replyTime[" + index + "]").innerHTML = tim;
+        })
+    })
+}
+
+/**
+ * @function replyToggle
+ * @description opens/closes the text box where the reply will be written
+ * @param {*} index 
+ */
 function replyToggle(index){
     if(document.getElementById("message["+index+"]").style.display =="inline"){
         document.getElementById("message["+index+"]").style.display = "none";
@@ -242,6 +321,19 @@ function replyToggle(index){
     }
 }
 
+/**
+ * @function sendMess
+ * @description  send a reply to the feedback
+ * @param {*} id 
+ * @param {*} year 
+ * @param {*} month 
+ * @param {*} index 
+ * @param {*} date 
+ * @param {*} h 
+ * @param {*} m 
+ * @param {*} s 
+ * @param {*} feedbackID 
+ */
 function sendMess(id,year,month,index,date,h,m,s,feedbackID){
 
   console.log(year,month,date);
@@ -280,12 +372,31 @@ function sendMess(id,year,month,index,date,h,m,s,feedbackID){
 
 }
 
+/**
+* @function reply
+* @description not sure it's needed, not deleting since it's so close to a sprint end
+* @param {*} id 
+*/
+function reply(id) {
+    
+}
+
+/**
+* @function setTimeout
+* @description sets a timer for inactivity of user
+*/
 setTimeout(function(){
     pat = document.getElementById("container");
     staff = document.getElementById("container1");
     sorting(pat);
     sorting(staff)
 }, 3000);
+
+/**
+ * @function sorting
+ * @description
+ * @param {*} table 
+ */
 function sorting(table){
   var  rows, switching, i, x, y, s, shouldSwitch, dir, switchcount = 0;
 
@@ -323,6 +434,10 @@ function sorting(table){
   }
 }
 
+/**
+ * @function showsf
+ * @description gets the staff feedback
+ */
 function showsf(){
   document.getElementById("container").style.display = "block";
   document.getElementById("container1").style.display = "none";
@@ -330,8 +445,10 @@ function showsf(){
   document.getElementById("patientfeedbackspan").style.opacity = ".8";
 }
 
-
-
+/**
+ * @function showpf
+ * @description gets the family(patient) feedback
+ */
 function showpf(){
   document.getElementById("container").style.display = "none";
   document.getElementById("container1").style.display = "block";
@@ -339,6 +456,10 @@ function showpf(){
   document.getElementById("patientfeedbackspan").style.opacity = "1";
 }
 
+/**
+ * @function openmenu
+ * @description allows user to open the menu that switches languages and logout (?)
+ */
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){
     document.getElementById("menu").style.display = "none";
@@ -350,25 +471,45 @@ function openmenu(){
 }
 }
 
-
+/**
+ * @function profile
+ * @description gets the profile information of current user
+ */
 function profile(){
   document.getElementById("profile").style.display = "block";
 }
 
+/**
+ * @function closeprofile
+ * @description allows the user to close the profile information
+ */
 function closeprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "none";
 }
 
+/**
+ * @function editprofile
+ * @description allows the user to edit their basic profile information
+ */
 function editprofile(){
   document.getElementById("profile").style.display = "none";
   document.getElementById("editprofile").style.display = "block";
 }
 
+/**
+ * @function cancelprofile
+ * @description allows the user to cancel out of editing their information
+
+ */
 function cancelprofile(){
   window.location.reload()
 }
 
+/**
+ * @function submitprofile
+ * @description allows the user to submit the edits to their profile not completed, but not getting rid of until next sprint
+ */
 function submitprofile(){
 
 }
