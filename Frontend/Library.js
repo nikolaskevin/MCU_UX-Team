@@ -49,7 +49,7 @@ fbTask.once("value")
             var cellCategory = row.insertCell(-1);
             cellCategory.appendChild(document.createTextNode(childSnapshot1.key));
             var cellName = row.insertCell(-1);
-            cellName.appendChild(document.createTextNode(childSnapshot2.key));
+            cellName.appendChild(document.createTextNode(childSnapshot2.val()["Info"]["Title"]));
             button.innerHTML="Detail";
             var cellButton= row.insertCell(-1);
             var cellCheckbox = row.insertCell(-1);

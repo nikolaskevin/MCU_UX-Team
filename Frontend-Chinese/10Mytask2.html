@@ -1,5 +1,5 @@
-
-  @file 05Library2.html
+﻿<!--
+  @file 10Mytask2.html
   @author  MCU
   @author  Kutztown University
   @license
@@ -26,9 +26,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type='text/javascript' src="Config.js"></script>
-    <script type='text/javascript' src='Library.js'></script>
-
-    <script type='text/javascript' src='chat.js'></script>
+    <script type='text/javascript' src='Mytask.js'></script>
     <script type='text/javascript' src='Profile.js'></script>
 </head>
 <style>
@@ -146,55 +144,55 @@
             <!-- SIDEBAR -->
             <ul class="list-unstyled components">
                 <li>
-                    <a href="../Frontend/01Aboutus2.html">
+                    <a href="../Frontend-Chinese/01Aboutus2.html">
                         <i class="glyphicon glyphicon-info-sign"></i>
                         About Us
                     </a>
                 </li>
                 <li>
-                    <a href="../Frontend/02Schedule2.html">
+                    <a href="../Frontend-Chinese/02Schedule2.html">
                         <i class="glyphicon glyphicon-calendar"></i>
                         Schedule
                     </a>
                 </li>
                 <li>
-                    <a href="../Frontend/03Memo2.html">
+                    <a href="../Frontend-Chinese/03Memo2.html">
                         <i class="glyphicon glyphicon-folder-close"></i>
                         Memo
                     </a>
                 </li>
-                <li >
-                    <a href="../Frontend/04Statusrecord2.html">
+                <li>
+                    <a href="../Frontend-Chinese/04Statusrecord2.html">
                         <i class="glyphicon glyphicon-heart-empty"></i>
                         Status Record
                     </a>
                 </li>
-                <li class="current">
-                    <a href="../Frontend/05Library2.html">
+                <li >
+                    <a href="../Frontend-Chinese/05Library2.html">
                         <i class="glyphicon glyphicon-book"></i>
                         Library
                     </a>
                 </li>
-                <li>
-                    <a href="../Frontend/10MyTask2.html">
-
+                <li class="current">
+                    <a href="../Frontend-Chinese/10MyTasks.html">
+                        <i class="glyphicon glyphicon-book"></i>
                         My Tasks
                     </a>
                 </li>
                 <li>
-                    <a href="../Frontend/06Taskeditor2.html">
+                    <a href="../Frontend-Chinese/06Taskeditor2.html">
                         <i class="glyphicon glyphicon-tasks"></i>
                         Task Editor
                     </a>
                 </li>
                 <li>
-                    <a href="../Frontend/07E-portfolio2.html">
+                    <a href="../Frontend-Chinese/07E-portfolio2.html">
                         <i class="glyphicon glyphicon-user"></i>
                         E-Portfolio
                     </a>
                 </li>
                 <li>
-                    <a href="../Frontend/08Helpandsupport2.html">
+                    <a href="../Frontend-Chinese/08Helpandsupport2.html">
                         <i class="glyphicon glyphicon-question-sign"></i>
                         Help and Support
                     </a>
@@ -222,7 +220,7 @@
 
                             <div class="navbar-header">
 
-                                <a href="../Frontend/01Aboutus2.html" style="padding-left:4px">
+                                <a href="../Frontend-Chinese/01Aboutus2.html" style="padding-left:4px">
                                     <img src="statics/images/v2ltctmslogo.png" height="50" width="60" />
                                 </a>
 
@@ -235,9 +233,9 @@
                                 <li class="dropdown">
                                     <a href="javascript:void(0)" class="dropbtn"><span class="glyphicon glyphicon-cog white-text"></span></a>
                                     <div class="dropdown-content">
-                                        <a href="#">English</a>
-                                        <a href="/../Frontend-Chinese/05Library2.html">Chinese</a>
-                                        <a onClick="Logout(); return false;" href="../Frontend/00Login2.html">Logout</a>
+                                        <a href="/../Frontend/01Aboutus2.html">English</a>
+                                        <a href="#">Chinese</a>
+                                        <a onClick="Logout(); return false;" href="../Frontend-Chinese/00Login2.html">Logout</a>
                                     </div>
                                 </li>
                             </ul>
@@ -307,7 +305,7 @@
                                         <th style="width:10%"><input type="checkbox" id="all_checked" onclick="toggleTask(this)"></th>
                                     </tr>
                                 </table>
-                                <button id ="library_requestCopy" type="button" onclick="submitClick()">Request Copy</button>
+                                <!--<button id ="library_requestCopy" type="button" onclick="submitClick()">Request Copy</button>-->
 
                         
                             </div>
@@ -371,9 +369,10 @@
             <div style="background-color:#E4EACD;position:relative;height:75px;">
                 <h2 id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
 
-                <button onclick="editprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
-                <button onclick="closeprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
-                <button onclick="changePassword()" style="position:relative; left:520px;top:75px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>            </div>
+                <button onclick="editprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
+                <button onclick="closeprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
+                <button onclick="changePassword()" style="position:relative; left:520px;top:45px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>
+            </div>
             <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
             <div style="position:relative; left:220px;top:-110px;">
                 <p>Position: &nbsp<span id="positionProfile"></span> </p><br>
@@ -412,6 +411,18 @@
             </div>
         </div>
 
+        <div id="expand" onclick="">
+            Chat
+            <div id="notification"></div>
+        </div>
+        <div id="leftList">
+            <div id="notificationAll"></div>
+            <div id="notificationPart"></div>
+            <ul>
+                <li id="chatAll" onclick="displayChat('0')">Center & System</li>
+                <li id="chatPart" onclick="displayChat('1')">Center</li>
+            </ul>
+        </div>
         <!-- START COPY FOR SIDEBAR JAVASCRIPT -->
         <!-- jQuery CDN - Slim version (=without AJAX) -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
