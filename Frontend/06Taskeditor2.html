@@ -103,7 +103,7 @@
 
                             <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 3ex;padding-top:1.5ex;padding-bottom:1.5ex; background-color:green;outline-color:darkgreen">
                                 <i class="fas fa-align-left"></i>
-                                <span>Toggle Sidebar</span>
+                                <span id="toggleSide">Hide sidebar</span>
                             </button>
 
                             <div class="navbar-header">
@@ -230,18 +230,6 @@
                         <p>Confirm Password: <input type="password" id="confirmnewPassword"></p><br>
                     </div>
                 </div>
-                <div id="expand" onclick="expand()">
-                    Chat
-                    <div id="notification"></div>
-                </div>
-                <div id="leftList">
-                    <div id="notificationAll"></div>
-                    <div id="notificationPart"></div>
-                    <ul>
-                        <li id="chatAll" onclick="displayChat('0')">Center & System</li>
-                        <li id="chatPart" onclick="displayChat('1')">Center</li>
-                    </ul>
-                </div>
             </div>
             
         </div><!-- END OF MAIN DIV CONTAINER CLASS!!! -->
@@ -268,6 +256,11 @@
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                if (document.getElementById("toggleSide").innerHTML == "Hide sidebar") {
+                    document.getElementById("toggleSide").innerHTML = "Show sidebar";
+                } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
+                    document.getElementById("toggleSide").innerHTML = "Hide sidebar";
+                }
             });
         });
     </script>
