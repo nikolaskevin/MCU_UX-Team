@@ -983,7 +983,7 @@ function submitClick(){
   document.getElementById("library_requestCopy")
   var counter = 0, // counter for checked checkboxes
       i = 0,       // loop variable
-      url = '../Frontend/10MyTasks2.html',    // final url string
+      url = '../Frontend/10MyTask2.html',    // final url string
       // get a collection of objects with the specified 'input' TAGNAME
       input_obj = document.getElementsByTagName('input');
   // loop through all collected objects
@@ -1000,11 +1000,11 @@ function submitClick(){
       // remove first "&" from the generated url string
       url = url.substr(1);
       // display final url string
-      alert(url);
+      console.log(url);
       // or you can send checkbox values
       // window.location.href = 'my_page.php?' + url; 
   }
   else {
-      alert('There is no checked checkbox');
+      console.log('There is no checked checkbox');
   }
 }
