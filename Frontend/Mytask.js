@@ -3,7 +3,7 @@
  * @author  MCU
  * @author  Kutztown University
  * @license
- */
+*/
 
 var goodPath = "";
 var num1 = 0; // keep track of table row for check box
@@ -13,75 +13,76 @@ var c = 0;
 
 //get staffID from google generated UID
 firebase.auth().onAuthStateChanged(function (firebaseUser){
-    if(firebaseUser){
-        var userid = -1;
-        
-        var fbGet= firebase.database().ref('UID');
-        fbGet.once('value',function(snapshot){
-        snapshot.forEach(function(newSnap){
-    
-            if (newSnap.key == firebaseUser.uid){
-                userid = newSnap.val();
-                //do queries in here to use userid:
-                
-                //MyTaskList query - get from uAccount
-                //put task IDs and task names into arrays
-                var fbMTL = firebase.database().ref("uAccount/"+userid+"/MyTaskList");
-                fbMTL.once("value")
-                .then(function(snapshotMTL){
-                    var taskIDArray = [];
-                    snapshotMTL.forEach(function(childSnapshotTaskIDs) {
-                        var tid = childSnapshotTaskIDs.val();
-                        taskIDArray.push(tid);
-                    });
-                    //console.log("task ID array: "+taskIDArray);
-                    // do queries here with tasks from MyTaskList:
-                    for (i = taskIDArray.length; i > 0; i--) { 
-                        //console.log(i+" task ID array: "+taskIDArray[i-1]);
-                        getTaskPath(taskIDArray[i-1], getTaskPathCallback);
-                    }                    
-                });
-            }
-        });
-      });
-    }
-});  
+  if(firebaseUser){
+    var userid = -1;
+          
+    var fbGet= firebase.database().ref('UID');
+    fbGet.once('value',function(snapshot){
+      snapshot.forEach(function(newSnap){
+        if (newSnap.key == firebaseUser.uid){
+          userid = newSnap.val();
+          //do queries in here to use userid:
+                  
+          //MyTaskList query - get from uAccount
+          //put task IDs and task names into arrays
+          var fbMTL = firebase.database().ref("uAccount/"+userid+"/MyTaskList");
+          fbMTL.once("value")
+          .then(function(snapshotMTL){
+            var taskIDArray = [];
+            snapshotMTL.forEach(function(snapshotTaskIDs) {
+              var tid = snapshotTaskIDs.val();
+              taskIDArray.push(tid);
+            }); //end snapshotTaskIDs
+                      
+            // do queries here with tasks from MyTaskList:
+            for (i = taskIDArray.length; i > 0; i--) { 
+              getTaskPath(taskIDArray[i-1], getTaskPathCallback);
+            } //end for loop
+
+          }); //end snapshotMTL
+        } //end if newSnap.key == firebaseUser.uid
+      }); //end function(newSnap)
+    }); //end function(snapshot)
+  } //end if firebaseUser
+}); //end function(firebaseUser)
+
 
 /**
  * @function getTaskPath
  * @description gets the task path of a task given an ID; calls function to add to table in UI
  * @param {*} taskID task ID of task retrieved from MyTaskList array
  * @param {*} callback function to execute when the task path is determined
- */
+*/
 function getTaskPath(taskID, callback){
-    var listOfTasks = "";
-    console.log("inside getTaskPath: "+taskID);
-    var fbGet= firebase.database().ref('TaskInstruction')   //Get all the task categories
+  var listOfTasks = "";
+  var fbGet= firebase.database().ref('TaskInstruction')   //Get all the task categories
 
-    fbGet.once('value',function(snapshot){  //Get a snapshot of the data in the TaskInstruction part of the database.
-        taskPath = "TaskInstruction";
-        // Loop through each of the categories
-        snapshot.forEach(function(catSnapshot)  { 
-            var cat = catSnapshot.key;
-            //console.log(taskID+" cat: "+cat);
-            taskPath = "TaskInstruction/" + cat + "/";
-            // Loop through each of the tasks
-            catSnapshot.forEach(function(taskSnapshot){
-                var task = taskSnapshot.key;
-                if (taskSnapshot.val()['TaskID'] == taskID){
-                    taskPath += taskSnapshot.key;
-                    //console.log("taskPath: "+taskPath);
-                    //console.log("Task ID: "+taskID+" "+taskSnapshot.val()); 
-                    goodPath = taskPath;
-                    getTaskPathCallback(taskSnapshot.val()); //callback function after getting the path to the task we're looking for.
-                    return;
-                }
-                listOfTasks += "\n" +  task;
-            });
-        });
-        taskPath = "";
-    });
-}
+  fbGet.once('value',function(snapshot){  //Get a snapshot of the data in the TaskInstruction part of the database.
+    taskPath = "TaskInstruction";
+    
+    // Loop through each of the categories
+    snapshot.forEach(function(catSnapshot)  { 
+      var cat = catSnapshot.key;
+      taskPath = "TaskInstruction/" + cat + "/";
+
+      // Loop through each of the tasks IDs
+      catSnapshot.forEach(function(taskIDSnapshot){
+        var task = taskIDSnapshot.key;
+        if (taskIDSnapshot.val()['TaskID'] == taskID){
+          taskPath += taskIDSnapshot.key;
+          goodPath = taskPath;
+          getTaskPathCallback(taskIDSnapshot.val()); //callback function after getting the path to the task we're looking for.
+          return;
+        } //end if taskIDSnapshot.val()['TaskID'] == taskID
+        listOfTasks += "\n" +  task;
+      
+      }); //end function(taskIDSnapshot)
+    }); //end function(catSnapshot)
+    taskPath = "";
+
+  }); //end function(snapshot)
+} //end getTaskPath
+
 
 /**
  * @function getTaskPathCallback
@@ -89,56 +90,88 @@ function getTaskPath(taskID, callback){
  * @param {*} task the task object retrieved from the database
  */
 function getTaskPathCallback(task){
-    //console.log("inside getTaskPathCall: "+task.key);
+  var category = task["Info"]["Category"];
+  var tName = task["Info"]["Title"];
+  var tID = task["TaskID"];
+  var published = task["Info"]["Published"];
+  if(published == true){published = "Yes";}
+  else{published = "No";}
+  var visible = task["Info"]["Visible"];
+  if(visible == true){visible = "Yes";}
+  else{visible = "No";}
 
-    var category = task["Info"]["Category"];
-    var tName = task["Info"]["TtitleIOS"];
+  // add category to filter options
+  var addCategory = document.getElementById("filterCategory"); //get filter category list element
+  console.log("filtercategory: "+addCategory);
+  var opt = document.createElement("option"); //create option to be added to category drop down
+  opt.text = category;
+  addCategory.add(opt); //add to filter category list
 
-    // add category to filter options
-    var addCategory = document.getElementById("filterCategory"); //get filter category list element
-    var opt = document.createElement("option"); //create option to be added to category drop down
-    opt.text = category;
-    addCategory.add(opt); //add to filter category list
+  // add task to table
+  var table = document.getElementById("assigningTask");
+  var tr = table.getElementsByTagName("tr");
 
+  var taskName = document.getElementById("filterTaskList");
+  var opt1 = document.createElement("option");
+  opt1.text = tName;
+  taskName.add(opt1);
     
-    // add task to table
-    var table = document.getElementById("assigningTask");
-    var tr = table.getElementsByTagName("tr");
+  num1 = num1 +1;
+  var row = assigningTask.insertRow(-1);
+  c++;
+  tr[c].style.display = "table-row";
+  
+  var cellCategory = row.insertCell(-1);
+  cellCategory.appendChild(document.createTextNode(category));
+  
+  var cellName = row.insertCell(-1);
+  cellName.appendChild(document.createTextNode(tName));
+    
+  var cellVisibility = row.insertCell(-1);
+  cellVisibility.appendChild(document.createTextNode(published));
+  var cellPublished = row.insertCell(-1);
+  cellPublished.appendChild(document.createTextNode(visible));
 
-    var taskName = document.getElementById("filterTaskList");
-    var opt1 = document.createElement("option");
-    opt1.text = tName;
-    taskName.add(opt1);
-    var button = document.createElement("button");
-    var checkBox = document.createElement("input");
-    checkBox.type = "checkbox";
-    checkBox.setAttribute("id", "checkbox_name["+num1+"]");
-    button.setAttribute("id","button_id["+num1+"]");
-    button.setAttribute("onclick", "display_Detail("+num1+")");
-    num1 = num1 +1;
-    var row = assigningTask.insertRow(-1);
-    c++;
-    tr[c].style.display = "table-row";
-    var cellCategory = row.insertCell(-1);
-    cellCategory.appendChild(document.createTextNode(category));
-    var cellName = row.insertCell(-1);
-    cellName.appendChild(document.createTextNode(tName));
-    button.innerHTML="Detail";
-    var cellButton= row.insertCell(-1);
-    var cellCheckbox = row.insertCell(-1);
-    cellButton.appendChild(button);
-    cellCheckbox.appendChild(checkBox);
+  var detailButton = document.createElement("button");
+  detailButton.setAttribute("id","button_id["+num1+"]");
+  detailButton.setAttribute("onclick", "display_Detail("+num1+")");
+  detailButton.innerHTML="Details";
+  var cellDetailButton= row.insertCell(-1);
+  cellDetailButton.appendChild(detailButton);
+  
+  var editButton = document.createElement("button");
+  editButton.setAttribute("id","editButton_id["+num1+"]");
+  editButton.setAttribute("onclick", "directTask("+num1+")");
+  editButton.innerHTML="Edit";
+  var cellEditButton= row.insertCell(-1);
+  cellEditButton.appendChild(editButton);
+    
+  var deleteButton = document.createElement("button");
+  deleteButton.setAttribute("id","deleteButton_id["+num1+"]");
+  deleteButton.setAttribute("onclick", "removeTaskMyList("+num1+")");
+  deleteButton.innerHTML="Remove";
+  var cellDeleteButton = row.insertCell(-1);
+  cellDeleteButton.appendChild(deleteButton);
 
-    console.log("TASK NAME: "+ tName);
-    return;
+  var cellTID = row.insertCell(-1);
+  cellTID.appendChild(document.createTextNode(tID));
+  cellTID.style.display = "none";
+
+  var checkBox = document.createElement("input");
+  checkBox.type = "checkbox";
+  checkBox.setAttribute("id", "checkbox_name["+num1+"]");
+
+  console.log("TASK NAME: "+ tName);
+  return;
 }
+
 
 /**
    * @function toggleTask
    * @description when check box in the header row in the task list table in Library > Assign Task is clicked
    *   all of the tasks are either selected or deselected
    * @param {*} source status of checkbox - checked or unchecked
-   */
+*/
 function toggleTask(source) {
 var table = document.getElementById("assigningTask");
 var tr = table.getElementsByTagName("tr");
@@ -172,7 +205,7 @@ console.log(length);
 /**
  * @function assign
  * @description selected task is assigned to selected assignees
- */
+*/
 function assign(){
   document.getElementById("library_requestCopy")
   var table = document.getElementById("assigningTask");
@@ -332,7 +365,7 @@ function filter_Category(){
           var value = document.getElementById("checkbox_name["+c+"]");
           console.log("checkbox_name["+c+"]");
           if(value.checked == true){
-              document.getElementById("all_checked").checked = true;
+            document.getElementById("all_checked").checked = true;
           }
         }
         else {
@@ -397,7 +430,9 @@ function display_Detail(num){
   var p = document.createElement('p');
   var Ukey = tr[num+1].cells[0].innerText;
   var Ukey1 = tr[num+1].cells[1].innerText;
-  var fbTask= firebase.database().ref('TaskInstruction/'+Ukey+"/"+Ukey1);
+  var taskID = tr[num+1].cells[7].innerText;
+  console.log("ID: "+ taskID)
+  var fbTask= firebase.database().ref('TaskInstruction/'+Ukey+"/"+taskID);
   //document.getElementById("TaskName").innerHTML = Ukey1;
   console.log(Ukey1);
   var array = [];
@@ -421,32 +456,65 @@ function display_Detail(num){
   });
 }
 
+
 /**
  * @function directTask
- * @description redirects to task editor for selected task to view more info
+ * @description Generates a path to the task in the database and redirects to the task editor.
  */
-function directTask(){
-    var cat = document.getElementById("category").innerHTML;
-    var taskN = document.getElementById("taskname").innerHTML;
-    sessionStorage.setItem("from","Library.html");
-    sessionStorage.setItem("category",cat);
-    sessionStorage.setItem("taskname",taskN);
-
-    location.href ="/../Frontend/06Taskeditor2.html";
+function directTask(num){
+  var table = document.getElementById("assigningTask");
+  var tr = table.getElementsByTagName("tr");
+  var cat = tr[num+1].cells[0].innerText;
+  var taskN = tr[num+1].cells[1].innerText;
+  var taskID = tr[num+1].cells[7].innerText;
+  var taskPath = "TaskInstruction/" + cat + "/" + taskID;
+  alert (taskPath);
+  sessionStorage.setItem("from","Library.html");
+  sessionStorage.setItem("category",cat);
+  sessionStorage.setItem("taskname",taskN);
+  window.path = "TaskInstruction/" + cat + "/" + taskN;
+  localStorage.setItem("taskPath", taskPath);
+  localStorage.setItem("taskN", taskN);
+  //alert("HI" + localStorage.getItem("taskPath"));
+  location.href ="/../Frontend/06Taskeditor2.html";
 
 }
+
 
 /**
- * @function openmenu
- * @description can't find this function in 10Mytask2.html
+ * @function removeTaskMyList
+ * @description remove a task from MyList
  */
-function openmenu(){
-  if(document.getElementById("menu").style.display== "block"){
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("openmenu").style.opacity = "1";
-  }
-  else{
-    document.getElementById("menu").style.display = "block";
-    document.getElementById("openmenu").style.opacity = ".6";
-  }
-}
+function removeTaskMyList(num) {
+  var table = document.getElementById("assigningTask");
+  var tr = table.getElementsByTagName("tr");
+  var taskID = tr[num+1].cells[7].innerText; //taskID to be removed
+
+  //get userid
+  firebase.auth().onAuthStateChanged(function (firebaseUser){
+    if(firebaseUser){
+      var userid = -1;
+      var refUID= firebase.database().ref('UID');
+      refUID.once('value',function(snapshotUID){
+        snapshotUID.forEach(function(snapshotInsideUID){
+          if (snapshotInsideUID.key == firebaseUser.uid){
+            userid = snapshotInsideUID.val();
+            //MyTaskList query - get from uAccount
+            var fbMTL = firebase.database().ref("uAccount/"+userid+"/MyTaskList");
+            fbMTL.once("value").then(function(snapshotMTL){
+              snapshotMTL.forEach(function(snapshotTaskIDs) {
+              var tidMTL = snapshotTaskIDs.val();
+                if(tidMTL == taskID){
+                  MyListTID = snapshotTaskIDs.key;
+                  var taskReference = firebase.database().ref("uAccount/"+userid+"/MyTaskList/"+MyListTID);
+                  taskReference.remove();
+                  window.location.href ="../Frontend/10MyTask2.html";
+                } //end if tidMTL == taskID
+              }); //end function(snapshotTaskIDs)
+            }); //end function(snapshotMTL)
+          } //end if snapshotInsideUID.key == firebaseUser.uid
+        }); //end function(snapshotInsideUID)
+      }); //end function(snapshotUID)
+    } //end if firebaseUser
+  }); //end function(firebaseUser)
+} //end removeTaskMyList

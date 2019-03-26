@@ -91,8 +91,8 @@
     .library_form-popup {
         display: none;
         position: absolute;
-        top: 40%;
-        left: 55%;
+        top: 20%;
+        left: 30%;
         border: 5px solid gray;
         padding: 10px;
         background-color: white;
@@ -289,24 +289,39 @@
                     </div>
                     <div class="container" id="data1">
                         <div class="library_tasktable" >
-                            <select class="library_filter" id="filterCategory" onchange="filter_Category()">
-                                <option>Category</option>
-                            </select>
-                            <form>
-                                <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
-                            </form>
+                            <table style="width: 100%; border:none;">
+                                <tr>
+                                    <td style="border:none; text-align:left;">
+                                        <select class="library_filter" id="filterCategory" onchange="filter_Category()">
+                                                <option>Category</option>
+                                        </select>
+                                    </td>
+                                    <td style="border:none; text-align:center;">
+                                        <form>
+                                            <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
+                                        </form>
+                                    </td>
+                                    <td style="border:none; text-align:right;">
+                                        <button id ="removeTask" type="button" onclick="">Create New Task</button>
+                                    </td>
+                                </tr>
+                            </table>
                             <br><br>
                             <div style="overflow:auto;height:300px;">
-                                <table class="library_tasktable_display" id="assigningTask" style="border-style:hidden;width:100%;">
+                                <table class="library_tasktable_display" id="assigningTask" style="width:100%;">
                                     <tr>
-                                        <th style="width:25%" onclick="sortingTask(0)" class="library_table_firstbox"> Category </th>
-                                        <th style="width:55%" onclick="sortingTask(1)" class="library_table_secondbox"> Task Name  </th>
+                                        <th style="width:20%" onclick="sortingTask(0)" class="library_table_firstbox"> Category </th>
+                                        <th style="width:30%" onclick="sortingTask(1)" class="library_table_secondbox"> Task Name  </th>
+                                        <th style="width:10%" onclick="sortingTask(2)" class="library_table_firstbox"> Published </th>
+                                        <th style="width:10%" onclick="sortingTask(3)" class="library_table_secondbox"> Visible  </th>
                                         <th style="width:10%"></th>
-                                        <th style="width:10%"><input type="checkbox" id="all_checked" onclick="toggleTask(this)"></th>
+                                        <th style="width:10%"></th>
+                                        <th style="width:10%"></th>
+                                        <th style="display:none"></th>
+                                        <!--<th style="width:10%">--><!--<input type="checkbox" id="all_checked" onclick="toggleTask(this)">--></th>
                                     </tr>
                                 </table>
-                                <!--<button id ="library_requestCopy" type="button" onclick="submitClick()">Request Copy</button>-->
-
+                                <br>
                         
                             </div>
                         </div>
@@ -336,7 +351,7 @@
         <div class="library_form-popup" id="form1">
             <table style="width:100%; height:100%;">
                 <tr>
-                    <td colspan="2" style="background-color:#ddd;"><h3 id="taskname"></h3> </td>
+                    <td colspan="2" style="background-color:#ddd;border: 2px solid black;"><h3 id="taskname"></h3> </td>
                 </tr>
                 <tr>
                     <td style="border-style:hidden;width:25%;"> Category:</td>
@@ -357,10 +372,12 @@
                 <tr>
                     <td style="border-style:hidden;" colspan="2"> <button type="button" class="btn cancel" onclick="closeclose_form()">Close</button> </td>
                 </tr>
+                <!--
                 <tr>
                     <td style="border-style:hidden;"></td>
                     <td style="border-style:hidden;text-align:right"> For more details, click <button style="cursor:pointer;" onclick="directTask()">Here</button></td>
                 </tr>
+            -->
             </table>
         </div>
         <div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA;border-style: solid;
