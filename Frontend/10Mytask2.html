@@ -289,12 +289,23 @@
                     </div>
                     <div class="container" id="data1">
                         <div class="library_tasktable" >
-                            <select class="library_filter" id="filterCategory" onchange="filter_Category()">
-                                <option>Category</option>
-                            </select>
-                            <form>
-                                <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
-                            </form>
+                            <table style="width: 100%; border:none;">
+                                <tr>
+                                    <td style="border:none; text-align:left;">
+                                        <select class="library_filter" id="filterCategory" onchange="filter_Category()">
+                                                <option>Category</option>
+                                        </select>
+                                    </td>
+                                    <td style="border:none; text-align:center;">
+                                        <form>
+                                            <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
+                                        </form>
+                                    </td>
+                                    <td style="border:none; text-align:right;">
+                                        <button id ="removeTask" type="button" onclick="">Create New Task</button>
+                                    </td>
+                                </tr>
+                            </table>
                             <br><br>
                             <div style="overflow:auto;height:300px;">
                                 <table class="library_tasktable_display" id="assigningTask" style="width:100%;">
@@ -311,9 +322,6 @@
                                     </tr>
                                 </table>
                                 <br>
-                                <!--<button id ="removeTask" type="button" onclick="">Remove Task(s)</button>-->
-                                
-
                         
                             </div>
                         </div>
