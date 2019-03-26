@@ -41,8 +41,8 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
 
           }); //end snapshotMTL
         } //end if newSnap.key == firebaseUser.uid
-      }); //end newSnap
-    }); //end snapshot
+      }); //end function(newSnap)
+    }); //end function(snapshot)
   } //end if firebaseUser
 }); //end function(firebaseUser)
 
@@ -510,11 +510,11 @@ function removeTaskMyList(num) {
                   taskReference.remove();
                   window.location.href ="../Frontend/10MyTask2.html";
                 } //end if tidMTL == taskID
-              }); //end snapshotTaskIDs
-            }); //end snapshotMTL
+              }); //end function(snapshotTaskIDs)
+            }); //end function(snapshotMTL)
           } //end if snapshotInsideUID.key == firebaseUser.uid
-        }); //end snapshotInsideUID
-      }); //end snapshotUID
+        }); //end function(snapshotInsideUID)
+      }); //end function(snapshotUID)
     } //end if firebaseUser
-  }); //end firebaseUser
+  }); //end function(firebaseUser)
 } //end removeTaskMyList
