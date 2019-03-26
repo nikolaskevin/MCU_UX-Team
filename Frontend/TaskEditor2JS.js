@@ -1,4 +1,5 @@
-
+/* It would be better to use JQuery to generate the HTML for the task steps dynamically rather than generating HTML code in raw strings */
+/* This refactoring would make it easier to edit in the future */
 var taskDetails=[];
 var steps=[];
 var goodPath = "";
@@ -13,25 +14,47 @@ if (goodPath  == null){
     alert("No valid task chosen from library");
     location.href ="/../Frontend/05Library2.html";
 }
-getTaskFromPath(goodPath, getTaskPathCallback);
 
+getTaskFromPath(goodPath, getTaskPathCallback); //Start the process of loading the task
+
+/**
+ * @function getTaskPathCallback
+ * @param {*} task 
+ */
 function getTaskPathCallback(task){
     populateArray(task);
     injectToDOM();
 }
 
+/**
+ * @function populateArray
+ * @description Take data from a task snapshot and put it into an array. This is done so that changes to the database
+ *              don't cause the need for major change in the task editor code.
+ * @param {*} task Snapshot of the task to put into the editor.
+ */
 function populateArray(task){
-
- 
     var counter = 1;
     //var steps=[];
     var taskData = {
         category: task["Info"]["Category"],
         outline: task["Info"]["OutlineIOS"],
         videoURL: task["Info"]["videoURL"],
-        note: task["Info"]["NoteIOS"]
+        note: task["Info"]["NoteIOS"],
+        name: task["Info"]["Title"],
+        owner: task["Info"]["Owner"],
+        taskID: task["TaskID"],
+        visible: task["Info"]["Visible"],
+        published: task["Info"]["Published"]
     }
     taskDetails = taskData;
+
+    //If visiblity and published aren't set, set them now
+    if (taskDetails["published"] == null){
+        taskDetails["published"] = false;
+    }
+    if (taskDetails["visible"] == null){
+        taskDetails["visible"] = false;
+    }
 
     console.log(taskData);
     while (true){
@@ -75,7 +98,7 @@ $('.sortable').sortable({
     },
     stop: function(event, ui){
         b = ui.item.index();
-        alert("was: " + a + " is now: " + b);
+        //alert("was: " + a + " is now: " + b);
         var temp;
         temp = steps[a];
         steps[a] = steps[b];
@@ -105,6 +128,7 @@ function getTaskFromPath(taskPath, callback){
         return;
     });
 }
+
 /**
 * @function generateStructure()
 * @desciprtion generate the array that contains the state of the task being edited.
@@ -129,24 +153,57 @@ function injectToDOM(){
     var htmlInjection;
     
     htmlInjection = "";
+    //Task name
+    htmlInjection += '<div style="text-align:center;"> Task Name: </div>';
+    htmlInjection += '<input style="text-align:center;" type="text" id="nameInput" value="' + taskDetails["name"] + '"> </input>';
 
+    //Task outline
     htmlInjection += '<div style="text-align:center;"> Task Outline: </div>';
-    htmlInjection += '<div>' + '<textarea class="taskName" >' + taskDetails["outline"] + ' </textarea>' + '</div>';
+    htmlInjection += '<div>' + '<textarea class="taskName" id="taskOutline" >' + taskDetails["outline"] + ' </textarea>' + '</div>';
+
+    //Visibility
+    htmlInjection += '<div style="text-align:center;"> Task Visibility: </div>';    
+    htmlInjection += '<div class="radioField">';
+    htmlInjection += '<div class="radioChild">';
+    htmlInjection += '<input id="visible"  type="radio" name="status" value="visible"/> Visible';
+    htmlInjection += '</div>';
+
+    htmlInjection += '<div class="radioChild">';
+    htmlInjection += '<input id="invisible"  type="radio" name="status" value="invisible"/> Invisible';
+    htmlInjection += '</div>';
+
+    htmlInjection += '</div>';
+
+    //Visibility
+    htmlInjection += '<div style="text-align:center; margin-top:25px;"> Publication Status: </div>'; 
+
+    htmlInjection += '<div class="radioField">';
+
+    htmlInjection += '<div class="radioChild">';
+    htmlInjection += '<input id="published"  type="radio" name="visibility" value="published"/> Published';
+    htmlInjection += '</div>';  //End Radio chiled
+
+    htmlInjection += '<div class="radioChild">';
+    htmlInjection += '<input id="draft"  type="radio" name="visibility" value="draft"/> Draft';
+    htmlInjection += '</div>';  //End Radio Child
+    
+   
+
+    htmlInjection += '</div>';  //End radioField
+ 
+
     $("#taskHeader").html(htmlInjection);
     htmlInjection = "";
     // Write the HTML for each individual task step
     for (var i = 0; i < steps.length; i++){
         //Task steps
-        htmlInjection += "<div class = 'taskStep'>";
-        htmlInjection += "<div class = 'taskStepTop'>";
+        htmlInjection += "<div  class = 'taskStep'>";
+        htmlInjection += "<div title='Press and hold to drag and reorder steps' class = 'taskStepTop'>";
 
-        //htmlInjeciton += "<div style = 'flex:10'> </div>";
         htmlInjection += '<div style="flex:3; align-content:left; margin-left:10px; font-size:1.2em;">' + 'Task Step ' + (parseInt(i)+1) + '</div>';
         htmlInjection += '<div style="flex:15;"></div>';
-        htmlInjection += '<div style="flex:1;margin-right:8px;"> <button class="mainStepDeleteButton" id = " ' + i + '">[X]</button>';
+        htmlInjection += '<div style="flex:1;margin-right:8px;"> <button title="Delete main step" class="mainStepDeleteButton" id = " ' + i + '">[X]</button>';
         htmlInjection += '</div>';
-        //htmlInjection += "<div style = 'flex:1'> hi guise </div>";
-
         htmlInjection += "</div>";
         //Task name
         htmlInjection += "<div class='inputField'>";
@@ -169,9 +226,28 @@ function injectToDOM(){
     htmlInjection += '<button class="saveButton"> Save Task </button>';
     $("#taskFooter").html(htmlInjection); //Insert the HTML for the tasks into the DOM
 
+    setRadioStartState(taskDetails);
     installEventHandlers(steps, taskDetails);
 }   // end injectToDom
 
+/**
+ * @function setRadioStartState
+ * @description Sets the state of the radio buttons to the state in the task being edited.
+ * @param {*} taskDetails The task whose state is being referenced.
+ */
+function setRadioStartState(taskDetails){
+    if (taskDetails["visible"]){
+        document.getElementById("visible").checked = true;
+    } else {
+        document.getElementById("invisible").checked = true;
+    }
+
+    if (taskDetails["published"]){
+        document.getElementById("published").checked = true;
+    } else {
+        document.getElementById("draft").checked = true;
+    }
+}
 
 /**
  * @function installEventHandlers
@@ -179,6 +255,7 @@ function injectToDOM(){
  * @param {*} steps 
  */
 function installEventHandlers(steps, taskDetails){
+    updateNameHandler(taskDetails);
     updateStepOutlineHandler(taskDetails);
     updateStepNameHandler(steps);
     updateStepDescriptionHandler(steps);
@@ -189,10 +266,9 @@ function installEventHandlers(steps, taskDetails){
     mainStepDeleteButtonHandler(steps);
     newDetailedStepButtonHandler(steps);
     saveButtonHandler(steps);
-    updateDetailedStepHandler(steps)
+    updateDetailedStepHandler(steps);
+    radioButtonHandler(taskDetails);
 }
-
-
 
 /**
  * @function getDetailedStepHTML
@@ -208,8 +284,8 @@ function getDetailedStepHTML(steps, stepNum){
         detailHTML += '<div class = "detailedStep">';
             //move up/move down buttons
             detailHTML += '<div class="detailedStepButtonContainer" id=' + i + '>';
-            detailHTML +=  "<button class='detailedStepUpButton' id=" + j + ">▲</button>";
-            detailHTML += "<button class='detailedStepDownButton' id =" + j + ">▼</button>";
+            detailHTML +=  "<button class='detailedStepUpButton' title='Move detailed step up' id=" + j +   ">▲</button>";
+            detailHTML += "<button class='detailedStepDownButton' title='Move detailed step down' id =" + j + ">▼</button>";
             detailHTML += "</div>";
             
             //Right side of detailed step
@@ -219,14 +295,31 @@ function getDetailedStepHTML(steps, stepNum){
 
             //delete button for detailed step
             detailHTML += '<div class="deleteDetailedStepButtonContainer" id= ' + i + '>';
-            detailHTML += '<button class = "deleteDetailedStepButton" id="' + j + '">[X]</button>';
+            detailHTML += '<button title="Delete detailed step" class = "deleteDetailedStepButton" id="' + j + '">[X]</button>';
             detailHTML += '</div>';
 
             detailHTML += '</div>'
     }   
-    detailHTML += '<button class = "newDetailedStepButton" style="margin:10px;" id="' + i + '">[+]</button>';
+    detailHTML += '<button class = "newDetailedStepButton" style="margin:10px;" id="' + i + '">[+ Add Detailed Step +]</button>';
     detailHTML += '</div>'  // End detailed steps
     return detailHTML;
+}
+
+function radioButtonHandler(taskDetails){
+    $('input[type=radio]').click(function(){
+        alert(this.value);
+        var val = this.value;
+        if (val == "visible"){
+            taskDetails["visible"] = true;
+        } else if (val == "invisible"){
+            taskDetails["visible"] = false;
+        } else if (val == "published"){
+            taskDetails["published"] = true;
+        } else if (val == "draft"){
+            taskDetails["published"] = false;
+        }
+        console.log(taskDetails);
+    });
 }
 
 function updateDetailedStepHandler(steps){
@@ -242,10 +335,18 @@ function updateDetailedStepHandler(steps){
  * @param {*} taskDetails 
  */
 function updateStepOutlineHandler(taskDetails){
-    $( ".taskName" ).keyup(function(event) {
+    $( "#taskOutline" ).keyup(function(event) {
         //alert( "Handler for .keyup() called." + event.target.id );
         taskDetails["outline"] = $(event.target).val();
         console.log(taskDetails["outline"]);
+    });
+}
+
+function updateNameHandler(taskDetails){
+    $( "#nameInput" ).keyup(function(event) {
+        //alert( "Handler for .keyup() called." + event.target.id );
+        taskDetails["name"] = $(event.target).val();
+        console.log(taskDetails["name"]);
     });
 }
 
@@ -372,16 +473,26 @@ function newDetailedStepButtonHandler(steps){
 }
 
 function saveTask(steps, goodPath, taskData){
+ 
     insertToDatabase = {};
 
     insertToDatabase["Info"] = {};
     insertToDatabase["Info"]["Category"] = taskDetails["category"];
     insertToDatabase["Info"]["OutlineIOS"] = taskDetails["outline"];
-    insertToDatabase["Info"]["videoURL"] = taskDetails["videoURL"];
-    insertToDatabase["Info"]["NoteIOS"] = taskDetails["note"];
-    insertToDatabase["TaskID"] = taskSearch;
+    if (taskDetails["videoURL"]){
+        insertToDatabase["Info"]["videoURL"] = taskDetails["videoURL"];
+    } else {
+        insertToDatabase["Info"]["videoURL"] = "null";
+    }
+    //insertToDatabase["Info"]["NoteIOS"] = taskDetails["note"];
+    insertToDatabase["Info"]["Title"] = taskDetails["name"];
+    insertToDatabase["TaskID"] = taskDetails["taskID"];
+ 
+    insertToDatabase["Info"]["Published"] = taskDetails["published"];
+    insertToDatabase["Info"]["Visible"] = taskDetails["visible"];
+    
     for (var i = 0; i < steps.length; i++){
-        var tempArray = [];
+        var tempArray = {};
         insertToDatabase["Step"+(parseInt(i)+1)] = {};
         insertToDatabase["Step"+(parseInt(i)+1)]["MDescriptionIOS"] = steps[i]["description"];
         insertToDatabase["Step"+(parseInt(i)+1)]["MtitleIOS"] = steps[i]["name"];
@@ -389,13 +500,16 @@ function saveTask(steps, goodPath, taskData){
             insertToDatabase["Step"+(parseInt(i)+1)]["DetailedStep"+(parseInt(j)+1)] = steps[i]["detailedSteps"][j];
         }
     }
-    var str = JSON.stringify(insertToDatabase);
-    
-    console.log(str);
+
     console.log(insertToDatabase);
     var updates = {};
     updates[goodPath] = insertToDatabase;
-    firebase.database().ref().update(updates);
+
+    if (firebase.database().ref().update(updates)){
+        alert("Save succesful");
+    } else {
+        alert("Task failed to save");
+    }
 }
 
 /**
@@ -424,7 +538,3 @@ function newDetailedStep(stepNum){
     var num = steps[stepNum]["detailedSteps"].length;
     steps[stepNum]["detailedSteps"][ num ] = "Detailed Step";
 }
-
-
-
-
