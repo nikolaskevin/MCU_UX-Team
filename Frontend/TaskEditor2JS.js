@@ -305,6 +305,11 @@ function getDetailedStepHTML(steps, stepNum){
     return detailHTML;
 }
 
+/**
+ * @function radioButtonHandler
+ * @description Installs the event handler for when the user presses a radio button.  Handles both task visibility and publication status.
+ * @param {*} taskDetails Contains the state for the task details.
+ */
 function radioButtonHandler(taskDetails){
     $('input[type=radio]').click(function(){
         alert(this.value);
@@ -322,6 +327,10 @@ function radioButtonHandler(taskDetails){
     });
 }
 
+/**
+ * @function updateDetailedStepHandler
+ * @param {*} steps 
+ */
 function updateDetailedStepHandler(steps){
     $(".detailedStepInput").keyup(function(event){
         var detailedNum = parseInt(event.target.id);
@@ -342,6 +351,11 @@ function updateStepOutlineHandler(taskDetails){
     });
 }
 
+/**
+ * @function updateNameHandler
+ * @description Installs event handler for updating the task name. Activates when the user types in the name text field.
+ * @param {*} taskDetails Contains the state of the task details. 
+ */
 function updateNameHandler(taskDetails){
     $( "#nameInput" ).keyup(function(event) {
         //alert( "Handler for .keyup() called." + event.target.id );
@@ -389,6 +403,11 @@ function addStepButtonHandler(steps){
     });
 }
 
+/**
+ * @function deleteDetailedStepButtonHandler
+ * @description Installs event handler for the detailed step delete button.
+ * @param {*} steps Contains the state of the steps.
+ */
 function deleteDetailedStepButtonHandler(steps){
     // Event handler for detailed task delete button
     $( ".deleteDetailedStepButton" ).click (function(event){
@@ -406,6 +425,11 @@ function deleteDetailedStepButtonHandler(steps){
     });
 }
 
+/**
+ * @function detailedStepUpButton
+ * @description Installs event handler for button to move detailed steps up.
+ * @param {*} steps Contains the state of the steps.
+ */
 function  detailedStepUpButtonHandler(steps){
     // Event listener for the button that swaps a detailed step up
     $( ".detailedStepUpButton").click (function(event){
@@ -425,6 +449,11 @@ function  detailedStepUpButtonHandler(steps){
     });
 }
 
+/**
+ * @function detailedStepDownButtonHandler
+ * @description Installs event handler for button to move detailed steps down.
+ * @param {*} steps Caontains the state of the steps.
+ */
 function detailedStepDownButtonHandler(steps){
     // Event handler for the button that swaps a detailed step down
     $( ".detailedStepDownButton").click (function(event){
@@ -442,6 +471,11 @@ function detailedStepDownButtonHandler(steps){
     });
 }
 
+/**
+ * @function mainStepDeleteButtonHandler
+ * @description Installs event handler for the button to delete main steps.
+ * @param {*} steps Contains the state of the steps.
+ */
 function mainStepDeleteButtonHandler(steps){
    // Event handler for main task step delete button
    $ ( ".mainStepDeleteButton" ).click(function(event){
@@ -456,6 +490,11 @@ function mainStepDeleteButtonHandler(steps){
 });
 }
 
+/**
+ * @fuction saveButtonHandler
+ * @description
+ * @param {} steps 
+ */
 function saveButtonHandler(steps){
     $ (".saveButton").click(function(event){
         
@@ -463,6 +502,11 @@ function saveButtonHandler(steps){
     });
 }
 
+/**
+ * @function newDetailedStepButtonHandler
+ * @description Event handler for the button to create a new detailed step.
+ * @param {*} steps 
+ */
 function newDetailedStepButtonHandler(steps){
     $ (".newDetailedStepButton").click(function(event){
         var stepNum;
@@ -472,6 +516,13 @@ function newDetailedStepButtonHandler(steps){
     });
 }
 
+/**
+ * @function saveTask
+ * @description Saves the current state of the task to the database.
+ * @param {*} steps Contains the data for the steps
+ * @param {*} goodPath The task's path in the database
+ * @param {*} taskData Contains the data fields for the task
+ */
 function saveTask(steps, goodPath, taskData){
  
     insertToDatabase = {};
@@ -491,11 +542,13 @@ function saveTask(steps, goodPath, taskData){
     insertToDatabase["Info"]["Published"] = taskDetails["published"];
     insertToDatabase["Info"]["Visible"] = taskDetails["visible"];
     
+    //Generate the structure of the individual steps to insert into the database
     for (var i = 0; i < steps.length; i++){
         var tempArray = {};
         insertToDatabase["Step"+(parseInt(i)+1)] = {};
         insertToDatabase["Step"+(parseInt(i)+1)]["MDescriptionIOS"] = steps[i]["description"];
         insertToDatabase["Step"+(parseInt(i)+1)]["MtitleIOS"] = steps[i]["name"];
+        //Generate the structure of the individual detailed steps to insert into the database
         for (var j = 0; j < steps[i]["detailedSteps"].length; j++){
             insertToDatabase["Step"+(parseInt(i)+1)]["DetailedStep"+(parseInt(j)+1)] = steps[i]["detailedSteps"][j];
         }
