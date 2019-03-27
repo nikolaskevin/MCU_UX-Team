@@ -990,6 +990,7 @@ function copyTask(checked, index, count){
   //alert("Index " + index + " count " + count);
   if (index == count){
     $("#library_requestCopy").attr("disabled", false);
+    alert("Tasks added to task list");
     return;
   }
   //alert("Index: " + index);
