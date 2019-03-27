@@ -102,7 +102,7 @@ function getTaskPathCallback(task){
 
   // add category to filter options
   var addCategory = document.getElementById("filterCategory"); //get filter category list element
-  console.log("filtercategory: "+addCategory);
+  //console.log("filtercategory: "+addCategory);
   var opt = document.createElement("option"); //create option to be added to category drop down
   opt.text = category;
   addCategory.add(opt); //add to filter category list
@@ -161,7 +161,7 @@ function getTaskPathCallback(task){
   checkBox.type = "checkbox";
   checkBox.setAttribute("id", "checkbox_name["+num1+"]");
 
-  console.log("TASK NAME: "+ tName);
+  //console.log("TASK NAME: "+ tName);
   return;
 }
 
@@ -176,7 +176,7 @@ function toggleTask(source) {
 var table = document.getElementById("assigningTask");
 var tr = table.getElementsByTagName("tr");
 var length = tr.length-1;
-console.log(length);
+//console.log(length);
     if(source.checked){
         for(var i = 1; i < tr.length; i++){
             if( tr[i].style.display ==  ""){
@@ -354,7 +354,7 @@ function filter_Category(){
   }
   else{
     for (i = 0; i < tr.length; i++) {
-      console.log(tr.length);
+      //console.log(tr.length);
       var td = tr[i].getElementsByTagName("td")[0];//row i cell number 7
       if(td){
         if (td.innerText == val) {
@@ -363,7 +363,7 @@ function filter_Category(){
           document.getElementById("all_checked").checked = false;
           var c = i-1;
           var value = document.getElementById("checkbox_name["+c+"]");
-          console.log("checkbox_name["+c+"]");
+          //console.log("checkbox_name["+c+"]");
           if(value.checked == true){
             document.getElementById("all_checked").checked = true;
           }
@@ -428,13 +428,12 @@ function display_Detail(num){
   var table = document.getElementById("assigningTask");
   var tr = table.getElementsByTagName("tr");
   var p = document.createElement('p');
-  var Ukey = tr[num+1].cells[0].innerText;
-  var Ukey1 = tr[num+1].cells[1].innerText;
-  var taskID = tr[num+1].cells[7].innerText;
+  var Ukey = tr[num].cells[0].innerText;
+  var Ukey1 = tr[num].cells[1].innerText;
+  var taskID = tr[num].cells[7].innerText;
   console.log("ID: "+ taskID)
   var fbTask= firebase.database().ref('TaskInstruction/'+Ukey+"/"+taskID);
   //document.getElementById("TaskName").innerHTML = Ukey1;
-  console.log(Ukey1);
   var array = [];
   var i = 0;
   fbTask.on('value', function(snapshot){
@@ -442,7 +441,7 @@ function display_Detail(num){
     document.getElementById("category").innerHTML = Ukey;
 
     snapshot.forEach(function(snapshot1){
-      console.log(snapshot1.key);
+      //console.log(snapshot1.key);
         if(snapshot1.key == "Info"){
           var video = snapshot1.child('videoURL').val();
           document.getElementById('video').innerHTML= video;
@@ -460,23 +459,20 @@ function display_Detail(num){
 /**
  * @function directTask
  * @description Generates a path to the task in the database and redirects to the task editor.
+ * @param row number of task in table
  */
 function directTask(num){
   var table = document.getElementById("assigningTask");
   var tr = table.getElementsByTagName("tr");
-  var cat = tr[num+1].cells[0].innerText;
-  var taskN = tr[num+1].cells[1].innerText;
-  var taskID = tr[num+1].cells[7].innerText;
+  var cat = tr[num].cells[0].innerText;
+  var taskN = tr[num].cells[1].innerText;
+  var taskID = tr[num].cells[7].innerText;
   var taskPath = "TaskInstruction/" + cat + "/" + taskID;
-  alert (taskPath);
-  sessionStorage.setItem("from","Library.html");
-  sessionStorage.setItem("category",cat);
-  sessionStorage.setItem("taskname",taskN);
-  window.path = "TaskInstruction/" + cat + "/" + taskN;
+  //alert (taskPath);
+  sessionStorage.setItem("taskPath", taskPath);
   localStorage.setItem("taskPath", taskPath);
   localStorage.setItem("taskN", taskN);
-  //alert("HI" + localStorage.getItem("taskPath"));
-  location.href ="/../Frontend/06Taskeditor2.html";
+  location.href ="./06Taskeditor2.html";
 
 }
 
@@ -484,11 +480,12 @@ function directTask(num){
 /**
  * @function removeTaskMyList
  * @description remove a task from MyList
+ * @param row number of task in table
  */
 function removeTaskMyList(num) {
   var table = document.getElementById("assigningTask");
   var tr = table.getElementsByTagName("tr");
-  var taskID = tr[num+1].cells[7].innerText; //taskID to be removed
+  var taskID = tr[num].cells[7].innerText; //taskID to be removed
 
   //get userid
   firebase.auth().onAuthStateChanged(function (firebaseUser){
@@ -518,3 +515,70 @@ function removeTaskMyList(num) {
     } //end if firebaseUser
   }); //end function(firebaseUser)
 } //end removeTaskMyList
+
+
+/**
+ * @function createNewTask
+ * @description get task ID for new task
+ */
+function createNewTask(){
+  var postRef = firebase.database().ref('TaskInstruction/LastID');
+
+  postRef.transaction(function(data) {
+    //console.log("Transaction");
+    
+    if (data != null){
+        console.log("LAST TID: "+data)
+        return (data+1); //If everything is succesful, reinsert the data to the database
+    } else {
+        return 0; 
+    }
+  }, function(error, commited, snapshot){
+      alert(snapshot.val());
+      var TID = snapshot.val();
+      createBlankTask(TID);
+      //Stuff to do after the transaction is done
+  }, true);
+  
+}
+
+/**
+ * @function createBlankTask
+ * @description create new task in database with given task ID
+ * @param {*} TID new generated task ID
+ */
+function createBlankTask(TID){
+  
+  var userid = $("#displayProfileid").html();
+  var taskDef = {};
+  taskDef["Info"] = {};
+  taskDef["Info"]["Category"] = "Basic";
+  taskDef["Info"]["OutlineIOS"] = "Outline";
+  taskDef["Info"]["Title"] = "Task Title";
+  taskDef["Info"]["Owner"] = String(userid);
+  taskDef["Info"]["VideoURL"] = "undefined";
+  taskDef["Step1"] = {};
+  taskDef["Step1"]["MDescriptionIOS"] = "Step Description";
+  taskDef["Step1"]["MtitleIOS"] = "Step Title";
+  taskDef["Step1"]["TaskID"] = TID;
+  taskDef["TaskID"] = TID;
+  console.log("TASK DEF:"+taskDef);
+  var insertToDB = {};
+
+  insertToDB["TaskInstruction/Basic/" + parseInt(TID)] = taskDef;
+  console.log("INSERT to DB: "+insertToDB);
+
+  if (firebase.database().ref().update(insertToDB)){
+      alert("Save succesful");
+      taskPath = "TaskInstruction/Basic/"+TID;
+      //sessionStorage.setItem("taskPath", taskPath);
+      localStorage.setItem("taskPath", taskPath);
+      //localStorage.setItem("taskN", taskN);
+      //alert("HI" + localStorage.getItem("taskPath"));
+      location.href ="./06Taskeditor2.html";
+  } else {
+      alert("Task failed to save");
+  }
+  
+}
+
