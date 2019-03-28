@@ -559,7 +559,7 @@ function saveTask(steps, goodPath, taskData){
     updates[goodPath] = insertToDatabase;
 
     if (firebase.database().ref().update(updates)){
-        alert("Save succesful");
+        alert("Save successful");
     } else {
         alert("Task failed to save");
     }

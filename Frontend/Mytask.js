@@ -538,6 +538,11 @@ function createNewTask(){
       var TID = snapshot.val();
       createBlankTask(TID);
       //Stuff to do after the transaction is done
+      var userid = $("#displayProfileid").html();
+      taskPath = "TaskInstruction/Basic/"+TID;
+      localStorage.setItem("taskPath", taskPath);
+      //console.log("YO: "+localStorage);
+      //location.href ="./06Taskeditor2.html";
   }, true);
   
 }
@@ -566,16 +571,52 @@ function createBlankTask(TID){
   var insertToDB = {};
 
   insertToDB["TaskInstruction/Basic/" + parseInt(TID)] = taskDef;
-  console.log("INSERT to DB: "+insertToDB);
+  console.log(insertToDB);
 
   if (firebase.database().ref().update(insertToDB)){
-      alert("Save succesful");
+      alert("Save successful");
       taskPath = "TaskInstruction/Basic/"+TID;
-      //sessionStorage.setItem("taskPath", taskPath);
       localStorage.setItem("taskPath", taskPath);
-      //localStorage.setItem("taskN", taskN);
-      //alert("HI" + localStorage.getItem("taskPath"));
-      location.href ="./06Taskeditor2.html";
+      
+      //Put the task into the user's task list
+      console.log(userid);
+      var fbGet= firebase.database().ref("uAccount/"+userid);
+      console.log(fbGet);
+      fbGet.once("value",function(snapshot){
+        console.log(snapshot.val());
+        var uAccount = snapshot.val();
+
+        if (uAccount["MyTaskList"] == null){  //myTaskList doesn't yet exist
+          uAccount["MyTaskList"] = {};
+          uAccount["MyTaskList"]["MyListTID1"] = TID;
+          uAccount["MyTaskIndex"]={};
+          uAccount["MyTaskIndex"]["Number"]=1;   
+          console.log(uAccount);
+
+          //Insert task to my task list.
+          firebase.database().ref('uAccount/'+userid).update(uAccount);
+          taskPath = "TaskInstruction/Basic/"+TID;
+          localStorage.setItem("taskPath", taskPath);
+          location.href ="./06Taskeditor2.html";
+
+
+        } else {  //myTaskList already exists
+          console.log(Object.keys(uAccount["MyTaskList"]).length);
+          var num = uAccount["MyTaskIndex"]["Number"] + 1;
+          uAccount["MyTaskIndex"]["Number"] = num;
+          console.log("NUM"+num); 
+          uAccount["MyTaskList"]["MyListTID" + num] = TID;
+          console.log(uAccount);
+          firebase.database().ref('uAccount/'+userid).update(uAccount);
+          taskPath = "TaskInstruction/Basic/"+TID;
+          localStorage.setItem("taskPath", taskPath);
+          location.href ="./06Taskeditor2.html";
+
+        } 
+      });
+
+
+      //location.href ="./06Taskeditor2.html";
   } else {
       alert("Task failed to save");
   }

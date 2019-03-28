@@ -1047,6 +1047,8 @@ function copyTask(checked, index, count){
             if (uAccount["MyTaskList"] == null){  //myTaskList doesn't yet exist
               uAccount["MyTaskList"] = {};
               uAccount["MyTaskList"]["MyListTID1"] = TID;
+              uAccount["MyTaskIndex"]={};
+              uAccount["MyTaskIndex"]["Number"]=1; 
               console.log(uAccount);
 
               //Insert task to my task list.
@@ -1055,7 +1057,9 @@ function copyTask(checked, index, count){
 
             } else {  //myTaskList already exists
               console.log(Object.keys(uAccount["MyTaskList"]).length);
-              var num = Object.keys(uAccount["MyTaskList"]).length + 1
+              var num = uAccount["MyTaskIndex"]["Number"] + 1;
+              console.log("NUM"+num); 
+              uAccount["MyTaskIndex"]["Number"] = num;
               uAccount["MyTaskList"]["MyListTID" + num] = TID;
               console.log(uAccount);
               firebase.database().ref('uAccount/'+userID).update(uAccount, copyTask(checked, (index+1), count));
@@ -1073,4 +1077,5 @@ function copyTask(checked, index, count){
       
     });
   });
+
 }
