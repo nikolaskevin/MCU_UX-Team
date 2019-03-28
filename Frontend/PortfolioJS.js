@@ -72,7 +72,7 @@ function handleuploadfile3(e) {
 }
 
 
-
+//Uploads staff portfolio
 function handleuploadfileSubmit(e) {
   var staffName = document.getElementById('staffName').value;
   var staffNID = document.getElementById('staffNID').value;
@@ -210,7 +210,7 @@ function handleuploadfile6(e) {
      console.log(file6.name);
 }
 
-//upload files
+//uploads patiant portfolio
 function handleuploadfileSubmit6(e) {
   var PatientID = document.getElementById('PatientID').innerHTML;
   var patientName = document.getElementById('patientName').value;
@@ -410,19 +410,9 @@ function portfolio_Table(fb){
       });
     });
 }
-
+// allows CNO or Director to actually add new CNA or patient
 setTimeout(function(){
-  var role = document.getElementById('displayProfileposition').innerHTML;
-  console.log('ROLE='+role);
-  if(role == 'CNO'){
-    document.getElementById('btnEditPP').style.display='none';
-    document.getElementById('btnDeletePP').style.display='none';
-    document.getElementById('btnEditSP').style.display='none';
-    document.getElementById('btnDeleteSP').style.display='none';
-  }
-  if(role =="Director"){
-     document.getElementById("newPortfolio").style.display = "block";
-  }
+  document.getElementById("newPortfolio").style.display = "block";
 },2000);
 
 

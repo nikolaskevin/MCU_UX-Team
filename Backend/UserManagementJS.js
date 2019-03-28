@@ -5,95 +5,110 @@
  * @license
  */
 //var admin = require("../node_modules/firebase-admin");
-
 /**
 * @function newAccount
 * @description allows the admin to make a new account
 */
 function newAccount(){
   var name = document.getElementById('Name').value;
-  var sid = document.getElementById('SID').value;
   var email = document.getElementById('Email').value;
   var pass = document.getElementById('password').value;
   var position = document.getElementById('position').value;
-  var userAccount = firebase.database().ref("uAccount/");
-  var checkExist = "False";
-  userAccount.child(sid).once('value').then(function(snapshot){
-      if(snapshot.exists()){
-          alert('Already exists:'+sid);
-      }
-      else{
-          var n = email.search(/[*+?^${}();|→TH:]/g);
-          for(var i = 0; i <sid.length;i++){
-              console.log(sid.charCodeAt(i));
-              if((sid.charCodeAt(i) <=57 && sid.charCodeAt(i) >=48 ) == false){
-                  var boolean = "false";
-              }
-          }
-        if(name == '' || email == '' || pass == '' || position == '' || sid == ''){
-          alert('Please fill in all the information!');
-        }
-        else if(checkExist == "True"){
-            alert(sid +"already exist!");
-        }
-        else if(sid.length !=6){
-            alert("ID length should be six digits!");
-        }
-        else if(boolean == "false"){
-            alert("ID should be number!");
-        }
-        //CNO ID Format: 22xxxx, Director ID Format: 11xxxx.  They must be 6 characters
-        else if((sid.charAt(0)+sid.charAt(1) =="22" && position == "CNO" || sid.charAt(0)+sid.charAt(1) =="11" && position == "Director") == false){
-            alert(" Director:11XXXX,CNO:22XXXX");
-        }
-        else if(pass.length < 6){
-            alert("Password length should over than six digits!");
-        }
-        else if(n != "-1"){
-            alert("Email format can't have / ,*+?^${}()|→ []");
-        }
+  var lastCNOID
+  var lastDirID
+  var rec = firebase.database().ref('UID/LastCNOID');
+  var rec2 = firebase.database().ref('UID/LastDirID');
+  var ref = firebase.database().ref('UID').child('LastCNOID');
+  var ref2 = firebase.database().ref('UID').child('LastDirID');
+  rec.once('value').then(function(snapshot){
+    lastCNOID = snapshot.val();//contains lastCNOID
+    sendLastCNOID = lastCNOID;  
+})
+rec2.once('value').then(function(snapshot){  
+    lastDirID = snapshot.val();//contains lastDirID
+    sendLastDirID = lastDirID;
+})
+var n = email.search(/[*+?^${}();|→TH:]/g);
 
-        else if(email.includes(".com") ==false){
-            alert("Please use @xxxxx.com format!!");
-        }
-        else{
-          //Create the user in Firebase Authentication
-          firebase.auth().createUserWithEmailAndPassword(email, pass).then(function(authData){  //Firebase authentication created for user successfully
-              console.log("User created successfully with payload-", authData.user.uid);
-              userID = authData.user.uid;
-              var data = {
-                Name : name,
-                Email: email,
-                Password : pass,
-                Position : position,
-                StaffID : sid
-               }
-               var updates={}
-               if(position =="CNO"){
-                   updates['No_Portfolio/'+position+'/'+sid] =data;
-               }
-               updates['uAccount/'+ sid]=data;
-               updates['UID/'+ userID ] = data.StaffID;
-               firebase.database().ref().update(updates);
-               //location.reload();
-            }).catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                if (errorCode == 'auth/weak-password') {
-                  alert('The password is too weak.');
-                } else {
-                  alert(errorMessage);
-                }
-                console.log(error);
-              });
-            console.log(userInfo);
-            console.log(userInfo.i.uid);
-               
-      }
-    }
-  });
+if(name == '' || email == '' || pass == '' || position == ''){
+    alert('Please fill in all the information!');
+  }
+  else if(pass.length < 6){
+    alert("Password length should over than six digits!");
 }
+else if(n != "-1"){
+    alert("Email format can't have / ,*+?^${}()|→ []");
+}
+else if(email.includes(".com") ==false){
+    alert("Please use @xxxxx.com format!!");
+}
+  else{
+    firebase.auth().createUserWithEmailAndPassword(email, pass).then(function(authData){
+        console.log("User created successfully with payload-", authData.user.uid);
+        userID = authData.user.uid;
+        if(position == "CNO"){
+            var userInfo = {
+                Name: name,
+                Email: email,
+                Password: pass,
+                Position: position,
+                StaffID: sendLastCNOID
+            }
+            var updates={}
+        ref.transaction(function(data){
+                // this increments lastCNOID, CANNOT start at 0
+                if (data || (data != 0)){
+                    data++;
+                    return data;
+                }    
+                else{
+                    console.log("Didn't work, GG");
+                }
+                //document.write(data);
+                updates['No_Portfolio/' + position + '/' + sendLastCNOID] = userInfo;
+            
+            })//end transaction function
+        updates['uAccount/' + sendLastCNOID] = userInfo;
+        updates['UID/' + userID] = userInfo.StaffID;
+        firebase.database().ref().update(updates);
+        }// end if
+        else{
+            var userInfo2 = {
+                Name: name,
+                Email: email,
+                Password: pass,
+                Position: position,
+                StaffID: sendLastDirID
+            }
+            var updates2={}
+            ref2.transaction(function(data){
+                // this increments lastDirID, CANNOT start at 0
+                if (data || (data != 0)){
+                    data++;
+                    return data;
+                }    
+                else{
+                    console.log("Didn't work, GG");
+                }
+            })//end transaction function
+            updates2['uAccount/' + sendLastDirID] = userInfo2;
+            updates2['UID/' + userID] = userInfo2.StaffID;
+            firebase.database().ref().update(updates2);
+        }// end third else
+})//end firebase.auth()
+.catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    if (errorCode == 'auth/weak-password') {
+      alert('The password is too weak.');
+    } else {
+      alert(errorMessage);
+    }
+    console.log(error);
+  });//end .catch
+}//end second else
+}//end of newACcount
 
 /**
 * @function deleteUserAccount
@@ -209,7 +224,15 @@ function editedUserAccount(){
                 location.reload();
       }
     }
-  });
+  }); 
+}
+
+function areYouSure(){
+  return confirm('Are you sure? Refresh Still does not work');
+}
+
+function refreshPage(){
+  window.location.reload(30000);
 }
 
 //Display UM table - UID, NAME, STATUS, EDIT button, DELETE button
