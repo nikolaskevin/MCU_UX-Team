@@ -1077,4 +1077,5 @@ function copyTask(checked, index, count){
       
     });
   });
+
 }
