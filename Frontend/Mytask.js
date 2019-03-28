@@ -534,7 +534,7 @@ function createNewTask(){
         return 0; 
     }
   }, function(error, commited, snapshot){
-      alert(snapshot.val());
+      //alert(snapshot.val());
       var TID = snapshot.val();
       createBlankTask(TID);
       //Stuff to do after the transaction is done
@@ -574,7 +574,7 @@ function createBlankTask(TID){
   console.log(insertToDB);
 
   if (firebase.database().ref().update(insertToDB)){
-      alert("Save successful");
+      //alert("Save successful");
       taskPath = "TaskInstruction/Basic/"+TID;
       localStorage.setItem("taskPath", taskPath);
       
