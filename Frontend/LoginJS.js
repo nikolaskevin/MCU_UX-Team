@@ -104,7 +104,6 @@ function authenticateLogin() {
         var fullDateandTime = fullDate + '-' + fullTime;
         firebase.database().ref('AccountStatus/Browser/' + firebaseUser.uid + '/LoginHistory/' + fullDate + '/' + fullTime).set('True');
         firebase.database().ref('AccountStatus/Browser/' + firebaseUser.uid + '/LatestLogin').set(fullDateandTime);
-        document.getElementById('policyPop').style.display = 'block';
       }
     } else {
       console.log('Please login!');

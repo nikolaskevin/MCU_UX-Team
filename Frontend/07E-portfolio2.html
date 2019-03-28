@@ -9,6 +9,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="30" />
     <title>LTCTMS</title>
     <link rel="icon" type="image/jpg" href="image\logo.jpg">
     <link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
@@ -559,7 +560,7 @@
                         <div class="editformselectcreate">
                             <center><h2>Select Role</h2><br></center><br>
                             <center>
-                                <button style="cursor:pointer;" class="selectpatientorstaff" id="btnStaff" onclick="staffPortfolio()">STAFF</button>
+                                <button style="cursor:pointer;" class="selectpatientorstaff" id="btnStaff" onclick="staffPortfolio()">CNA</button>
                                 &nbsp&nbsp&nbsp&nbsp
                                 <button style="cursor:pointer;" class="selectpatientorstaff" id="btnPatient" onclick="patientPortfolio()">PATIENT</button>
                             </center><br><br>
@@ -571,7 +572,7 @@
         </div>
         <div id="newStaffPortfolio">
             <div class="editformcreatestaff">
-                <br><center><h2>Staff Portfolio</h2></center><br>
+                <br><center><h2>CNA Portfolio</h2></center><br>
                 <table class="portfolio_table">
                     <tr>
                         <td rowspan="3"> Insert Photo: <br><br><input id="btnPicture" type="file" accept="image/*" required /> </td>
@@ -579,18 +580,16 @@
                             <p style="position:relative;left:-50px;display:inline;">Position:</p>
                             <select style="position:relative;display:inline;left:20px;" id="staffPosition" onchange="pass123()" required>
                                 <option value="">Please Select</option>
-                                <option value="DIR">Director</option>
-                                <option value="CNO">CNO</option>
                                 <option value="CNA">CNA</option>
                             </select>
                     <tr>
-                        <td> Staff ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id='StaffID'></span></td>
+                        <td> CNA ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id='StaffID'></span></td>
                     </tr>
                     <tr>
                         <td>Name: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffName" placeholder="Name" required /></td>
                     </tr>
                     <tr>
-                        <td colspan="2" id="passtable" style="display:none;"> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffPassword" placeholder="give a password" /></td>
+                        <td colspan="2" id="passtable" style="display:none;"> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="password" id="staffPassword" placeholder="give a password" /></td>
                     </tr>
                     <tr>
                         <td> Date of Birth: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffDOB" placeholder="yyyy/mm/dd" required /></td>
@@ -644,7 +643,7 @@
                 </tr>
                 <tr>
                     <td> Room number: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientRoomNo" placeholder="101.." required /></td>
-                    <td> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientPassword" placeholder="give a password" required /></td>
+                    <td> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="password" id="patientPassword" placeholder="give a password" required /></td>
                 </tr>
                 <tr>
                     <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNID" placeholder="National ID" required /></td>
