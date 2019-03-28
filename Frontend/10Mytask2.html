@@ -91,8 +91,8 @@
     .library_form-popup {
         display: none;
         position: absolute;
-        top: 40%;
-        left: 55%;
+        top: 20%;
+        left: 30%;
         border: 5px solid gray;
         padding: 10px;
         background-color: white;
@@ -137,6 +137,8 @@
         }
     }
 </style>
+
+
 <body>
     <div class="wrapper">
         <!-- Contain EVERYTHING THING IN WRAPPER CLASS -->
@@ -175,14 +177,8 @@
                 </li>
                 <li class="current">
                     <a href="../Frontend/10Mytask2.html">
-                        <i class="glyphicon glyphicon-wrench"></i>
-                        My Tasks
-                    </a>
-                </li>
-                <li>
-                    <a href="../Frontend/06Taskeditor2.html">
-                        <i class="glyphicon glyphicon-tasks"></i>
-                        Task Editor
+                        <i class="glyphicon glyphicon-list-alt"></i>
+                        My Task
                     </a>
                 </li>
                 <li>
@@ -215,7 +211,7 @@
 
                             <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 3ex;padding-top:1.5ex;padding-bottom:1.5ex; background-color:green;outline-color:darkgreen">
                                 <i class="fas fa-align-left"></i>
-                                <span>Toggle Sidebar</span>
+                                <span id="toggleSide">Hide sidebar</span>
                             </button>
 
                             <div class="navbar-header">
@@ -289,24 +285,39 @@
                     </div>
                     <div class="container" id="data1">
                         <div class="library_tasktable" >
-                            <select class="library_filter" id="filterCategory" onchange="filter_Category()">
-                                <option>Category</option>
-                            </select>
-                            <form>
-                                <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
-                            </form>
+                            <table style="width: 100%; border:none;">
+                                <tr>
+                                    <td style="border:none; text-align:left;">
+                                        <select class="library_filter" id="filterCategory" onchange="filter_Category()">
+                                                <option>Category</option>
+                                        </select>
+                                    </td>
+                                    <td style="border:none; text-align:center;">
+                                        <form>
+                                            <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
+                                        </form>
+                                    </td>
+                                    <td style="border:none; text-align:right;">
+                                        <button id ="removeTask" type="button" onclick="createNewTask()">Create New Task</button>
+                                    </td>
+                                </tr>
+                            </table>
                             <br><br>
                             <div style="overflow:auto;height:300px;">
-                                <table class="library_tasktable_display" id="assigningTask" style="border-style:hidden;width:100%;">
+                                <table class="library_tasktable_display" id="assigningTask" style="width:100%;">
                                     <tr>
-                                        <th style="width:25%" onclick="sortingTask(0)" class="library_table_firstbox"> Category </th>
-                                        <th style="width:55%" onclick="sortingTask(1)" class="library_table_secondbox"> Task Name  </th>
+                                        <th style="width:20%" onclick="sortingTask(0)" class="library_table_firstbox"> Category </th>
+                                        <th style="width:30%" onclick="sortingTask(1)" class="library_table_secondbox"> Task Name  </th>
+                                        <th style="width:10%" onclick="sortingTask(2)" class="library_table_firstbox"> Published </th>
+                                        <th style="width:10%" onclick="sortingTask(3)" class="library_table_secondbox"> Visible  </th>
                                         <th style="width:10%"></th>
-                                        <th style="width:10%"><input type="checkbox" id="all_checked" onclick="toggleTask(this)"></th>
+                                        <th style="width:10%"></th>
+                                        <th style="width:10%"></th>
+                                        <th style="display:none"></th>
+                                        <!--<th style="width:10%">--><!--<input type="checkbox" id="all_checked" onclick="toggleTask(this)">--></th>
                                     </tr>
                                 </table>
-                                <!--<button id ="library_requestCopy" type="button" onclick="submitClick()">Request Copy</button>-->
-
+                                <br>
                         
                             </div>
                         </div>
@@ -336,7 +347,7 @@
         <div class="library_form-popup" id="form1">
             <table style="width:100%; height:100%;">
                 <tr>
-                    <td colspan="2" style="background-color:#ddd;"><h3 id="taskname"></h3> </td>
+                    <td colspan="2" style="background-color:#ddd;border: 2px solid black;"><h3 id="taskname"></h3> </td>
                 </tr>
                 <tr>
                     <td style="border-style:hidden;width:25%;"> Category:</td>
@@ -357,21 +368,23 @@
                 <tr>
                     <td style="border-style:hidden;" colspan="2"> <button type="button" class="btn cancel" onclick="closeclose_form()">Close</button> </td>
                 </tr>
+                <!--
                 <tr>
                     <td style="border-style:hidden;"></td>
                     <td style="border-style:hidden;text-align:right"> For more details, click <button style="cursor:pointer;" onclick="directTask()">Here</button></td>
                 </tr>
+            -->
             </table>
         </div>
-
-        <div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA;border-style: solid;
-					border-width: 2px; z-index:3;">
+        <div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA;border-style: solid;
+				border-width: 2px; z-index:3;">
             <div style="background-color:#E4EACD;position:relative;height:75px;">
                 <h2 id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
 
                 <button onclick="editprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
                 <button onclick="closeprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
-                <button onclick="changePassword()" style="position:relative; left:520px;top:75px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>            </div>
+                <button onclick="changePassword()" style="position:relative; left:520px;top:75px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;z-index:4;">Change Password</button>
+            </div>
             <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
             <div style="position:relative; left:220px;top:-110px;">
                 <p>Position: &nbsp<span id="positionProfile"></span> </p><br>
@@ -381,8 +394,8 @@
             </div>
         </div>
 
-        <div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;border-style: solid;
-					border-width: 2px;">
+        <div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA; z-index:3;border-style: solid;
+				border-width: 2px;">
             <div style="background-color:#E4EACD;position:relative;height:75px;">
                 <h2 id="nameProfileTE" style="position:relative; left:210px;top:20px;"></h2>
                 <h3 style="position:relative; left:300px;top:-10px;color:gray;">	</h3>
@@ -397,31 +410,19 @@
                 <p>Email Address: <input type="text" id="emailProfileE" style="width:300px;"></p><br>
             </div>
         </div>
-        <div id="changePass" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;">
+        <div id="changePass" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA; z-index:4;border-style: solid; border-width:2px;">
             <div style="background-color:#E4EACD;position:relative;height:75px;">
                 <h2 style="position:relative; left:210px;top:20px;">Changing Password</h2>
                 <button onclick="submitNewPass()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
                 <button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
             </div>
-            <div style="position:relative; left:220px;top:110px;">
+            <div style="position:relative; left:220px;top:70px;">
                 <p>Current Password: <input type="password" id="oldPassword"></p><br>
                 <p>New Password: <input type="password" id="newPassword"></p><br>
                 <p>Confirm Password: <input type="password" id="confirmnewPassword"></p><br>
             </div>
         </div>
 
-        <div id="expand" onclick="">
-            Chat
-            <div id="notification"></div>
-        </div>
-        <div id="leftList">
-            <div id="notificationAll"></div>
-            <div id="notificationPart"></div>
-            <ul>
-                <li id="chatAll" onclick="displayChat('0')">Center & System</li>
-                <li id="chatPart" onclick="displayChat('1')">Center</li>
-            </ul>
-        </div>
         <!-- START COPY FOR SIDEBAR JAVASCRIPT -->
         <!-- jQuery CDN - Slim version (=without AJAX) -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -441,6 +442,11 @@
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                if (document.getElementById("toggleSide").innerHTML == "Hide sidebar") {
+                    document.getElementById("toggleSide").innerHTML = "Show sidebar";
+                } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
+                    document.getElementById("toggleSide").innerHTML = "Hide sidebar";
+                }
             });
         });
         </script>

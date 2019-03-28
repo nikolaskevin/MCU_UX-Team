@@ -23,3 +23,29 @@
 [debug] [2019-02-07T17:29:13.693Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: public
 [info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2019-03-21T15:23:58.097Z] ----------------------------------------------------------------------
+[debug] [2019-03-21T15:23:58.100Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2019-03-21T15:23:58.100Z] CLI Version:   6.3.1
+[debug] [2019-03-21T15:23:58.100Z] Platform:      darwin
+[debug] [2019-03-21T15:23:58.100Z] Node Version:  v10.15.1
+[debug] [2019-03-21T15:23:58.101Z] Time:          Thu Mar 21 2019 11:23:58 GMT-0400 (Eastern Daylight Time)
+[debug] [2019-03-21T15:23:58.101Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-03-21T15:23:58.113Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-03-21T15:23:58.113Z] > authorizing via signed-in user
+[debug] [2019-03-21T15:23:58.113Z] [iam] checking project browserteam for permissions ["firebase.projects.get"]
+[debug] [2019-03-21T15:23:58.115Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/browserteam:testIamPermissions  
+
+[debug] [2019-03-21T15:23:58.299Z] <<< HTTP RESPONSE 200
+[debug] [2019-03-21T15:23:58.301Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/browserteam  
+ 
+[debug] [2019-03-21T15:23:58.534Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/DVera2/Desktop/LTC-TMS-master/BrowserTestVersion'...
+[info] 
+[debug] [2019-03-21T15:23:58.537Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/917274264132/clients/_:getWebAppConfig  
+ 
+[debug] [2019-03-21T15:23:58.814Z] <<< HTTP RESPONSE 200
+[warn] ⚠  hosting: Port 5000 is not available. Trying another port...
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5005

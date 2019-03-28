@@ -1,4 +1,4 @@
-﻿<!--
+<!--
   @file 06Taskeditor2.html
   @author  MCU
   @author  Kutztown University
@@ -70,14 +70,9 @@
                 </li>
                 <li>
                     <a href="../Frontend/10Mytask2.html">
-                        <i class="glyphicon glyphicon-wrench"></i>
-                        My Tasks
+                        <i class="glyphicon glyphicon-list-alt"></i>
+                        My Task
                     </a>
-                </li>
-                <li>
-                    <a href="../Frontend/06Taskeditor2.html">
-                        <i class="glyphicon glyphicon-tasks"></i>
-                    Task Editor</a>
                 </li>
                 <li>
                     <a href="../Frontend/07E-portfolio2.html">
@@ -165,6 +160,7 @@
                 </div>
             </div> <!-- END OF THE TWO HEADER!! -->
 
+
             <!---<div class="main container-fluid wrapper">-->
             <div style="display: flex; width:100%; height:80%;">
                 <!-- START OF MIDDLE CONTENT-->
@@ -172,9 +168,19 @@
                         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
                         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>
 
+                        <div class = "taskInfoContainer">
+                            <div class = "taskEditorContent" id="taskHeader"> </div>
+                        </div>
+
                         <div class="sortableContainer" id="sortableContainer">
                             <div class="sortable" id="sort"></div>
+                            <div class = "taskEditorContent" id="taskFooter"> </div>
                         </div>
+
+                        <div class = "taskInfoContainer">
+                            
+                        </div>
+                        
                         <script type='text/javascript' src='./TaskEditor2JS.js'></script>
                         
              
@@ -200,8 +206,6 @@
                     </div>
                 </div>
             -->
-
-
                 <div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;border-style: solid;
 				border-width: 2px;">
                     <div style="background-color:#E4EACD;position:relative;height:75px;">

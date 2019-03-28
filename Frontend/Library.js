@@ -5,11 +5,12 @@
  * @license
  */
 
-var fbTask = firebase.database().ref("TaskInstruction/");
+var fbGet = firebase.database().ref('TaskInstruction/');
+var fbCopy = firebase.database().ref('uAccount/');
 var copy = document.getElementById("library_requestCopy");
 var num = 0;
 var checkbox_name = [];
-fbTask.once("value")
+fbGet.once("value")
 .then(function(snapshot){
     var array = [];
     var index = 0;
@@ -21,6 +22,9 @@ fbTask.once("value")
 
     snapshot.forEach(function(childSnapshot1){
         var childKey = childSnapshot1.key;
+        if (childKey == "LastID" || childKey == "on"){  
+          return; //Exit when we're done looping through the categories
+        }
         a.push(childKey);
        var x = document.getElementById("filterCategory");
        var opt = document.createElement("option");
@@ -40,6 +44,7 @@ fbTask.once("value")
             var checkBox = document.createElement("input");
             checkBox.type = "checkbox";
             checkBox.setAttribute("id", "checkbox_name["+num+"]");
+            checkBox.setAttribute("name", num);
             button.setAttribute("id","button_id["+num+"]");
             button.setAttribute("onclick", "display_Detail("+num+")");
             num = num +1;
@@ -50,6 +55,11 @@ fbTask.once("value")
             cellCategory.appendChild(document.createTextNode(childSnapshot1.key));
             var cellName = row.insertCell(-1);
             cellName.appendChild(document.createTextNode(childSnapshot2.val()["Info"]["Title"]));
+             //Put the ID in a hidden cell in the table to access later
+             var cellID = row.insertCell(-1);
+             cellID.setAttribute("id","id_holder["+num+"]");
+             cellID.appendChild(document.createTextNode(childSnapshot2.val()["TaskID"]));
+             cellID.setAttribute("hidden", true);
             button.innerHTML="Detail";
             var cellButton= row.insertCell(-1);
             var cellCheckbox = row.insertCell(-1);
@@ -444,7 +454,7 @@ $(document).ready(function(){
   });
 });
 
-    $(document).ready(function(){
+$(document).ready(function(){
       $("#searchkeyin").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $("#assigningCF tr:not(:first)").filter(function() {
@@ -798,38 +808,6 @@ $(document).ready(function(){
         document.getElementById("popup_detail").style.display = "none";
     }
 
-    /**
-     * @function submit
-     * @description in Library > Task History unassigns selected task
-     */
-    function submit(){
-    var table = document.getElementById("assigningList");
-    var tr = table.getElementsByTagName("tr");
-    var length = tr.length-1 ;
-    for(var a = 0, b=1; a < length; a++){
-      console.log(table.rows[b].cells[0].innerHTML);
-        if(table.rows[b].cells[0].innerHTML  == "CNA"){
-            if (document.getElementById("checkbox_id["+a+"]").checked == false){
-                console.log("CNA/"+table.rows[b].cells[1].innerHTML+"/Task"+"/"+table.rows[b].cells[3].innerHTML+"/"+table.rows[b].cells[4].innerHTML);
-                 var unchecked = firebase.database().ref("CNA/"+table.rows[b].cells[1].innerHTML+"/Task"+"/"+table.rows[b].cells[3].innerHTML+"/"+table.rows[b].cells[4].innerHTML);
-                 unchecked.remove();
-            }
-        }
-        if(table.rows[b].cells[0].innerHTML  == "Patient"){
-            if (document.getElementById("checkbox_id["+a+"]").checked == false){
-                console.log("Patient/"+table.rows[b].cells[1].innerHTML+"/Task"+"/"+table.rows[b].cells[3].innerHTML+"/"+table.rows[b].cells[4].innerHTML);
-                 var famunchecked = firebase.database().ref("Patient/"+table.rows[b].cells[1].innerHTML+"/Task"+"/"+table.rows[b].cells[3].innerHTML+"/"+table.rows[b].cells[4].innerHTML);
-                 famunchecked.remove();
-            }
-        }
-        b++
-    }
-    var r = alert("Task have been unassigned!");
-             if(true)
-             {
-               window.location.reload();
-             }
-}
 
 /**
  * @function closeclose_form
@@ -854,12 +832,12 @@ function display_Detail(num){
   var p = document.createElement('p');
   var Ukey = tr[num+1].cells[0].innerText;
   var Ukey1 = tr[num+1].cells[1].innerText;
-  var fbTask= firebase.database().ref('TaskInstruction/'+Ukey+"/"+Ukey1);
+  var fbGet= firebase.database().ref('TaskInstruction/'+Ukey+"/"+Ukey1);
   //document.getElementById("TaskName").innerHTML = Ukey1;
   console.log(Ukey1);
   var array = [];
   var i = 0;
-  fbTask.on('value', function(snapshot){
+  fbGet.on('value', function(snapshot){
       document.getElementById("taskname").innerHTML = Ukey1;
       document.getElementById("category").innerHTML = Ukey;
 
@@ -976,35 +954,128 @@ function submitprofile(){
 }
 
 /**
- * @function submitClick
+ * @function createTaskCopy
  * @description
  */
-function submitClick(){
+function createTaskCopy(){
   document.getElementById("library_requestCopy")
   var counter = 0, // counter for checked checkboxes
       i = 0,       // loop variable
-      url = '../Frontend/10MyTasks2.html',    // final url string
-      // get a collection of objects with the specified 'input' TAGNAME
       input_obj = document.getElementsByTagName('input');
   // loop through all collected objects
+  var checked = [];
   for (i = 0; i < input_obj.length; i++) {
-      // if input object is checkbox and checkbox is checked then ...
-      if (input_obj[i].type === 'checkbox' && input_obj[i].checked === true) {
-          // ... increase counter and concatenate checkbox value to the url string
-          counter++;
-          url = url + '&c=' + input_obj[i].value;
-      }
+    if (input_obj[i].type === 'checkbox' && input_obj[i].checked === true){
+      checked[checked.length] = input_obj[i];
+      counter++;
+      console.log(checked);
+    }
   }
+
   // display url string or message if there is no checked checkboxes
   if (counter > 0) {
-      // remove first "&" from the generated url string
-      url = url.substr(1);
-      // display final url string
-      alert(url);
-      // or you can send checkbox values
-      // window.location.href = 'my_page.php?' + url; 
+    $("#library_requestCopy").attr("disabled", true);
+    copyTask(checked, 0, counter);
   }
   else {
-      alert('There is no checked checkbox');
+      window.alert('There is no checked checkbox');
   }
+}
+
+function copyTask(checked, index, count){
+
+  
+  var userID = $("#displayProfileid").html();
+
+  //alert("Index " + index + " count " + count);
+  if (index == count){
+    $("#library_requestCopy").attr("disabled", false);
+    alert("Tasks added to task list");
+    return;
+  }
+  //alert("Index: " + index);
+  console.log(checked[index]);
+  //Get a copy of the task to be changed
+  var num = parseInt(checked[index].name);
+  var table = document.getElementById("assigningTask");
+  var tr = table.getElementsByTagName("tr");
+
+  var tCat = tr[num+1].cells[0].innerText;
+  var tID = tr[num+1].cells[2].innerText;
+
+  var fbGet= firebase.database().ref('TaskInstruction/'+tCat+"/"+tID);
+  fbGet.once("value", function(snapshot){
+    var newTask = snapshot.val(); //Create an exact duplicate of the data in the task that was returned
+
+    var postRef = firebase.database().ref('TaskInstruction/LastID');
+    //Start the process of getting the new ID
+    postRef.transaction(function(data) {
+      console.log("Transaction");
+    
+      if (data != null){
+        console.log(data)
+        return (data+1); //If everything is succesful, reinsert the data to the database
+      } else {
+          return 0; 
+      }
+
+    }, function(error, commited, TIDSnap){
+      if (error){
+        alert("A problem ocurred, aborting task duplication.");
+        return;
+      }
+      if (commited){
+        console.log("hai");
+        var TID = TIDSnap.val();
+        newTask["TaskID"] = TID;
+        newTask["Info"]["Owner"] = $("#displayProfileid").html();
+        var insertToDB = {};
+        insertToDB["TaskInstruction/"+ newTask["Info"]["Category"] + "/" + parseInt(TID)] = newTask;
+        console.log(insertToDB);
+        if (firebase.database().ref().update(insertToDB)){
+          console.log("checkpoint");
+          //Task is duplicated at this point.  Now it needs to be added to the user's task list.
+          //Put the task into the user's task list
+          var userID = newTask["Info"]["Owner"];
+          console.log(userID);
+          var fbGet= firebase.database().ref("uAccount/"+userID);
+          console.log(fbGet);
+          fbGet.once("value",function(snapshot){
+            console.log(snapshot.val());
+            var uAccount = snapshot.val();
+
+            if (uAccount["MyTaskList"] == null){  //myTaskList doesn't yet exist
+              uAccount["MyTaskList"] = {};
+              uAccount["MyTaskList"]["MyListTID1"] = TID;
+              uAccount["MyTaskIndex"]={};
+              uAccount["MyTaskIndex"]["Number"]=1; 
+              console.log(uAccount);
+
+              //Insert task to my task list.
+              firebase.database().ref('uAccount/'+userID).update(uAccount, copyTask(checked, (index+1), count));
+    
+
+            } else {  //myTaskList already exists
+              console.log(Object.keys(uAccount["MyTaskList"]).length);
+              var num = uAccount["MyTaskIndex"]["Number"] + 1;
+              console.log("NUM"+num); 
+              uAccount["MyTaskIndex"]["Number"] = num;
+              uAccount["MyTaskList"]["MyListTID" + num] = TID;
+              console.log(uAccount);
+              firebase.database().ref('uAccount/'+userID).update(uAccount, copyTask(checked, (index+1), count));
+                
+
+            } 
+          });
+
+        } else {
+          alert("A problem ocurred, aborting task duplication of " + newTask["Info"]["Title"]);
+          return;
+        }
+        console.log(newTask);
+      }
+      
+    });
+  });
+
 }

@@ -176,15 +176,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../Frontend/10MyTask2.html">
-                        <i class="glyphicon glyphicon-wrench"></i>
-                        My Tasks
-                    </a>
-                </li>
-                <li>
-                    <a href="../Frontend/06Taskeditor2.html">
-                        <i class="glyphicon glyphicon-tasks"></i>
-                        Task Editor
+                    <a href="../Frontend/10Mytask2.html">
+                        <i class="glyphicon glyphicon-list-alt"></i>
+                        My Task
                     </a>
                 </li>
                 <li>
@@ -217,7 +211,7 @@
 
                             <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 3ex;padding-top:1.5ex;padding-bottom:1.5ex; background-color:green;outline-color:darkgreen">
                                 <i class="fas fa-align-left"></i>
-                                <span>Toggle Sidebar</span>
+                                <span id="toggleSide">Hide sidebar</span>
                             </button>
 
                             <div class="navbar-header">
@@ -289,7 +283,7 @@
                         <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Frontend-Chinese/05Library2.html'">&nbsp 中文<br></p>
                         <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
                     </div>
-                    <div class="container" id="data1">
+                    <div class="container" id="data1"style="overflow:auto;">
                         <div class="library_tasktable" >
                             <select class="library_filter" id="filterCategory" onchange="filter_Category()">
                                 <option>Category</option>
@@ -298,7 +292,7 @@
                                 <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
                             </form>
                             <br><br>
-                            <div style="overflow:auto;height:300px;">
+                            <div style="overflow:auto;">
                                 <table class="library_tasktable_display" id="assigningTask" style="border-style:hidden;width:100%;">
                                     <tr>
                                         <th style="width:25%" onclick="sortingTask(0)" class="library_table_firstbox"> Category </th>
@@ -307,14 +301,11 @@
                                         <th style="width:10%"><input type="checkbox" id="all_checked" onclick="toggleTask(this)"></th>
                                     </tr>
                                 </table>
-                                <button id ="library_requestCopy" type="button" onclick="submitClick()">Request Copy</button>
-
                         
                             </div>
                         </div>
-                        
-
                     </div>
+                    <button id ="library_requestCopy" type="button" onclick="createTaskCopy()">Request Copy</button>
 
                     <div class="container" id="data2" style="display:none;">
                         <br>
@@ -412,18 +403,6 @@
             </div>
         </div>
 
-        <div id="expand" onclick="expand()">
-            Chat
-            <div id="notification"></div>
-        </div>
-        <div id="leftList">
-            <div id="notificationAll"></div>
-            <div id="notificationPart"></div>
-            <ul>
-                <li id="chatAll" onclick="displayChat('0')">Center & System</li>
-                <li id="chatPart" onclick="displayChat('1')">Center</li>
-            </ul>
-        </div>
         <!-- START COPY FOR SIDEBAR JAVASCRIPT -->
         <!-- jQuery CDN - Slim version (=without AJAX) -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -443,6 +422,11 @@
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                if (document.getElementById("toggleSide").innerHTML == "Hide sidebar") {
+                    document.getElementById("toggleSide").innerHTML = "Show sidebar";
+                } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
+                    document.getElementById("toggleSide").innerHTML = "Hide sidebar";
+                }
             });
         });
         </script>
