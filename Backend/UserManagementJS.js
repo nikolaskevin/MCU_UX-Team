@@ -71,6 +71,7 @@ else if(email.includes(".com") ==false){
         updates['uAccount/' + sendLastCNOID] = userInfo;
         updates['UID/' + userID] = userInfo.StaffID;
         firebase.database().ref().update(updates);
+        location.reload();
         }// end if
         else{
             var userInfo2 = {
@@ -94,6 +95,7 @@ else if(email.includes(".com") ==false){
             updates2['uAccount/' + sendLastDirID] = userInfo2;
             updates2['UID/' + userID] = userInfo2.StaffID;
             firebase.database().ref().update(updates2);
+            location.reload();
         }// end third else
 })//end firebase.auth()
 .catch(function(error) {
@@ -110,9 +112,14 @@ else if(email.includes(".com") ==false){
 }//end second else
 }//end of newACcount
 
+function areYouSure(){
+  var yes = confirm('Are you sure?');
+  return yes;
+}
+
 /**
 * @function deleteUserAccount
-* @description allows the admin to delete an accout
+* @description bring the pop up for when you hit the delete button
 */
 function deleteUserAccount(i){
   var sid = document.getElementById('cellId['+i+']').innerHTML;
@@ -130,10 +137,9 @@ function deleteUserAccount(i){
   }
 }
 
-
 /**
 * @function editUserAccount
-* @description allows the admin to edit an account
+* @description shows the information already for the user in the popup
 * @param {*} i 
 */
 function editUserAccount(i){
@@ -142,12 +148,13 @@ function editUserAccount(i){
   fbACCE.on('value', function(snapshot){
     document.getElementById('editAccountPop').style.display = 'block';
     var childData = snapshot.val();
+    //var sid = childData.StaffID;
     var name = childData.Name;
     var email = childData.Email;
     var position = childData.Position;
     var pass = childData.Password;
 
-    document.getElementById('SIDE').value = sid;
+    document.getElementById('SIDE').innerHTML = sid;
     document.getElementById('NameE').value = name;
     document.getElementById('EmailE').value = email;
     document.getElementById('positionE').innerHTML = position;
@@ -164,18 +171,15 @@ function editUserAccount(i){
 *               checks to see if the information is correct/ already exists
 */
 function editedUserAccount(){
-  var sid = document.getElementById('SIDE').value;
+  var sid = document.getElementById('SIDE').innerHTML;
   var name= document.getElementById('NameE').value;
   var email= document.getElementById('EmailE').value;
   var position= document.getElementById('positionE').innerHTML;
   var pass= document.getElementById('passE').value;
+  //var currPassword = firebase.database().ref('uAccount/' + sid + '/' + 'Password');
   var userAccount = firebase.database().ref("uAccount/");
-  var checkExist = "False";
+  
   userAccount.child(sid).once('value').then(function(snapshot){
-      if(snapshot.exists()){
-          alert('Already exists:'+sid);
-      }
-      else{
           var n = email.search(/[*+?^${}();|→TH:]/g);
           for(var i = 0; i <sid.length;i++){
               console.log(sid.charCodeAt(i));
@@ -183,20 +187,11 @@ function editedUserAccount(){
                   var boolean = "false";
               }
           }
-        if(name == '' || email == '' || pass == '' || position == '' || sid == ''){
+        if(name == '' || email == '' || pass == '' || position == ''){
           alert('Please fill in all the information!');
-        }
-        else if(checkExist == "True"){
-            alert(sid +"already exist!");
-        }
-        else if(sid.length != "6"){
-            alert("ID length should be six digits!");
         }
         else if(boolean == "false"){
             alert("ID should be number!");
-        }
-        else if((sid.charAt(0)+sid.charAt(1) =="22" && position == "CNO" || sid.charAt(0)+sid.charAt(1) =="11" && position == "Director") == false){
-            alert(" Director:11XXXX,CNO:22XXXX");
         }
         else if(pass.length < 6){
             alert("Password length should over than six digits!");
@@ -204,7 +199,7 @@ function editedUserAccount(){
         else if(n != "-1"){
             alert("Email format can't have / ,*+?^${}()|→ []");
         }
-
+  
         else if(email.includes(".com") ==false){
             alert("Please use @xxxxx.com format!!");
         }
@@ -221,19 +216,15 @@ function editedUserAccount(){
                 updates['uAccount/'+ sid]=data;
                 updates['No_Portfolio/'+position+'/'+sid] =data;
                 firebase.database().ref().update(updates);
+                //currPassword.updatePassword(pass);
                 location.reload();
       }
-    }
-  }); 
+  });
+  }
+function updatePassword(){
+
 }
 
-function areYouSure(){
-  return confirm('Are you sure? Refresh Still does not work');
-}
-
-function refreshPage(){
-  window.location.reload(30000);
-}
 
 //Display UM table - UID, NAME, STATUS, EDIT button, DELETE button
 var rowIndex=0;
