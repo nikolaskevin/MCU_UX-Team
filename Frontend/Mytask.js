@@ -602,7 +602,6 @@ function createBlankTask(TID){
 
         } else {  //myTaskList already exists
           console.log(Object.keys(uAccount["MyTaskList"]).length);
-          //var num = Object.keys(uAccount["MyTaskList"]).length + 1
           var num = uAccount["MyTaskIndex"]["Number"] + 1;
           uAccount["MyTaskIndex"]["Number"] = num;
           console.log("NUM"+num); 
