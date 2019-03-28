@@ -9,7 +9,6 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="30" />
     <title>LTCTMS</title>
     <link rel="icon" type="image/jpg" href="image\logo.jpg">
     <link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
@@ -439,7 +438,7 @@
                             <!-- CIRCLE IMAGE THING-->
 
 
-                            <div class="user-headface" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
+                            <div class="user-headface" onmouseover="imgBlur(this)" onmouseout="imgOrg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
                                 <img src="statics/images/edit.png" id="photoword"
                                      style="position:relative;left:20px; text-align:center;
                                 display:none;width:40px;height:40px; white-space:nowrap;overflow: hidden;" onclick="document.getElementById('newPic').click();">
@@ -560,7 +559,7 @@
                         <div class="editformselectcreate">
                             <center><h2>Select Role</h2><br></center><br>
                             <center>
-                                <button style="cursor:pointer;" class="selectpatientorstaff" id="btnStaff" onclick="staffPortfolio()">CNA</button>
+                                <button style="cursor:pointer;" class="selectpatientorstaff" id="btnStaff" onclick="staffPortfolio()">STAFF</button>
                                 &nbsp&nbsp&nbsp&nbsp
                                 <button style="cursor:pointer;" class="selectpatientorstaff" id="btnPatient" onclick="patientPortfolio()">PATIENT</button>
                             </center><br><br>
@@ -572,7 +571,7 @@
         </div>
         <div id="newStaffPortfolio">
             <div class="editformcreatestaff">
-                <br><center><h2>CNA Portfolio</h2></center><br>
+                <br><center><h2>Staff Portfolio</h2></center><br>
                 <table class="portfolio_table">
                     <tr>
                         <td rowspan="3"> Insert Photo: <br><br><input id="btnPicture" type="file" accept="image/*" required /> </td>
@@ -580,16 +579,18 @@
                             <p style="position:relative;left:-50px;display:inline;">Position:</p>
                             <select style="position:relative;display:inline;left:20px;" id="staffPosition" onchange="pass123()" required>
                                 <option value="">Please Select</option>
+                                <option value="DIR">Director</option>
+                                <option value="CNO">CNO</option>
                                 <option value="CNA">CNA</option>
                             </select>
                     <tr>
-                        <td> CNA ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id='StaffID'></span></td>
+                        <td> Staff ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id='StaffID'></span></td>
                     </tr>
                     <tr>
                         <td>Name: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffName" placeholder="Name" required /></td>
                     </tr>
                     <tr>
-                        <td colspan="2" id="passtable" style="display:none;"> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="password" id="staffPassword" placeholder="give a password" /></td>
+                        <td colspan="2" id="passtable" style="display:none;"> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffPassword" placeholder="give a password" /></td>
                     </tr>
                     <tr>
                         <td> Date of Birth: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffDOB" placeholder="yyyy/mm/dd" required /></td>
@@ -643,7 +644,7 @@
                 </tr>
                 <tr>
                     <td> Room number: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientRoomNo" placeholder="101.." required /></td>
-                    <td> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="password" id="patientPassword" placeholder="give a password" required /></td>
+                    <td> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientPassword" placeholder="give a password" required /></td>
                 </tr>
                 <tr>
                     <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNID" placeholder="National ID" required /></td>
@@ -1048,6 +1049,24 @@
                 }
             });
         });
+
+        function imgBlur(obj) {
+            var photoword = document.getElementById("photoword");
+            var Profilepic = document.getElementById("Profilepic");
+            photoword.style.display = "inline";
+            photoword.style.position = "absolute";
+            photoword.style.transform = "translate(2ex,2ex)";
+            Profilepic.style.filter = "blur(3px)";
+            Profilepic.style.display = "inline";
+        }
+
+        function imgOrg(obj) {
+            var photoword = document.getElementById("photoword");
+            var Profilepic = document.getElementById("Profilepic");
+            photoword.style.display = "none";
+            Profilepic.style.display = "inline";
+            Profilepic.style.filter = "blur(0px)";
+        }
     </script>
     <!-- END COPY FOR SIDEBAR JAVASCRIPT-->
 </body>

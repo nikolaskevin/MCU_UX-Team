@@ -253,24 +253,6 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
   
   }
   
-  function bigImg(x) {
-      photoword.style.display = "inline";
-      Profilepic.style.position = "relative"
-      $("#Profilepic").css({ top: '-44px' });
-      $("#photoword").css("z-index", "2000");
-      $("#Profilepic").css("filter", "grayscale(100%)");
-      $("#Profilepic").css("filter", "blur(2px)");
-  
-    }
-  
-  function normalImg(x) {
-      photoword.style.display = "none";
-      Profilepic.style.display = "inline";
-      Profilepic.style.position = "relative";
-      $("#Profilepic").css("filter", "grayscale(0%)");
-  
-  }
-  
   
   var a = new Date();
   var hour = a.getHours();

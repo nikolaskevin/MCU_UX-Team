@@ -330,7 +330,7 @@
                             <!-- CIRCLE IMAGE THING-->
 
 
-                            <div class="user-headface" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
+                            <div class="user-headface" onmouseover="imgBlur(this)" onmouseout="imgOrg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
                                 <img src="statics/images/edit.png" id="photoword"
                                      style="position:relative;left:20px; text-align:center;
                                 display:none;width:40px;height:40px; white-space:nowrap;overflow: hidden;" onclick="document.getElementById('newPic').click();">
@@ -485,6 +485,24 @@
                 }
             });
         });
+
+        function imgBlur(obj) {
+            var photoword = document.getElementById("photoword");
+            var Profilepic = document.getElementById("Profilepic");
+            photoword.style.display = "inline";
+            photoword.style.position = "absolute";
+            photoword.style.transform = "translate(2ex,2ex)";
+            Profilepic.style.filter = "blur(3px)";
+            Profilepic.style.display = "inline";
+        }
+
+        function imgOrg(obj) {
+            var photoword = document.getElementById("photoword");
+            var Profilepic = document.getElementById("Profilepic");
+            photoword.style.display = "none";
+            Profilepic.style.display = "inline";
+            Profilepic.style.filter = "blur(0px)";
+        }
     </script>
     <!-- END COPY FOR SIDEBAR JAVASCRIPT-->
 </body>
