@@ -1,3 +1,9 @@
+<!--
+  @file UserManagement.html
+  @author  MCU
+  @author  Kutztown University
+  @license
+-->
 <!DOCTYPE html>
 <!--#30B400#339933#99CC00#FFFFCC-->
 <html>
@@ -235,8 +241,8 @@
 						<p class="tip" id="time123"></p>
 						<img style="position:relative; left:140px;top:-25px;cursor:pointer;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
 						<p class="account" style="position:relative; top:-20px;">
-							<span>Name : <span id="displayProfilename"></span></span>
-							<span>UserID : <span id="displayProfileid"></span></span>
+							<span>Name : IT Admin<span id="displayProfilename"></span></span>
+							
 							<span>Role : IT Admin<span id="displayProfileposition"></span></span>
 						</p>
 					</div>
@@ -283,8 +289,8 @@
 				</div>
 
 
-
-				<div class="container" id="data1" style="position:relative;width:100%;">
+				<!-- BEGIN OF USER MANAGEMENT CONTAINTER -->
+				<div class="container" id="data1" style="position:relative;width:100%; overflow: scroll;">
 					<table id="UserList" style="width:100%;border-style:hidden;">
 						<thread>
 							<tr>
@@ -299,7 +305,8 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="container" id="data2" style="display:none;position:relative;">
+				<!--Browser tab-->
+				<div class="container" id="data2" style="display:none;position:relative;  overflow: scroll;">
 					<p style="position:relative;left:270px;font-size:18px;font-weight:bold;color:#B53232;top:8px;">Latest Login</p>
 					<p style="position:relative;left:590px;top:-16px;font-size:18px;font-weight:bold;color:#B53232;">Latest Logout</p>
 						<table id="browseraccount" style="width:100%;border-style:hidden;position:relative;top:-10px;">
@@ -314,6 +321,8 @@
 							<tbody id='browseraccountbody'>
 							</tbody>
 						</table>
+				<!-- END OF USER MANAGEMENT CONTAINTER -->		
+					
 				</div>
 
 				<div class="container" id="data3" style="display:none;position:relative;">
@@ -330,6 +339,10 @@
 							</thread>
 							<tbody id='appaccountbody'>
 							</tbody>
+
+							//Insert Scrollbar
+							
+
 						</table>
 				</div>
 
@@ -348,9 +361,7 @@
 											</div>
 											<br><br>
 											<p style="position:relative;left:-40px;">Display Name:</p>
-											<input style="position:relative;top:-20px;left:110px;width:200px;" id='Name' type='text' placeholder='Name...' /><br>
-											<p style="position:relative;left:-40px;">Staff ID:</p>
-											<input style="position:relative;top:-20px;left:110px;width:200px;" id='SID' type='text' placeholder='ID...' /><br>
+											<input style="position:relative;top:-20px;left:110px;width:200px;" id='Name' type='text'  placeholder='Name...' /><br>
 											<p style="position:relative;left:-40px;">Email Address:</p>
 											<input style="position:relative;top:-20px;left:110px;width:200px;" id='Email' type='text' placeholder='Email....' /><br>
 											<p style="position:relative;left:-40px;">Default Password:</p>
@@ -364,7 +375,9 @@
 														</select>
 
 												<br><br>
-											<input style="position:relative;left:115px;width:80px;height:30px;border-radius:10px;border-style:hidden;background-color:#69B4ED;cursor:pointer;color:white;" type="Submit" value="Submit" />
+											<input style="position:relative;left:115px;width:80px;height:30px;border-radius:10px;border-style:hidden;background-color:#69B4ED;cursor:pointer;color:white;"
+											 type="Submit" value="Submit" onclick="areYouSure()" />
+											 <!--<meta http-equiv="refresh" content="30; UserManagement.html">-->
 										</form>
 									  </div>
 									</div>
@@ -380,11 +393,11 @@
 							<p style="position:relative;left:-40px;">Display Name:</p>
 							<input style="position:relative;top:-20px;left:110px;width:200px;" id='NameE' type='text' /><br>
 							<p style="position:relative;left:-40px;">Staff ID:</p>
-							<input style="position:relative;top:-20px;left:110px;width:200px;" id='SIDE' type='text' /><br>
+							<span style="position:relative;top:-20px;left:110px;width:200px;" id='SIDE' ></span>
 							<p style="position:relative;left:-40px;">Email Address:</p>
 							<input style="position:relative;top:-20px;left:110px;width:200px;" id='EmailE' type='text' /><br>
 							<p style="position:relative;left:-40px;">Default Password:</p>
-							<input style="position:relative;top:-20px;left:110px;width:200px;" id='passE' type='text' /><br>
+							<input style="position:relative;top:-20px;left:110px;width:200px;" id='passE' type='password' /><br>
 							<p style="position:relative;left:-40px;">Work Position:</p>
 							<span style="position:relative;top:-20px;left:110px;width:200px;" id='positionE' ></span><br><br>
 							<input style="position:relative;left:115px;width:80px;height:30px;border-radius:10px;border-style:hidden;cursor:pointer;background-color:#E92020;color:white;" type="Submit" value="Submit" />
@@ -408,7 +421,6 @@
 				<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
 				<div style="position:relative; left:220px;top:-110px;">
 					<p>Position: &nbsp IT Admin </p><br>
-					<p>User ID: &nbsp <span id = "idProfile"></span></p><br>
 					<p>Display Name: &nbsp <span id = "nameProfile"></span></p><br>
 					<p>Email Address: &nbsp <span id = "emailProfile"></p><br>
 				</div>
@@ -427,7 +439,7 @@
 				<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="editpic">
 				<div style="position:relative; left:220px;top:-110px;">
 					<p>Position: &nbsp IT Admin </span> </p><br>
-					<p >User ID: &nbsp <span id = "idProfileE"> </span>  </p><br>
+					
 					<p>Display Name: <input type="text" id = "nameProfileE" style="width:200px;"></p><br>
 					<p>Email Address: <input type="text" id = "emailProfileE" style="width:300px;"></p><br>
 
@@ -536,17 +548,6 @@
 </div>
 </div>
 
-
-
-<div id="expand" onclick="expand()" >Chat
-	<div  id ="notification" style= "background:red;width:12px;height:20px;position:absolute;right:5%;top:0px;display:none;"></div>
-</div>
-
-<div id= "leftList">
-	<ul>
-		<li id= "chatAll" >Center & System</li>
-	</ul>
-</div>
 
 	</body>
 
