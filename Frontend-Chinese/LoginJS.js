@@ -73,7 +73,12 @@ function authenticateLogin() {
       if (firebaseUser.email == "ltctmsapp2018@gmail.com") {
         alert('You are logged in as Admin!');
         window.location.href = "/../Backend/Policy.html";
-      } else {
+      }
+      if (firebaseUser.email != "ltctmsapp2018@gmail.com") {
+        alert('You are logged in!');
+        window.location.href = "/../Frontend/01Aboutus2.html";
+      } 
+      else {
         var today = new Date();
         var currentYear = today.getFullYear();
         var currentMonth = today.getMonth() + 1;
@@ -99,7 +104,6 @@ function authenticateLogin() {
         var fullDateandTime = fullDate + '-' + fullTime;
         firebase.database().ref('AccountStatus/Browser/' + firebaseUser.uid + '/LoginHistory/' + fullDate + '/' + fullTime).set('True');
         firebase.database().ref('AccountStatus/Browser/' + firebaseUser.uid + '/LatestLogin').set(fullDateandTime);
-        document.getElementById('policyPop').style.display = 'block';
       }
     } else {
       console.log('Please login!');
@@ -237,21 +241,3 @@ fbPolicy.once('value', function (snapshot) {
   document.getElementById('policyid').src = url;
 });
 
-/**
- * @function policyPopup
- * @description Show the policy popup.
- */
-function policyPopup() {
-  alert('You are logged in!');
-  window.location.href = "/../Frontend/01Aboutus2.html";
-}
-
-/**
- * @function policyPopupClose
- * @description Close the policy popup.
- */
-function policyPopupClose() {
-  firebase.auth().signOut();
-  alert("You can't login until you understood this policy!");
-  window.location.reload();
-}
