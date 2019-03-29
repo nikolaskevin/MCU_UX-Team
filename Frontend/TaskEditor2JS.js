@@ -1,6 +1,7 @@
 /* It would be better to use JQuery to generate the HTML for the task steps dynamically rather than generating HTML code in raw strings */
 /* This refactoring would make it easier to edit in the future */
 var taskDetails=[];
+var categories=[];
 var steps=[];
 var goodPath = "";
 var taskSearch = "0000000000000000001";
@@ -8,6 +9,7 @@ var a;
 var b;
 var goodPath = localStorage.getItem("taskPath");
 var taskN = localStorage.getItem("taskN");
+var defImage = "https://i.imgur.com/d0H6zwB.png";
 taskPath = goodPath;
 //var goodPath = window.path;
 if (goodPath  == null){
@@ -15,14 +17,16 @@ if (goodPath  == null){
     location.href ="/../Frontend/05Library2.html";
 }
 
-getTaskFromPath(goodPath, getTaskPathCallback); //Start the process of loading the task
-
+//Start the process of loading the task
+getTaskFromPath(goodPath, getTaskPathCallback); 
 /**
  * @function getTaskPathCallback
  * @param {*} task 
  */
 function getTaskPathCallback(task){
-    populateArray(task);
+    getCategories(categories, task, populateArray);
+    //populateArray(task);
+    console.log(categories);
     injectToDOM();
 }
 
@@ -44,7 +48,11 @@ function populateArray(task){
         owner: task["Info"]["Owner"],
         taskID: task["TaskID"],
         visible: task["Info"]["Visible"],
-        published: task["Info"]["Published"]
+        published: task["Info"]["Published"],
+        startCategory: task["Info"]["Category"]
+    }
+    if (taskData["videoURL"] == "null") {
+        taskData["videoURL"] = "";
     }
     taskDetails = taskData;
 
@@ -57,7 +65,7 @@ function populateArray(task){
     }
 
     console.log(taskData);
-    while (true){
+    while (true){   // Loop through the steps
         var stepF = "Step"+counter;
         if ( task["Step"+counter] != null ){
             var detailedSteps = [];
@@ -65,7 +73,7 @@ function populateArray(task){
             detailedCounter = 1;
 
             //Get information about the detailed steps
-            while (true){
+            while (true){   // Loop through the detailed steps
                 if (task["Step"+counter]["DetailedStep"+detailedCounter] != null){
                     detailedSteps[detailedCounter-1] = task["Step"+counter]["DetailedStep"+detailedCounter];
                 } else {
@@ -79,18 +87,96 @@ function populateArray(task){
                 description: task[stepF]["MDescriptionIOS"],
                 name: task[stepF]["MtitleIOS"],
                 number: task[stepF]["Step"],
+                image: defImage,
+                imageChanged: false,
                 detailedSteps: detailedStepsJSON
             }
             steps[counter-1] = stepsData;
-            steps[counter-1]['detailedSteps'] = detailedSteps;
-            console.log(stepsData);
-            
+            steps[counter-1]['detailedSteps'] = detailedSteps;   
         } else {
             break;
         }
         counter++;
     }
+    getStepImage(task, steps, 0);
 }
+
+/**
+ * @function getCategories
+ * @description Finds all the categories of tasks in the database, and places the options in an array.
+ * @param categories - Array to be filled
+ * @param task - Task (to put into the callback function, not strictly necessary, but makes the flow of data more apparent)
+ * @param callback Function to perform after finding all categories
+ */
+function getCategories(categories, task, callback){
+    var count = 0;
+    var fbGet= firebase.database().ref("TaskInstruction")   //Get all the task categories
+    fbGet.once('value', function(snapshot){
+        snapshot.forEach(function(catSnap){
+            if (catSnap.numChildren()){
+                categories[count] = catSnap.key;
+                count++;
+            }
+        });
+        callback(task);
+        return;
+    });
+}
+
+/**
+ * @function getStepImage
+ * @description Recursively iterates through each step and gets its image. 
+ * @param {*} task Details about the task original task.
+ * @param {*} steps Task step descriptions
+ * @param {*} stepNum The step num whose image is to be received from the database.  This controls the recursion's termination as well.
+ */
+function getStepImage(task, steps, stepNum){
+    
+    if (steps[stepNum] == undefined){
+        console.log("returning at stepNum" + stepNum);
+        injectToDOM();
+        return;
+    }
+
+    var imageLink = task["Step"+(stepNum+1)]["ImageURL"];
+
+    if (imageLink == defImage){
+        //console.log("defImage at step " + stepNum);
+        getStepImage(task, steps, stepNum+1);
+    } else if (imageLink == null){
+        steps["image"] = defImage;
+        getStepImage(task, steps, stepNum+1);
+    }else if (imageLink.substring(0,6)!="images"){
+        //alert("stepNum" + stepNum + " " + imageLink + " " + imageLink.substring(0,6));
+        steps[stepNum]["image"] = imageLink;
+        getStepImage(task, steps, stepNum+1);
+    } else if (imageLink != null){
+        //alert("No image @ " + stepNum);
+        var storageRef = firebase.storage().ref();
+        var imageRef = storageRef.child(imageLink);
+        //steps[counter-1]["image"] = 
+
+            imageRef.getDownloadURL().then(function(snapshot){
+                console.log(snapshot);
+                imageLink = snapshot;
+                steps[stepNum]["image"] = imageLink;
+                console.log(steps);
+                //return imageLink;
+                getStepImage(task, steps, stepNum+1);
+            }).catch(function(err){
+                console.log(err);
+                getStepImage(task,steps,stepNum+1);
+            });
+        
+        //promises.push(getImageURL);
+    } else {    //image link is null
+        steps["image"] = defImage;
+        getStepImage(task, steps, stepNum+1);
+    }
+
+return;
+}
+
 
 $('.sortable').sortable({
     start: function(event, ui){
@@ -151,11 +237,24 @@ function generateStructure(){
 */
 function injectToDOM(){
     var htmlInjection;
-    
+    //var $AddToDom = $('<div>Task Name: </div>');
     htmlInjection = "";
     //Task name
     htmlInjection += '<div style="text-align:center;"> Task Name: </div>';
     htmlInjection += '<input style="text-align:center;" type="text" id="nameInput" value="' + taskDetails["name"] + '"> </input>';
+
+    //Task Category
+    htmlInjection += '<div style="text-align:center;"> Category: </div>';
+    htmlInjection += '<select id="category" name="category">';
+    console.log(categories);
+    for (var c = 0; c < categories.length; c++){
+        htmlInjection += '<option value = "' + categories[c] + '">'+ categories[c] + '</option>';
+    }
+    htmlInjection += '</select>';    // End category input
+
+     //Task Video
+     htmlInjection += '<div style="text-align:center;"> Video URL: </div>';
+     htmlInjection += '<input style="text-align:center;" type="text" id="videoURLInput" value="' + taskDetails["videoURL"] + '"> </input>';
 
     //Task outline
     htmlInjection += '<div style="text-align:center;"> Task Outline: </div>';
@@ -211,9 +310,15 @@ function injectToDOM(){
         htmlInjection += "</div>";
 
         //Task description
-        htmlInjection += "<div class='inputField' width='100%'>";
-        htmlInjection += "Description: <div class='containerDiv'> <textarea class = 'stepDescriptionInput' id='" + i + "'>"+ steps[i].description + "</textarea> </div>";
-        htmlInjection += "</div>";
+        htmlInjection += "<div class='inputFieldLeft' width='100%'>";
+        htmlInjection += "Description: <div class='containerDiv'> <div class='desDiv'> <textarea class = 'stepDescriptionInput' id='" + i + "'>"+ steps[i].description + "</textarea></div>";
+        htmlInjection += '<div class = "stepImageContainer">';
+        //Add in image upload button and image preview
+        htmlInjection += '<input type="file" class="uploadPic" name="'+i+'"/>';
+        htmlInjection += '<img class="picPreview" name="stepImage' + i + '" src="' + steps[i]["image"] + '"/>';
+        htmlInjection += "</div>"   //Close stepImageContainer Div
+        htmlInjection += "</div>";  //Close desDevi
+        htmlInjection += "</div>";  //Close inputFieldLeft div
 
         //insert detailed steps
         htmlInjection += getDetailedStepHTML(steps, i);
@@ -249,6 +354,39 @@ function setRadioStartState(taskDetails){
     }
 }
 
+function installImageHandler(steps, taskDetails){
+    $(':file').change(function(event){
+        if (this.files && this.files[0]) {
+
+            var id = event.target.name;
+            imageFile = this.files[0];
+            var reader = new FileReader();
+            //reader.onload = imageIsLoaded();
+            var fileName = event.target.value;
+            reader.onload = function(e){
+
+                //alert('[name="stepImage' + id + '"]');
+                $('[name="stepImage' + id + '"]').attr('src', e.target.result);
+                steps[id]["image"] = e.target.result;
+                steps[id]["imageChanged"] = true;
+                steps[id]["jImage"] = imageFile;
+                //Process to get file extension
+                var filename = event.target.value;  
+                var fileExt = filename.substring(filename.lastIndexOf('.')+1, filename.length) || filename;
+                steps[id]["fileExt"] = fileExt;
+                console.log(steps);
+                console.log(steps[id]);
+               
+             
+            }
+            reader.readAsDataURL(this.files[0]);
+            
+            console.log(fileName);
+        }
+       
+    });
+}
+
 /**
  * @function installEventHandlers
  * @description Install the event handlers needed for the page to work correctly.
@@ -268,6 +406,9 @@ function installEventHandlers(steps, taskDetails){
     saveButtonHandler(steps);
     updateDetailedStepHandler(steps);
     radioButtonHandler(taskDetails);
+    installImageHandler(steps, taskDetails)
+    categoryEventHandler(steps, taskDetails);
+    updateVideoURLHandler(taskDetails);
 }
 
 /**
@@ -361,6 +502,19 @@ function updateNameHandler(taskDetails){
         //alert( "Handler for .keyup() called." + event.target.id );
         taskDetails["name"] = $(event.target).val();
         console.log(taskDetails["name"]);
+    });
+}
+
+/**
+ * @function updateVideoURLHandler
+ * @description Installs event handler for updating the task's video URL.
+ * @param {]} taskDetails Conatains the state of the task details
+ */
+function updateVideoURLHandler(taskDetails){
+
+    $( "#videoURLInput" ).keyup(function(event) {
+        taskDetails["videoURL"] = $(event.target).val();
+        console.log(taskDetails["videoURL"]);
     });
 }
 
@@ -503,6 +657,18 @@ function saveButtonHandler(steps){
 }
 
 /**
+ * @function categoryEventHandler
+ * @description Update state of the array when the category is changed
+ * @param {} steps 
+ */
+function categoryEventHandler(steps, taskDetails){
+    $("#category").change(function(event){
+        taskDetails["category"]=event.target.value;
+        console.log(taskDetails);
+    });
+}
+
+/**
  * @function newDetailedStepButtonHandler
  * @description Event handler for the button to create a new detailed step.
  * @param {*} steps 
@@ -543,26 +709,94 @@ function saveTask(steps, goodPath, taskData){
     insertToDatabase["Info"]["Visible"] = taskDetails["visible"];
     
     //Generate the structure of the individual steps to insert into the database
+    const promises = [];
     for (var i = 0; i < steps.length; i++){
         var tempArray = {};
         insertToDatabase["Step"+(parseInt(i)+1)] = {};
         insertToDatabase["Step"+(parseInt(i)+1)]["MDescriptionIOS"] = steps[i]["description"];
         insertToDatabase["Step"+(parseInt(i)+1)]["MtitleIOS"] = steps[i]["name"];
+    
+            if (steps[i]["imageChanged"]){
+                // Create a root reference
+                var storageRef = firebase.storage().ref();
+
+                // Create a reference to 'mountains.jpg'
+                var fileExt = steps[i]["fileExt"];
+
+                var imageRef = storageRef.child('images/' + taskDetails["taskID"] + '/' + i + 'stepImage.' + fileExt);
+                
+                
+                var file = steps[i]["jImage"];
+                //Warn about redirection while task is saving
+                window.onbeforeunload = function() {
+                    return "Do you really want to leave this page? Your changes are still saving.";
+    
+                 };
+                const uploadTask = imageRef.put(file).then(function(snapshot, i) {
+                    console.log('Uploaded a blob or file!');
+                    console.log(snapshot);
+                    var path = snapshot["metadata"]["fullPath"];
+                    var fileName = snapshot["metadata"]["name"];
+                    
+                    //Parse the number of the image from the filename that was uploaded
+                    //This is used to insert into the insertToDatabase array at the proper step index.
+                    var num = parseInt(fileName.substr(0, fileName.indexOf('s'))); 
+                    console.log(num);
+                    console.log(path);
+                    insertToDatabase["Step"+(parseInt(num)+1)]["ImageURL"] = path;
+                    console.log(path);
+                    //insertToDatabase["Step"+(parseInt(i)+1)]["imageURL"] = 
+                  
+                });
+                promises.push(uploadTask);
+
+            } else {
+                insertToDatabase["Step"+(parseInt(i)+1)]["ImageURL"] = steps[i]["image"];
+            }
+           
         //Generate the structure of the individual detailed steps to insert into the database
         for (var j = 0; j < steps[i]["detailedSteps"].length; j++){
             insertToDatabase["Step"+(parseInt(i)+1)]["DetailedStep"+(parseInt(j)+1)] = steps[i]["detailedSteps"][j];
         }
     }
 
-    console.log(insertToDatabase);
-    var updates = {};
-    updates[goodPath] = insertToDatabase;
+    Promise.all(promises).then(function(tasks) {
+        alert("all image uploads complete.");
+        console.log(insertToDatabase);
+        var updates = {};
+        //updates[goodPath] = insertToDatabase;
+        updates[taskDetails["taskID"]] = insertToDatabase;
+        console.log(updates);
+        if (firebase.database().ref("TaskInstruction/"+taskDetails["category"]+"/"+taskDetails["taskID"]).set(insertToDatabase)){
+            if (taskDetails["category"] != taskDetails["startCategory"]){
+                console.log("TaskInstruction/" + taskDetails["startCategory"] + "/" + taskDetails["taskID"]);
+                firebase.database().ref().child("TaskInstruction/" + taskDetails["startCategory"] + "/" + taskDetails["taskID"]).remove().then(function(error){
+                    console.log("deleted");
+                    alert("Save succesful");
+                    //Disable redirection warning
+                    window.onbeforeunload = function() {
+                        return;
+                     };
+                });
+            } else {
+                alert("Save succesful");
+                //Disable redirection warning
+                window.onbeforeunload = function() {
+                    return;
+                };
+                }
 
-    if (firebase.database().ref().update(updates)){
-        alert("Save successful");
-    } else {
-        alert("Task failed to save");
-    }
+        } else {
+            alert("Task failed to save");
+            //Disable redirection warning
+            window.onbeforeunload = function() {
+                return;
+             };
+        }
+
+    });
+
+    
 }
 
 /**
@@ -575,6 +809,8 @@ function newStep(){
     data = {
         description: "description",
         name: "new step",
+        image: defImage,
+        imageChanged: false,
         number: steps.length
     }
     data.detailedSteps = [];

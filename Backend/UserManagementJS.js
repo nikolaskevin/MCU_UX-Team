@@ -28,6 +28,7 @@ rec2.once('value').then(function(snapshot){
     lastDirID = snapshot.val();//contains lastDirID
     sendLastDirID = lastDirID;
 })
+
 var n = email.search(/[*+?^${}();|→TH:]/g);
 
 if(name == '' || email == '' || pass == '' || position == ''){
@@ -47,32 +48,35 @@ else if(email.includes(".com") ==false){
         console.log("User created successfully with payload-", authData.user.uid);
         userID = authData.user.uid;
         if(position == "CNO"){
-            var userInfo = {
-                Name: name,
-                Email: email,
-                Password: pass,
-                Position: position,
-                StaffID: sendLastCNOID
-            }
-            var updates={}
-        ref.transaction(function(data){
-                // this increments lastCNOID, CANNOT start at 0
-                if (data || (data != 0)){
-                    data++;
-                    return data;
-                }    
-                else{
-                    console.log("Didn't work, GG");
-                }
-                //document.write(data);
-                updates['No_Portfolio/' + position + '/' + sendLastCNOID] = userInfo;
-            
-            })//end transaction function
-        updates['uAccount/' + sendLastCNOID] = userInfo;
-        updates['UID/' + userID] = userInfo.StaffID;
-        firebase.database().ref().update(updates);
-        location.reload();
-        }// end if
+          var userInfo = {
+              Name: name,
+              Email: email,
+              Password: pass,
+              Position: position,
+              StaffID: sendLastCNOID
+          }
+          var updates={}
+      updates['No_Portfolio/' + position + '/' + sendLastCNOID] = userInfo;
+      updates['uAccount/' + sendLastCNOID] = userInfo;
+      updates['UID/' + userID] = userInfo.StaffID;
+      firebase.database().ref().update(updates);
+      ref.transaction(function(data){
+        // this increments lastCNOID, CANNOT start at 0
+        if (data || (data != 0)){
+            data++;
+            return data;
+        }    
+        else{
+            console.log("Didn't work, GG");
+        }
+        //document.write(data);
+    }, function(error, commited, snapshot){
+      if (commited){
+        window.location.reload(true);
+      }
+
+  }, true); //end transaction function
+      }// end if
         else{
             var userInfo2 = {
                 Name: name,
@@ -82,20 +86,25 @@ else if(email.includes(".com") ==false){
                 StaffID: sendLastDirID
             }
             var updates2={}
-            ref2.transaction(function(data){
-                // this increments lastDirID, CANNOT start at 0
-                if (data || (data != 0)){
-                    data++;
-                    return data;
-                }    
-                else{
-                    console.log("Didn't work, GG");
-                }
-            })//end transaction function
             updates2['uAccount/' + sendLastDirID] = userInfo2;
             updates2['UID/' + userID] = userInfo2.StaffID;
             firebase.database().ref().update(updates2);
-            location.reload();
+            ref2.transaction(function(data){
+              // this increments lastCNOID, CANNOT start at 0
+              if (data || (data != 0)){
+                  data++;
+                  return data;
+              }    
+              else{
+                  console.log("Didn't work, GG");
+              }
+              //document.write(data);
+          }, function(error, commited, snapshot){
+            if (commited){
+                window.location.reload(true);
+            }
+      
+        }, true); //end transaction function
         }// end third else
 })//end firebase.auth()
 .catch(function(error) {
@@ -108,6 +117,7 @@ else if(email.includes(".com") ==false){
       alert(errorMessage);
     }
     console.log(error);
+    
   });//end .catch
 }//end second else
 }//end of newACcount
@@ -153,7 +163,6 @@ function editUserAccount(i){
     var email = childData.Email;
     var position = childData.Position;
     var pass = childData.Password;
-
     document.getElementById('SIDE').innerHTML = sid;
     document.getElementById('NameE').value = name;
     document.getElementById('EmailE').value = email;
@@ -221,11 +230,7 @@ function editedUserAccount(){
       }
   });
   }
-function updatePassword(){
-
-}
-
-
+  
 //Display UM table - UID, NAME, STATUS, EDIT button, DELETE button
 var rowIndex=0;
 var fbACC = firebase.database().ref('uAccount');
