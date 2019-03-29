@@ -8,16 +8,6 @@ IT Admin
 * Email: ltctmsapp2018@gmail.com 
 * Password: admin123123 
 
-CNO 
-* Email: cno@test.com 
-* Password: ku2019 
-
-Director 
-* Email: director@test.com 
-* Password: ku2019 
-
- 
-
 ### Browser Version Link 
 The browser version can be accessed by clicking [here](https://browserteam.firebaseapp.com/Frontend/00Login2.html). This link was generated using the files completed during Sprint 2 and the following command:
 ```
