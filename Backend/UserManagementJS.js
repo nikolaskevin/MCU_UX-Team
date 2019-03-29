@@ -28,7 +28,7 @@ rec2.once('value').then(function(snapshot){
     lastDirID = snapshot.val();//contains lastDirID
     sendLastDirID = lastDirID;
 })
-alert("Submission Successful! \n Please reload the page.")
+
 var n = email.search(/[*+?^${}();|→TH:]/g);
 
 if(name == '' || email == '' || pass == '' || position == ''){
@@ -56,22 +56,26 @@ else if(email.includes(".com") ==false){
               StaffID: sendLastCNOID
           }
           var updates={}
-      ref.transaction(function(data){
-              // this increments lastCNOID, CANNOT start at 0
-              if (data || (data != 0)){
-                  data++;
-                  return data;
-              }    
-              else{
-                  console.log("Didn't work, GG");
-              }
-              //document.write(data);
-              updates['No_Portfolio/' + position + '/' + sendLastCNOID] = userInfo;
-          
-          })//end transaction function
+      updates['No_Portfolio/' + position + '/' + sendLastCNOID] = userInfo;
       updates['uAccount/' + sendLastCNOID] = userInfo;
       updates['UID/' + userID] = userInfo.StaffID;
       firebase.database().ref().update(updates);
+      ref.transaction(function(data){
+        // this increments lastCNOID, CANNOT start at 0
+        if (data || (data != 0)){
+            data++;
+            return data;
+        }    
+        else{
+            console.log("Didn't work, GG");
+        }
+        //document.write(data);
+    }, function(error, commited, snapshot){
+      if (commited){
+        window.location.reload(true);
+      }
+
+  }, true); //end transaction function
       }// end if
         else{
             var userInfo2 = {
@@ -82,19 +86,25 @@ else if(email.includes(".com") ==false){
                 StaffID: sendLastDirID
             }
             var updates2={}
-            ref2.transaction(function(data){
-                // this increments lastDirID, CANNOT start at 0
-                if (data || (data != 0)){
-                    data++;
-                    return data;
-                }    
-                else{
-                    console.log("Didn't work, GG");
-                }
-            })//end transaction function
             updates2['uAccount/' + sendLastDirID] = userInfo2;
             updates2['UID/' + userID] = userInfo2.StaffID;
             firebase.database().ref().update(updates2);
+            ref2.transaction(function(data){
+              // this increments lastCNOID, CANNOT start at 0
+              if (data || (data != 0)){
+                  data++;
+                  return data;
+              }    
+              else{
+                  console.log("Didn't work, GG");
+              }
+              //document.write(data);
+          }, function(error, commited, snapshot){
+            if (commited){
+                window.location.reload(true);
+            }
+      
+        }, true); //end transaction function
         }// end third else
 })//end firebase.auth()
 .catch(function(error) {
@@ -107,6 +117,7 @@ else if(email.includes(".com") ==false){
       alert(errorMessage);
     }
     console.log(error);
+    
   });//end .catch
 }//end second else
 }//end of newACcount
@@ -152,7 +163,6 @@ function editUserAccount(i){
     var email = childData.Email;
     var position = childData.Position;
     var pass = childData.Password;
-
     document.getElementById('SIDE').innerHTML = sid;
     document.getElementById('NameE').value = name;
     document.getElementById('EmailE').value = email;
@@ -170,62 +180,57 @@ function editUserAccount(i){
 *               checks to see if the information is correct/ already exists
 */
 function editedUserAccount(){
-var sid = document.getElementById('SIDE').innerHTML;
-var name= document.getElementById('NameE').value;
-var email= document.getElementById('EmailE').value;
-var position= document.getElementById('positionE').innerHTML;
-var pass= document.getElementById('passE').value;
-//var currPassword = firebase.database().ref('uAccount/' + sid + '/' + 'Password');
-var userAccount = firebase.database().ref("uAccount/");
-
-userAccount.child(sid).once('value').then(function(snapshot){
-        var n = email.search(/[*+?^${}();|→TH:]/g);
-        for(var i = 0; i <sid.length;i++){
-            console.log(sid.charCodeAt(i));
-            if((sid.charCodeAt(i) <=57 && sid.charCodeAt(i) >=48 ) == false){
-                var boolean = "false";
-            }
-        }
-      if(name == '' || email == '' || pass == '' || position == ''){
-        alert('Please fill in all the information!');
-      }
-      else if(boolean == "false"){
-          alert("ID should be number!");
-      }
-      else if(pass.length < 6){
-          alert("Password length should over than six digits!");
-      }
-      else if(n != "-1"){
-          alert("Email format can't have / ,*+?^${}()|→ []");
-      }
-
-      else if(email.includes(".com") ==false){
-          alert("Please use @xxxxx.com format!!");
-      }
-      else{
-              var data = {
-               Name : name,
-               Email: email,
-               Password : pass,
-              Position : position,
-              StaffID : sid
+  var sid = document.getElementById('SIDE').innerHTML;
+  var name= document.getElementById('NameE').value;
+  var email= document.getElementById('EmailE').value;
+  var position= document.getElementById('positionE').innerHTML;
+  var pass= document.getElementById('passE').value;
+  //var currPassword = firebase.database().ref('uAccount/' + sid + '/' + 'Password');
+  var userAccount = firebase.database().ref("uAccount/");
+  
+  userAccount.child(sid).once('value').then(function(snapshot){
+          var n = email.search(/[*+?^${}();|→TH:]/g);
+          for(var i = 0; i <sid.length;i++){
+              console.log(sid.charCodeAt(i));
+              if((sid.charCodeAt(i) <=57 && sid.charCodeAt(i) >=48 ) == false){
+                  var boolean = "false";
               }
-              var updates={}
-              var updates1 ={}
-              updates['uAccount/'+ sid]=data;
-              updates['No_Portfolio/'+position+'/'+sid] =data;
-              firebase.database().ref().update(updates);
-              //currPassword.updatePassword(pass);
-              location.reload();
-    }
-});
-}
-
-function updatePassword(){
-
-}
-
-
+          }
+        if(name == '' || email == '' || pass == '' || position == ''){
+          alert('Please fill in all the information!');
+        }
+        else if(boolean == "false"){
+            alert("ID should be number!");
+        }
+        else if(pass.length < 6){
+            alert("Password length should over than six digits!");
+        }
+        else if(n != "-1"){
+            alert("Email format can't have / ,*+?^${}()|→ []");
+        }
+  
+        else if(email.includes(".com") ==false){
+            alert("Please use @xxxxx.com format!!");
+        }
+        else{
+                var data = {
+                 Name : name,
+                 Email: email,
+                 Password : pass,
+                Position : position,
+                StaffID : sid
+                }
+                var updates={}
+                var updates1 ={}
+                updates['uAccount/'+ sid]=data;
+                updates['No_Portfolio/'+position+'/'+sid] =data;
+                firebase.database().ref().update(updates);
+                //currPassword.updatePassword(pass);
+                location.reload();
+      }
+  });
+  }
+  
 //Display UM table - UID, NAME, STATUS, EDIT button, DELETE button
 var rowIndex=0;
 var fbACC = firebase.database().ref('uAccount');
