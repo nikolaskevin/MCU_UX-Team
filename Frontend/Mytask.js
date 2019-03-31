@@ -505,7 +505,7 @@ function removeTaskMyList(num) {
                   MyListTID = snapshotTaskIDs.key;
                   var taskReference = firebase.database().ref("uAccount/"+userid+"/MyTaskList/"+MyListTID);
                   taskReference.remove();
-                  window.location.href ="../Frontend/10MyTask2.html";
+                  window.location.href ="../Frontend/10Mytask2.html";
                 } //end if tidMTL == taskID
               }); //end function(snapshotTaskIDs)
             }); //end function(snapshotMTL)
