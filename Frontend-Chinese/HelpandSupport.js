@@ -9,15 +9,15 @@
     var num = 0;
     fbFeedback.once("value")
     .then(function(snapshot){
-        snapshot.forEach(function(childSnapshot1){
-            var id = childSnapshot1.key;
+        feedbackSnapshot.forEach(function(getIDSnapshot){
+            var id = getIDSnapshot.key;
             match_id(id,fbFeedback);
        });
     });
 
 /**
  * @function match_id
- * @description verifys wheter the user is a CNA or Patient/Family member
+ * @description verifies wheter the user is a CNA or Patient/Family member
  * @param {*} id 
  * @param {*} fbFeedback 
  */
@@ -25,19 +25,16 @@ function match_id(id,fbFeedback){
 
     if (id.charAt(0) == "3"){
         var fbCNA = firebase.database().ref("CNA/"+id+"/Portfolio");
-        let arr_name = [];
-        var name;
-        var picture;
         fbCNA.once("value")
-           .then(function(snapshot){
+           .then(function(CNAsnapshot){
                var name;
                var picture;
-               snapshot.forEach(function(childSnapshot1){
-                   if(childSnapshot1.key == "Name"){
-                       name = childSnapshot1.val();
+               CNAsnapshot.forEach(function(CNAinfoSnapshot){
+                   if(CNAinfoSnapshot.key == "Name"){
+                       name = CNAinfoSnapshot.val();
                    }
-                   if(childSnapshot1.key =="pictureurl"){
-                       picture = childSnapshot1.val();
+                   if(CNAinfoSnapshot.key =="pictureurl"){
+                       picture = CNAinfoSnapshot.val();
                        tableform(id,name,fbFeedback,picture);
                    }
                })
@@ -45,18 +42,16 @@ function match_id(id,fbFeedback){
     }
     else{
         var fbPAT = firebase.database().ref("Patient/"+id+"/Portfolio");
-        let arr_name = [];
-        var name;
         fbPAT.once("value")
-           .then(function(snapshot){
+           .then(function(patientSnapshot){
                var name;
                var picture;
-               snapshot.forEach(function(childSnapshot1){
-                   if(childSnapshot1.key == "Name"){
-                       name = childSnapshot1.val();
+               patientSnapshot.forEach(function(patientInfoSnapshot){
+                   if(patientInfoSnapshot.key == "Name"){
+                       name = patientInfoSnapshot.val();
                    }
-                   if(childSnapshot1.key =="pictureurl"){
-                       picture = childSnapshot1.val();
+                   if(patientInfoSnapshot.key =="pictureurl"){
+                       picture = patientInfoSnapshot.val();
                        tableform(id,name,fbFeedback,picture);
                    }
                })
@@ -180,6 +175,7 @@ function tableform(id,name,fbFeedback,picture){
                           document.getElementById("photo["+index+"]").src = picture;
                           document.getElementById("username["+index+"]").innerHTML = name +"  said:";
                           document.getElementById("comment["+index+"]").innerHTML = childSnapshot6.val();
+                          console.log(childSnapshot6.val());
                           getReply(id, index, a[0], a[1], a[2], time[0], time[1], time[2], feedbackID);
                           console.log(index);
                           index++;

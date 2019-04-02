@@ -505,7 +505,7 @@ function removeTaskMyList(num) {
                   MyListTID = snapshotTaskIDs.key;
                   var taskReference = firebase.database().ref("uAccount/"+userid+"/MyTaskList/"+MyListTID);
                   taskReference.remove();
-                  window.location.href ="../Frontend/10MyTask2.html";
+                  window.location.href ="../Frontend/10Mytask2.html";
                 } //end if tidMTL == taskID
               }); //end function(snapshotTaskIDs)
             }); //end function(snapshotMTL)
@@ -522,6 +522,7 @@ function removeTaskMyList(num) {
  * @description get task ID for new task
  */
 function createNewTask(){
+  /*
   var postRef = firebase.database().ref('TaskInstruction/LastID');
 
   postRef.transaction(function(data) {
@@ -544,7 +545,10 @@ function createNewTask(){
       //console.log("YO: "+localStorage);
       //location.href ="./06Taskeditor2.html";
   }, true);
-  
+  */
+  localStorage.setItem("userID", $("#displayProfileid").html());
+  localStorage.setItem("taskPath", "newTask");
+  location.href = "./06Taskeditor2.html";
 }
 
 /**

@@ -69,9 +69,10 @@
                     Library</a>
                 </li>
                 <li>
-                    <a href="../Frontend-Chinese/06Taskeditor2.html">
-                        <i class="glyphicon glyphicon-tasks"></i>
-                    Task Editor</a>
+                    <a href="../Frontend-Chinese/10Mytask2.html">
+                        <i class="glyphicon glyphicon-list-alt"></i>
+                        My Task
+                    </a>
                 </li>
                 <li>
                     <a href="../Frontend-Chinese/07E-portfolio2.html">
@@ -115,7 +116,7 @@
                                 <li class="dropdown">
                                     <a href="javascript:void(0)" class="dropbtn"><span class="glyphicon glyphicon-cog white-text"></span></a>
                                     <div class="dropdown-content">
-                                        <a href="/../Frontend/06Taskeditor2.html">English</a>
+                                        <a href="/../Frontend/06TaskEditor2.html">English</a>
                                         <a href="#">Chinese</a>
                                         
                                         <a onClick="Logout(); return false;" href="../Frontend-Chinese/00Login2.html">Logout</a>
@@ -137,7 +138,7 @@
                             <!-- CIRCLE IMAGE THING-->
 
 
-                            <div class="user-headface" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
+                            <div class="user-headface" onmouseover="imgBlur(this)" onmouseout="imgOrg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
                                 <img src="statics/images/edit.png" id="photoword"
                                      style="position:relative;left:20px; text-align:center;
                                 display:none;width:40px;height:40px; white-space:nowrap;overflow: hidden;" onclick="document.getElementById('newPic').click();">
@@ -160,6 +161,7 @@
                 </div>
             </div> <!-- END OF THE TWO HEADER!! -->
 
+
             <!---<div class="main container-fluid wrapper">-->
             <div style="display: flex; width:100%; height:80%;">
                 <!-- START OF MIDDLE CONTENT-->
@@ -167,9 +169,19 @@
                         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
                         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>
 
+                        <div class = "taskInfoContainer">
+                            <div class = "taskEditorContent" id="taskHeader"> </div>
+                        </div>
+
                         <div class="sortableContainer" id="sortableContainer">
                             <div class="sortable" id="sort"></div>
+                            <div class = "taskEditorContent" id="taskFooter"> </div>
                         </div>
+
+                        <div class = "taskInfoContainer">
+                            
+                        </div>
+                        
                         <script type='text/javascript' src='./TaskEditor2JS.js'></script>
                         
              
@@ -195,8 +207,6 @@
                     </div>
                 </div>
             -->
-
-
                 <div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;border-style: solid;
 				border-width: 2px;">
                     <div style="background-color:#E4EACD;position:relative;height:75px;">
@@ -265,6 +275,25 @@
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
             });
         });
+
+        function imgBlur(obj) {
+            var photoword = document.getElementById("photoword");
+            var Profilepic = document.getElementById("Profilepic");
+            photoword.style.display = "inline";
+            photoword.style.position = "absolute";
+            photoword.style.transform = "translate(2ex,2ex)";
+            photoword.style.zIndex = "2000";
+            Profilepic.style.filter = "blur(3px)";
+            Profilepic.style.display = "inline";
+        }
+
+        function imgOrg(obj) {
+            var photoword = document.getElementById("photoword");
+            var Profilepic = document.getElementById("Profilepic");
+            photoword.style.display = "none";
+            Profilepic.style.display = "inline";
+            Profilepic.style.filter = "blur(0px)";
+        }
     </script>
 
     <!-- END COPY FOR SIDEBAR JAVASCRIPT-->

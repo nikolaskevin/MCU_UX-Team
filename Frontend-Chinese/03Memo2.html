@@ -257,14 +257,8 @@
                 </li>
                 <li>
                     <a href="../Frontend-Chinese/10Mytask2.html">
-                        <i class="glyphicon glyphicon-wrench"></i>
+                        <i class="glyphicon glyphicon-list-alt"></i>
                         My Task
-                    </a>
-                </li>
-                <li>
-                    <a href="../Frontend-Chinese/06Taskeditor2.html">
-                        <i class="glyphicon glyphicon-tasks"></i>
-                        Task Editor
                     </a>
                 </li>
                 <li>
@@ -337,7 +331,7 @@
                             <!-- CIRCLE IMAGE THING-->
 
 
-                            <div class="user-headface" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
+                            <div class="user-headface" onmouseover="imgBlur(this)" onmouseout="imgOrg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
                                 <img src="statics/images/edit.png" id="photoword"
                                      style="position:relative;left:20px; text-align:center;
                                 display:none;width:40px;height:40px; white-space:nowrap;overflow: hidden;" onclick="document.getElementById('newPic').click();">
@@ -418,15 +412,14 @@
             </div>
         </div>
     </div>
-
-    <div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA;border-style: solid;
-					border-width: 2px; z-index:3;">
+    <div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA;border-style: solid;
+				border-width: 2px; z-index:3;">
         <div style="background-color:#E4EACD;position:relative;height:75px;">
-            <h2 id="nameProfileT" style="position: relative; left: 210px; top: 20px;"><h3 style="position: relative; color: gray; left: 300px; top: -10px;">	</h3></h2>
+            <h2 id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
 
-            <button onclick="editprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
-            <button onclick="closeprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
-            <button onclick="changePassword()" style="position:relative; left:520px;top:45px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>
+            <button onclick="editprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
+            <button onclick="closeprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
+            <button onclick="changePassword()" style="position:relative; left:520px;top:75px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;z-index:4;">Change Password</button>
         </div>
         <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
         <div style="position:relative; left:220px;top:-110px;">
@@ -437,8 +430,8 @@
         </div>
     </div>
 
-    <div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;border-style: solid;
-					border-width: 2px;">
+    <div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA; z-index:3;border-style: solid;
+				border-width: 2px;">
         <div style="background-color:#E4EACD;position:relative;height:75px;">
             <h2 id="nameProfileTE" style="position:relative; left:210px;top:20px;"></h2>
             <h3 style="position:relative; left:300px;top:-10px;color:gray;">	</h3>
@@ -453,30 +446,18 @@
             <p>Email Address: <input type="text" id="emailProfileE" style="width:300px;"></p><br>
         </div>
     </div>
-    <div id="changePass" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;">
+    <div id="changePass" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA; z-index:4;border-style: solid; border-width:2px;">
         <div style="background-color:#E4EACD;position:relative;height:75px;">
             <h2 style="position:relative; left:210px;top:20px;">Changing Password</h2>
             <button onclick="submitNewPass()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
             <button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
         </div>
-        <div style="position:relative; left:220px;top:110px;">
+        <div style="position:relative; left:220px;top:70px;">
             <p>Current Password: <input type="password" id="oldPassword"></p><br>
             <p>New Password: <input type="password" id="newPassword"></p><br>
             <p>Confirm Password: <input type="password" id="confirmnewPassword"></p><br>
         </div>
     </div>
-    </div>
-    <div id="expand" onclick="expand()">
-        Chat
-        <div id="notification"></div>
-    </div>
-    <div id="leftList">
-        <div id="notificationAll"></div>
-        <div id="notificationPart"></div>
-        <ul>
-            <li id="chatAll" onclick="displayChat('0')">Center & System</li>
-            <li id="chatPart" onclick="displayChat('1')">Center</li>
-        </ul>
     </div>
 
     <!-- START COPY FOR SIDEBAR JAVASCRIPT -->
@@ -505,6 +486,25 @@
                 }
             });
         });
+
+        function imgBlur(obj) {
+            var photoword = document.getElementById("photoword");
+            var Profilepic = document.getElementById("Profilepic");
+            photoword.style.display = "inline";
+            photoword.style.position = "absolute";
+            photoword.style.transform = "translate(2ex,2ex)";
+            photoword.style.zIndex = "2000";
+            Profilepic.style.filter = "blur(3px)";
+            Profilepic.style.display = "inline";
+        }
+
+        function imgOrg(obj) {
+            var photoword = document.getElementById("photoword");
+            var Profilepic = document.getElementById("Profilepic");
+            photoword.style.display = "none";
+            Profilepic.style.display = "inline";
+            Profilepic.style.filter = "blur(0px)";
+        }
     </script>
     <!-- END COPY FOR SIDEBAR JAVASCRIPT-->
 </body>

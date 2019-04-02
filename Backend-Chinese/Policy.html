@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿<!--
+  @file Policy.html
+  @author  MCU
+  @author  Kutztown University
+  @license
+-->
+<!DOCTYPE html>
 <!--#30B400#339933#99CC00#FFFFCC-->
 <html>
 	<head>
@@ -56,8 +62,7 @@
 						<p class="tip" id="time123"></p>
 						<img style="position:relative; cursor:pointer;left:140px;top:-25px;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
 						<p class="account" style="position:relative; top:-20px;">
-							<span>Name : <span id="displayProfilename"></span></span>
-							<span>UserID : <span id="displayProfileid"></span></span>
+							<span>Name : IT Admin<span id="displayProfilename"></span></span>
 							<span>Role : IT Admin<span id="displayProfileposition"></span></span>
 						</p>
 					</div>
@@ -111,7 +116,6 @@
 	<div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
 				<div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
 				<p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Backend/Policy.html'">&nbsp English<br></p>
-				
 				<p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" >&nbsp Chinese<br></p>
 
 				<p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;" onclick = "Logout()"></i>Logout</p>
@@ -143,16 +147,6 @@
 
 
 
-<div id="expand" onclick="expand()" >Chat
-	<div  id ="notification" style= "background:red;width:12px;height:20px;position:absolute;right:5%;top:0px;display:none;"></div>
-</div>
-
-<div id= "leftList">
-	<ul>
-		<li id= "chatAll" >Center & System</li>
-	</ul>
-</div>
-
 			<div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA;border-style: solid;
 					border-width: 2px; z-index:3;">
 			<div style="background-color:#E4EACD;position:relative;height:75px;">
@@ -167,7 +161,6 @@
 			<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
 			<div style="position:relative; left:220px;top:-110px;">
 				<p>Position: &nbsp IT Admin </p><br>
-				<p>User ID: &nbsp <span id = "idProfile"></span></p><br>
 				<p>Display Name: &nbsp <span id = "nameProfile"></span></p><br>
 				<p>Email Address: &nbsp <span id = "emailProfile"></p><br>
 			</div>
@@ -185,7 +178,6 @@
 			<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="editpic">
 			<div style="position:relative; left:220px;top:-110px;">
 				<p>Position: &nbsp IT Admin </span> </p><br>
-				<p >User ID: &nbsp <span id = "idProfileE"> </span>  </p><br>
 				<p>Display Name: <input type="text" id = "nameProfileE" style="width:200px;"></p><br>
 				<p>Email Address: <input type="text" id = "emailProfileE" style="width:300px;"></p><br>
 
