@@ -895,7 +895,7 @@ function getDetailedStepHTML(steps, stepNum){
             
             //Right side of detailed step
             detailHTML += '<div class="detailedStepRightContainer" id= "' + i + '">';
-            temp = i+1;
+            temp = j+1;
             detailHTML += "<div>Detail Step " + temp +": "+ steps[i]["detailedSteps"][j] +"</div>";
             detailHTML += '</div>';
 
