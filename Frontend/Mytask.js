@@ -226,11 +226,6 @@ function assign(){
   document.getElementById("library_requestCopy")
   var table = document.getElementById("assigningTask");
   var tr = table.getElementsByTagName("tr");
-  var table1 = document.getElementById("assigningCF");
-  var tr1 = table1.getElementsByTagName("tr");
-  var array = [];
-  var arr = [];
-  var length1  = tr1.length-1;
   var length = tr.length-1;
   for(var d =  1 , c = 0; c < length1; d++){
       if (document.getElementById("checkbox_CFname["+c+"]").checked == true){
@@ -435,8 +430,7 @@ function closeclose_form(){
 
 /**
  * @function display_Detail
- * @description in Library > Assign Task, task details are displayed in a pop
- *  up window
+ * @description show task description and steps
  * @param {*} num row number of task in displayed task list
  */
 function display_Detail(num){
@@ -686,7 +680,7 @@ function injectToDOM(){
       htmlInjection += "</div>";
       //Task name
       htmlInjection += "<div class='inputField'>";
-      htmlInjection += "<div>Step name: "+ steps[i].name +"</div>";
+      htmlInjection += "<div>Step Name: "+ steps[i].name +"</div>";
       htmlInjection += "</div>";
 
       //Task description

@@ -5,6 +5,25 @@
  * @license
  */
 
+
+
+//for task details
+/* It would be better to use JQuery to generate the HTML for the task steps dynamically rather than generating HTML code in raw strings */
+/* This refactoring would make it easier to edit in the future */
+var taskDetails=[];
+var categories=[];
+var steps=[];
+var goodPath = "";
+//var taskSearch = "0000000000000000001";
+var a;
+var b;
+//var goodPath = localStorage.getItem("taskPath");
+//var taskN = localStorage.getItem("taskN");
+var defImage = "https://i.imgur.com/d0H6zwB.png";
+//taskPath = goodPath;
+//var goodPath = window.path;
+
+
 var fbGet = firebase.database().ref('TaskInstruction/');
 var fbCopy = firebase.database().ref('uAccount/');
 var copy = document.getElementById("library_requestCopy");
@@ -51,19 +70,24 @@ fbGet.once("value")
             var row = assigningTask.insertRow(-1);
             c++;
             tr[c].style.display = "table-row";
+            
             var cellCategory = row.insertCell(-1);
             cellCategory.appendChild(document.createTextNode(childSnapshot1.key));
+            
             var cellName = row.insertCell(-1);
             cellName.appendChild(document.createTextNode(childSnapshot2.val()["Info"]["Title"]));
-             //Put the ID in a hidden cell in the table to access later
-             var cellID = row.insertCell(-1);
-             cellID.setAttribute("id","id_holder["+num+"]");
-             cellID.appendChild(document.createTextNode(childSnapshot2.val()["TaskID"]));
-             cellID.setAttribute("hidden", true);
+            
+            //Put the ID in a hidden cell in the table to access later
+            var cellID = row.insertCell(-1);
+            cellID.setAttribute("id","id_holder["+num+"]");
+            cellID.appendChild(document.createTextNode(childSnapshot2.val()["TaskID"]));
+            cellID.setAttribute("hidden", true);
             button.innerHTML="Detail";
+            
             var cellButton= row.insertCell(-1);
-            var cellCheckbox = row.insertCell(-1);
             cellButton.appendChild(button);
+            
+            var cellCheckbox = row.insertCell(-1);
             cellCheckbox.appendChild(checkBox);
                     })
                 })
@@ -178,267 +202,6 @@ function toggleList(source) {
         }
     }
 }
-
-/**
- * @function assign
- * @description selected task is assigned to selected assignees
- */
-function assign(){
-    document.getElementById("library_requestCopy")
-    var table = document.getElementById("assigningTask");
-    var tr = table.getElementsByTagName("tr");
-    var table1 = document.getElementById("assigningCF");
-    var tr1 = table1.getElementsByTagName("tr");
-    var array = [];
-    var arr = [];
-    var length1  = tr1.length-1;
-    var length = tr.length-1;
-    for(var d =  1 , c = 0; c < length1; d++){
-        if (document.getElementById("checkbox_CFname["+c+"]").checked == true){
-            console.log(table1.rows[d].cells[2].innerHTML);
-            if(table1.rows[d].cells[0].innerHTML == "CNA"){
-                for(var f = 1, i = 0; i < length; f++){
-                  //  console.log("CNA/"+table1.rows[d].cells[2].innerHTML+"/Task"+"/"+table.rows[f].cells[0].innerHTML+"/"+table.rows[f].cells[1].innerHTML);
-                    if(document.getElementById("checkbox_name["+i+"]").checked == true){
-                        firebase.database().ref("CNA/"+table1.rows[d].cells[2].innerHTML+"/Task"+"/"+table.rows[f].cells[0].innerHTML+"/"+table.rows[f].cells[1].innerHTML).set("TaskInstruction/"+table.rows[f].cells[0].innerHTML+"/"+table.rows[f].cells[1].innerHTML);
-                        }
-                      i++;
-                    }
-            }
-            if(table1.rows[d].cells[0].innerHTML == "Patient"){
-                for(var e = 1, g = 0; g < length; e++){
-                    if(document.getElementById("checkbox_name["+g+"]").checked == true){
-                    console.log("Patient/"+table1.rows[d].cells[2].innerHTML+"/Task"+"/"+table.rows[e].cells[0].innerHTML+"/"+table.rows[e].cells[1].innerHTML);
-                    firebase.database().ref("Patient/"+table1.rows[d].cells[2].innerHTML+"/Task"+"/"+table.rows[e].cells[0].innerHTML+"/"+table.rows[e].cells[1].innerHTML).set("TaskInstruction/"+table.rows[e].cells[0].innerHTML+"/"+table.rows[e].cells[1].innerHTML);
-                    }
-                    g++;
-                }
-            }
-
-  }
-  c++;
-}
-var r = alert("Task have been copied!");
-         if(true)
-         {
-           window.location.reload();
-         }
-
-}
-
-
-var fbCNA = firebase.database().ref("CNA/");
-var n = 0;
-fbCNA.once("value")
-.then(function(snapshot){
-    var array = [];
-    var index = 0;
-    var i = 0;
-    var a =[];
-
-    snapshot.forEach(function(childSnapshot1){
-        var childKey = childSnapshot1.key;
-        var row = assigningCF.insertRow(-1);
-        var checkBox = document.createElement("input");
-        var table = document.getElementById("assigningCF");
-        var tr = table.getElementsByTagName("tr");
-        checkBox.type = "checkbox";
-        checkBox.setAttribute("id", "checkbox_CFname["+n+"]");
-        n = n+1;
-        tr[0].style.display = "table-row";
-        tr[n].style.display = "table-row";
-        var cellID = row.insertCell(0);
-        cellID.appendChild(document.createTextNode(childSnapshot1.key));
-        childSnapshot1.forEach(function(childSnapshot2){
-            childSnapshot2.forEach(function(childSnapshot3){
-                var childKey =childSnapshot3.key;
-                var childData = childSnapshot3.val();
-
-                if(childKey == "Name"){
-                    var cellName = row.insertCell(0);
-                    cellName.appendChild(document.createTextNode(childData));
-                }
-                if(childKey == "Position"){
-                    var cellPosition = row.insertCell(0);
-                    cellPosition.appendChild(document.createTextNode(childData));
-                    var cellCheckbox = row.insertCell(-1);
-                    cellCheckbox.appendChild(checkBox);
-
-                }
-            })
-        })
-    })
-})
-var fbPAT = firebase.database().ref("Patient/");
-fbPAT.once("value")
-.then(function(snapshot){
-    var array = [];
-    var index = 0;
-    var i = 0;
-    var a = [];
-    snapshot.forEach(function(childSnapshot1){
-        var childKey = childSnapshot1.key;
-        var row = assigningCF.insertRow(-1);
-        var checkBox = document.createElement("input");
-        var table = document.getElementById("assigningCF");
-        var tr = table.getElementsByTagName("tr");
-        checkBox.type = "checkbox";
-        checkBox.setAttribute("id", "checkbox_CFname["+n+"]");
-        //checkBox.setAttribute("unchecked", false);
-        n = n+1;
-        tr[0].style.display = "table-row";
-
-        tr[n].style.display = "table-row";
-        var cellID = row.insertCell(0);
-        cellID.appendChild(document.createTextNode(childSnapshot1.key));
-        childSnapshot1.forEach(function(childSnapshot2){
-            childSnapshot2.forEach(function(childSnapshot3){
-                var childKey =childSnapshot3.key;
-                var childData = childSnapshot3.val();
-                if(childKey == "Name"){
-                    var cellName = row.insertCell(0);
-                    cellName.appendChild(document.createTextNode(childData));
-                }
-                if(childKey == "Position"){
-                    var cellPosition = row.insertCell(0);
-                    cellPosition.appendChild(document.createTextNode(childData));
-                    var cellCheckbox = row.insertCell(-1);
-                    cellCheckbox.appendChild(checkBox);
-                }
-            })
-        })
-    })
-})
-
-var fbList_CNA = firebase.database().ref("CNA/");
-var fbList_PAT = firebase.database().ref("Patient/");
-console.log(fbList_CNA);
-console.log(fbList_PAT);
-
-display_List(fbList_CNA);
-display_List(fbList_PAT);
-var checkBox_index = 0;
-var x = 0;
-function display_List(fbList){
-    fbList.once("value")
-    .then(function(snapshot){
-        var array = [];
-        var index = 0;
-        var a = [];
-        var i = 0;
-
-        snapshot.forEach(function(childSnapshot1){
-            var CF_Name;
-                childSnapshot1.forEach(function(childSnapshot2){
-                    if(childSnapshot2.key == "Portfolio"){
-                        childSnapshot2.forEach(function(childSnapshot3){
-                        if( childSnapshot3.key == "Name"){
-                            CF_Name = childSnapshot3.val();
-                            a.push(CF_Name);
-                           var x = document.getElementById("filterNameList");
-                           var opt = document.createElement("option");
-                           opt.text= a[i];
-                            x.add(opt);
-                            i = i +1;
-                        }
-                    })
-                }
-                    if(childSnapshot2.key == "Task"){
-                        childSnapshot2.forEach(function(childSnapshot3){
-
-                            childSnapshot3.forEach(function(childSnapshot4){
-                                var childKey = childSnapshot4.key;
-                                var path = childSnapshot4.val();
-                                var fbExist = firebase.database().ref(path);
-
-                                fbExist.on("value",function(ex){
-                                    if(ex.exists()){
-
-                                        var checkBox = document.createElement("input");
-                                        checkBox.type = "checkbox";
-                                        checkBox.setAttribute("id", "checkbox_id["+checkBox_index+"]");
-                                        checkBox_index++;
-                                        var table1 = document.getElementById("assigningList");
-                                        var tr = table1.getElementsByTagName("tr");
-
-                                        checkBox.setAttribute("checked", true);
-                                        var row = assigningList.insertRow(-1);
-
-                                        var cellPosition = row.insertCell(0);
-                                        var cellID = row.insertCell(1);
-                                        var CFname = row.insertCell(2);
-                                        var cellCategory = row.insertCell(3);
-                                        var cellName = row.insertCell(4);
-                                        var cellCheckbox = row.insertCell(-1);
-
-                                        if(fbList.key == "CNA"){
-
-                                            cellPosition.appendChild(document.createTextNode("CNA"));
-                                            x++;
-                                            tr[x].style.display = "table-row";
-                                        }
-                                        else{
-                                            cellPosition.appendChild(document.createTextNode("Patient"));
-                                            x++;
-                                            tr[x].style.display = "table-row";
-                                        }
-                                        cellID.appendChild(document.createTextNode(childSnapshot1.key));
-                                        CFname.appendChild(document.createTextNode(CF_Name));
-                                        cellCategory.appendChild(document.createTextNode(childSnapshot3.key));
-                                        cellName.appendChild(document.createTextNode(childSnapshot4.key));
-                                        cellCheckbox.appendChild(checkBox);
-                                    }
-                                    else{
-                                        console.log("it be removed");
-                                        //fbExist.remove();
-                                        var fbList_CNA = firebase.database().ref("CNA/");
-                                        var fbList_PAT = firebase.database().ref("Patient/");
-                                        deleteNotExist(fbList_CNA,path);
-                                        deleteNotExist(fbList_PAT,path);
-                                    }
-                                })
-                            })
-                        })
-                    }
-                })
-            })
-        })
-}
-
-/**
- * @function deleteNotExist
- * @description
- * @param {*} fbList 
- * @param {*} path 
- */
-function deleteNotExist(fbList,path){
-  fbList.once("value")
-  .then(function(snapshot){
-  var array = [];
-  var index = 0;
-  var a = [];
-  var i = 0;
-  napshot.forEach(function(childSnapshot1){
-    var CF_Name;
-    dhildSnapshot1.forEach(function(childSnapshot2){
-      if(childSnapshot2.key == "Task"){
-        childSnapshot2.forEach(function(childSnapshot3){
-          childSnapshot3.forEach(function(childSnapshot4){
-            var childKey = childSnapshot4.key;
-            var childData = childSnapshot4.val();
-            if(childData == path){
-              fbList.child(childSnapshot1.key+"/"+"Task/"+childSnapshot3.key+"/"+childSnapshot4.key).remove();
-            }
-          });
-        });
-      }
-    });
-  });
-});
-}
-
-
-
 
 
 
@@ -822,38 +585,324 @@ function closeclose_form(){
 
 /**
  * @function display_Detail
- * @description
+ * @description show task description and steps
  * @param {*} num 
  */
 function display_Detail(num){
-  document.getElementById('form1').style.display ='block';
+  taskDetails=[];
+  categories=[];
+  steps=[];
+  goodPath = "";
+  
   var table = document.getElementById("assigningTask");
   var tr = table.getElementsByTagName("tr");
-  var p = document.createElement('p');
-  var Ukey = tr[num+1].cells[0].innerText;
-  var Ukey1 = tr[num+1].cells[1].innerText;
-  var fbGet= firebase.database().ref('TaskInstruction/'+Ukey+"/"+Ukey1);
-  //document.getElementById("TaskName").innerHTML = Ukey1;
-  console.log(Ukey1);
-  var array = [];
-  var i = 0;
-  fbGet.on('value', function(snapshot){
-      document.getElementById("taskname").innerHTML = Ukey1;
-      document.getElementById("category").innerHTML = Ukey;
+  var cat = tr[num+1].cells[0].innerText;
+  console.log(cat);
+  var taskN = tr[num+1].cells[1].innerText;
+  console.log(taskN);
+  var taskID = tr[num].cells[2].innerText;
+  console.log(taskID);
+  var taskPath = "TaskInstruction/" + cat + "/" + taskID;
+  //alert (taskPath);
+  sessionStorage.setItem("taskPath", taskPath);
+  localStorage.setItem("taskPath", taskPath);
+  localStorage.setItem("taskN", taskN);
 
-      snapshot.forEach(function(snapshot1){
-          console.log(snapshot1.key);
-          if(snapshot1.key == "Info"){
-              var video = snapshot1.child('videoURL').val();
-              document.getElementById('video').innerHTML= video;
-              var outline = snapshot1.child('OutlineIOS').val();
-              document.getElementById('outline').innerHTML= outline;
-              var note = snapshot1.child('NoteIOS').val();
-              document.getElementById('note').innerHTML= note;
-              i++;
-          }
-      })
+  goodPath = taskPath;
+
+  //Start the process of loading the task
+  if (goodPath != null) {
+    getTaskFromPath(goodPath, getTaskFromPathCallback); 
+  }
+  document.getElementById('form1').style.display ='block';
+}
+
+/**
+ * @funciton getTaskFromPath
+ * @description Returns an object with the data in a task instruction, given a string containing the path to the task in the database.
+ * @param {*} taskPath The path to the task in the database.
+ * @param {*} callback The function to run once the task is retrieved.
+ */
+function getTaskFromPath(taskPath, callback){
+  var listOfTasks = "";
+  var fbGet= firebase.database().ref(taskPath)   //Get all the task categories
+  fbGet.once('value', function(snapshot){
+      var taskDef = snapshot.val();
+      if (taskDef != null){
+          callback(taskDef);
+      } else {
+          //TODO: Failure routine
+      }
+      return;
   });
+}
+
+/**
+ * @function getTaskFromPathCallback
+ * @param {*} task 
+ */
+function getTaskFromPathCallback(task){
+  getCategories(categories, task, populateArray);
+  //populateArray(task);
+  console.log(categories);
+  injectToDOM();
+}
+
+/**
+ * @function getCategories
+ * @description Finds all the categories of tasks in the database, and places the options in an array.
+ * @param categories - Array to be filled
+ * @param task - Task (to put into the callback function, not strictly necessary, but makes the flow of data more apparent)
+ * @param callback Function to perform after finding all categories
+ */
+function getCategories(categories, task, callback){
+  var count = 0;
+  var fbGet= firebase.database().ref("TaskInstruction")   //Get all the task categories
+  fbGet.once('value', function(snapshot){
+      snapshot.forEach(function(catSnap){
+          if (catSnap.numChildren()){
+              categories[count] = catSnap.key;
+              count++;
+          }
+      });
+      callback(task);
+      return;
+  });
+}
+
+/**
+ * @function populateArray
+ * @description Take data from a task snapshot and put it into an array. This is done so that changes to the database
+ *              don't cause the need for major change in the task editor code.
+ * @param {*} task Snapshot of the task to put into the editor.
+ */
+function populateArray(task){
+  var counter = 1;
+  //var steps=[];
+  var taskData = {
+      category: task["Info"]["Category"],
+      outline: task["Info"]["OutlineIOS"],
+      videoURL: task["Info"]["videoURL"],
+      note: task["Info"]["NoteIOS"],
+      name: task["Info"]["Title"],
+      owner: task["Info"]["Owner"],
+      taskID: task["TaskID"],
+      visible: task["Info"]["Visible"],
+      published: task["Info"]["Published"],
+      startCategory: task["Info"]["Category"],
+      newTask: false
+  }
+  if (taskData["videoURL"] == "null") {
+      taskData["videoURL"] = "";
+  }
+  taskDetails = taskData;
+
+  //If visiblity and published aren't set, set them now
+  if (taskDetails["published"] == null){
+      taskDetails["published"] = false;
+  }
+  if (taskDetails["visible"] == null){
+      taskDetails["visible"] = false;
+  }
+
+  console.log(taskData);
+  while (true){   // Loop through the steps
+      var stepF = "Step"+counter;
+      if ( task["Step"+counter] != null ){
+          var detailedSteps = [];
+          var detailedCounter;
+          detailedCounter = 1;
+
+          //Get information about the detailed steps
+          while (true){   // Loop through the detailed steps
+              if (task["Step"+counter]["DetailedStep"+detailedCounter] != null){
+                  detailedSteps[detailedCounter-1] = task["Step"+counter]["DetailedStep"+detailedCounter];
+              } else {
+                  break;
+              }
+              detailedCounter++;
+          }
+          var detailedStepsJSON = JSON.stringify(detailedSteps);
+
+          var stepsData = {
+              description: task[stepF]["MDescriptionIOS"],
+              name: task[stepF]["MtitleIOS"],
+              number: task[stepF]["Step"],
+              image: defImage,
+              imageChanged: false,
+              detailedSteps: detailedStepsJSON
+          }
+          console.log(stepsData);
+          steps[counter-1] = stepsData;
+          steps[counter-1]['detailedSteps'] = detailedSteps;   
+      } else {
+          break;
+      }
+      counter++;
+  }
+  getStepImage(task, steps, 0);
+}
+
+/**
+ * @function getStepImage
+ * @description Recursively iterates through each step and gets its image. 
+ * @param {*} task Details about the task original task.
+ * @param {*} steps Task step descriptions
+ * @param {*} stepNum The step num whose image is to be received from the database.  This controls the recursion's termination as well.
+ */
+function getStepImage(task, steps, stepNum){
+    
+  if (steps[stepNum] == undefined){
+      console.log(steps);
+      console.log("returning at stepNum" + stepNum);
+      injectToDOM();
+      return;
+  }
+
+  var imageLink = task["Step"+(stepNum+1)]["ImageURL"];
+
+  if (imageLink == defImage){
+      //console.log("defImage at step " + stepNum);
+      getStepImage(task, steps, stepNum+1);
+  } else if (imageLink == null){
+      steps["image"] = defImage;
+      getStepImage(task, steps, stepNum+1);
+  }else if (imageLink.substring(0,6)!="images"){
+      //alert("stepNum" + stepNum + " " + imageLink + " " + imageLink.substring(0,6));
+      steps[stepNum]["image"] = imageLink;
+      getStepImage(task, steps, stepNum+1);
+  } else if (imageLink != null){
+      //alert("No image @ " + stepNum);
+      var storageRef = firebase.storage().ref();
+      var imageRef = storageRef.child(imageLink);
+      //steps[counter-1]["image"] = 
+
+          imageRef.getDownloadURL().then(function(snapshot){
+              console.log(snapshot);
+              imageLink = snapshot;
+              steps[stepNum]["image"] = imageLink;
+              console.log(steps);
+              //return imageLink;
+              getStepImage(task, steps, stepNum+1);
+          }).catch(function(err){
+              console.log(err);
+              getStepImage(task,steps,stepNum+1);
+          });
+      
+      //promises.push(getImageURL);
+  } else {    //image link is null
+      steps["image"] = defImage;
+      getStepImage(task, steps, stepNum+1);
+  }
+
+return;
+}
+
+/**
+* @function injectToDOM
+* @description insert the task editor GUI/HTML into the DOM, display its current state to the page.
+*/
+function injectToDOM(){
+  var htmlInjection;
+  //var $AddToDom = $('<div>Task Name: </div>');
+  htmlInjection = "";
+  //Task name
+  htmlInjection += '<div style="text-align:left;"> Task Name: '+taskDetails["name"]+'</div>';
+  
+  //Task Category
+  htmlInjection += '<div style="text-align:left;"> Category: '+taskDetails["category"]+'</div>';
+
+  //Task Video
+  htmlInjection += '<div style="text-align:left;"> Video URL: '+taskDetails["videoURL"]+'</div>';
+
+  //Task outline
+  htmlInjection += '<div style="text-align:left;"> Task Outline: '+taskDetails["outline"]+'</div>';
+  
+  //Visibility
+  htmlInjection += '<div style="text-align:left;"> Visible: '+taskDetails["visible"]+'</div>';
+
+  //Publication Status
+  htmlInjection += '<div style="text-align:left;"> Publication Status: '+taskDetails["published"]+'</div>';  
+
+  $("#taskHeader").html(htmlInjection);
+  htmlInjection = "";
+  // Write the HTML for each individual task step
+  for (var i = 0; i < steps.length; i++){
+      //Task steps
+      htmlInjection += "<div  class = ''>";
+
+      htmlInjection += '<br><div style="flex:3; align-content:left;">' + 'Task Step ' + (parseInt(i)+1) + '</div>';
+      //htmlInjection += '<div style="flex:15;"></div>';
+      htmlInjection += '</div>';
+      htmlInjection += "</div>";
+      //Task name
+      htmlInjection += "<div class='inputField'>";
+      htmlInjection += "<div>Step Name: "+ steps[i].name +"</div>";
+      htmlInjection += "</div>";
+
+      //Task description
+      htmlInjection += "<div>Step Description: "+ steps[i].description +"</div>";
+      htmlInjection += '<div class = "stepImageContainer">';
+      //Add in image upload button and image preview
+      
+      if(steps[i]["image"] != "https://i.imgur.com/d0H6zwB.png") {
+        htmlInjection += '<img class="picPreview" name="stepImage' + i + '" src="' + steps[i]["image"] + '"/>';
+  }
+      htmlInjection += "</div>"   //Close stepImageContainer Div
+      htmlInjection += "</div>";  //Close desDevi
+      htmlInjection += "</div>";  //Close inputFieldLeft div
+
+      //insert detailed steps
+      htmlInjection += getDetailedStepHTML(steps, i);
+
+      htmlInjection += '</div>';   // close taskStep div
+  }   //End loop
+
+  htmlInjection += '<br><div style="text-align:left;"><button type="button" class="btn cancel" onclick="closeclose_form()">Close</button></div>';
+  
+  $("#taskFooter").html(htmlInjection); //Insert the HTML for the tasks into the DOM
+}   // end injectToDom
+
+$('.sortable').sortable({
+  start: function(event, ui){
+      a = ui.item.index();
+  },
+  stop: function(event, ui){
+      b = ui.item.index();
+      //alert("was: " + a + " is now: " + b);
+      var temp;
+      temp = steps[a];
+      steps[a] = steps[b];
+      steps[b] = temp;
+      console.log(steps);
+      injectToDOM();
+      $(".nestedSortable").sortable( {axis:"y"});
+  }
+});
+
+/**
+ * @function getDetailedStepHTML
+ * @description return the HTML to render detailed steps to teh DOM
+ * @param {*} steps 
+ * @param {*} stepNum 
+ */
+function getDetailedStepHTML(steps, stepNum){
+    var i = parseInt(stepNum);
+    var detailHTML = "";
+    detailHTML += '<div class = "detailedStepContainer">';
+    for (var j = 0; j < steps[i]["detailedSteps"].length; j++){ //Loop through the detailed steps, insert them into the page
+        detailHTML += '<div class = "detailedStep">';
+            
+            //Right side of detailed step
+            detailHTML += '<div class="detailedStepRightContainer" id= "' + i + '">';
+            temp = i+1;
+            detailHTML += "<div>Detail Step " + temp +": "+ steps[i]["detailedSteps"][j] +"</div>";
+            detailHTML += '</div>';
+
+            detailHTML += '</div>'
+    }   
+    detailHTML += '</div>'  // End detailed steps
+    return detailHTML;
 }
 
 /**
