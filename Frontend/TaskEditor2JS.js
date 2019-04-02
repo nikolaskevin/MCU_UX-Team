@@ -12,13 +12,66 @@ var taskN = localStorage.getItem("taskN");
 var defImage = "https://i.imgur.com/d0H6zwB.png";
 taskPath = goodPath;
 //var goodPath = window.path;
-if (goodPath  == null){
-    alert("No valid task chosen from library");
-    location.href ="/../Frontend/05Library2.html";
-}
 
 //Start the process of loading the task
-getTaskFromPath(goodPath, getTaskPathCallback); 
+if (goodPath == null || goodPath == "newTask"){
+    alert("Creating new task!");
+    createNewTask();
+} else {
+    getTaskFromPath(goodPath, getTaskPathCallback); 
+}
+
+function createNewTask(){
+    var postRef = firebase.database().ref('TaskInstruction/LastID');
+
+    postRef.transaction(function(data) {
+      //console.log("Transaction");
+      
+      if (data != null){
+          console.log("LAST TID: "+data)
+          return (data+1); //If everything is succesful, reinsert the data to the database
+      } else {
+          return 0; 
+      }
+    }, function(error, commited, snapshot){
+        //alert(snapshot.val());
+        var TID = snapshot.val();
+        var userid = localStorage.getItem("userID");
+        alert(userid);
+        if (commited){
+            alert(TID);
+        
+            var taskData = {
+                category: "Basic",
+                outline: "Type an outline here",
+                videoURL: "",
+                note: "task note",
+                name: "New Task",
+                owner: userid,
+                taskID: TID,
+                visible: false,
+                published: false,
+                startCategory: "Basic",
+                newTask: true
+            };
+            taskDetails = taskData;
+            console.log(taskData);
+            var stepsData = {
+                description: "step description",
+                name: "step name",
+                number: 1,
+                image: defImage,
+                imageChanged: false,
+            }
+            steps[0] = stepsData;
+            steps[0]["detailedSteps"] = [];
+            steps[0]["detailedSteps"][0] = "Detailed Step";
+            console.log(steps);
+        }
+        getCategories(categories,task="",function(){injectToDOM();})
+    }, true);
+}
+
 /**
  * @function getTaskPathCallback
  * @param {*} task 
@@ -49,7 +102,8 @@ function populateArray(task){
         taskID: task["TaskID"],
         visible: task["Info"]["Visible"],
         published: task["Info"]["Published"],
-        startCategory: task["Info"]["Category"]
+        startCategory: task["Info"]["Category"],
+        newTask: false
     }
     if (taskData["videoURL"] == "null") {
         taskData["videoURL"] = "";
@@ -707,7 +761,7 @@ function saveTask(steps, goodPath, taskData){
  
     insertToDatabase["Info"]["Published"] = taskDetails["published"];
     insertToDatabase["Info"]["Visible"] = taskDetails["visible"];
-    
+    insertToDatabase["Info"]["Owner"] = taskDetails["owner"];
     //Generate the structure of the individual steps to insert into the database
     const promises = [];
     for (var i = 0; i < steps.length; i++){
@@ -767,16 +821,21 @@ function saveTask(steps, goodPath, taskData){
         //updates[goodPath] = insertToDatabase;
         updates[taskDetails["taskID"]] = insertToDatabase;
         console.log(updates);
-        if (firebase.database().ref("TaskInstruction/"+taskDetails["category"]+"/"+taskDetails["taskID"]).set(insertToDatabase)){
+    
+        if (firebase.database().ref("TaskInstruction/"+taskDetails["category"]+"/"+taskDetails["taskID"]).update(insertToDatabase)){   //Actually uploads the task to the database
+            localStorage.setItem("taskPath", "TaskInstruction/"+taskDetails["category"]+"/"+taskDetails["taskID"]);
+            if (taskDetails["newTask"]){
+                addTaskToLibrary();
+            }
             if (taskDetails["category"] != taskDetails["startCategory"]){
                 console.log("TaskInstruction/" + taskDetails["startCategory"] + "/" + taskDetails["taskID"]);
+            
+                //If the category changed, delete the old database entry.
                 firebase.database().ref().child("TaskInstruction/" + taskDetails["startCategory"] + "/" + taskDetails["taskID"]).remove().then(function(error){
                     console.log("deleted");
                     alert("Save succesful");
-                    //Disable redirection warning
-                    window.onbeforeunload = function() {
-                        return;
-                     };
+                    //Put the task into the library
+                    
                 });
             } else {
                 alert("Save succesful");
@@ -784,7 +843,7 @@ function saveTask(steps, goodPath, taskData){
                 window.onbeforeunload = function() {
                     return;
                 };
-                }
+            }
 
         } else {
             alert("Task failed to save");
@@ -795,8 +854,51 @@ function saveTask(steps, goodPath, taskData){
         }
 
     });
+}
 
+function addTaskToLibrary(){
     
+    //Put the task into tasklist
+    console.log("checkpoint");
+    //Task is duplicated at this point.  Now it needs to be added to the user's task list.
+    //Put the task into the user's task list
+    var userID = taskDetails["owner"];
+    var TID = taskDetails["taskID"];
+    console.log(userID);
+    var fbGet= firebase.database().ref("uAccount/"+userID);
+    console.log(fbGet);
+    fbGet.once("value",function(snapshot){
+        console.log(snapshot.val());
+        var uAccount = snapshot.val();
+
+        if (uAccount["MyTaskList"] == null){  //myTaskList doesn't yet exist
+            uAccount["MyTaskList"] = {};
+            uAccount["MyTaskList"]["MyListTID1"] = TID;
+            uAccount["MyTaskIndex"]={};
+            uAccount["MyTaskIndex"]["Number"]=1; 
+            console.log(uAccount);
+
+            //Insert task to my task list.
+            firebase.database().ref('uAccount/'+userID).update(uAccount);
+
+
+        } else {  //myTaskList already exists
+            console.log(Object.keys(uAccount["MyTaskList"]).length);
+            var num = uAccount["MyTaskIndex"]["Number"] + 1;
+            console.log("NUM"+num); 
+            uAccount["MyTaskIndex"]["Number"] = num;
+            uAccount["MyTaskList"]["MyListTID" + num] = TID;
+            console.log(uAccount);
+            firebase.database().ref('uAccount/'+userID).update(uAccount);
+            
+        } 
+    }).then(function(){
+        //Disable redirection warning
+        taskDetails["newTask"] = false;
+        window.onbeforeunload = function() {
+            return;
+        };
+    });
 }
 
 /**
