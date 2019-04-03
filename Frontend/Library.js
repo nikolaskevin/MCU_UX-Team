@@ -39,6 +39,11 @@ fbGet.once("value")
     var rowIndex = 1;
     var c =0;
 
+/**
+* @description grabs the information from firebase under the "Task Instruction" node and outputs 
+* it into the table in the Library by rows
+*/
+	
     snapshot.forEach(function(childSnapshot1){
         var childKey = childSnapshot1.key;
         if (childKey == "LastID" || childKey == "on"){  
