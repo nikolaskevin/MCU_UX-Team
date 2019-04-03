@@ -581,6 +581,8 @@ function closeclose_form(){
     console.log("Close");
     var Table = document.getElementById("data2");
     Table.innerHTML = ""
+    var x = document.getElementById("taskFooter");
+			x.style.display = "none";
 }
 
 /**
@@ -600,7 +602,7 @@ function display_Detail(num){
   console.log(cat);
   var taskN = tr[num+1].cells[1].innerText;
   console.log(taskN);
-  var taskID = tr[num].cells[2].innerText;
+  var taskID = tr[num+1].cells[2].innerText;
   console.log(taskID);
   var taskPath = "TaskInstruction/" + cat + "/" + taskID;
   //alert (taskPath);
@@ -806,6 +808,9 @@ function injectToDOM(){
   var htmlInjection;
   //var $AddToDom = $('<div>Task Name: </div>');
   htmlInjection = "";
+
+  htmlInjection += '<br><div style="text-align:left;"><button type="button" onclick="closeclose_form()">Close Task</button></div><br>';
+  
   //Task name
   htmlInjection += '<div style="text-align:left;"> Task Name: '+taskDetails["name"]+'</div>';
   
@@ -818,12 +823,7 @@ function injectToDOM(){
   //Task outline
   htmlInjection += '<div style="text-align:left;"> Task Outline: '+taskDetails["outline"]+'</div>';
   
-  //Visibility
-  htmlInjection += '<div style="text-align:left;"> Visible: '+taskDetails["visible"]+'</div>';
-
-  //Publication Status
-  htmlInjection += '<div style="text-align:left;"> Publication Status: '+taskDetails["published"]+'</div>';  
-
+  htmlInjection += '<div style="text-align:left;"> Click <button onClick = "showDetails()" type="button">HERE</button> for more details.</div>';
   $("#taskHeader").html(htmlInjection);
   htmlInjection = "";
   // Write the HTML for each individual task step
@@ -857,8 +857,6 @@ function injectToDOM(){
 
       htmlInjection += '</div>';   // close taskStep div
   }   //End loop
-
-  htmlInjection += '<br><div style="text-align:left;"><button type="button" class="btn cancel" onclick="closeclose_form()">Close</button></div>';
   
   $("#taskFooter").html(htmlInjection); //Insert the HTML for the tasks into the DOM
 }   // end injectToDom
@@ -879,6 +877,15 @@ $('.sortable').sortable({
       $(".nestedSortable").sortable( {axis:"y"});
   }
 });
+
+/**
+ * @function showDetails
+ * @description show task steps
+ */
+function showDetails() {
+  var x = document.getElementById("taskFooter");
+			x.style.display = "block";
+}
 
 /**
  * @function getDetailedStepHTML

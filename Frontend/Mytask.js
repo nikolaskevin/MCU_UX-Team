@@ -426,6 +426,8 @@ function closeclose_form(){
     console.log("Close");
     var Table = document.getElementById("data2");
     Table.innerHTML = ""
+    var x = document.getElementById("taskFooter");
+			x.style.display = "none";
 }
 
 /**
@@ -649,6 +651,9 @@ function injectToDOM(){
   var htmlInjection;
   //var $AddToDom = $('<div>Task Name: </div>');
   htmlInjection = "";
+
+  htmlInjection += '<br><div style="text-align:left;"><button type="button" onclick="closeclose_form()">Close Task</button></div><br>';
+
   //Task name
   htmlInjection += '<div style="text-align:left;"> Task Name: '+taskDetails["name"]+'</div>';
   
@@ -662,10 +667,18 @@ function injectToDOM(){
   htmlInjection += '<div style="text-align:left;"> Task Outline: '+taskDetails["outline"]+'</div>';
   
   //Visibility
-  htmlInjection += '<div style="text-align:left;"> Visible: '+taskDetails["visible"]+'</div>';
+  var v = "";
+  if(taskDetails["visible"] == true) {v = "Yes";}
+  else {v = "No";}
+  htmlInjection += '<div style="text-align:left;"> Visible: '+v+'</div>'; 
 
   //Publication Status
-  htmlInjection += '<div style="text-align:left;"> Publication Status: '+taskDetails["published"]+'</div>';  
+  var p = "";
+  if(taskDetails["published"] == true) {p = "Published";}
+  else {p = "Draft";}
+  htmlInjection += '<div style="text-align:left;"> Publication Status: '+p+'</div>';  
+
+  htmlInjection += '<div style="text-align:left;"> Click <button onClick = "showDetails()" type="button">HERE</button> for more details.</div>';
 
   $("#taskHeader").html(htmlInjection);
   htmlInjection = "";
@@ -701,7 +714,6 @@ function injectToDOM(){
       htmlInjection += '</div>';   // close taskStep div
   }   //End loop
 
-  htmlInjection += '<br><div style="text-align:left;"><button type="button" class="btn cancel" onclick="closeclose_form()">Close</button></div>';
   
   $("#taskFooter").html(htmlInjection); //Insert the HTML for the tasks into the DOM
 }   // end injectToDom
@@ -722,6 +734,15 @@ $('.sortable').sortable({
       $(".nestedSortable").sortable( {axis:"y"});
   }
 });
+
+/**
+ * @function showDetails
+ * @description show task steps
+ */
+function showDetails() {
+  var x = document.getElementById("taskFooter");
+			x.style.display = "block";
+}
 
 /**
  * @function getDetailedStepHTML
