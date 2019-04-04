@@ -1092,6 +1092,8 @@ function copyTask(checked, index, count){
         newTask["Info"]["Owner"] = $("#displayProfileid").html();
         var insertToDB = {};
         insertToDB["TaskInstruction/"+ newTask["Info"]["Category"] + "/" + parseInt(TID)] = newTask;
+        insertToDB["TaskInstruction/"+ newTask["Info"]["Category"] + "/" + parseInt(TID)]["Info"]["Published"] = false;
+        insertToDB["TaskInstruction/"+ newTask["Info"]["Category"] + "/" + parseInt(TID)]["Info"]["Visible"] = false;
         console.log(insertToDB);
         if (firebase.database().ref().update(insertToDB)){
           console.log("checkpoint");
