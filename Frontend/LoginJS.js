@@ -71,11 +71,11 @@ function authenticateLogin() {
       console.log(firebaseUser);
 
       if (firebaseUser.email == "ltctmsapp2018@gmail.com") {
-        alert('You are logged in as Admin!');
+        
         window.location.href = "/../Backend/Policy.html";
       }
       if (firebaseUser.email != "ltctmsapp2018@gmail.com") {
-        alert('You are logged in!');
+        
         window.location.href = "/../Frontend/01Aboutus2.html";
       } 
       else {
