@@ -290,11 +290,16 @@
     <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript">
+        /*
+        This is the javascript required for the sidebar to work.
+        */
         $(document).ready(function () {
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"
             });
-
+            /*
+            This is the javascript for the sidebar to change.
+            */
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
@@ -306,7 +311,14 @@
                 }
             });
         });
-
+        /*************************************************************************/
+        /* */
+        /* Function name: imgBlur */
+        /* Description: Blur the image when the mouse is over the icon image. */
+        /* Parameters: obj - the image  */
+        /* Return Value: none */
+        /* */
+        /*************************************************************************/
         function imgBlur(obj) {
             var photoword = document.getElementById("photoword");
             var Profilepic = document.getElementById("Profilepic");
@@ -319,6 +331,14 @@
             Profilepic.style.display = "inline";
         }
 
+        /*************************************************************************/
+        /* */
+        /* Function name: imgOrg */
+        /* Description: Fix the image post mouse over. */
+        /* Parameters: obj - the image  */
+        /* Return Value: none */
+        /* */
+        /*************************************************************************/
         function imgOrg(obj) {
             var photoword = document.getElementById("photoword");
             var Profilepic = document.getElementById("Profilepic");
