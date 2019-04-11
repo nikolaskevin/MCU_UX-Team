@@ -108,53 +108,32 @@
         overflow: auto;
     }
 
-    /*
-        CSS FUNCTION: This css is to add a vertical sidebar for the EDIT ANNOUNCEMENT pop-up.
-    */
-    #Amsg{
-        
-        display: block;
-        overflow: auto;
-        padding-bottom:30ex;
-        margin-bottom:2px;
-        width: 90%;
-    }
-
-    #Announcement{
-        
-        display: block;
-        overflow: auto;
-        padding-bottom:30ex;
-        margin-bottom:2px;
-        width: 90%;
-    }
-
     .editForm_create_announcement {
-        max-width: 70%;
+        max-width: 600px;
         min-width: 200px;
         padding: 10px 50px border:2px solid gray;
         border-radius: 10px;
         font-family: raleway;
         background-color: #fff;
         position: absolute;
-        left: 25%;
-        top: 150px;
-        width: 70%;
-        height: 500px;
+        left: 500px;
+        top: 200px;
+        width: 500px;
+        height: 350px;
     }
 
     .editForm_edit_announcement {
-        max-width: 70%;
+        max-width: 600px;
         min-width: 200px;
         padding: 10px 50px border:2px solid gray;
         border-radius: 10px;
         font-family: raleway;
         background-color: #fff;
         position: absolute;
-        left: 25%;
-        top: 150px;
-        width: 70%;
-        height: 500px;
+        left: 500px;
+        top: 200px;
+        width: 500px;
+        height: 370px;
     }
 
     .editForm_upload_file {
@@ -313,7 +292,7 @@
                     <!--BACKGROUND PANEL IMAGE-->
                     <div class="container-fluid">
 
-                        <img class="panelimg img-responsive" style="background-color:white; white-space:nowrap;overflow: hidden;"/>
+                        <img class="panelimg img-responsive" src="statics/images/user_info_bg.jpg" />
 
                         <div class="container" style="transform:translateY(-8.5ex)">
                             <!-- CIRCLE IMAGE THING-->
@@ -332,7 +311,7 @@
                                 <p class="tip" id="time123"></p><!-- DISPLAYS GOOD MORNING/AFTERNOON/EVENING MSG -->
                                 <p></p>
                                 <p class="account" style="position:relative; top:-20px;">
-				<span style = "font-size: 20pt;" word-wrap: break-word;>Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
+                                <span style = "font-size: 20pt;" word-wrap: break-word;>Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
                                     
                                 <span style = "font-size: 20pt;" word-wrap: break-word;> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
                                 </p>
@@ -347,7 +326,9 @@
                 <div class="right" style="width:800ex; transform:translateY(-13ex)">
                     <div class="tap">
                         <span id="announcementspan" onclick="showannouncement()" style="opacity:1;cursor:pointer;">Announcement</span>
-                        <span id="csspan" onclick="showcs()" style="opacity:.8;cursor:pointer;">Center Schedule</span>
+                        <span id="csspan" onclick="showcs()" style="opacity:.8;cursor:pointer;">Events</span>
+                        <span id="wsspan" onclick="showws()" style="opacity:.8;cursor:pointer;">Working Schedule</span>
+                        <span id="whspan" onclick="showwh()" style="opacity:.8;cursor:pointer;">Working Hour</span>
                     </div>
                     <div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
                         <div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
@@ -369,8 +350,8 @@
                     <div class="container" id="data2" style="display:none;">
                         <table id='CStable' class="schedule_table" style="width:100%;border-style:hidden;">
                             <tr>
-                                <th style="width:50%"> Center Schedule </th>
-                                <th style="width:25%"></th>
+                                <th style="width:50%"> Events </th>
+                                <th style="width:25%"><button type="button" onclick="DownloadNewCS()" class="add_button" style="background-color:#B0C4DE;width:120px;height:40px;cursor:pointer;">Download <br>New Form</button></th>
                                 <th style="width:25%"><button type="button" onclick="AddNewCS()" class="add_button" style="cursor:pointer;"><img src="statics\images\add.png" height="15px" width="15px" /></button> </th>
                             </tr>
                         </table>
@@ -398,14 +379,13 @@
         </div><!-- END OF MAIN DIV CONTAINER CLASS!!! -->
     </div><!--End OF WRAPPER CLASS!!-->
     <div id="newABlock">
-        <div class="editForm_create_announcement" id="edit_create">
+        <div class="editForm_create_announcement">
             <h2><center><br>New Announcement</center></h2>
             <hr class="schedule_hr">
             <p id='keyname' style='display:none'></p>
-            &nbsp&nbsp <b>Announcement Title</b>:
-            <input id="Atitle" type="text" placeholder="title.." size="37" maxlength="50" />
-            
-            <p class="nofont"> <br /><b>&nbsp&nbsp Announcement</b>:</p>
+            &nbsp&nbsp Announcement Title:
+            <input id="Atitle" type="text" placeholder="title.." maxlength="50" /><br>
+            &nbsp&nbsp Announcement:
             <textarea class="schedule_textarea" id="Announcement" type=text rows="4" cols="30" placeholder="Text Here..."></textarea>
             <br>
             <center>
@@ -416,13 +396,13 @@
     </div>
     </div>
     <div id="editABlock">
-        <div class="editForm_edit_announcement" id="edit_announcement">
+        <div class="editForm_edit_announcement">
             <h2><center><br>Editing Announcement</center></h2>
             <hr class="schedule_hr">
-            &nbsp&nbsp <b>Announcement Title</b>:
-            <input id="AEtitle2" type="text" placeholder="title.." onkeydown="btnpopUp()" size="37" maxlength="50" /><br>
+            &nbsp&nbsp Announcement Title:
+            <input id="AEtitle2" type="text" placeholder="title.." onkeydown="btnpopUp()" maxlength="50" /><br>
             <br>
-            &nbsp&nbsp <b>Announcement</b>:
+            &nbsp&nbsp Announcement:
             <textarea class="schedule_textarea" id="Amsg" onkeydown="btnpopUp()"></textarea>
             <br>
             <center>
@@ -486,7 +466,8 @@
         </div>
     </div>
     </div>
-    
+
+
     <script type='text/javascript' src='Config.js'></script>
     <script type='text/javascript' src='Schedulejs.js'></script>
     <script type='text/javascript' src='chat.js'></script>
@@ -512,14 +493,8 @@
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
                 if(document.getElementById("toggleSide").innerHTML=="Hide sidebar"){
                     document.getElementById("toggleSide").innerHTML = "Show sidebar";
-                    document.getElementById("edit_announcement").style.left = "15%";
-                    document.getElementById("edit_create").style.left = "15%";
-
                 } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
                     document.getElementById("toggleSide").innerHTML = "Hide sidebar";
-                    document.getElementById("edit_announcement").style.left = "25%";
-                    document.getElementById("edit_create").style.left = "25%";
-
                 }
             });
         });
