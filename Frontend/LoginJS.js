@@ -17,7 +17,7 @@ setFirebaseAuth(); //Set firebase authentication state to only be valid in the c
  * @description Retrieves the contact info contents from the database and writes it to the HTML.
  */
 function getContactInfo() {
-  var logincontact = firebase.database().ref("CenterInformation/ContactInfo/");
+  var logincontact = firebase.database().ref("CenterInformation/KUContactInfo/");
   logincontact.once('value').then(function (snapshot) {
     snapshot.forEach(function (childSnapshot) {
       var childKey = childSnapshot.key;
