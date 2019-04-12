@@ -21,21 +21,27 @@ fbA.once('value',function(snapshot){
     var childData = childSnapshot.val();
     var button = document.createElement("button");
     var button2 = document.createElement("button");
+    var button3 = document.createElement("button");
     button.innerHTML="Detail";
-    button2.innerHTML="Delete";
+    button2.innerHTML = "Edit";
+    button3.innerHTML="Delete";
     var row = Atable.insertRow(rowIndex);
-    //var cellId = row.insertCell(0)
+    
     var cellAnnouncement= row.insertCell(0);
     var cellButton= row.insertCell(1)
     var cellButton2= row.insertCell(2);
-    //cellId.appendChild(document.createTextNode(childKey));
+    var cellButton3= row.insertCell(3);
+    
     cellAnnouncement.appendChild(document.createTextNode(childData.ATitleIOS));
     cellButton.appendChild(button);
     cellButton2.appendChild(button2);
-    button.setAttribute("id","editA_id["+rowIndex+"]");
-    button.setAttribute("onclick","editA("+rowIndex+")");
-    button2.setAttribute("id","deleteA_id["+rowIndex+"]");
-    button2.setAttribute("onclick","deleteA("+rowIndex+")");
+    cellButton3.appendChild(button3);
+    button.setAttribute("id","viewA_id["+rowIndex+"]");
+    button.setAttribute("onclick","viewA("+rowIndex+")");
+    button2.setAttribute("id","editA_id["+rowIndex+"]");
+    button2.setAttribute("onclick","editA("+rowIndex+")");
+    button3.setAttribute("id","deleteA_id["+rowIndex+"]");
+    button3.setAttribute("onclick","deleteA("+rowIndex+")");
 
     rowIndex = rowIndex + 1;
 
@@ -84,7 +90,22 @@ function deleteA(rowIndex){
     }
 }
 
-//View/Editing Announcement
+//View Announcement, no editing
+//WIP
+function viewA(rowIndex){
+  document.getElementById('viewABlock').style.display = 'block';
+  var Ukey = an[rowIndex];
+  var fbB= firebase.database().ref('Announcements/'+Ukey);
+  fbB.on('value', function(snapshot){
+    var EAdata = snapshot.child('AnnouncementIOS').val();
+    var EAdata2 = snapshot.child('ATitleIOS').val();
+    document.getElementById('Amsg').value = EAdata;
+    document.getElementById('AEtitle2').value = EAdata2;
+    document.getElementById('keyname').innerHTML = Ukey;
+  });
+}
+
+//Edit Announcement, no viewing
 function editA(rowIndex){
   document.getElementById('editABlock').style.display ='block';
   var Ukey = an[rowIndex];
@@ -98,7 +119,6 @@ function editA(rowIndex){
   });
 
 }
-
 function editSave(rowIndex){
   var editedData = $("#Amsg").val();
   var editedData2 = 'xasx' + editedData + 'xaex';
