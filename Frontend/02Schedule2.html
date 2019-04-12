@@ -70,6 +70,19 @@
         background-color: #313131;
         overflow: auto;
     }
+  
+    #viewABlock {
+        width: 100%;
+        height: 100%;
+        opacity: .95;
+        right: 0;
+        top: 0;
+        padding: 40px, 60px;
+        display: none;
+        position: fixed;
+        background-color: #313131;
+        overflow: auto;
+    }
 
     #newCSBlock {
         width: 100%;
@@ -122,7 +135,7 @@
         height: 350px;
     }
 
-    .editForm_edit_announcement {
+        .editForm_edit_announcement {
         max-width: 600px;
         min-width: 200px;
         padding: 10px 50px border:2px solid gray;
@@ -134,6 +147,20 @@
         top: 200px;
         width: 500px;
         height: 370px;
+    }
+
+    .viewForm_edit_announcement {
+        max-width: 600px;
+        min-width: 200px;
+        padding: 10px 50px border:2px solid gray;
+        border-radius: 10px;
+        font-family: raleway;
+        background-color: #fff;
+        position: absolute;
+        left: 500px;
+        top: 200px;
+        width: 500px;
+        height: 450px;
     }
 
     .editForm_upload_file {
@@ -395,7 +422,8 @@
         </div>
     </div>
     </div>
-    <div id="editABlock">
+    
+      <div id="editABlock">
         <div class="editForm_edit_announcement">
             <h2><center><br>Editing Announcement</center></h2>
             <hr class="schedule_hr">
@@ -408,6 +436,26 @@
             <center>
                 <button id="Esave" onclick="editSave()" style="cursor:pointer;display:none;">Save</button> &nbsp&nbsp&nbsp&nbsp
                 <button id="Ecancel" onclick="document.getElementById('editABlock').style.display='none';" style="cursor:pointer;">Back</button>
+            </center>
+        </div>
+    </div>
+    </div>
+
+    <div id="viewABlock">
+        <div class="viewForm_edit_announcement">
+            <h2><center><br>Viewing Announcement</center></h2>
+            <h2><center>Work in Progress</center></h2>
+            <hr class="schedule_hr">
+            &nbsp&nbsp Announcement Title:
+            <span id="AEtitle2" type="text" placeholder="title.." onkeydown="btnpopUp()" maxlength="50" ></span><br>
+            
+            <br>
+            &nbsp&nbsp Announcement:
+            <textarea class="schedule_textarea" id="Amsg" onkeydown="btnpopUp()"></textarea>
+            <br>
+            <center>
+                <button id="Esave" onclick="editSave()" style="cursor:pointer;display:none;">Save</button> &nbsp&nbsp&nbsp&nbsp
+                <button id="Ecancel" onclick="document.getElementById('viewABlock').style.display='none';" style="cursor:pointer;">Back</button>
             </center>
         </div>
     </div>
