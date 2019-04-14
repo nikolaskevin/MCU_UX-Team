@@ -163,17 +163,14 @@
     }
 
     .editForm_upload_file {
-        max-width: 600px;
-        min-width: 200px;
-        padding: 10px 50px border:2px solid gray;
         border-radius: 10px;
         font-family: raleway;
         background-color: #fff;
         position: absolute;
-        left: 500px;
-        top: 300px;
-        width: 550px;
-        height: 200px;
+        left: 35%;
+        top: 20%;
+        width: 30%;
+        height: 60%;
     }
 
     .schedule_hr {
@@ -390,7 +387,7 @@
                                 
                             </tr>
                         </table>
-                        <div style="border: 1px solid black; width:100%;" id="CenterScheduleInfo"></div>
+                        <div style="width:100%;" id="CenterScheduleInfo"></div>
                     </div>
                     
                 </div>
@@ -474,17 +471,12 @@
 
     <div id="newWSBlock">
         <div class="editForm_upload_file">
-            <h2><center>New Working Schedule</center></h2>
+            <h2><center>New Center Schedule</center></h2>
             <hr class="schedule_hr">
-            &nbsp&nbsp File title:
-            <input id="fileTitle" type=text maxlength="50"></input>
-            <br><br>
-            &nbsp&nbsp Upload File:
-            <input type="file" id="fileButton" accept="image/*,application/pdf" />
-            <progress value="0" max="100" id="uploader">0%</progress>
-            <br><br><br>
-            &nbsp&nbsp&nbsp <button id="btnSubmitWS" style="cursor:pointer;">Submit</button> &nbsp&nbsp
-            <button id="Ecancel" onclick="document.getElementById('newWSBlock').style.display='none';" style="cursor:pointer;">Cancel</button>
+            <div style="padding:2%">
+                <button id="btnSubmitWS" style="cursor:pointer;">Submit</button> &nbsp&nbsp
+                <button id="Ecancel" onclick="document.getElementById('newWSBlock').style.display='none';" style="cursor:pointer;">Cancel</button>
+            </div>
         </div>
     </div>
     </div>
@@ -510,7 +502,6 @@
 
     <script type='text/javascript' src='Config.js'></script>
     <script type='text/javascript' src='Schedulejs.js'></script>
-    <script type='text/javascript' src='chat.js'></script>
     <script type='text/javascript' src='Profile.js'></script>
     <!-- START COPY FOR SIDEBAR JAVASCRIPT -->
     <!-- jQuery CDN - Slim version (=without AJAX) -->

@@ -218,66 +218,61 @@ uploadtask3.on('state_changed',
 }
 
 
-function getWeek(){
-  var fbCS = firebase.database().ref('CenterSchedule')
-}
-
 //Display CS table
 var cs = [];
 var rowIndexCS = 1;
 var fbCS = firebase.database().ref('CenterSchedule')
-console.log("HELLO");
-console.log(fbCS);
+var weeks = [];
 
+//get weeks stored in an array
 fbCS.once('value',function(snapshot){
+  //console.log(snapshot.numChildren());
   snapshot.forEach(function(Week){
     weekOf = Week.key;
-    var days = {Sunday: "", Monday: "", Tuesday: "", Wednesday: "", Thursday: "", Friday: "", Saturday: ""};
-    var sched = Week.val();
-
-
-    console.log(days);
-    console.log(sched);
-
-    days["Sunday"]= sched["Sunday"];
-    days["Monday"]= sched["Monday"];
-    days["Tuesday"]= sched["Tuesday"];
-    days["Wednesday"]= sched["Wednesday"];
-    days["Thursday"]= sched["Thursday"];
-    days["Friday"]= sched["Friday"];
-    days["Saturday"]= sched["Saturday"];
-
-    console.log(days);
-    injectToDOM(days);
-
-    
-    var childData = Week.val();
-    var button = document.createElement("button");
-    var button2 = document.createElement("button");
-    button.innerHTML="Download";
-    button2.innerHTML="Delete";
-
+    weeks.push(weekOf);
   });
+  console.log(weeks);
+  injectToDOM(weeks);
 });
 
-function injectToDOM(days){
+/**
+ * @function injectToDOM
+ * @description query for data for individual days given the week, then display in DOM
+ * @param {*} weeks array of weeks that have schedules
+ */
+function injectToDOM(weeks){
   var htmlInjection;
-  htmlInjection = "";
-  htmlInjection += '<tr><td style="width:10%">'+weekOf+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Sunday"]+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Monday"]+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Tuesday"]+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Wednesday"]+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Thursday"]+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Friday"]+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Sunday"]+'</td>';
-  htmlInjection += '<td style="width:10%">Edit</th>';
-  htmlInjection += '<td style="width:10%">Delete</th>';
-  htmlInjection += '</tr>';
-
-  $("#CenterScheduleInfo").html(htmlInjection); //Insert the HTML for the tasks into the DOM
-
-}
+  count = 1;
+  
+  htmlInjection = '<table style="width:100%; border: 1px solid black;">';
+  for (var i = 0; i < weeks.length; i++){
+    var weekSched = firebase.database().ref('CenterSchedule/'+weeks[i]+'/');  
+    console.log("HELLO");
+    weekSched.once('value',function(days){
+      console.log(days.key);
+      times = [];
+      times = days.val();
+      
+      htmlInjection += '<tr><td style="width:10%">'+days.key+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Sunday"]+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Monday"]+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Tuesday"]+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Wednesday"]+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Thursday"]+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Friday"]+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Sunday"]+'</td>';
+      htmlInjection += '<td style="width:10%">Edit</td>';
+      htmlInjection += '<td style="width:10%">Delete</td>';
+      htmlInjection += '</tr>';
+      
+      count ++;
+      if(count = weeks.length) //if reached the end of the list of weeks
+      {
+        $("#CenterScheduleInfo").html(htmlInjection); //Insert the HTML for the tasks into the DOM
+      } //end if
+    }); //end weekSched.once('value',function(days){
+  } //end for
+} //end injectToDOM
 
 //CS deletion
 function deleteCS(rowIndexCS){
