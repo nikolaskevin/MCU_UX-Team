@@ -1,4 +1,4 @@
-<!--
+﻿<!--
   @file 025Schedule2.html
   @author  MCU
   @author  Kutztown University
@@ -123,46 +123,54 @@
         overflow: auto;
     }
 
+    /*
+        CSS FUNCTION: This css is to add a vertical sidebar for the EDIT ANNOUNCEMENT pop-up.
+    */
+    #Amsg{
+        
+        display: block;
+        overflow: auto;
+        padding-bottom:30ex;
+        margin-bottom:2px;
+        width: 90%;
+    }
+
+    
+    #Announcement{
+        
+        display: block;
+        overflow: auto;
+        padding-bottom:30ex;
+        margin-bottom:2px;
+        width: 90%;
+    }
+
     .editForm_create_announcement {
-        max-width: 600px;
+        max-width: 70%;
         min-width: 200px;
         padding: 10px 50px border:2px solid gray;
         border-radius: 10px;
         font-family: raleway;
         background-color: #fff;
         position: absolute;
-        left: 500px;
-        top: 200px;
-        width: 500px;
-        height: 350px;
+        left: 25%;
+        top: 150px;
+        width: 70%;
+        height: 500px;
     }
 
     .editForm_edit_announcement {
-        max-width: 600px;
+        max-width: 70%;
         min-width: 200px;
         padding: 10px 50px border:2px solid gray;
         border-radius: 10px;
         font-family: raleway;
         background-color: #fff;
         position: absolute;
-        left: 500px;
-        top: 200px;
-        width: 500px;
-        height: 370px;
-    }
-
-    .viewForm_edit_announcement {
-        max-width: 600px;
-        min-width: 200px;
-        padding: 10px 50px border:2px solid gray;
-        border-radius: 10px;
-        font-family: raleway;
-        background-color: #fff;
-        position: absolute;
-        left: 500px;
-        top: 200px;
-        width: 500px;
-        height: 450px;
+        left: 25%;
+        top: 150px;
+        width: 70%;
+        height: 500px;
     }
 
     .editForm_upload_file {
@@ -542,10 +550,16 @@
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                if(document.getElementById("toggleSide").innerHTML=="Hide sidebar"){
+                if (document.getElementById("toggleSide").innerHTML == "Hide sidebar") {
                     document.getElementById("toggleSide").innerHTML = "Show sidebar";
+                    document.getElementById("edit_announcement").style.left = "15%";
+                    document.getElementById("edit_create").style.left = "15%";
+
                 } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
                     document.getElementById("toggleSide").innerHTML = "Hide sidebar";
+                    document.getElementById("edit_announcement").style.left = "25%";
+                    document.getElementById("edit_create").style.left = "25%";
+
                 }
             });
         });
