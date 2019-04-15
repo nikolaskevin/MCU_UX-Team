@@ -1,4 +1,4 @@
-﻿<!--
+<!--
   @file 025Schedule2.html
   @author  MCU
   @author  Kutztown University
@@ -14,6 +14,7 @@
     <link rel="icon" type="image/jpg" href="image\logo.jpg">
     <link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="statics/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="statics/css/chat.css" />
     <!-- IMPORTING BOOTSTRAP!!-->
     <!-- Importing BOOTSTRAP!!! -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -27,6 +28,7 @@
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 </head>
 <style>
+    
     table, th, td {
         padding: 10px;
         border: 1px solid black;
@@ -34,7 +36,9 @@
         text-align: center;
         word-wrap: break-word;
     }
-
+    span.hidden{
+        display: none;
+    }
         table th {
             background-color: #B0C4DE;
             color: #000;
@@ -69,7 +73,6 @@
         background-color: #313131;
         overflow: auto;
     }
-  
     #viewABlock {
         width: 100%;
         height: 100%;
@@ -134,7 +137,7 @@
         height: 350px;
     }
 
-        .editForm_edit_announcement {
+    .editForm_edit_announcement {
         max-width: 600px;
         min-width: 200px;
         padding: 10px 50px border:2px solid gray;
@@ -338,7 +341,7 @@
                                 <p></p>
                                 <p class="account" style="position:relative; top:-20px;">
                                 <span style = "font-size: 20pt;" word-wrap: break-word;>Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
-                                    
+                                <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
                                 <span style = "font-size: 20pt;" word-wrap: break-word;> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
                                 </p>
                             </div>
@@ -352,7 +355,9 @@
                 <div class="right" style="width:800ex; transform:translateY(-13ex)">
                     <div class="tap">
                         <span id="announcementspan" onclick="showannouncement()" style="opacity:1;cursor:pointer;">Announcement</span>
-                        <span id="wsspan" onclick="showws()" style="opacity:.8;cursor:pointer;">Center Schedule</span>
+                        <span id="csspan" onclick="showcs()" style="opacity:.8;cursor:pointer;">Events</span>
+                        <span id="wsspan" onclick="showws()" style="opacity:.8;cursor:pointer;">Working Schedule</span>
+                        <span id="whspan" onclick="showwh()" style="opacity:.8;cursor:pointer;">Working Hour</span>
                     </div>
                     <div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
                         <div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
@@ -365,34 +370,40 @@
                             <thread>
                                 <tr>
                                     <th style="width:50%"> Announcement Title </th>
-                                    <th style="width:25%"></th>
-                                    <th style="width:25%"> <button id="btnAdd" class="add_button" type="button" onclick="AddNewA()" style="cursor:pointer;"><img src="statics\images\add.png" height="15px" width="15px" /></button> </th>
+                                    <th style="width:16%"></th>
+                                    <th style="width:16%"></th>
+                                    <th style="width:16%"> <button id="btnAdd" class="add_button" type="button" onclick="AddNewA()" style="cursor:pointer;"><img src="statics\images\add.png" height="15px" width="15px" /></button> </th>
                                 </tr>
                             </thread>
                         </table>
                     </div>
-                    <div class="container" id="data3" style="display:none;">
-                        <br>
-                        <button type="button" onclick="AddNewWS()" class="add_button" style="cursor:pointer;">Add New Schedule</button> 
-                        <br><br>
-                        <table id='WStable' style="width:100%; border: 1px solid black;">
+                    <div class="container" id="data2" style="display:none;">
+                        <table id='CStable' class="schedule_table" style="width:100%;border-style:hidden;">
                             <tr>
-                                <th style="width:10%">Week Of</th>
-                                <th style="width:10%">SUN</th>
-                                <th style="width:10%">MON</th>
-                                <th style="width:10%">TUE</th>
-                                <th style="width:10%">WED</th>
-                                <th style="width:10%">THU</th>
-                                <th style="width:10%">FRI</th>
-                                <th style="width:10%">SAT</th>
-                                <th style="width:10%"></th>
-                                <th style="width:10%"></th>
-                                
+                                <th style="width:50%"> Events </th>
+                                <th style="width:25%"><button type="button" onclick="DownloadNewCS()" class="add_button" style="background-color:#B0C4DE;width:120px;height:40px;cursor:pointer;">Download <br>New Form</button></th>
+                                <th style="width:25%"><button type="button" onclick="AddNewCS()" class="add_button" style="cursor:pointer;"><img src="statics\images\add.png" height="15px" width="15px" /></button> </th>
                             </tr>
                         </table>
-                        <div style="border: 1px solid black; width:100%;" id="CenterScheduleInfo"></div>
                     </div>
-                    
+                    <div class="container" id="data3" style="display:none;">
+                        <table id='WStable' class="schedule_table" style="width:100%;border-style:hidden;">
+                            <tr>
+                                <th style="width:50%"> Working Schedule </th>
+                                <th style="width:25%"><button type="button" onclick="DownloadNewWS()" class="add_button" style="background-color:#B0C4DE;width:120px;height:40px;cursor:pointer;">Download <br>New Form</button></th>
+                                <th style="width:25%"><button type="button" onclick="AddNewWS()" class="add_button" style="cursor:pointer;"><img src="statics\images\add.png" height="15px" width="15px" /></button> </th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="container" id="data4" style="display:none;">
+                        <table id=tableWH class="schedule_table" style="width:100%;border-style:hidden;">
+                            <tr>
+                                <th style="width:50%"> Working Hour </th>
+                                <th style="width:25%"><button type="button" onclick="DownloadNewWH()" class="add_button" style="background-color:#B0C4DE;width:120px;height:40px;cursor:pointer;">Download <br>New Form</button></th>
+                                <th style="width:25%"> <button type="button" class="add_button" style="cursor:pointer;"><img src="statics\images\add.png" onclick="AddNewWH()" height="15px" width="15px" /></button> </th>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div><!-- END OF MAIN DIV CONTAINER CLASS!!! -->
@@ -415,7 +426,7 @@
     </div>
     </div>
     
-      <div id="editABlock">
+    <div id="editABlock">
         <div class="editForm_edit_announcement">
             <h2><center><br>Editing Announcement</center></h2>
             <hr class="schedule_hr">
