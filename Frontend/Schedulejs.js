@@ -21,21 +21,27 @@ fbA.once('value',function(snapshot){
     var childData = childSnapshot.val();
     var button = document.createElement("button");
     var button2 = document.createElement("button");
+    var button3 = document.createElement("button");
     button.innerHTML="Detail";
-    button2.innerHTML="Delete";
+    button2.innerHTML = "Edit";
+    button3.innerHTML="Delete";
     var row = Atable.insertRow(rowIndex);
-    //var cellId = row.insertCell(0)
+    
     var cellAnnouncement= row.insertCell(0);
     var cellButton= row.insertCell(1)
     var cellButton2= row.insertCell(2);
-    //cellId.appendChild(document.createTextNode(childKey));
+    var cellButton3= row.insertCell(3);
+    
     cellAnnouncement.appendChild(document.createTextNode(childData.ATitleIOS));
     cellButton.appendChild(button);
     cellButton2.appendChild(button2);
-    button.setAttribute("id","editA_id["+rowIndex+"]");
-    button.setAttribute("onclick","editA("+rowIndex+")");
-    button2.setAttribute("id","deleteA_id["+rowIndex+"]");
-    button2.setAttribute("onclick","deleteA("+rowIndex+")");
+    cellButton3.appendChild(button3);
+    button.setAttribute("id","viewA_id["+rowIndex+"]");
+    button.setAttribute("onclick","viewA("+rowIndex+")");
+    button2.setAttribute("id","editA_id["+rowIndex+"]");
+    button2.setAttribute("onclick","editA("+rowIndex+")");
+    button3.setAttribute("id","deleteA_id["+rowIndex+"]");
+    button3.setAttribute("onclick","deleteA("+rowIndex+")");
 
     rowIndex = rowIndex + 1;
 
@@ -78,13 +84,28 @@ function deleteA(rowIndex){
     if (r == true) {
         fbB.child(Ukey).remove();
         alert("successfully deleted!");
-        //window.location.reload();
+        window.location.reload();
     }
     else {
     }
 }
 
-//View/Editing Announcement
+//View Announcement, no editing
+//WIP
+function viewA(rowIndex){
+  document.getElementById('viewABlock').style.display = 'block';
+  var Ukey = an[rowIndex];
+  var fbB= firebase.database().ref('Announcements/'+Ukey);
+  fbB.on('value', function(snapshot){
+    var EAdata = snapshot.child('AnnouncementIOS').val();
+    var EAdata2 = snapshot.child('ATitleIOS').val();
+    document.getElementById('Amsg').value = EAdata;
+    document.getElementById('AEtitle2').value = EAdata2;
+    document.getElementById('keyname').innerHTML = Ukey;
+  });
+}
+
+//Edit Announcement, no viewing
 function editA(rowIndex){
   document.getElementById('editABlock').style.display ='block';
   var Ukey = an[rowIndex];
@@ -98,7 +119,6 @@ function editA(rowIndex){
   });
 
 }
-
 function editSave(rowIndex){
   var editedData = $("#Amsg").val();
   var editedData2 = 'xasx' + editedData + 'xaex';
@@ -197,43 +217,67 @@ uploadtask3.on('state_changed',
 );
 }
 
+
+function getWeek(){
+  var fbCS = firebase.database().ref('CenterSchedule')
+}
+
 //Display CS table
 var cs = [];
 var rowIndexCS = 1;
 var fbCS = firebase.database().ref('CenterSchedule')
-var WStable = document.getElementById('CStable');
+console.log("HELLO");
+console.log(fbCS);
 
 fbCS.once('value',function(snapshot){
-snapshot.forEach(function(childSnapshot){
-    cs[rowIndexCS] = childSnapshot.key;
-  var childKey = childSnapshot.key;
-  var childData = childSnapshot.val();
-  var button = document.createElement("button");
-  var button2 = document.createElement("button");
-  button.innerHTML="Download";
-  button2.innerHTML="Delete";
+  snapshot.forEach(function(Week){
+    weekOf = Week.key;
+    var days = {Sunday: "", Monday: "", Tuesday: "", Wednesday: "", Thursday: "", Friday: "", Saturday: ""};
+    var sched = Week.val();
 
 
-  var row = CStable.insertRow(rowIndexCS);
- // var cellId = row.insertCell(0)
-  var cellCSTitle = row.insertCell(0);
-  var cellButton = row.insertCell(1);
-  var cellButton2 = row.insertCell(2);
-  //cellId.appendChild(document.createTextNode(childKey));
-  cellCSTitle.appendChild(document.createTextNode(childData.titleIOS));
-  cellButton.appendChild(button);
-  cellButton2.appendChild(button2);
-  button.setAttribute("id","download_id["+rowIndexCS+"]");
-  button.setAttribute("onclick","downloadCS("+rowIndexCS+")");
-  button2.setAttribute("id","deleteCS_id["+rowIndexCS+"]");
-  button2.setAttribute("onclick","deleteCS("+rowIndexCS+")");
-console.log(rowIndexCS);
- // button.onclick = downloadCS;
-  //button2.onclick = deleteCS;
-  rowIndexCS = rowIndexCS + 1;
+    console.log(days);
+    console.log(sched);
 
+    days["Sunday"]= sched["Sunday"];
+    days["Monday"]= sched["Monday"];
+    days["Tuesday"]= sched["Tuesday"];
+    days["Wednesday"]= sched["Wednesday"];
+    days["Thursday"]= sched["Thursday"];
+    days["Friday"]= sched["Friday"];
+    days["Saturday"]= sched["Saturday"];
+
+    console.log(days);
+    injectToDOM(days);
+
+    
+    var childData = Week.val();
+    var button = document.createElement("button");
+    var button2 = document.createElement("button");
+    button.innerHTML="Download";
+    button2.innerHTML="Delete";
+
+  });
 });
-});
+
+function injectToDOM(days){
+  var htmlInjection;
+  htmlInjection = "";
+  htmlInjection += '<tr><td style="width:10%">'+weekOf+'</td>';
+  htmlInjection += '<td style="width:10%">'+days["Sunday"]+'</td>';
+  htmlInjection += '<td style="width:10%">'+days["Monday"]+'</td>';
+  htmlInjection += '<td style="width:10%">'+days["Tuesday"]+'</td>';
+  htmlInjection += '<td style="width:10%">'+days["Wednesday"]+'</td>';
+  htmlInjection += '<td style="width:10%">'+days["Thursday"]+'</td>';
+  htmlInjection += '<td style="width:10%">'+days["Friday"]+'</td>';
+  htmlInjection += '<td style="width:10%">'+days["Sunday"]+'</td>';
+  htmlInjection += '<td style="width:10%">Edit</th>';
+  htmlInjection += '<td style="width:10%">Delete</th>';
+  htmlInjection += '</tr>';
+
+  $("#CenterScheduleInfo").html(htmlInjection); //Insert the HTML for the tasks into the DOM
+
+}
 
 //CS deletion
 function deleteCS(rowIndexCS){
@@ -345,40 +389,6 @@ uploadtask.on('state_changed',
 }
 
 
-//Display WS table
-var rowIndexWS = 1;
-var ws = [];
-var fbWS = firebase.database().ref('WorkingSchedule')
-var WStable = document.getElementById('WStable');
-
-fbWS.once('value',function(snapshot){
-snapshot.forEach(function(childSnapshot){
-  ws[rowIndexWS] = childSnapshot.key;
-  var childData = childSnapshot.val();
-  var button = document.createElement("button");
-  var button2 = document.createElement("button");
-  button.innerHTML="Download";
-  button2.innerHTML="Delete";
-
-
-  var row = WStable.insertRow(rowIndexWS);
-  //var cellId = row.insertCell(0)
-  var cellWSTitle = row.insertCell(0);
-  var cellButton = row.insertCell(1);
-  var cellButton2 = row.insertCell(2);
-  //cellId.appendChild(document.createTextNode(childKey));
-  cellWSTitle.appendChild(document.createTextNode(childData.titleIOS));
-  cellButton.appendChild(button);
-  cellButton2.appendChild(button2);
-  button.setAttribute("id","downloadWS_id["+rowIndexWS+"]");
-  button.setAttribute("onclick","downloadWS("+rowIndexWS+")");
-  button2.setAttribute("id","deleteWS_id["+rowIndexWS+"]");
-  button2.setAttribute("onclick","deleteWS("+rowIndexWS+")");
-
-  rowIndexWS = rowIndexWS + 1;
-
-});
-});
 //WS deletion
 function deleteWS(rowIndexWS){
 var fbWS= firebase.database().ref('WorkingSchedule');
@@ -414,25 +424,6 @@ url.once("value").then(function(snapshot){
    window.open(downloadURL,'_blank');
 });
 }
-function DownloadNewWS(){
-var url= firebase.storage().ref('CenterSchedule/wsnew.xlsx');
-url.getDownloadURL().then(function(ur2) {
-      window.location = ur2;
-   });
-   }
-
-
-//Working hour
-function AddNewWH(){
-document.getElementById('newWHBlock').style.display ='block';
-}
-
-function DownloadNewWH(){
-var url= firebase.storage().ref('CenterSchedule/whnew.xlsx');
-url.getDownloadURL().then(function(ur2) {
-      window.location = ur2;
-   });
-   }
 
 //Upload file
 var uploader2 = document.getElementById('uploader2');
@@ -493,116 +484,23 @@ uploadtask.on('state_changed',
 );
 }
 
-//Display all Working Hour
-var rowIndexWH = 1;
-var wh = [];
-var fbWH = firebase.database().ref('WorkingHourRecord')
-var tableWH = document.getElementById('tableWH');
-
-fbWH.once('value',function(snapshot){
-snapshot.forEach(function(childSnapshot){
-wh[rowIndexWH] = childSnapshot.key;
-  //var childKey = childSnapshot.key;
-  var childData = childSnapshot.val();
-  var button = document.createElement("button");
-  var button2 = document.createElement("button");
-  button.innerHTML="Download";
-  button2.innerHTML="Delete";
-
-
-  var row = tableWH.insertRow(rowIndexWH);
- // var cellId = row.insertCell(0)
-  var cellWHTitle = row.insertCell(0);
-  var cellButton = row.insertCell(1);
-  var cellButton2 = row.insertCell(2);
-  //cellId.appendChild(document.createTextNode(childKey));
-  cellWHTitle.appendChild(document.createTextNode(childData.titleIOS));
-  cellButton.appendChild(button);
-  cellButton2.appendChild(button2);
-  button.setAttribute("id","downloadWH_id["+rowIndexWH+"]");
-  button.setAttribute("onclick","downloadWH("+rowIndexWH+")");
-  button2.setAttribute("id","deleteWH_id["+rowIndexWH+"]");
-  button2.setAttribute("onclick","deleteWH("+rowIndexWH+")");
-
-  rowIndexWH = rowIndexWH + 1;
-});
-});
-
-//WH deletion
-function deleteWH(rowIndexWH){
-var fbWH= firebase.database().ref('WorkingHourRecord');
-var Ukey = wh[rowIndexWH];
-console.log(Ukey);
-var r = confirm("Are you sure you want to delete a working hour?");
-if (r == true) {
-    fbWH.child(Ukey+"/filename").once('value').
-    then(function(snapshot){
-        var storageRef=firebase.storage().ref();
-        storageRef.child("WorkingHourRecord/"+snapshot.val()).delete().then(function(){
-            fbWH.child(Ukey).remove();
-            alert("successfully deleted!");
-            window.location.reload();
-       });
-    });
-}
-}
-
-//WH download
-function downloadWH(rowIndexWH){
-var fbWH= firebase.database().ref('WorkingHourRecord');
-var Ukey = wh[rowIndexWH];
-var url = fbWH.child(Ukey).child('url');
-let downloadURL;
-url.once("value").then(function(snapshot){
-   downloadURL = snapshot.val();
-   console.log(downloadURL);
-   window.open(downloadURL,'_blank') ;
-});
-}
-
-
 function showannouncement(){
   document.getElementById("data1").style.display = "block";
-  document.getElementById("data2").style.display = "none";
   document.getElementById("data3").style.display = "none";
-  document.getElementById("data4").style.display = "none";
   document.getElementById("announcementspan").style.opacity = "1";
   document.getElementById("csspan").style.opacity = ".8";
   document.getElementById("wsspan").style.opacity = ".8";
-  document.getElementById("whspan").style.opacity = ".8";
+  
 }
 
-function showcs(){
-  document.getElementById("data1").style.display = "none";
-  document.getElementById("data2").style.display = "block";
-  document.getElementById("data3").style.display = "none";
-  document.getElementById("data4").style.display = "none";
-  document.getElementById("announcementspan").style.opacity = ".8";
-  document.getElementById("csspan").style.opacity = "1";
-  document.getElementById("wsspan").style.opacity = ".8";
-  document.getElementById("whspan").style.opacity = ".8";
-}
 function showws(){
   document.getElementById("data1").style.display = "none";
-  document.getElementById("data2").style.display = "none";
   document.getElementById("data3").style.display = "block";
-  document.getElementById("data4").style.display = "none";
   document.getElementById("announcementspan").style.opacity = ".8";
   document.getElementById("csspan").style.opacity = ".8";
   document.getElementById("wsspan").style.opacity = "1";
-  document.getElementById("whspan").style.opacity = ".8";
+  
 }
-function showwh(){
-  document.getElementById("data1").style.display = "none";
-  document.getElementById("data2").style.display = "none";
-  document.getElementById("data3").style.display = "none";
-  document.getElementById("data4").style.display = "block";
-  document.getElementById("announcementspan").style.opacity = ".8";
-  document.getElementById("csspan").style.opacity = ".8";
-  document.getElementById("wsspan").style.opacity = ".8";
-  document.getElementById("whspan").style.opacity = "1";
-}
-
 
 function openmenu(){
   if(document.getElementById("menu").style.display== "block"){

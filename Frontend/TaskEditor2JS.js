@@ -15,7 +15,7 @@ taskPath = goodPath;
 
 //Start the process of loading the task
 if (goodPath == null || goodPath == "newTask"){
-    alert("Creating new task!");
+    //alert("Creating new task!");
     createNewTask();
 } else {
     getTaskFromPath(goodPath, getTaskPathCallback); 
@@ -37,9 +37,9 @@ function createNewTask(){
         //alert(snapshot.val());
         var TID = snapshot.val();
         var userid = localStorage.getItem("userID");
-        alert(userid);
+        //alert(userid);
         if (commited){
-            alert(TID);
+            //alert(TID);
         
             var taskData = {
                 category: "Basic",
@@ -263,9 +263,14 @@ function getTaskFromPath(taskPath, callback){
         if (taskDef != null){
             callback(taskDef);
         } else {
+            alert("Task Failed to load")
+            Window.location.href("./10Mytask2.html");
             //TODO: Failure routine
         }
         return;
+    }, function(error){
+        alert("Task failed to load.");
+        Window.location.href("./10Mytask2.html")
     });
 }
 
@@ -507,7 +512,7 @@ function getDetailedStepHTML(steps, stepNum){
  */
 function radioButtonHandler(taskDetails){
     $('input[type=radio]').click(function(){
-        alert(this.value);
+        //alert(this.value);
         var val = this.value;
         if (val == "visible"){
             taskDetails["visible"] = true;

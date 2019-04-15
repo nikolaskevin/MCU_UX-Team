@@ -28,6 +28,7 @@
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 </head>
 <style>
+    
     table, th, td {
         padding: 10px;
         border: 1px solid black;
@@ -35,7 +36,9 @@
         text-align: center;
         word-wrap: break-word;
     }
-
+    span.hidden{
+        display: none;
+    }
         table th {
             background-color: #B0C4DE;
             color: #000;
@@ -59,6 +62,18 @@
     }
 
     #editABlock {
+        width: 100%;
+        height: 100%;
+        opacity: .95;
+        right: 0;
+        top: 0;
+        padding: 40px, 60px;
+        display: none;
+        position: fixed;
+        background-color: #313131;
+        overflow: auto;
+    }
+    #viewABlock {
         width: 100%;
         height: 100%;
         opacity: .95;
@@ -108,32 +123,54 @@
         overflow: auto;
     }
 
+    /*
+        CSS FUNCTION: This css is to add a vertical sidebar for the EDIT ANNOUNCEMENT pop-up.
+    */
+    #Amsg{
+        
+        display: block;
+        overflow: auto;
+        padding-bottom:30ex;
+        margin-bottom:2px;
+        width: 90%;
+    }
+
+    
+    #Announcement{
+        
+        display: block;
+        overflow: auto;
+        padding-bottom:30ex;
+        margin-bottom:2px;
+        width: 90%;
+    }
+
     .editForm_create_announcement {
-        max-width: 600px;
+        max-width: 70%;
         min-width: 200px;
         padding: 10px 50px border:2px solid gray;
         border-radius: 10px;
         font-family: raleway;
         background-color: #fff;
         position: absolute;
-        left: 500px;
-        top: 200px;
-        width: 500px;
-        height: 350px;
+        left: 25%;
+        top: 150px;
+        width: 70%;
+        height: 500px;
     }
 
     .editForm_edit_announcement {
-        max-width: 600px;
+        max-width: 70%;
         min-width: 200px;
         padding: 10px 50px border:2px solid gray;
         border-radius: 10px;
         font-family: raleway;
         background-color: #fff;
         position: absolute;
-        left: 500px;
-        top: 200px;
-        width: 500px;
-        height: 370px;
+        left: 25%;
+        top: 150px;
+        width: 70%;
+        height: 500px;
     }
 
     .editForm_upload_file {
@@ -292,7 +329,7 @@
                     <!--BACKGROUND PANEL IMAGE-->
                     <div class="container-fluid">
 
-                        <img class="panelimg img-responsive" src="statics/images/user_info_bg.jpg" />
+                        <img class="panelimg img-responsive" style="background-color: #fff5ee" />
 
                         <div class="container" style="transform:translateY(-8.5ex)">
                             <!-- CIRCLE IMAGE THING-->
@@ -309,11 +346,11 @@
                             <!-- TEXT NEXT TO THE CIRCLE IMAGE THING-->
                             <div class="user-account">
                                 <p class="tip" id="time123"></p><!-- DISPLAYS GOOD MORNING/AFTERNOON/EVENING MSG -->
-                                <img style="position:relative; left:125px;top:-25px;cursor:pointer;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
+                                <p></p>
                                 <p class="account" style="position:relative; top:-20px;">
-                                    <span>Name : <span id="displayProfilename"></span></span>
-                                    <span>UserID : <span id="displayProfileid"></span></span>
-                                    <span>Role : <span id="displayProfileposition"></span></span>
+                                <span style = "font-size: 20pt;" word-wrap: break-word;>Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
+                                <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
+                                <span style = "font-size: 20pt;" word-wrap: break-word;> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
                                 </p>
                             </div>
                         </div>
@@ -341,8 +378,9 @@
                             <thread>
                                 <tr>
                                     <th style="width:50%"> Announcement Title </th>
-                                    <th style="width:25%"></th>
-                                    <th style="width:25%"> <button id="btnAdd" class="add_button" type="button" onclick="AddNewA()" style="cursor:pointer;"><img src="statics\images\add.png" height="15px" width="15px" /></button> </th>
+                                    <th style="width:16%"></th>
+                                    <th style="width:16%"></th>
+                                    <th style="width:16%"> <button id="btnAdd" class="add_button" type="button" onclick="AddNewA()" style="cursor:pointer;"><img src="statics\images\add.png" height="15px" width="15px" /></button> </th>
                                 </tr>
                             </thread>
                         </table>
@@ -395,6 +433,7 @@
         </div>
     </div>
     </div>
+    
     <div id="editABlock">
         <div class="editForm_edit_announcement">
             <h2><center><br>Editing Announcement</center></h2>
@@ -408,6 +447,26 @@
             <center>
                 <button id="Esave" onclick="editSave()" style="cursor:pointer;display:none;">Save</button> &nbsp&nbsp&nbsp&nbsp
                 <button id="Ecancel" onclick="document.getElementById('editABlock').style.display='none';" style="cursor:pointer;">Back</button>
+            </center>
+        </div>
+    </div>
+    </div>
+
+    <div id="viewABlock">
+        <div class="viewForm_edit_announcement">
+            <h2><center><br>Viewing Announcement</center></h2>
+            <h2><center>Work in Progress</center></h2>
+            <hr class="schedule_hr">
+            &nbsp&nbsp Announcement Title:
+            <span id="AEtitle2" type="text" placeholder="title.." onkeydown="btnpopUp()" maxlength="50" ></span><br>
+            
+            <br>
+            &nbsp&nbsp Announcement:
+            <textarea class="schedule_textarea" id="Amsg" onkeydown="btnpopUp()"></textarea>
+            <br>
+            <center>
+                <button id="Esave" onclick="editSave()" style="cursor:pointer;display:none;">Save</button> &nbsp&nbsp&nbsp&nbsp
+                <button id="Ecancel" onclick="document.getElementById('viewABlock').style.display='none';" style="cursor:pointer;">Back</button>
             </center>
         </div>
     </div>
@@ -467,51 +526,6 @@
     </div>
     </div>
 
-    <div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA;border-style: solid;
-				border-width: 2px; z-index:3;">
-        <div style="background-color:#E4EACD;position:relative;height:75px;">
-            <h2 id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
-
-            <button onclick="editprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
-            <button onclick="closeprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
-            <button onclick="changePassword()" style="position:relative; left:520px;top:75px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;z-index:4;">Change Password</button>        </div>
-        <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
-        <div style="position:relative; left:220px;top:-110px;">
-            <p>Position: &nbsp<span id="positionProfile"></span> </p><br>
-            <p>User ID: &nbsp <span id="idProfile"></span></p><br>
-            <p>Display Name: &nbsp <span id="nameProfile"></span></p><br>
-            <p>Email Address: &nbsp <span id="emailProfile"></p><br>
-        </div>
-    </div>
-
-    <div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA; z-index:3;border-style: solid;
-				border-width: 2px;">
-        <div style="background-color:#E4EACD;position:relative;height:75px;">
-            <h2 id="nameProfileTE" style="position:relative; left:210px;top:20px;"></h2>
-            <h3 style="position:relative; left:300px;top:-10px;color:gray;">	</h3>
-            <button onclick="submitprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
-            <button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
-        </div>
-        <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="editpic">
-        <div style="position:relative; left:220px;top:-110px;">
-            <p>Position: &nbsp <span id=positionProfileE> </span> </p><br>
-            <p>User ID: &nbsp <span id="idProfileE"> </span>  </p><br>
-            <p>Display Name: <input type="text" id="nameProfileE" style="width:200px;"></p><br>
-            <p>Email Address: <input type="text" id="emailProfileE" style="width:300px;"></p><br>
-        </div>
-    </div>
-    <div id="changePass" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA; z-index:4;border-style: solid; border-width:2px;">
-        <div style="background-color:#E4EACD;position:relative;height:75px;">
-            <h2 style="position:relative; left:210px;top:20px;">Changing Password</h2>
-            <button onclick="submitNewPass()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
-            <button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
-        </div>
-        <div style="position:relative; left:220px;top:70px;">
-            <p>Current Password: <input type="password" id="oldPassword"></p><br>
-            <p>New Password: <input type="password" id="newPassword"></p><br>
-            <p>Confirm Password: <input type="password" id="confirmnewPassword"></p><br>
-        </div>
-    </div>
 
     <script type='text/javascript' src='Config.js'></script>
     <script type='text/javascript' src='Schedulejs.js'></script>
@@ -536,10 +550,16 @@
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                if(document.getElementById("toggleSide").innerHTML=="Hide sidebar"){
+                if (document.getElementById("toggleSide").innerHTML == "Hide sidebar") {
                     document.getElementById("toggleSide").innerHTML = "Show sidebar";
+                    document.getElementById("edit_announcement").style.left = "15%";
+                    document.getElementById("edit_create").style.left = "15%";
+
                 } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
                     document.getElementById("toggleSide").innerHTML = "Hide sidebar";
+                    document.getElementById("edit_announcement").style.left = "25%";
+                    document.getElementById("edit_create").style.left = "25%";
+
                 }
             });
         });

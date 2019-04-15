@@ -1,4 +1,4 @@
-﻿<!--
+<!--
   @file 03Memo2.html
   @author  MCU
   @author  Kutztown University
@@ -42,7 +42,9 @@
         text-align: center;
         border: 5px solid rgba(255, 255, 255, .4);
     }
-
+    span.hidden{
+        display: none;
+    }
     .memo_display, td, th {
         border: 1px solid black;
     }
@@ -84,7 +86,7 @@
         .memo_form-popup .btn {
             background-color: #4CAF50;
             color: white;
-            padding: 16px 20px;
+            padding: 5px 5px;
             border: none;
             cursor: pointer;
             width: 100%;
@@ -102,14 +104,13 @@
 
     .add_memo_button {
         position: relative;
-        top: -715px;
-        left: 825px;
+        top: 0px;
+        left: 55%;
         border-radius: 20%;
         background-color: #b6d7a8;
         width: 150px;
         height: 40px;
         font-size: 20px;
-        cursor: pointer;
     }
 
         .add_memo_button:hover {
@@ -324,7 +325,7 @@
                     <!--BACKGROUND PANEL IMAGE-->
                     <div class="container-fluid">
 
-                        <img class="panelimg img-responsive" src="statics/images/user_info_bg.jpg" />
+                        <img class="panelimg img-responsive" style="background-color:white" />
 
                         <div class="container" style="transform:translateY(-8.5ex)">
                             <!-- CIRCLE IMAGE THING-->
@@ -343,9 +344,10 @@
                                 <p class="tip" id="time123"></p><!-- DISPLAYS GOOD MORNING/AFTERNOON/EVENING MSG -->
                                 <img style="position:relative; left:125px;top:-25px;cursor:pointer;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
                                 <p class="account" style="position:relative; top:-20px;">
-                                    <span>Name : <span id="displayProfilename"></span></span>
-                                    <span>UserID : <span id="displayProfileid"></span></span>
-                                    <span>Role : <span id="displayProfileposition"></span></span>
+				<span style = "font-size: 20pt">Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
+                                    <span style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
+				    <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
+                                    <span style = "font-size: 20pt"> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>	
                                 </p>
                             </div>
                         </div>
@@ -391,23 +393,22 @@
                         <div class="memo_form-popup" id="form">
                             <h2>New Memo</h2>
                             <input type="date" id="selected_date" />
-                            <textarea id="memo_text" rows="8" cols="40"></textarea>
+                            <textarea id="memo_text" rows="8" cols="30"></textarea>
                             <button onclick="submit()" type="button" class="btn">Submit</button>
                             <button type="button" class="btn cancel" onclick="close_form()">Close</button>
                         </div>
-                        <div class="memo_form-popup" id="edit_form" style="left:58%;">
+                        <div class="memo_form-popup" id="edit_form" style="left:58%; top:10%">
                             <h2>Edit Memo</h2>
                             <input type="date" id="edited_date" />
-                            <textarea id="memoedited" rows="8" cols="40"></textarea>
+                            <textarea id="memoedited" rows="8" cols="30"></textarea>
                             <button onclick="esubmit()" type="button" class="btn">Submit</button>
                             <button type="button" class="btn cancel" onclick="closeform()">Close</button>
                         </div>
-                        <button class="add_memo_button" onclick="popup_form()">Add Memo</button>
-                        <div style="position:relative; top:-6%; left:30%;"><button onclick="viewTable('last');"><img class="previous_memo_month" src="statics\images\left-arrow.png" height="25px" width="30px" /></button></div>
-                        <div style="position:relative; top:-18.5%; left:86%;"><button onclick="viewTable('next')"><img class="next_memo_month" src="statics\images\right-arrow.png" height="25px" width="30px" /></button></div>
                     </div>
-
-                </div>
+                    <button class="add_memo_button" onclick="popup_form()">Add Memo</button>
+                    <div style="position:relative; top:-6.5%; left:40%;"><button onclick="viewTable('last');"><img class="previous_memo_month" src="static/images/left-arrow.png" height="25px" width="30px" /> < </button></div>
+                    <div style="position:relative; top:-12%; left:80%;"><button onclick="viewTable('next')"><img class="next_memo_month" src="statics/images/right-arrow.png" height="25px" width="30px" /> ></button></div>
+               </div>
             </div>
         </div>
     </div>

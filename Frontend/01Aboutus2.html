@@ -32,6 +32,11 @@
     <script type='text/javascript' src='Profile.js'></script>
     <script type='text/javascript' src='chat.js'></script>
 </head>
+	<style>
+        span.hidden{
+        display: none;
+    }
+    </style>
 <body>
     <div class="wrapper"><!-- Contain EVERYTHING THING IN WRAPPER CLASS -->
         <nav id="sidebar"><!-- SIDEBAR -->
@@ -125,7 +130,7 @@
                     <!--BACKGROUND PANEL IMAGE-->
                     <div class="container-fluid">
 
-                        <img class="panelimg img-responsive" src="statics/images/user_info_bg.jpg" />
+                        <img class="panelimg img-responsive" style="background-color: #fff5ee" />
 
                         <div class="container" style="transform:translateY(-8.5ex)">
                             <!-- CIRCLE IMAGE THING-->
@@ -144,9 +149,10 @@
                                 <p class="tip" id="time123"></p><!-- DISPLAYS GOOD MORNING/AFTERNOON/EVENING MSG -->
                                 <img style="position:relative; left:125px;top:-25px;cursor:pointer;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
                                 <p class="account" style="position:relative; top:-20px;">
-                                    <span>Name : <span id="displayProfilename"></span></span>
-                                    <span>UserID : <span id="displayProfileid"></span></span>
-                                    <span>Role : <span id="displayProfileposition"></span></span>
+					<span style = "font-size: 20pt">Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
+                                    <span style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
+                                    <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
+				    <span style = "font-size: 20pt"> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
                                 </p>
                             </div>
                         </div>
@@ -290,11 +296,16 @@
     <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript">
+        /*
+        This is the javascript required for the sidebar to work.
+        */
         $(document).ready(function () {
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"
             });
-
+            /*
+            This is the javascript for the sidebar to change.
+            */
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
@@ -306,7 +317,12 @@
                 }
             });
         });
-
+        /*************************************************************************/
+        /* Function name: imgBlur */
+        /* Description: Blur the image when the mouse is over the icon image. */
+        /* Parameters: obj - the image  */
+        /* Return Value: none */
+        /*************************************************************************/
         function imgBlur(obj) {
             var photoword = document.getElementById("photoword");
             var Profilepic = document.getElementById("Profilepic");
@@ -319,6 +335,12 @@
             Profilepic.style.display = "inline";
         }
 
+        /*************************************************************************/
+        /* Function name: imgOrg */
+        /* Description: Fix the image post mouse over. */
+        /* Parameters: obj - the image  */
+        /* Return Value: none */
+        /*************************************************************************/
         function imgOrg(obj) {
             var photoword = document.getElementById("photoword");
             var Profilepic = document.getElementById("Profilepic");
