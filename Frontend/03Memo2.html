@@ -42,7 +42,9 @@
         text-align: center;
         border: 5px solid rgba(255, 255, 255, .4);
     }
-
+    span.hidden{
+        display: none;
+    }
     .memo_display, td, th {
         border: 1px solid black;
     }
@@ -344,6 +346,7 @@
                                 <p class="account" style="position:relative; top:-20px;">
 				<span style = "font-size: 20pt">Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
                                     <span style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
+				    <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
                                     <span style = "font-size: 20pt"> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>	
                                 </p>
                             </div>
