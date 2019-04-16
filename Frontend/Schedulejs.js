@@ -67,12 +67,12 @@ function createNewAnnouncement(){
     alert(' Please input a data');
   }
   else {
-  updates['Announcements/'+ keyA] = AData;
-  firebase.database().ref().update(updates);
-  alert('Successfully Entered');
-  window.location.reload();
-}
-}
+    updates['Announcements/'+ keyA] = AData;
+    firebase.database().ref().update(updates);
+    alert('Successfully Entered');
+    window.location.reload();
+  }
+} //end function createNewAnnouncement
 
 //Deleting Announcements
 function deleteA(rowIndex){
@@ -88,7 +88,7 @@ function deleteA(rowIndex){
     }
     else {
     }
-}
+} //end function deleteA
 
 //View Announcement, no editing
 //WIP
@@ -103,7 +103,7 @@ function viewA(rowIndex){
     document.getElementById('AEtitle2').value = EAdata2;
     document.getElementById('keyname').innerHTML = Ukey;
   });
-}
+} //end function viewA
 
 //Edit Announcement, no viewing
 function editA(rowIndex){
@@ -117,8 +117,8 @@ function editA(rowIndex){
     document.getElementById('AEtitle2').value = EAdata2;
     document.getElementById('keyname').innerHTML = Ukey;
   });
+} //end function editA
 
-}
 function editSave(rowIndex){
   var editedData = $("#Amsg").val();
   var editedData2 = 'xasx' + editedData + 'xaex';
@@ -132,50 +132,51 @@ function editSave(rowIndex){
     AnnouncementAndroid: editedData2,
     AnnouncementIOS: editedData,
     a_id: akey
-};
-if(editedData == ""){
-  alert(' Please input a data');
-}
-else {
-  var updates={};
-  updates['Announcements/'+ akey] = wholeA;
-  firebase.database().ref().update(updates);
-  window.location.reload();
-}
-}
+  };
+  if(editedData == ""){
+    alert(' Please input a data');
+  }
+  else {
+    var updates={};
+    updates['Announcements/'+ akey] = wholeA;
+    firebase.database().ref().update(updates);
+    window.location.reload();
+  }
+} //end function editSave
 
 function btnpopUp(){
   document.getElementById('Esave').style.display = "inline";
+} //end function btnpopUP
 
-}
-
+/*
 //Events
 function AddNewCS(){
 document.getElementById('newCSBlock').style.display ='block';
 }
+*/
 
 //Create new Working Schedule - Upload folder into firebase
-var uploader3 = document.getElementById('uploader3');
-var fileButton3 = document.getElementById('fileButton3');
-var submitfileButton3 = document.getElementById('btnSubmitCS');
+//var uploader3 = document.getElementById('uploader3');
+//var fileButton3 = document.getElementById('fileButton3');
+//var submitfileButton3 = document.getElementById('btnSubmitCS');
 
-fileButton3.addEventListener('change', handleuploadfile3);
-submitfileButton3.addEventListener('click', handleuploadfileSubmit3);
+//fileButton3.addEventListener('change', handleuploadfile3);
+//submitfileButton3.addEventListener('click', handleuploadfileSubmit3);
 
-let file3;
+//let file3;
 
 function handleuploadfile3(e) {
  file3=e.target.files[0];
-
-}
+} //end function handleuploadfile3
 
 function handleuploadfileSubmit3(e) {
   if(file3 == undefined){
     alert ("Please enter data!")
   }
-var storageRef=firebase.storage().ref('CenterSchedule/'+file3.name);
-var uploadtask3 = storageRef.put(file3);
-
+}
+//var storageRef=firebase.storage().ref('CenterSchedule/'+file3.name);
+//var uploadtask3 = storageRef.put(file3);
+/*
 uploadtask3.on('state_changed',
 
   function progress(snapshot){
@@ -216,7 +217,7 @@ uploadtask3.on('state_changed',
   }
 );
 }
-
+*/
 
 //Display CS table
 var cs = [];
@@ -276,39 +277,38 @@ function injectToDOM(weeks){
 
 //CS deletion
 function deleteCS(rowIndexCS){
-var fbCS= firebase.database().ref('CenterSchedule');
-var Ukey = cs[rowIndexCS];
-//var Ukey = $(this).closest('tr').children('td:first').text();
-console.log(Ukey);
-var r = confirm("Are you sure you want to delete a center schedule?");
-if (r == true) {
+  var fbCS= firebase.database().ref('CenterSchedule');
+  var Ukey = cs[rowIndexCS];
+  //var Ukey = $(this).closest('tr').children('td:first').text();
+  console.log(Ukey);
+  var r = confirm("Are you sure you want to delete a center schedule?");
+  if (r == true) {
     fbCS.child(Ukey+"/filename").once('value').
     then(function(snapshot){
-        var storageRef=firebase.storage().ref();
-        storageRef.child("CenterSchedule/"+snapshot.val()).delete().then(function(){
-            fbCS.child(Ukey).remove();
-            alert("successfully deleted!");
-            window.location.reload();
-        });
+      var storageRef=firebase.storage().ref();
+      storageRef.child("CenterSchedule/"+snapshot.val()).delete().then(function(){
+        fbCS.child(Ukey).remove();
+        alert("successfully deleted!");
+        window.location.reload();
+      });
     });
-}
-else {
-}
+  }
+  else {}
 }
 
 //CS download
 function downloadCS(rowIndexCS){
-var fbCS= firebase.database().ref('CenterSchedule');
-var Ukey = cs[rowIndexCS];
-console.log(rowIndexCS);
-//var Ukey = $(this).closest('tr').children('td:first').text();
-var url = fbCS.child(Ukey).child('url');
-let downloadURL;
-url.once("value").then(function(snapshot){
-   downloadURL = snapshot.val();
-  // console.log(downloadURL);
-   window.open(downloadURL,'_blank') ;
-});
+  var fbCS= firebase.database().ref('CenterSchedule');
+  var Ukey = cs[rowIndexCS];
+  console.log(rowIndexCS);
+  //var Ukey = $(this).closest('tr').children('td:first').text();
+  var url = fbCS.child(Ukey).child('url');
+  let downloadURL;
+  url.once("value").then(function(snapshot){
+    downloadURL = snapshot.val();
+    // console.log(downloadURL);
+    window.open(downloadURL,'_blank') ;
+  });
 }
 
 
@@ -467,7 +467,6 @@ uploadtask.on('state_changed',
        titleAndroid : title2,
        titleIOS : title,
        filename: file2.name
-
      };
      updates['WorkingHourRecord/' + postKey] = postData;
      firebase.database().ref().update(updates);
@@ -503,7 +502,7 @@ function openmenu(){
     document.getElementById("openmenu").style.opacity = "1";
   }
   else{
-  document.getElementById("menu").style.display = "block";
-  document.getElementById("openmenu").style.opacity = ".6";
-}
+    document.getElementById("menu").style.display = "block";
+    document.getElementById("openmenu").style.opacity = ".6";
+  }
 }
