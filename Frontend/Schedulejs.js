@@ -188,26 +188,26 @@ else {
 
 function viewA(rowIndex){
 
-document.getElementById('viewABlock').style.display = 'block';
+  document.getElementById('viewABlock').style.display ='block';
 
-var Ukey = an[rowIndex];
+  var Ukey = an[rowIndex];
 
-var fbB= firebase.database().ref('Announcements/'+Ukey);
+  var fbB= firebase.database().ref('Announcements/'+Ukey);
 
-fbB.on('value', function(snapshot){
+  fbB.on('value', function(snapshot){
 
-var EAdata = snapshot.child('AnnouncementIOS').val();
+    var EAdata = snapshot.child('AnnouncementIOS').val();
 
-var EAdata2 = snapshot.child('ATitleIOS').val();
+    var EAdata2 = snapshot.child('ATitleIOS').val();
 
-document.getElementById('Amsg').value = EAdata;
+    document.getElementById('Amsg2').innerHTML = EAdata;
 
-document.getElementById('AEtitle2').value = EAdata2;
+    document.getElementById('AEtitle3').innerHTML = EAdata2;
 
-document.getElementById('keyname').innerHTML = Ukey;
+    document.getElementById('keyname').innerHTML = Ukey;
 
-});
-
+  });
+  
 } //end function viewA
 
 
