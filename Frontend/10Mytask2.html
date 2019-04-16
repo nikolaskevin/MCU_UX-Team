@@ -133,8 +133,26 @@
             height: 60%;
             width: 45%;
             overflow-y: auto;
+            align-content: center;
+            
         }
 
+        .userTableContainer{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+        }
+
+        .userTable{
+            width: 80%;
+            margin-left: 10%;
+        }
+        #usersPopupCloseButton{
+            margin-top: 10px;
+            margin-left: 90%;
+            margin-bottom: 30px;
+        }
         .picPreview{
             display: flex;
             max-height: 100px;
@@ -380,6 +398,7 @@
             </div>
         </div>
         <div class="usersPopup">
+            <button id = "usersPopupCloseButton">Close</button>
             <div class = "userTableContainer">
                 
             </div>

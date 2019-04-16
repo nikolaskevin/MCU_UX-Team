@@ -1,4 +1,4 @@
-<!--
+﻿<!--
   @file 03Memo2.html
   @author  MCU
   @author  Kutztown University
@@ -37,8 +37,6 @@
         width: 65%;
         height: 12%;
         position: relative;
-        top: 2%;
-        left: 29%;
         text-align: center;
         border: 5px solid rgba(255, 255, 255, .4);
     }
@@ -50,15 +48,15 @@
     }
 
     .memo_display {
-        width: 638px;
+        width: 75%;
         border-collapse: collapse;
-        position: relative;
-        top: -180%;
-        left: 29%;
-        height: 75%;
+        position: absolute;
+        left: 23.5%;
+        height: 72%;
         display: block;
-        overflow-x: hidden;
+        top:18ex;
         overflow-y: auto;
+        overflow-x: auto;
         background-color: rgba(215, 233, 184, .8);
         border: 5px solid rgba(255, 255, 255, .4);
     }
@@ -72,15 +70,15 @@
 
     .memo_form-popup {
         display: none;
-        position: fixed;
-        top: 30%;
-        left: 69.5%;
+        position: absolute;
+        top: 20%;
+        left: 20%;
         border: 5px solid #f1f1f1;
         z-index: 9;
-        max-width: 300px;
+        width: 75%;
         padding: 10px;
         background-color: white;
-        height: 45%;
+        height: 55%;
     }
 
         .memo_form-popup .btn {
@@ -104,7 +102,7 @@
 
     .add_memo_button {
         position: relative;
-        top: 0px;
+        top: 1ex;
         left: 55%;
         border-radius: 20%;
         background-color: #b6d7a8;
@@ -137,10 +135,11 @@
     .today_memo {
         position: relative;
         top: 0%;
-        left: 3%;
-        width: 18%;
-        height: 160px;
+        left: 2%;
+        width: 20%;
+        height: 70ex;
         overflow-y: auto;
+        padding-top:2ex;
         background-color: #F0E68C;
         word-wrap: break-word;
         padding-left: 25px;
@@ -356,7 +355,7 @@
 
             <div class="main container-fluid wrapper">
                 <!-- START OF MIDDLE CONTENT-->
-                <div class="right" style="width:800ex; transform:translateY(-13ex)">
+                <div class="right" style="width:800ex; height:100%; transform:translateY(-13ex)">
                     <div class="tap">
                         <span>Memo</span>
                     </div>
@@ -366,48 +365,51 @@
                         <p class="selected" style="margin-top:3px;margin-bottom:3px;" onclick="window.location.href='/../Frontend-Chinese/03Memo2.html'">&nbsp 中文<br></p>
                         <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right: 5px;"></i>Logout</p>
                     </div>
-                    <div class="container">
-                        <div class="memo_month_title">
-                            <table style="position:absolute; top:-25%;left:30%;border-style:hidden;margin-bottom:0px;">
+                    <div class="container" style="height:80%; vertical-align:middle">
+                        <div class="memo_month_title img-rounded" style="position:relative; top:2ex;left:30%;border-style:hidden;margin-bottom:0px;padding-bottom: 0px;padding-top: 0px;">
+                            <table>
                                 <tr>
-                                    <td style="border-style:hidden;text-align:right;"><h1 id="fullName_Month"></h1>
-                                    <td style="border-style:hidden;text-align:left;"><h4 id="years"></h4>
+                                    <td style="border-style:hidden;text-align:center;"><h1 id="fullName_Month"></h1>
+                                    <td style="border-style:hidden;text-align:center;"><h4 id="years"></h4>
                                 </tr>
                             </table>
                         </div>
-                        <h2 id="current_year" style="position:relative;"></h2>
-                        <h2 id='current_date' style="position:relative;"></h2>
-                        <h2 id="current_month" style="position:relative;"></h2>
-                        <h2 id="current_week" style="position:relative;"></h2>
-                        <div class="today_memo" id="today_memo"></div>
-                        <div style="position:relative; top:-100%; left:22%; width:0.3%; height:100%; background-color:#000;"></div>
+                        <div style="transform:translateY(-5ex)">
+                            <h2 id="current_year" style="position:relative;"></h2>
+                            <h2 id='current_date' style="position:relative;"></h2>
+                            <h2 id="current_month" style="position:relative;"></h2>
+                            <h2 id="current_week" style="position:relative;"></h2>
+                            <div class="today_memo" id="today_memo"></div>
+                        </div>
                         <table id="memo_table" class="memo_display">
                             <tr>
-                                <th class="memo_table_head" style="width: 100px; background-color: #ddd; text-align: center;">Date</th>
-                                <th class="memo_table_head" style="width: 400px; background-color: #ddd; text-align: center;">Content</th>
-                                <th class="memo_table_head" style="width: 100px; background-color: #ddd; text-align: center;">Delete </th>
+                                <th class="memo_table_head" style="width: 10%; background-color: #ddd; text-align: center;">Date</th>
+                                <th class="memo_table_head" style="width: 90%; background-color: #ddd; text-align: center;">Content</th>
+                                <th class="memo_table_head" style="width: 10%; background-color: #ddd; text-align: center;">Delete </th>
                             </tr>
                             <tbody id="context_table" style="text-align:center;"></tbody>
                         </table>
                         <div class="memo_form-popup" id="form">
                             <h2>New Memo</h2>
-                            <input type="date" id="selected_date" />
-                            <textarea id="memo_text" rows="8" cols="30"></textarea>
+                            <input type="date" id="selected_date" /><br />
+                            <textarea id="memo_text" rows="15" cols="75"></textarea>
                             <button onclick="submit()" type="button" class="btn">Submit</button>
                             <button type="button" class="btn cancel" onclick="close_form()">Close</button>
                         </div>
-                        <div class="memo_form-popup" id="edit_form" style="left:58%; top:10%">
+                        <div class="memo_form-popup" id="edit_form" >
                             <h2>Edit Memo</h2>
-                            <input type="date" id="edited_date" />
-                            <textarea id="memoedited" rows="8" cols="30"></textarea>
+                            <input type="date" id="edited_date" /><br/>
+                            <textarea id="memoedited" rows="15" cols="75"></textarea>
                             <button onclick="esubmit()" type="button" class="btn">Submit</button>
                             <button type="button" class="btn cancel" onclick="closeform()">Close</button>
                         </div>
                     </div>
-                    <button class="add_memo_button" onclick="popup_form()">Add Memo</button>
-                    <div style="position:relative; top:-6.5%; left:40%;"><button onclick="viewTable('last');"><img class="previous_memo_month" src="static/images/left-arrow.png" height="25px" width="30px" /> < </button></div>
-                    <div style="position:relative; top:-12%; left:80%;"><button onclick="viewTable('next')"><img class="next_memo_month" src="statics/images/right-arrow.png" height="25px" width="30px" /> ></button></div>
-               </div>
+                        <button class="add_memo_button" onclick="popup_form()">Add Memo</button>
+                    <div style="position:relative; left:40%;">
+                        <button onclick="viewTable('last');"><img class="previous_memo_month" src="statics/images/left-arrow.png" height="25px" width="30px" /> < </button>
+                        <span style="position:relative; left: 35%"><button onclick="viewTable('next')"><img class="next_memo_month" src="statics/images/right-arrow.png" height="25px" width="30px" /> ></button></span>
+                    </div>
+                    </div>
             </div>
         </div>
     </div>

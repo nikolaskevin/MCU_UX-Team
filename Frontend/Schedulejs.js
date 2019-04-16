@@ -67,12 +67,12 @@ function createNewAnnouncement(){
     alert(' Please input a data');
   }
   else {
-  updates['Announcements/'+ keyA] = AData;
-  firebase.database().ref().update(updates);
-  alert('Successfully Entered');
-  window.location.reload();
-}
-}
+    updates['Announcements/'+ keyA] = AData;
+    firebase.database().ref().update(updates);
+    alert('Successfully Entered');
+    window.location.reload();
+  }
+} //end function createNewAnnouncement
 
 //Deleting Announcements
 function deleteA(rowIndex){
@@ -88,7 +88,7 @@ function deleteA(rowIndex){
     }
     else {
     }
-}
+} //end function deleteA
 
 //View Announcement, no editing
 //WIP
@@ -103,7 +103,7 @@ function viewA(rowIndex){
     document.getElementById('AEtitle2').value = EAdata2;
     document.getElementById('keyname').innerHTML = Ukey;
   });
-}
+} //end function viewA
 
 //Edit Announcement, no viewing
 function editA(rowIndex){
@@ -117,8 +117,8 @@ function editA(rowIndex){
     document.getElementById('AEtitle2').value = EAdata2;
     document.getElementById('keyname').innerHTML = Ukey;
   });
+} //end function editA
 
-}
 function editSave(rowIndex){
   var editedData = $("#Amsg").val();
   var editedData2 = 'xasx' + editedData + 'xaex';
@@ -132,50 +132,51 @@ function editSave(rowIndex){
     AnnouncementAndroid: editedData2,
     AnnouncementIOS: editedData,
     a_id: akey
-};
-if(editedData == ""){
-  alert(' Please input a data');
-}
-else {
-  var updates={};
-  updates['Announcements/'+ akey] = wholeA;
-  firebase.database().ref().update(updates);
-  window.location.reload();
-}
-}
+  };
+  if(editedData == ""){
+    alert(' Please input a data');
+  }
+  else {
+    var updates={};
+    updates['Announcements/'+ akey] = wholeA;
+    firebase.database().ref().update(updates);
+    window.location.reload();
+  }
+} //end function editSave
 
 function btnpopUp(){
   document.getElementById('Esave').style.display = "inline";
+} //end function btnpopUP
 
-}
-
+/*
 //Events
 function AddNewCS(){
 document.getElementById('newCSBlock').style.display ='block';
 }
+*/
 
 //Create new Working Schedule - Upload folder into firebase
-var uploader3 = document.getElementById('uploader3');
-var fileButton3 = document.getElementById('fileButton3');
-var submitfileButton3 = document.getElementById('btnSubmitCS');
+//var uploader3 = document.getElementById('uploader3');
+//var fileButton3 = document.getElementById('fileButton3');
+//var submitfileButton3 = document.getElementById('btnSubmitCS');
 
-fileButton3.addEventListener('change', handleuploadfile3);
-submitfileButton3.addEventListener('click', handleuploadfileSubmit3);
+//fileButton3.addEventListener('change', handleuploadfile3);
+//submitfileButton3.addEventListener('click', handleuploadfileSubmit3);
 
-let file3;
+//let file3;
 
 function handleuploadfile3(e) {
  file3=e.target.files[0];
-
-}
+} //end function handleuploadfile3
 
 function handleuploadfileSubmit3(e) {
   if(file3 == undefined){
     alert ("Please enter data!")
   }
-var storageRef=firebase.storage().ref('CenterSchedule/'+file3.name);
-var uploadtask3 = storageRef.put(file3);
-
+}
+//var storageRef=firebase.storage().ref('CenterSchedule/'+file3.name);
+//var uploadtask3 = storageRef.put(file3);
+/*
 uploadtask3.on('state_changed',
 
   function progress(snapshot){
@@ -216,104 +217,100 @@ uploadtask3.on('state_changed',
   }
 );
 }
-
-
-function getWeek(){
-  var fbCS = firebase.database().ref('CenterSchedule')
-}
+*/
 
 //Display CS table
 var cs = [];
 var rowIndexCS = 1;
 var fbCS = firebase.database().ref('CenterSchedule')
-console.log("HELLO");
-console.log(fbCS);
+var weeks = [];
 
+//get weeks stored in an array
 fbCS.once('value',function(snapshot){
+  //console.log(snapshot.numChildren());
   snapshot.forEach(function(Week){
     weekOf = Week.key;
-    var days = {Sunday: "", Monday: "", Tuesday: "", Wednesday: "", Thursday: "", Friday: "", Saturday: ""};
-    var sched = Week.val();
-
-
-    console.log(days);
-    console.log(sched);
-
-    days["Sunday"]= sched["Sunday"];
-    days["Monday"]= sched["Monday"];
-    days["Tuesday"]= sched["Tuesday"];
-    days["Wednesday"]= sched["Wednesday"];
-    days["Thursday"]= sched["Thursday"];
-    days["Friday"]= sched["Friday"];
-    days["Saturday"]= sched["Saturday"];
-
-    console.log(days);
-    injectToDOM(days);
-
-    
-    var childData = Week.val();
-    var button = document.createElement("button");
-    var button2 = document.createElement("button");
-    button.innerHTML="Download";
-    button2.innerHTML="Delete";
-
+    weeks.push(weekOf);
   });
+  console.log(weeks);
+  injectToDOM(weeks);
 });
 
-function injectToDOM(days){
+/**
+ * @function injectToDOM
+ * @description query for data for individual days given the week, then display in DOM
+ * @param {*} weeks array of weeks that have schedules
+ */
+function injectToDOM(weeks){
   var htmlInjection;
-  htmlInjection = "";
-  htmlInjection += '<tr><td style="width:10%">'+weekOf+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Sunday"]+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Monday"]+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Tuesday"]+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Wednesday"]+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Thursday"]+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Friday"]+'</td>';
-  htmlInjection += '<td style="width:10%">'+days["Sunday"]+'</td>';
-  htmlInjection += '<td style="width:10%">Edit</th>';
-  htmlInjection += '<td style="width:10%">Delete</th>';
-  htmlInjection += '</tr>';
-
-  $("#CenterScheduleInfo").html(htmlInjection); //Insert the HTML for the tasks into the DOM
-
-}
+  count = 1;
+  
+  htmlInjection = '<table style="width:100%; border: 1px solid black;">';
+ // for (var i = 0; i < weeks.length; i++){
+ for (var i = weeks.length-1; i >= 0; i--){
+   console.log(i);
+    var weekSched = firebase.database().ref('CenterSchedule/'+weeks[i]+'/');  
+    console.log("HELLO");
+    weekSched.once('value',function(days){
+      console.log(days.key);
+      times = [];
+      times = days.val();
+      
+      htmlInjection += '<tr><td style="width:10%">'+days.key+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Sunday"]+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Monday"]+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Tuesday"]+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Wednesday"]+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Thursday"]+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Friday"]+'</td>';
+      htmlInjection += '<td style="width:10%">'+times["Sunday"]+'</td>';
+      htmlInjection += '<td style="width:10%">Edit</td>';
+      htmlInjection += '<td style="width:10%">Delete</td>';
+      htmlInjection += '</tr>';
+      
+      count ++;
+      if(count = weeks.length) //if reached the end of the list of weeks
+      {
+        $("#CenterScheduleInfo").html(htmlInjection); //Insert the HTML for the tasks into the DOM
+      } //end if
+    }); //end weekSched.once('value',function(days){
+  } //end for
+} //end injectToDOM
 
 //CS deletion
 function deleteCS(rowIndexCS){
-var fbCS= firebase.database().ref('CenterSchedule');
-var Ukey = cs[rowIndexCS];
-//var Ukey = $(this).closest('tr').children('td:first').text();
-console.log(Ukey);
-var r = confirm("Are you sure you want to delete a center schedule?");
-if (r == true) {
+  var fbCS= firebase.database().ref('CenterSchedule');
+  var Ukey = cs[rowIndexCS];
+  //var Ukey = $(this).closest('tr').children('td:first').text();
+  console.log(Ukey);
+  var r = confirm("Are you sure you want to delete a center schedule?");
+  if (r == true) {
     fbCS.child(Ukey+"/filename").once('value').
     then(function(snapshot){
-        var storageRef=firebase.storage().ref();
-        storageRef.child("CenterSchedule/"+snapshot.val()).delete().then(function(){
-            fbCS.child(Ukey).remove();
-            alert("successfully deleted!");
-            window.location.reload();
-        });
+      var storageRef=firebase.storage().ref();
+      storageRef.child("CenterSchedule/"+snapshot.val()).delete().then(function(){
+        fbCS.child(Ukey).remove();
+        alert("successfully deleted!");
+        window.location.reload();
+      });
     });
-}
-else {
-}
+  }
+  else {}
 }
 
 //CS download
 function downloadCS(rowIndexCS){
-var fbCS= firebase.database().ref('CenterSchedule');
-var Ukey = cs[rowIndexCS];
-console.log(rowIndexCS);
-//var Ukey = $(this).closest('tr').children('td:first').text();
-var url = fbCS.child(Ukey).child('url');
-let downloadURL;
-url.once("value").then(function(snapshot){
-   downloadURL = snapshot.val();
-  // console.log(downloadURL);
-   window.open(downloadURL,'_blank') ;
-});
+  var fbCS= firebase.database().ref('CenterSchedule');
+  var Ukey = cs[rowIndexCS];
+  console.log(rowIndexCS);
+  //var Ukey = $(this).closest('tr').children('td:first').text();
+  var url = fbCS.child(Ukey).child('url');
+  let downloadURL;
+  url.once("value").then(function(snapshot){
+    downloadURL = snapshot.val();
+    // console.log(downloadURL);
+    window.open(downloadURL,'_blank') ;
+  });
 }
 
 
@@ -472,7 +469,6 @@ uploadtask.on('state_changed',
        titleAndroid : title2,
        titleIOS : title,
        filename: file2.name
-
      };
      updates['WorkingHourRecord/' + postKey] = postData;
      firebase.database().ref().update(updates);
@@ -508,7 +504,7 @@ function openmenu(){
     document.getElementById("openmenu").style.opacity = "1";
   }
   else{
-  document.getElementById("menu").style.display = "block";
-  document.getElementById("openmenu").style.opacity = ".6";
-}
+    document.getElementById("menu").style.display = "block";
+    document.getElementById("openmenu").style.opacity = ".6";
+  }
 }
