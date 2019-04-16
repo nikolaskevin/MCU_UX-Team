@@ -14,7 +14,6 @@
     <link rel="icon" type="image/jpg" href="image\logo.jpg">
     <link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="statics/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="statics/css/chat.css" />
     <!-- IMPORTING BOOTSTRAP!!-->
     <!-- Importing BOOTSTRAP!!! -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -27,8 +26,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 </head>
-<style>
-    
+<style> 
     table, th, td {
         padding: 10px;
         border: 1px solid black;
@@ -39,14 +37,14 @@
     span.hidden{
         display: none;
     }
-        table th {
-            background-color: #B0C4DE;
-            color: #000;
-        }
+    table th {
+        background-color: #B0C4DE;
+        color: #000;
+    }
 
-        table td {
-            text-shadow: 2px 2px #FFFFFF;
-        }
+    table td {
+        text-shadow: 2px 2px #FFFFFF;
+    }
 
     #newABlock {
         width: 100%;
@@ -379,25 +377,24 @@
                         </table>
                     </div> <!--end div class="container" id="data1"-->
                     <div class="container" id="data3" style="display:none;">
-                        <table id='WStable' class="schedule_table" style="width:100%;border-style:hidden;">
+                        <br>
+                        <button type="button" onclick="AddNewWS()" class="add_button" style="cursor:pointer;">Add New Schedule</button> 
+                        <br><br>
+                        <table id='WStable' style="width:100%; border: 1px solid black;">
                             <tr>
-                                <th style="width:50%"> Working Schedule </th>
-                                <th style="width:25%"><button type="button" onclick="DownloadNewWS()" class="add_button" style="background-color:#B0C4DE;width:120px;height:40px;cursor:pointer;">Download <br>New Form</button></th>
-                                <th style="width:25%"><button type="button" onclick="AddNewWS()" class="add_button" style="cursor:pointer;"><img src="statics\images\add.png" height="15px" width="15px" /></button> </th>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="container" id="data4" style="display:none;">
-                        <table id=tableWH class="schedule_table" style="width:100%;border-style:hidden;">
-                            <tr>
-                                <th style="width:50%"> Working Hour </th>
-                                <th style="width:25%"><button type="button" onclick="DownloadNewWH()" class="add_button" style="background-color:#B0C4DE;width:120px;height:40px;cursor:pointer;">Download <br>New Form</button></th>
-                                <th style="width:25%"> <button type="button" class="add_button" style="cursor:pointer;"><img src="statics\images\add.png" onclick="AddNewWH()" height="15px" width="15px" /></button> </th>
+                                <th style="width:10%">Week Of</th>
+                                <th style="width:10%">SUN</th>
+                                <th style="width:10%">MON</th>
+                                <th style="width:10%">TUE</th>
+                                <th style="width:10%">WED</th>
+                                <th style="width:10%">THU</th>
+                                <th style="width:10%">FRI</th>
+                                <th style="width:10%">SAT</th>
+                                <th style="width:20%" colspan="2"></th> 
                             </tr>
                         </table>
                         <div style="width:100%;" id="CenterScheduleInfo"></div><!--end div style="width:100%;" id="CenterScheduleInfo"-->
                     </div> <!--end div class="container" id="data3" style="display:none;"-->
-                    
                 </div> <!--end div class="right" style="width:800ex; transform:translateY(-13ex)"-->
             </div> <!--end div class="main container-fluid wrapper"-->
         </div><!-- END OF MAIN DIV CONTAINER CLASS!!! --> <!--end div id="content"-->

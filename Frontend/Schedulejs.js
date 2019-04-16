@@ -246,7 +246,9 @@ function injectToDOM(weeks){
   count = 1;
   
   htmlInjection = '<table style="width:100%; border: 1px solid black;">';
-  for (var i = 0; i < weeks.length; i++){
+ // for (var i = 0; i < weeks.length; i++){
+ for (var i = weeks.length-1; i >= 0; i--){
+   console.log(i);
     var weekSched = firebase.database().ref('CenterSchedule/'+weeks[i]+'/');  
     console.log("HELLO");
     weekSched.once('value',function(days){
