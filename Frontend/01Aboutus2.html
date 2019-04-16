@@ -32,6 +32,11 @@
     <script type='text/javascript' src='Profile.js'></script>
     <script type='text/javascript' src='chat.js'></script>
 </head>
+	<style>
+        span.hidden{
+        display: none;
+    }
+    </style>
 <body>
     <div class="wrapper"><!-- Contain EVERYTHING THING IN WRAPPER CLASS -->
         <nav id="sidebar"><!-- SIDEBAR -->
@@ -146,7 +151,8 @@
                                 <p class="account" style="position:relative; top:-20px;">
 					<span style = "font-size: 20pt">Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
                                     <span style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
-                                    <span style = "font-size: 20pt"> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
+                                    <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
+				    <span style = "font-size: 20pt"> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
                                 </p>
                             </div>
                         </div>

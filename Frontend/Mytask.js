@@ -99,6 +99,63 @@ function getTaskPath(taskID, callback){
   }); //end function(snapshot)
 } //end getTaskPath
 
+function assignTask(taskData){
+  console.log(taskData);
+  //alert(taskData.data.name);
+  var taskID = taskData.data.tID;
+  var category = taskData.data.category;
+
+  $(".usersPopup").css("display", "flex");
+  $(".usersPopup").css("flex-direction", "column");
+
+  loadUsers(taskID, category, function(){
+
+  });
+}
+
+/**
+ * @function assignTaskCallback
+ * @description callback function for the assign task button on the users popup. This is what actually assigns the task to the user in the database.
+ * @param {*} assignData 
+ */
+function assignTaskCallback(assignData){
+  console.log(assignData.data);
+
+  var lastTask;
+  var taskID = assignData.data.taskID;
+  var patientID = assignData.data.patientID;
+  var category = assignData.data.category;
+  // Insert the task to the patients task list
+  var fbRef = firebase.database().ref("Patient/"+patientID+"/AssignedTasks");
+  var insert = {};
+  insert[""+taskID] = taskID;
+  console.log(insert);
+  fbRef.update(insert).then(function(){
+    var fbRef = firebase.database().ref("TaskInstruction/"+category+"/"+taskID+"/Info/Assigned/");
+    var tInsert = {};
+    tInsert[""+patientID] = patientID;
+    fbRef.update(tInsert).then(function(){
+      loadUsers(taskID, category, assignTask);
+    })
+  })
+  // Insert the task to the tasks's assigned list
+}
+
+function unassignTaskCallback(assignData){
+
+  var taskID = assignData.data.taskID;
+  var patientID = assignData.data.patientID;
+  var category = assignData.data.category;
+  //Remove task from patient's task list
+  var fbRef = firebase.database().ref("Patient/"+patientID+"/AssignedTasks");
+  fbRef.child(""+taskID).remove().then(function(){
+    //Remove task from task's assignee list
+    var fbRef = firebase.database().ref("TaskInstruction/"+category+"/"+taskID+"/Info/Assigned/");
+    fbRef.child(""+patientID).remove().then(function(){
+      loadUsers(taskID, category, assignTask);
+    })
+  })
+}
 
 /**
  * @function getTaskPathCallback
@@ -161,7 +218,20 @@ function getTaskPathCallback(task){
   editButton.innerHTML="Edit";
   var cellEditButton= row.insertCell(-1);
   cellEditButton.appendChild(editButton);
-    
+  
+  //Assign Button
+  var assignButton = document.createElement("button");
+  assignButton.setAttribute.className = "assignButton";
+  assignButton.setAttribute("id","deleteButton_id["+num1+"]");
+  var tData = {};
+  tData.tID = tID;
+  tData.name = tName;
+  tData.category = category;
+  $(assignButton).click(tData, assignTask);
+  assignButton.innerHTML="Assign";
+  var cellAssignButton = row.insertCell(-1);
+  cellAssignButton.appendChild(assignButton);
+
   var deleteButton = document.createElement("button");
   deleteButton.setAttribute("id","deleteButton_id["+num1+"]");
   deleteButton.setAttribute("onclick", "removeTaskMyList("+num1+")");
@@ -181,6 +251,59 @@ function getTaskPathCallback(task){
   return;
 }
 
+
+function loadUsers(taskID, category, callback){
+  
+  $(".userTableContainer").html("asdf");
+  var table = $('<table>').addClass('userTable');
+  var fbGet = firebase.database().ref("Patient");
+  fbGet.once('value', function(patientsSnapshot){
+    patientsSnapshot.forEach(function (patientSnapshot){
+      var patient = patientSnapshot.val();
+      var row = $('<tr>').addClass('userTableRow');
+
+      var patientName = patient["Portfolio"]["Name"];
+      var patientID = patient["Portfolio"]["ID"];
+
+      var patientNameCell = $('<td>').addClass('userTableCell');
+        patientNameCell.html(patientName);
+      var patientIDCell = $('<td>').addClass('userTableCell');
+        patientIDCell.html(patientID);
+      var assignButtonCell = $('<td>').addClass('userTableCell');
+     
+      var assignButton = $('<button>').addClass('assignButton');
+      var assignData = {};
+      assignData.dummy = "dummy";
+      assignData.patientID = patientID;
+      assignData.taskID = taskID;
+      assignData.category = category;
+      if (patient.AssignedTasks == null){
+        patient.AssignedTasks = {};
+      }
+      assignData.AssignedTasks = patient.AssignedTasks;
+      if (patient.AssignedTasks == null || patient.AssignedTasks[""+taskID] == null){
+        assignButton.click(assignData, assignTaskCallback);
+        assignButton.html("Assign Task");
+        assignButtonCell.append(assignButton);
+      } else {
+        assignButton.click(assignData, unassignTaskCallback);
+        assignButton.html("Unassign Task");
+        assignButtonCell.append(assignButton);
+      }
+     
+
+      //Add Each cell to each row 
+      row.append(patientNameCell);
+      row.append(patientIDCell);
+      row.append(assignButtonCell);
+      table.append(row);
+      
+      console.log(patientName);
+    });
+    $(".userTableContainer").html(table);
+    callback();
+  });
+}
 
 /**
    * @function toggleTask
@@ -267,6 +390,10 @@ $(document).ready(function(){
           $("#assigningTask tr:not(:first)").filter(function() {
               $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
           });
+    });
+
+    $("#usersPopupCloseButton").click(function(){
+      $(".usersPopup").css("display","none");
     });
 });
 
@@ -735,6 +862,8 @@ $('.sortable').sortable({
   }
 });
 
+
+
 /**
  * @function showDetails
  * @description show task steps
@@ -782,7 +911,6 @@ function directTask(num){
   var taskN = tr[num].cells[1].innerText;
   var taskID = tr[num].cells[7].innerText;
   var taskPath = "TaskInstruction/" + cat + "/" + taskID;
-  //alert (taskPath);
   sessionStorage.setItem("taskPath", taskPath);
   localStorage.setItem("taskPath", taskPath);
   localStorage.setItem("taskN", taskN);
@@ -849,7 +977,7 @@ function createNewTask(){
         return 0; 
     }
   }, function(error, commited, snapshot){
-      //alert(snapshot.val());
+   
       var TID = snapshot.val();
       createBlankTask(TID);
       //Stuff to do after the transaction is done
@@ -892,7 +1020,7 @@ function createBlankTask(TID){
   console.log(insertToDB);
 
   if (firebase.database().ref().update(insertToDB)){
-      //alert("Save successful");
+     
       taskPath = "TaskInstruction/Basic/"+TID;
       localStorage.setItem("taskPath", taskPath);
       
