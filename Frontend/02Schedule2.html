@@ -30,198 +30,174 @@
     span.hidden{
     display: none;
 }
-    table, th, td {
-        padding: 10px;
-        border: 1px solid black;
-        width: 600px;
-        text-align: center;
-        word-wrap: break-word;
-    }
-    span.hidden{
-        display: none;
-    }
+table, th, td {
+    padding: 10px;
+    border: 1px solid black;
+    width: 600px;
+    text-align: center;
+    word-wrap: break-word;
+}
     table th {
         background-color: #B0C4DE;
         color: #000;
     }
-
     table td {
         text-shadow: 2px 2px #FFFFFF;
     }
+#newABlock {
+    width: 100%;
+    height: 100%;
+    opacity: .95;
+    right: 0;
+    top: 0;
+    padding: 40px, 60px;
+    display: none;
+    position: fixed;
+    background-color: #313131;
+    overflow: auto;
+}
+#editABlock {
+    width: 100%;
+    height: 100%;
+    opacity: .95;
+    right: 0;
+    top: 0;
+    padding: 40px, 60px;
+    display: none;
+    position: fixed;
+    background-color: #313131;
+    overflow: auto;
+}
 
-    #newABlock {
-        width: 100%;
-        height: 100%;
-        opacity: .95;
-        right: 0;
-        top: 0;
-        padding: 40px, 60px;
-        display: none;
-        position: fixed;
-        background-color: #313131;
-        overflow: auto;
-    }
-
-    #editABlock {
-        width: 100%;
-        height: 100%;
-        opacity: .95;
-        right: 0;
-        top: 0;
-        padding: 40px, 60px;
-        display: none;
-        position: fixed;
-        background-color: #313131;
-        overflow: auto;
-    }
-    #viewABlock {
-        width: 100%;
-        height: 100%;
-        opacity: .95;
-        right: 0;
-        top: 0;
-        padding: 40px, 60px;
-        display: none;
-        position: fixed;
-        background-color: #313131;
-        overflow: auto;
-    }
-
-    #newCSBlock {
-        width: 100%;
-        height: 100%;
-        opacity: .95;
-        right: 0;
-        top: 0;
-        padding: 40px, 60px;
-        display: none;
-        position: fixed;
-        background-color: #313131;
-        overflow: auto;
-    }
-
-    #newWSBlock {
-        width: 100%;
-        height: 100%;
-        opacity: .95;
-        top: 0;
-        left: 0;
-        display: none;
-        position: fixed;
-        background-color: #313131;
-        overflow: auto;
-    }
-
-    #newWHBlock {
-        width: 100%;
-        height: 100%;
-        opacity: .95;
-        top: 0;
-        left: 0;
-        display: none;
-        position: fixed;
-        background-color: #313131;
-        overflow: auto;
-    }
-
-    /*
-        CSS FUNCTION: This css is to add a vertical sidebar for the EDIT ANNOUNCEMENT pop-up.
-    */
-    #Amsg{
-        
-        display: block;
-        overflow: auto;
-        padding-bottom:30ex;
-        margin-bottom:2px;
-        width: 90%;
-    }
-
+#viewABlock {
+    width: 100%;
+    height: 100%;
+    opacity: .95;
+    right: 0;
+    top: 0;
+    padding: 40px, 60px;
+    display: none;
+    position: fixed;
+    background-color: #313131;
+    overflow: auto;
+}
+#newCSBlock {
+    width: 100%;
+    height: 100%;
+    opacity: .95;
+    right: 0;
+    top: 0;
+    padding: 40px, 60px;
+    display: none;
+    position: fixed;
+    background-color: #313131;
+    overflow: auto;
+}
+#newWSBlock {
+    width: 100%;
+    height: 100%;
+    opacity: .95;
+    top: 0;
+    left: 0;
+    display: none;
+    position: fixed;
+    background-color: #313131;
+    overflow: auto;
+}
+#newWHBlock {
+    width: 100%;
+    height: 100%;
+    opacity: .95;
+    top: 0;
+    left: 0;
+    display: none;
+    position: fixed;
+    background-color: #313131;
+    overflow: auto;
+}
+.editForm_create_announcement {
+    max-width: 600px;
+    min-width: 200px;
     
-    #Announcement{
-        
-        display: block;
-        overflow: auto;
-        padding-bottom:30ex;
-        margin-bottom:2px;
-        width: 90%;
-    }
-
-    .editForm_create_announcement {
-        max-width: 70%;
-        min-width: 200px;
-        padding: 10px 50px;
-        border:2px solid gray;
-        border-radius: 10px;
-        font-family: raleway;
-        background-color: #fff;
-        position: absolute;
-        left: 25%;
-        top: 150px;
-        width: 70%;
-        height: 500px;
-    }
-
+    border-radius: 10px;
+    font-family: raleway;
+    background-color: #fff;
+    position: absolute;
+    left: 500px;
+    top: 200px;
+    width: 500px;
+    height: 350px;
+}
     .editForm_edit_announcement {
-        max-width: 70%;
-        min-width: 200px;
-        padding: 10px 50px;
-        border:2px solid gray;
-        border-radius: 10px;
-        font-family: raleway;
-        background-color: #fff;
-        position: absolute;
-        left: 25%;
-        top: 150px;
-        width: 70%;
-        height: 500px;
+    max-width: 600px;
+    min-width: 200px;
+    
+    border-radius: 10px;
+    font-family: raleway;
+    background-color: #fff;
+    position: absolute;
+    left: 500px;
+    top: 200px;
+    width: 500px;
+    height: 370px;
+}
+.viewForm_edit_announcement {
+    max-width: 600px;
+    min-width: 200px;
+    
+    border-radius: 10px;
+    font-family: raleway;
+    background-color: #fff;
+    position: absolute;
+    left: 500px;
+    top: 200px;
+    width: 500px;
+    height: 450px;
+}
+.editForm_upload_file {
+    max-width: 600px;
+    min-width: 200px;
+    
+    border-radius: 10px;
+    font-family: raleway;
+    background-color: #fff;
+    position: absolute;
+    left: 500px;
+    top: 300px;
+    width: 550px;
+    height: 200px;
+}
+.schedule_hr {
+    margin: 10px 0px;
+    border: 0;
+    border-top: 1px solid #ccc;
+}
+.schedule_textarea {
+    width: 82%;
+    height: 140px;
+    padding: 10px;
+    resize: none;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    font-family: raleway;
+    margin-bottom: 20px;
+    margin-left: 30px;
+}
+@keyframes bounce {
+    0%, 20%, 60%, 100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
     }
-
-    .editForm_upload_file {
-        border-radius: 10px;
-        font-family: raleway;
-        background-color: #fff;
-        position: absolute;
-        left: 35%;
-        top: 20%;
-        width: 30%;
-        height: 60%;
+    40% {
+        -webkit-transform: translateY(-5px);
+        transform: translateY(-5px);
     }
-
-    .schedule_hr {
-        margin: 10px 0px;
-        border: 0;
-        border-top: 1px solid #ccc;
+    80% {
+        -webkit-transform: translateY(-3px);
+        transform: translateY(-3px);
     }
-
-    .schedule_textarea {
-        width: 82%;
-        height: 140px;
-        padding: 10px;
-        resize: none;
-        margin-top: 10px;
-        border: 1px solid #ccc;
-        font-size: 16px;
-        font-family: raleway;
-        margin-bottom: 20px;
-        margin-left: 30px;
-    }
-
-    @keyframes bounce {
-        0%, 20%, 60%, 100% {
-            -webkit-transform: translateY(0);
-            transform: translateY(0);
-        }
-
-        40% {
-            -webkit-transform: translateY(-5px);
-            transform: translateY(-5px);
-        }
-
-        80% {
-            -webkit-transform: translateY(-3px);
-            transform: translateY(-3px);
-        }
-    }
+}
 </style>
 <body>
 
@@ -419,7 +395,6 @@
         </div> <!--end div class="editForm_create_announcement"-->
     </div> <!--end div id="newABlock-->
     <!--</div>-->
-    
     <div id="editABlock">
         <div class="editForm_edit_announcement">
             <h2><center><br>Editing Announcement</center></h2>
@@ -436,7 +411,8 @@
             </center>
         </div>
     </div>
-    </div>    
+    </div>
+
 <!--</div>-->
     <div id="viewABlock">
         <div class="viewForm_edit_announcement">
