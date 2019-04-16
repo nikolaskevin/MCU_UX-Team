@@ -104,10 +104,12 @@ function assignTask(taskData){
   //alert(taskData.data.name);
   var taskID = taskData.data.tID;
   var category = taskData.data.category;
-  alert(category);
+
   $(".usersPopup").css("display", "flex");
+  $(".usersPopup").css("flex-direction", "column");
+
   loadUsers(taskID, category, function(){
-    alert("done.");
+
   });
 }
 
@@ -388,6 +390,10 @@ $(document).ready(function(){
           $("#assigningTask tr:not(:first)").filter(function() {
               $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
           });
+    });
+
+    $("#usersPopupCloseButton").click(function(){
+      $(".usersPopup").css("display","none");
     });
 });
 
@@ -855,6 +861,8 @@ $('.sortable').sortable({
       $(".nestedSortable").sortable( {axis:"y"});
   }
 });
+
+
 
 /**
  * @function showDetails
