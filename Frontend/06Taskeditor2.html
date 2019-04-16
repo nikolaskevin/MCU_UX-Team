@@ -38,6 +38,34 @@
         span.hidden{
         display: none;
     }
+
+    .newCategoryPopup{
+        display:none;
+        position: absolute;
+        top: 20%;
+        left: 30%;
+        border: 5px solid gray;
+        padding: 10px;
+        background-color: white;
+        height: 300px;
+        width: 45%;
+        overflow-y: auto;
+        align-content: center;
+    }
+
+    .newCategoryContentContainer{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+    }
+
+    #newCategoryPopupCloseButton{
+        margin-top: 10px;
+        margin-left: 90%;
+        margin-bottom: 30px;
+    }
+    
     </style>
 
 </head>
@@ -154,7 +182,7 @@
                                 <p></p>
                                 <p class="account" style="position:relative; top:-20px;">
                                     <span style = "font-size: 20pt;" word-wrap: break-word;>Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
-                                    <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
+                                    <span style = "font-size: 20pt"> UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
                                     <span style = "font-size: 20pt;" word-wrap: break-word;> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
                                 </p>
                             </div>
@@ -188,6 +216,10 @@
                         
              
                 </div>
+                <div class = "newCategoryPopup">
+                    <button id="newCategoryPopupCloseButton">Close</button>
+                    <div class="newCategoryContentContainer">Content</div>
+                </div>
 
 
                             
@@ -204,20 +236,17 @@
     <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript">
-
     
         $(document).ready(function () {
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"
             });
-
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
             });
         });
-
         function imgBlur(obj) {
             var photoword = document.getElementById("photoword");
             var Profilepic = document.getElementById("Profilepic");
@@ -228,7 +257,6 @@
             Profilepic.style.filter = "blur(3px)";
             Profilepic.style.display = "inline";
         }
-
         function imgOrg(obj) {
             var photoword = document.getElementById("photoword");
             var Profilepic = document.getElementById("Profilepic");
