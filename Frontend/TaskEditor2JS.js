@@ -307,8 +307,16 @@ function injectToDOM(){
     htmlInjection += '<select id="category" name="category">';
     console.log(categories);
     for (var c = 0; c < categories.length; c++){
-        htmlInjection += '<option value = "' + categories[c] + '">'+ categories[c] + '</option>';
+        if (taskDetails.category == categories[c]){
+            htmlInjection += '<option value = "' + categories[c] + '" selected="selected">'+ categories[c] + '</option>';
+        } else {
+            htmlInjection += '<option value = "' + categories[c] + '">'+ categories[c] + '</option>';   
+        }
     }
+
+    htmlInjection += '<option value = "new">' + "New Category" + '</option>';
+
+
     htmlInjection += '</select>';    // End category input
 
      //Task Video
@@ -722,6 +730,29 @@ function saveButtonHandler(steps){
  */
 function categoryEventHandler(steps, taskDetails){
     $("#category").change(function(event){
+        console.log(event.target.value);
+        if (event.target.value == "new"){
+            //alert("new");
+            $(".newCategoryPopup").css("display","flex");
+            $(".newCategoryPopup").css("flex-direction","column");
+            var newCategoryTextBox = $('<input>').addClass("catBox").attr("type","text").attr("maxlength","30");
+            $(".newCategoryContentContainer").html("Enter custom category name");
+
+            var finishButton = $("<button>").html("Finish").click(function(){
+             
+                categories[categories.length] = $(".catBox").val();
+                taskDetails["category"] = $(".catBox").val();
+                console.log(categories);
+                console.log(taskDetails);
+                $(".newCategoryPopup").css("display","none");
+                injectToDOM(steps);
+            });
+            $(".newCategoryContentContainer").append(newCategoryTextBox);
+            $(".newCategoryContentContainer").append(finishButton);
+        
+            //$(".newCategoryContentContainer").html("Hello world");
+            return;
+        }
         taskDetails["category"]=event.target.value;
         console.log(taskDetails);
     });

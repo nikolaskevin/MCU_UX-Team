@@ -909,7 +909,7 @@ function directTask(num){
   var tr = table.getElementsByTagName("tr");
   var cat = tr[num].cells[0].innerText;
   var taskN = tr[num].cells[1].innerText;
-  var taskID = tr[num].cells[7].innerText;
+  var taskID = tr[num].cells[8].innerText;
   var taskPath = "TaskInstruction/" + cat + "/" + taskID;
   sessionStorage.setItem("taskPath", taskPath);
   localStorage.setItem("taskPath", taskPath);
