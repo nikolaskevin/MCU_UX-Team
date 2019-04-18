@@ -1,5 +1,5 @@
-<!--
-  @file 03Memo2.html
+﻿<!--
+  @file Reports.html
   @author  MCU
   @author  Kutztown University
   @license
@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="statics/css/style.css" />
     <link rel="stylesheet" type="text/css" href="statics/css/chat.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500" rel="stylesheet">
     <!-- IMPORTING BOOTSTRAP!!-->
     <!-- Importing BOOTSTRAP!!! -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -26,65 +27,93 @@
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type='text/javascript' src='Config.js'></script>
+    <script type='text/javascript' src='ReportsJS.js'></script>
     <script type='text/javascript' src='chat.js'></script>
     <script type='text/javascript' src='Profile.js'></script>
-    <script type='text/javascript' src='memo.js'></script>
 </head>
 <style>
-    .memo_month_title {
-        background-color: #B0C4DE;
-        border-style: double;
-        width: 65%;
-        height: 12%;
+    #current_date {
+        top: 7%;
+        left: 31%;
+        font-size: 60px;
+        color: #2F4F4F;
+    }
+
+    #current_month {
+        top: 7%;
+        left: 35%;
+        font-size: 25px;
+        color: #A0522D;
+    }
+
+    #current_year {
+        top: 7%;
+        left: 56%;
+        font-size: 15px;
+        color: #A0522D;
+    }
+
+    #current_week {
+        top: 8%;
+        left: 28%;
+        font-size: 25px;
+        color: #000;
+    }
+
+    .status_record_option {
         position: relative;
+        top: 15%;
+        left: 0%;
         text-align: center;
-        border: 5px solid rgba(255, 255, 255, .4);
-    }
-    span.hidden{
-        display: none;
-    }
-    .memo_display, td, th {
-        border: 1px solid black;
     }
 
-    .memo_display {
-        width: 75%;
-        border-collapse: collapse;
-        position: absolute;
-        left: 23.5%;
-        height: 72%;
-        display: block;
-        top:18ex;
-        overflow-y: auto;
-        overflow-x: auto;
-        background-color: rgba(215, 233, 184, .8);
-        border: 5px solid rgba(255, 255, 255, .4);
+    .status_record_date_option {
+        position: relative;
+        top: 15%;
+        left: 0%;
+        text-align: center;
     }
 
-    .memo_table_head {
-        padding: 0px 0px;
+    .status_record_display_button {
+        position: relative;
+        left: 40%;
+        text-align: center;
+    }
+
+    table, th, td {
+        padding: 10px;
         border: 1px solid black;
-        text-align: left;
+        width: 600px;
+        text-align: center;
         word-wrap: break-word;
     }
 
-    .memo_form-popup {
+        table th {
+            background-color: #B0C4DE;
+            color: #000;
+        }
+
+        table td {
+            text-shadow: 2px 2px #FFFFFF;
+        }
+
+    .dvsr_form-popup {
         display: none;
-        position: absolute;
-        top: 20%;
-        left: 20%;
+        position: fixed;
+        top: 45%;
+        left: 48%;
         border: 5px solid #f1f1f1;
         z-index: 9;
-        width: 75%;
         padding: 10px;
         background-color: white;
-        height: 55%;
+        height: 80%;
+        width: 80%;
     }
 
-        .memo_form-popup .btn {
+        .dvsr_form-popup .btn {
             background-color: #4CAF50;
             color: white;
-            padding: 5px 5px;
+            padding: 16px 20px;
             border: none;
             cursor: pointer;
             width: 100%;
@@ -92,114 +121,18 @@
             opacity: 0.8;
         }
 
-        .memo_form-popup .cancel {
+        .dvsr_form-popup .cancel {
             background-color: red;
+            position: fixed;
+            top: 9.5%;
+            width: 0px;
+            z-index: 2;
+            left: 92.2%;
+            height: 0px;
         }
 
-        .memo_form-popup .btn:hover, .open-button:hover {
+        .dvsr_form-popup .btn:hover, .open-button:hover {
             opacity: 1;
-        }
-
-    .add_memo_button {
-        position: relative;
-        top: 1ex;
-        left: 55%;
-        border-radius: 20%;
-        background-color: #b6d7a8;
-        width: 150px;
-        height: 40px;
-        font-size: 20px;
-    }
-
-        .add_memo_button:hover {
-            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.5), 0 17px 50px 0 rgba(0,0,0,0.5);
-        }
-
-        .add_memo_button:before {
-            position: absolute;
-            content: '';
-            height: 0;
-            width: 0;
-            bottom: 5px;
-            right: 0;
-            background: linear-gradient(315deg, white 45%, #aaa 50%, #ccc 56%, white 80%);
-            transition-duration: 0.3s;
-            border-radius: 20%;
-        }
-
-        .add_memo_button:hover:before, .add_memo_button:focus:before, .add_memo_button:active:before {
-            width: 25px;
-            height: 25px;
-        }
-
-    .today_memo {
-        position: relative;
-        top: 0%;
-        left: 2%;
-        width: 20%;
-        height: 70ex;
-        overflow-y: auto;
-        padding-top:2ex;
-        background-color: #F0E68C;
-        word-wrap: break-word;
-        padding-left: 25px;
-    }
-
-    #current_date {
-        top: -5%;
-        left: 7%;
-        font-size: 60px;
-        color: #2F4F4F;
-    }
-
-    #current_month {
-        top: -5%;
-        left: 8%;
-        font-size: 25px;
-        color: #A0522D;
-    }
-
-    #current_year {
-        top: -5%;
-        left: 12.5%;
-        font-size: 15px;
-        color: #A0522D;
-    }
-
-    #current_week {
-        top: -5%;
-        left: 5%;
-        font-size: 25px;
-        color: #000;
-    }
-
-    .previous_memo_month {
-        position: relative;
-        left: 45%;
-        top: -1080px;
-        background-color: #B0C4DE;
-        border: hidden;
-        transition: transform .2s;
-        z-index: 3;
-        cursor: pointer;
-    }
-
-        .previous_memo_month:hover {
-            transform: scale(1.3);
-        }
-
-    .next_memo_month {
-        position: relative;
-        left: 70%;
-        background-color: #B0C4DE;
-        border: hidden;
-        transition: transform .2s;
-        top: -1060px;
-        cursor: pointer;
-    }
-
-        .next_memo_month:hover {
-            transform: scale(1.3);
         }
 
     @keyframes bounce {
@@ -237,19 +170,20 @@
                         Schedule
                     </a>
                 </li>
-                <li class="current">
+                <li>
                     <a href="../Frontend/03Memo2.html">
                         <i class="glyphicon glyphicon-folder-close"></i>
                         Memo
                     </a>
                 </li>
-                <li>
+                <li >
                     <a href="../Frontend/04Statusrecord2.html">
                         <i class="glyphicon glyphicon-heart-empty"></i>
                         Status Record
                     </a>
                 </li>
-                <li>
+
+                <li class="current">
                     <a href="../Frontend/Reports.html">
                         <i class="glyphicon glyphicon-file"></i>
                         Reports
@@ -316,7 +250,7 @@
                                     <a href="javascript:void(0)" class="dropbtn"><span class="glyphicon glyphicon-cog white-text"></span></a>
                                     <div class="dropdown-content">
                                         <a href="#">English</a>
-                                        <a href="/../Frontend-Chinese/03Memo2.html">Chinese</a>
+                                        <a href="/../Frontend-Chinese/04Statusrecord2.html">Chinese</a>
                                         <a onClick="Logout(); return false;" href="../Frontend/00Login2.html">Logout</a>
                                     </div>
                                 </li>
@@ -330,13 +264,13 @@
                     <!--BACKGROUND PANEL IMAGE-->
                     <div class="container-fluid">
 
-                        <img class="panelimg img-responsive" style="background-color:white" />
+                        <img class="panelimg img-responsive" src="statics/images/user_info_bg.jpg" />
 
                         <div class="container" style="transform:translateY(-8.5ex)">
                             <!-- CIRCLE IMAGE THING-->
 
 
-                            <div class="user-headface" onmouseover="imgBlur(this)" onmouseout="imgOrg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
+                            <div class="user-headface" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
                                 <img src="statics/images/edit.png" id="photoword"
                                      style="position:relative;left:20px; text-align:center;
                                 display:none;width:40px;height:40px; white-space:nowrap;overflow: hidden;" onclick="document.getElementById('newPic').click();">
@@ -349,10 +283,9 @@
                                 <p class="tip" id="time123"></p><!-- DISPLAYS GOOD MORNING/AFTERNOON/EVENING MSG -->
                                 <img style="position:relative; left:125px;top:-25px;cursor:pointer;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
                                 <p class="account" style="position:relative; top:-20px;">
-				<span style = "font-size: 20pt">Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
-                                    <span style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
-				    <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
-                                    <span style = "font-size: 20pt"> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>	
+                                    <span>Name : <span id="displayProfilename"></span></span>
+                                    <span>UserID : <span id="displayProfileid"></span></span>
+                                    <span>Role : <span id="displayProfileposition"></span></span>
                                 </p>
                             </div>
                         </div>
@@ -362,62 +295,109 @@
 
             <div class="main container-fluid wrapper">
                 <!-- START OF MIDDLE CONTENT-->
-                <div class="right" style="width:800ex; height:100%; transform:translateY(-13ex)">
-                    <div class="tap">
-                        <span>Memo</span>
-                    </div>
+                <div class="right" style="width:800ex; transform:translateY(-13ex)">
+
                     <div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
                         <div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
-                        <p class="selected" style="margin-top:3px;margin-bottom:3px;">&nbsp English<br></p>
-                        <p class="selected" style="margin-top:3px;margin-bottom:3px;" onclick="window.location.href='/../Frontend-Chinese/03Memo2.html'">&nbsp 中文<br></p>
-                        <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right: 5px;"></i>Logout</p>
+                        <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;">&nbsp English<br></p>
+                        <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Frontend-Chinese/04Statusrecord2.html'">&nbsp 中文<br></p>
+                        <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
                     </div>
-                    <div class="container" style="height:80%; vertical-align:middle">
-                        <div class="memo_month_title img-rounded" style="position:relative; top:2ex;left:30%;border-style:hidden;margin-bottom:0px;padding-bottom: 0px;padding-top: 0px;">
-                            <table>
+                    <div id="data1" style="position:relative;left:10%;width:78%;height:80%;background-color:#fff;border-left:2px solid black;overflow-x:hidden; overflow-y:scroll;">
+                        <table id="DSR_table" class="daily_status_record" onclick="sortDSR()" style="position:relative;width:100%;border-style:hidden;">
+                            <tr>
+                                <th colspan="3"> Report Generation </th>
+                            </tr>
+                        </table>
+                        <div class="no-doc" id="no-doc1">   <!-- Reports field implimentation !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! --> 
+                            <br><br>
+                            <center>
+							
+                        <div class="start_date_option"> <!-- start date -->
+								Start Date:
+                            <input type="date" id="startDate">
+                            <br><br>
+                        </div>
+						
+					   <div class="end_date_option">  <!-- end date -->
+								End Date:
+                            <input type="date" id="endDate">
+                            <br><br>
+                        </div>
+
+                       <!-- Fast Report Buttons-->
+                            Fast Report:
+                        <input class="day_button" type="button" value="Day Report" onclick="fastDay();" style="cursor:pointer;" id="day_button" />&nbsp &nbsp
+                        <input class="week_button" type="button" value="Week Report" onclick="fastWeek();" style="cursor:pointer;" id="week_button" />&nbsp &nbsp
+						<input class="month_button" type="button" value="Month Report" onclick="fastMonth();" style="cursor:pointer;" id="month_button" />
+
+                        
+
+                        
+						<!-- Patient Name Option-->
+						 <div class="patient_name_option">
+                             <br>
+						 Patient Name:
+                            <select id="selectPatName"  onchange="selectPatientName()">
+								
+                                <option>Patient Name</option>
+                            </select>
+                            <br><br>
+                        </div>			
+
+
+                        <!-- Pantient ID Option-->
+                        <div class="patient_id_values">
+                            Patient ID:
+                               
+                                    <input type="text" name="patientID" value="" id="patientID" disabled>
+                                    
+                              
+                                <br><br>
+                            </div>
+                        <!--Clear button--> 
+                            &nbsp &nbsp
+                            <input class="clear_button" type="button" value="Clear" onclick=" clearBox();" style="cursor:pointer;" />
+                            &nbsp &nbsp
+                        <!-- Generate Report Button-->             
+                        <input class="generate_report_button" type="button" value="Generate Report" onclick=" generateReport();" style="cursor:pointer; background-color:#A9A9A9 " id="generate_report_button" disabled/>
+
+                        <br><br>
+                            <p id = "ReportURL" style="color:black"></p>
+                            </center>
+                        </div>
+                    </div>
+					
+					
+
+                            <!-- Outline for rest of the page (Style sidebar menu etc...) -->
+                    <div class="dvsr_form-popup" id="form" style="position:absolute;left:250px; top:100px;display:none;overflow-y:scroll;">
+                        <div style="position:absolute; left:10px;top:18px;">
+                            <table id="heartRateRecord" style="border-style:hidden;" onclick="sortHRR()">
                                 <tr>
-                                    <td style="border-style:hidden;text-align:center;"><h1 id="fullName_Month"></h1>
-                                    <td style="border-style:hidden;text-align:center;"><h4 id="years"></h4>
+                                    <th colspan="3"> Heart Rate Record</th>
                                 </tr>
                             </table>
                         </div>
-                        <div style="transform:translateY(-5ex)">
-                            <h2 id="current_year" style="position:relative;"></h2>
-                            <h2 id='current_date' style="position:relative;"></h2>
-                            <h2 id="current_month" style="position:relative;"></h2>
-                            <h2 id="current_week" style="position:relative;"></h2>
-                            <div class="today_memo" id="today_memo"></div>
+                        <div style="position:absolute; left:620px;top:18px;">
+                            <table id="VisitRecord" style="border-style:hidden;">
+                                <tr>
+                                    <th colspan="3" onclick="sortvisitrecord()"> Visit Record</th>
+                                </tr>
+                            </table>
                         </div>
-                        <table id="memo_table" class="memo_display">
-                            <tr>
-                                <th class="memo_table_head" style="width: 10%; background-color: #ddd; text-align: center;">Date</th>
-                                <th class="memo_table_head" style="width: 90%; background-color: #ddd; text-align: center;">Content</th>
-                                <th class="memo_table_head" style="width: 10%; background-color: #ddd; text-align: center;">Delete </th>
-                                <th class="memo_table_head" style="width: 10%; background-color: #ddd; text-align: center;">Edit </th>
-                            </tr>
-                            <tbody id="context_table" style="text-align:center;"></tbody>
-                        </table>
-                        <div class="memo_form-popup" id="form">
-                            <h2>New Memo</h2>
-                            <input type="date" id="selected_date" /><br />
-                            <textarea id="memo_text" rows="15" cols="75"></textarea>
-                            <button onclick="submit()" type="button" class="btn">Submit</button>
-                            <button type="button" class="btn cancel" onclick="close_form()">Close</button>
-                        </div>
-                        <div class="memo_form-popup" id="edit_form" >
-                            <h2>Edit Memo</h2>
-                            <input type="date" id="edited_date" /><br/>
-                            <textarea id="memoedited" rows="15" cols="75"></textarea>
-                            <button onclick="esubmit()" type="button" class="btn">Submit</button>
-                            <button type="button" class="btn cancel" onclick="closeform()">Close</button>
-                        </div>
+                        <button type="button" class="btn cancel" onclick="close_form()"><p style="position:relative;top:-15px;left:-6px;font-size:20px;"> x </p></button>
                     </div>
-                        <button class="add_memo_button" onclick="popup_form()">Add Memo</button>
-                    <div style="position:relative; left:40%;">
-                        <button onclick="viewTable('last');"><img class="previous_memo_month" src="statics/images/left-arrow.png" height="25px" width="30px" /> < </button>
-                        <span style="position:relative; left: 35%"><button onclick="viewTable('next')"><img class="next_memo_month" src="statics/images/right-arrow.png" height="25px" width="30px" /> ></button></span>
+
+                    <div style="position:relative; top:-90%; left:0%; background-color:#ddd;width:22%; height:86%;">
+                       <!-- <h2 id="current_year" style="position:relative;top:40%"></h2> -->
+                        <h2 id='current_date' style="position:relative;top:50%"></h2>
+                        <h2 id="current_month" style="position:relative;"></h2>
+                        <h2 id="current_week" style="position:relative;"></h2>
+
+
                     </div>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -467,7 +447,6 @@
             <p>Confirm Password: <input type="password" id="confirmnewPassword"></p><br>
         </div>
     </div>
-    </div>
 
     <!-- START COPY FOR SIDEBAR JAVASCRIPT -->
     <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -495,25 +474,6 @@
                 }
             });
         });
-
-        function imgBlur(obj) {
-            var photoword = document.getElementById("photoword");
-            var Profilepic = document.getElementById("Profilepic");
-            photoword.style.display = "inline";
-            photoword.style.position = "absolute";
-            photoword.style.transform = "translate(2ex,2ex)";
-            photoword.style.zIndex = "2000";
-            Profilepic.style.filter = "blur(3px)";
-            Profilepic.style.display = "inline";
-        }
-
-        function imgOrg(obj) {
-            var photoword = document.getElementById("photoword");
-            var Profilepic = document.getElementById("Profilepic");
-            photoword.style.display = "none";
-            Profilepic.style.display = "inline";
-            Profilepic.style.filter = "blur(0px)";
-        }
     </script>
     <!-- END COPY FOR SIDEBAR JAVASCRIPT-->
 </body>

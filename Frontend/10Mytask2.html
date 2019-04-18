@@ -213,6 +213,13 @@
                         Status Record
                     </a>
                 </li>
+
+                <li>
+                    <a href="../Frontend/Reports.html">
+                        <i class="glyphicon glyphicon-file"></i>
+                        Reports
+                    </a>
+                </li>
                 <li >
                     <a href="../Frontend/05Library2.html">
                         <i class="glyphicon glyphicon-book"></i>
@@ -305,11 +312,12 @@
                             <!-- TEXT NEXT TO THE CIRCLE IMAGE THING-->
                             <div class="user-account">
                                 <p class="tip" id="time123"></p><!-- DISPLAYS GOOD MORNING/AFTERNOON/EVENING MSG -->
-                                <p></p>
+                                <img style="position:relative; left:125px;top:-25px;cursor:pointer;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
                                 <p class="account" style="position:relative; top:-20px;">
-					            <span style = "font-size: 20pt">Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
-                                <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
-				                <span style = "font-size: 20pt"> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
+					<span style = "font-size: 20pt">Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
+                                    <span style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
+                                    <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
+				    <span style = "font-size: 20pt"> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
                                 </p>
                             </div>
                         </div>
@@ -404,7 +412,53 @@
             </div>
             
         </div>
-        
+        <div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA;border-style: solid;
+				border-width: 2px; z-index:3;">
+            <div style="background-color:#E4EACD;position:relative;height:75px;">
+                <h2 id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
+
+                <button onclick="editprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
+                <button onclick="closeprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
+                <button onclick="changePassword()" style="position:relative; left:520px;top:75px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;z-index:4;">Change Password</button>
+            </div>
+            <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
+            <div style="position:relative; left:220px;top:-110px;">
+                <p>Position: &nbsp<span id="positionProfile"></span> </p><br>
+                <p>User ID: &nbsp <span id="idProfile"></span></p><br>
+                <p>Display Name: &nbsp <span id="nameProfile"></span></p><br>
+                <p>Email Address: &nbsp <span id="emailProfile"></p><br>
+            </div>
+        </div>
+
+        <div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA; z-index:3;border-style: solid;
+				border-width: 2px;">
+            <div style="background-color:#E4EACD;position:relative;height:75px;">
+                <h2 id="nameProfileTE" style="position:relative; left:210px;top:20px;"></h2>
+                <h3 style="position:relative; left:300px;top:-10px;color:gray;">	</h3>
+                <button onclick="submitprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
+                <button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
+            </div>
+            <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="editpic">
+            <div style="position:relative; left:220px;top:-110px;">
+                <p>Position: &nbsp <span id=positionProfileE> </span> </p><br>
+                <p>User ID: &nbsp <span id="idProfileE"> </span>  </p><br>
+                <p>Display Name: <input type="text" id="nameProfileE" style="width:200px;"></p><br>
+                <p>Email Address: <input type="text" id="emailProfileE" style="width:300px;"></p><br>
+            </div>
+        </div>
+        <div id="changePass" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA; z-index:4;border-style: solid; border-width:2px;">
+            <div style="background-color:#E4EACD;position:relative;height:75px;">
+                <h2 style="position:relative; left:210px;top:20px;">Changing Password</h2>
+                <button onclick="submitNewPass()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
+                <button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
+            </div>
+            <div style="position:relative; left:220px;top:70px;">
+                <p>Current Password: <input type="password" id="oldPassword"></p><br>
+                <p>New Password: <input type="password" id="newPassword"></p><br>
+                <p>Confirm Password: <input type="password" id="confirmnewPassword"></p><br>
+            </div>
+        </div>
+
         <!-- START COPY FOR SIDEBAR JAVASCRIPT -->
         <!-- jQuery CDN - Slim version (=without AJAX) -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
