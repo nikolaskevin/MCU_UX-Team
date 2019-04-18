@@ -73,7 +73,7 @@
     <div class="wrapper"><!-- Contain EVERYTHING THING IN WRAPPER CLASS -->
         <nav id="sidebar"><!-- SIDEBAR -->
             <ul class="list-unstyled components">
-                <li class="current">
+                <li >
                     <a href="../Frontend/01Aboutus2.html">
                         <i class="glyphicon glyphicon-info-sign"></i>
                         About Us
@@ -106,7 +106,7 @@
                         <i class="glyphicon glyphicon-book"></i>
                     Library</a>
                 </li>
-                <li>
+                <li class="current">
                     <a href="../Frontend/10Mytask2.html">
                         <i class="glyphicon glyphicon-list-alt"></i>
                         My Task
@@ -136,7 +136,7 @@
 
                             <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 3ex;padding-top:1.5ex;padding-bottom:1.5ex; background-color:green;outline-color:darkgreen">
                                 <i class="fas fa-align-left"></i>
-                                <span>Toggle Sidebar</span>
+                                <span id="toggleSide">Hide sidebar</span>
                             </button>
 
                             <div class="navbar-header">
@@ -243,17 +243,23 @@
     <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript">
-    
         $(document).ready(function () {
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"
             });
+
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                if (document.getElementById("toggleSide").innerHTML == "Hide sidebar") {
+                    document.getElementById("toggleSide").innerHTML = "Show sidebar";
+                } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
+                    document.getElementById("toggleSide").innerHTML = "Hide sidebar";
+                }
             });
         });
+
         function imgBlur(obj) {
             var photoword = document.getElementById("photoword");
             var Profilepic = document.getElementById("Profilepic");
