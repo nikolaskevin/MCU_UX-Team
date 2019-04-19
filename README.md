@@ -36,7 +36,7 @@ This link will direct you to the index.html page that is automatically generated
 
 ### NOTE 
 
-As of 10:00AM on 3/29/2019 the deployed version of LTC-TMS given above uses the Browser Team’s instance of the firebase. In order to use a different firebase instance, the appropriate code snippet must be added to the following files to configure the database (basically to tell the web app which database it is using and to let the database know it is being accessed): 
+As of 12:00PM on 4/19/2019 the deployed version of LTC-TMS given above uses the Browser Team’s instance of the firebase. In order to use a different firebase instance, the appropriate code snippet must be added to the following files to configure the database (basically to tell the web app which database it is using and to let the database know it is being accessed): 
 
 * /Backend/Config.js 
 * /Backend/Server.js 
