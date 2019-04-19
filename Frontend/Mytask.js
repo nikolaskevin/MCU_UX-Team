@@ -927,7 +927,7 @@ function directTask(num){
 function removeTaskMyList(num) {
   var table = document.getElementById("assigningTask");
   var tr = table.getElementsByTagName("tr");
-  var taskID = tr[num].cells[7].innerText; //taskID to be removed
+  var taskID = tr[num].cells[8].innerText; //taskID to be removed
 
   //get userid
   firebase.auth().onAuthStateChanged(function (firebaseUser){
