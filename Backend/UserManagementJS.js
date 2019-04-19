@@ -226,7 +226,6 @@ function editedUserAccount(){
     .then(function (info){
       var user = firebase.auth().currentUser;
       user.updateEmail(email);
-      firebase.auth().signInWithEmailAndPassword("ltctmsapp2018@gmail.com", "admin123123")  
     })
   })
 
@@ -237,7 +236,6 @@ function editedUserAccount(){
 .then(function (info){
   var user = firebase.auth().currentUser;
   user.updatePassword(pass);
-  firebase.auth().signInWithEmailAndPassword("ltctmsapp2018@gmail.com", "admin123123")  
 })
 })
 userAccount.child(sid).once('value').then(function(snapshot){
