@@ -9,7 +9,7 @@ IT Admin
 * Password: admin123123 
 
 ### Browser Version Link 
-The browser version can be accessed by clicking [here](https://browserteam.firebaseapp.com/Frontend/00Login2.html). This link was generated using the files completed during Sprint 3 and the following command:
+The browser version can be accessed by clicking [here](https://browserteam.firebaseapp.com/Frontend/00Login2.html). This link was generated using the files completed during Sprint 4 and the following command:
 ```
 firebase deploy
 ```
