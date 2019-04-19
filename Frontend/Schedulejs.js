@@ -178,52 +178,6 @@ function handleuploadfileSubmit3(e) {
   }
 }
 
-//var storageRef=firebase.storage().ref('CenterSchedule/'+file3.name);
-//var uploadtask3 = storageRef.put(file3);
-/*
-uploadtask3.on('state_changed',
-
-function progress(snapshot){
-var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-uploader.value = percentage;
-},
-
-function error(err){
-  console.log("failed");
-},
-
-function complete(){
-  console.log('Successful');
-  var postKey = firebase.database().ref('CenterSchedule/').push().key;
-  var title = document.getElementById('fileTitle3').value;
-  var title2 = 'xtsx' + title + 'xtex';
-  storageRef.getDownloadURL().then(function(url){
-    console.log("Success");
-    console.log(url);
-    var updates = {};
-    var postData={
-      url : url,
-      id : postKey,
-      titleAndroid : title2,
-      titleIOS: title,
-      filename: file3.name
-    };
-
-    // if(url == "" || title =="")
-      // alert ("Please input")
-    //else {
-      updates['CenterSchedule/' + postKey] = postData;
-      firebase.database().ref().update(updates);
-      alert ("Entered Succesfully");
-      window.location.reload();
-    //}
-    });
-  });
-}
-*/
-
-
-
 //Display CS table
 var cs = [];
 var rowIndexCS = 1;
@@ -232,7 +186,6 @@ var weeks = [];
 
 //get weeks stored in an array
 fbCS.once('value',function(snapshot){
-  //console.log(snapshot.numChildren());
   snapshot.forEach(function(Week){
     weekOf = Week.key;
     weeks.push(weekOf);
@@ -242,15 +195,13 @@ fbCS.once('value',function(snapshot){
   injectToDOM(weeks);
 });
 
-
-
 /**
 * @function injectToDOM
 * @description query for data for individual days given the week, then display in DOM
 * @param {*} weeks array of weeks that have schedules
 */
 function injectToDOM(weeks){
-  var htmlInjection;
+  var htmlInjection = "";
   count = 0;
 
   htmlInjection = '<table style="width:100%; border: 1px solid black;">';
@@ -262,10 +213,8 @@ function injectToDOM(weeks){
       times = [];
       times = days.val();
 
-      temp = '"'+days.key+'"';
-
-      htmlInjection += '<tr><td style="width:10%">'+days.key+'</td>';
-      htmlInjection += '<td style="width:10%">'+times["Sunday"]+'</td>';
+      htmlInjection += '<tr><td style="width:10%; font-weight:bold;">'+days.key+'</td>';
+      htmlInjection += '<td style="width:10%;">'+times["Sunday"]+'</td>';
       htmlInjection += '<td style="width:10%">'+times["Monday"]+'</td>';
       htmlInjection += '<td style="width:10%">'+times["Tuesday"]+'</td>';
       htmlInjection += '<td style="width:10%">'+times["Wednesday"]+'</td>';
@@ -275,8 +224,6 @@ function injectToDOM(weeks){
       htmlInjection += '<td style="width:10%"><button id="edit'+days.key+'" onclick="editCenterSchedule(\''+days.key+'\')" style="cursor:pointer;">Edit</button></td>';
       htmlInjection += '<td style="width:10%"><button id="delete'+days.key+'" onclick="deleteCenterSchedule(\''+days.key+'\')" style="cursor:pointer;">Delete</button></td>';
       htmlInjection += '</tr>';
-
-      
 
       if(count = weeks.length) //if reached the end of the list of weeks
       {
@@ -301,42 +248,17 @@ function createNewCenterSchedule(){
   var FriData = $("#NewCSFri").val();
   var SatData = $("#NewCSSat").val();
 
-  //var temp = getSundayOfCurrentWeek(ymd);
-  //console.log(temp);
-
+  //create alert message
   var fields = "";
-  if(ymd == ""){
-    fields += "Week Of\n";
-    //alert("The year entered has exceeded one hundred years!");
-  }
-  if(SunData == ""){
-    fields += "Sunday\n";
-    //alert ("Please enter Sunday data");
-  }
-  if(MonData == ""){
-    fields += "Monday\n";
-    //alert ("Please enter Monday data");
-  }
-  if(TueData == ""){
-    fields += "Tuesday\n";
-    //alert ("Please enter Tuesday data");
-  }
-  if(WedData == ""){
-    fields += "Wednesday\n";
-    //alert ("Please enter Wednesday data");
-  }
-  if(ThuData == ""){
-    fields += "Thursday\n";
-    //alert ("Please enter Thursday data");
-  }
-  if(FriData == ""){
-    fields += "Friday\n";
-    //alert ("Please enter Friday data");
-  }
-  if(SatData == ""){
-    fields += "Saturday\n";
-    //alert ("Please enter Saturday data");
-  }
+  if(ymd == ""){fields += "Week Of\n";}
+  if(SunData == ""){fields += "Sunday\n";}
+  if(MonData == ""){fields += "Monday\n";}
+  if(TueData == ""){fields += "Tuesday\n";}
+  if(WedData == ""){fields += "Wednesday\n";}
+  if(ThuData == ""){fields += "Thursday\n";}
+  if(FriData == ""){fields += "Friday\n";}
+  if(SatData == ""){fields += "Saturday\n";}
+
   if(ymd == "" || SunData == "" || MonData == "" ||
   TueData == "" || WedData == "" || ThuData == "" ||
   FriData == "" || SatData == "") {
@@ -360,10 +282,7 @@ function createNewCenterSchedule(){
       var updates = {};
       updates['CenterSchedule/'+ymd] = data;
       firebase.database().ref().update(updates);
-      alert('Successfully created a new Center Schedule for the week of '+ ymd);
-      //close_form();
       document.getElementById('newCSBlock').style.display ='none';
-      //window.location.reload();
       location.href ="./02Schedule2.html";
     }
   }
@@ -458,7 +377,6 @@ function submitEditCenterSchedule(){
       var updates = {};
       updates['CenterSchedule/'+ymd] = data;
       firebase.database().ref().update(updates);
-      alert('Successfully edited Center Schedule for the Week of '+ymd);
       document.getElementById('editWSBlock').style.display ='none';
       location.href ="./02Schedule2.html";
     } //end if
