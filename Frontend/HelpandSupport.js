@@ -9,7 +9,7 @@
 var feedback = [];
 var goodPath = "";
 var fbGet = firebase.database().ref('Feedback/unique_ID');
-
+var c = 0;
 
 
 /**
@@ -44,14 +44,16 @@ function getFeedback(callback){
 function loadStaffFeedback(){
     $(".staffTable").html("table");
 
-    var table = $('<table>').addClass('staffFeedback');
+    //var table = $('<table>').addClass('staffFeedback');
     var fbGet = firebase.database().ref('Feedback/unique_ID');
     fbGet.on('value', function(snapshot){
-        console.log(snapshot.val());
-
         var staff = snapshot.val();
-        //console.log(staff);
+
         var row = $('<tr>').addClass('staffFeedbackRow');
+
+        var table = document.getElementById('staffFeedback');
+
+        var row = document.getElementsByTagName("td");
 
         var userEmail = staff["userEmail"];
         var userId = staff["userId"];
@@ -64,20 +66,19 @@ function loadStaffFeedback(){
         var userIdCell = $('<td>').addClass('staffFeedback');
             userIdCell.html(userId);
 
+
         var userTextCell = $('<td>').addClass('staffFeedback');
             userTextCell.html(feedbackText);
         
         var userReplyCell = $('<td>').addClass('staffFeedback');
-            userReplyCell.html(feedbackReply);
+            userReplyCell.html(feedbackReply).width("100%");
 
         //Add Each Cell to each row
         row.append(userEmailCell, userIdCell, userTextCell, userReplyCell);
         //row.append(userIdCell);
         table.append(row);
-
-        console.log(userEmail);
-        console.log(userId);
-        console.log(feedbackReply)
+        var cell = row.insertCell(userEmailCell);
+        row.append(cell);
 
         /* DO NOT DELETE MIGHT NEED FOR LATER USE
         snapshot.forEach(function(snapshot){
@@ -97,10 +98,11 @@ function loadStaffFeedback(){
         console.log(userName);
         });
         */
+
+
         $(".staffTable").html(table);
     });
 }
-console.table(loadStaffFeedback());
 
 
 function loadFamilyFeedback(){
@@ -109,10 +111,9 @@ function loadFamilyFeedback(){
     var table = $('<table>').addClass('familyFeedback');
     var fbGet = firebase.database().ref('Feedback/unique_ID');
     fbGet.on('value', function(snapshot){
-        console.log(snapshot.val());
 
         var staff = snapshot.val();
-        //console.log(staff);
+
         var row = $('<tr>').addClass('familyFeedbackRow');
 
         var userEmail = staff["userEmail"];
@@ -137,10 +138,6 @@ function loadFamilyFeedback(){
         //row.append(userIdCell);
         table.append(row);
 
-        console.log(userEmail);
-        console.log(userId);
-        console.log(feedbackReply);
-
         /* DO NOT DELETE MIGHT NEED FOR LATER USE
         snapshot.forEach(function(snapshot){
             var staff = snapshot.val();
@@ -162,7 +159,6 @@ function loadFamilyFeedback(){
         $(".familyTable").html(table);
     });
 }
-console.log(loadFamilyFeedback())
 
 
 
@@ -194,65 +190,13 @@ function populateArray(feedback){
 
 /**
  * @function getFeedbackFromPathCallback
- * @param {*} task 
+ * @param {*} feedback 
  */
 function getFeedbackFromPathCallback(feedback){
     getFeedback(feedback, populateArray);
-    //populateArray(task);
-    //(categories);
+    populateArray(feedback);
     injectToDOM();
 }
-
-function injectToDOM(){
-    var htmlInjection;
-    //var $AddToDom = $('<div>Task Name: </div>');
-    htmlInjection = "";
-  
-    htmlInjection += '<br><div style="text-align:left;"><button type="button" onclick="closeclose_form()">Close Task</button></div><br>';
-    
-    //Task name
-    htmlInjection += '<div style="text-align:left;"> User Name: '+feedback["userName"]+'</div>';
-    
-    //Task Category
-    htmlInjection += '<div style="text-align:left;"> Reply: '+feedback["replyText"]+'</div>';
-  
-    //Task Video
-    htmlInjection += '<div style="text-align:left;"> Time: '+feedback["timestamp"]+'</div>';
-  
-    //Task outline
-    htmlInjection += '<div style="text-align:left;"> User ID: '+feedback["userId"]+'</div>';
-    for (var i = 0; i < steps.length; i++){
-        //Task steps
-        htmlInjection += "<div  class = ''>";
-  
-        htmlInjection += '<br><div style="flex:3; align-content:left;">' + 'Task Step ' + (parseInt(i)+1) + '</div>';
-        //htmlInjection += '<div style="flex:15;"></div>';
-        htmlInjection += '</div>';
-        htmlInjection += "</div>";
-        //Task name
-        htmlInjection += "<div class='inputField'>";
-        htmlInjection += "<div>Step Name: "+ steps[i].name +"</div>";
-        htmlInjection += "</div>";
-  
-        //Task description
-        htmlInjection += "<div>Step Description: "+ steps[i].description +"</div>";
-        htmlInjection += '<div class = "stepImageContainer">';
-        //Add in image upload button and image preview
-        
-        if(steps[i]["image"] != "https://i.imgur.com/d0H6zwB.png") {
-          htmlInjection += '<img class="picPreview" name="stepImage' + i + '" src="' + steps[i]["image"] + '"/>';
-    }
-        htmlInjection += "</div>"   //Close stepImageContainer Div
-        htmlInjection += "</div>";  //Close desDevi
-        htmlInjection += "</div>";  //Close inputFieldLeft div
-  
-        //insert detailed steps
-        htmlInjection += getDetailedStepHTML(steps, i);
-  
-        htmlInjection += '</div>';   // close taskStep div
-    }
-}  
-
 
 /**
  * @function showsf
