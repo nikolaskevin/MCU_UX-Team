@@ -81,7 +81,7 @@ table, th, td {
     background-color: #313131;
     overflow: auto;
 }
-#newCSBlock {
+#newWSBlock {
     width: 100%;
     height: 100%;
     opacity: .95;
@@ -93,7 +93,7 @@ table, th, td {
     background-color: #313131;
     overflow: auto;
 }
-#newWSBlock {
+#newCSBlock {
     width: 100%;
     height: 100%;
     opacity: .95;
@@ -154,18 +154,16 @@ table, th, td {
     width: 500px;
     height: 450px;
 }
-.editForm_upload_file {
-    max-width: 600px;
-    min-width: 200px;
-    
+.create_new_center_schedule_form {
     border-radius: 10px;
     font-family: raleway;
     background-color: #fff;
     position: absolute;
-    left: 500px;
-    top: 300px;
-    width: 550px;
-    height: 200px;
+    left: 25%;
+    top: 20%;
+    width: 50%;
+    height: 70%;
+    overflow:scroll;
 }
 .schedule_hr {
     margin: 10px 0px;
@@ -362,9 +360,9 @@ table, th, td {
                             </thread>
                         </table>
                     </div> <!--end div class="container" id="data1"-->
-                    <div class="container" id="data3" style="display:none;">
+                    <div class="container" id="data3" style="display:none;overflow:scroll;">
                         <br>
-                        <button type="button" onclick="AddNewWS()" class="add_button" style="cursor:pointer;">Add New Schedule</button> 
+                        <button type="button" onclick="AddNewCS()" class="add_button" style="cursor:pointer;">Add New Schedule</button> 
                         <br><br>
                         <table id='WStable' style="width:100%; border: 1px solid black;">
                             <tr>
@@ -439,28 +437,111 @@ table, th, td {
     </div>
     <!--</div>-->
 
-    <div id="newCSBlock">
-        <div class="editForm_upload_file">
+    <div id="newWSBlock">
+        <div class="create_new_center_schedule_form">
             <input type="text" id="fileButton3"/>
             
             &nbsp&nbsp&nbsp<button id="btnSubmitCS" style="cursor:pointer;">Submit</button> &nbsp&nbsp
-            <button id="Ecancel" onclick="document.getElementById('newCSBlock').style.display='none';" style="cursor:pointer;">Cancel</button>
+            <button id="Ecancel" onclick="document.getElementById('newWSBlock').style.display='none';" style="cursor:pointer;">Cancel</button>
         </div>
     </div>
     <!--</div>-->
 
 
 
-    <div id="newWSBlock">
-        <div class="editForm_upload_file">
+    <div id="newCSBlock">
+        <div class="create_new_center_schedule_form">
             <h2><center>New Center Schedule</center></h2>
             <hr class="schedule_hr">
             <div style="padding:2%">
-                <button id="btnSubmitWS" style="cursor:pointer;">Submit</button> &nbsp&nbsp
-                <button id="Ecancel" onclick="document.getElementById('newWSBlock').style.display='none';" style="cursor:pointer;">Cancel</button>
+                <table style="border:none; width: 50%;">
+                    <tr>
+                        <td style="border:none">Week Of:</td>
+                        <td style="border:none"><input type="date" id="selected_date" /><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Sunday</td>
+                        <td style="border:none"><input type="text" id="NewCSSun"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Monday</td>
+                        <td style="border:none"><input type="text" id="NewCSMon"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Tuesday</td>
+                        <td style="border:none"><input type="text" id="NewCSTue"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Wednesday</td>
+                        <td style="border:none"><input type="text" id="NewCSWed"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Thursday</td>
+                        <td style="border:none"><input type="text" id="NewCSThu"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Friday</td>
+                        <td style="border:none"><input type="text" id="NewCSFri"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Saturday</td>
+                        <td style="border:none"><input type="text" id="NewCSSat"><br></td>
+                    </tr>
+                </table>
+                <br>
+
+                <button id="btnSubmitWS" style="cursor:pointer;" onclick="createNewCenterSchedule()">Submit</button> &nbsp&nbsp
+                <button id="Ecancel" onclick="document.getElementById('newCSBlock').style.display='none';" style="cursor:pointer;">Cancel</button>
             </div>
         </div>
-    </div>
+    </div> <!--end div id="newWSBlock-->
+
+    <div id="editWSBlock" style="display:none">
+        <div class="create_new_center_schedule_form">
+            <h2><center>New Center Schedule</center></h2>
+            <hr class="schedule_hr">
+            <div style="padding:2%">
+                <table style="border:none; width: 50%;">
+                    <tr>
+                        <td style="border:none">Week Of:</td>
+                        <td style="border:none" id = editWeekOf></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Sunday</td>
+                        <td style="border:none"><input type="text" id="editCSSun" value=""><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Monday</td>
+                        <td style="border:none"><input type="text" id="editCSMon"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Tuesday</td>
+                        <td style="border:none"><input type="text" id="editCSTue"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Wednesday</td>
+                        <td style="border:none"><input type="text" id="editCSWed"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Thursday</td>
+                        <td style="border:none"><input type="text" id="editCSThu"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Friday</td>
+                        <td style="border:none"><input type="text" id="editCSFri"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Saturday</td>
+                        <td style="border:none"><input type="text" id="editCSSat"><br></td>
+                    </tr>
+                </table>
+                <br>
+
+                <button id="btnSubmitWS" style="cursor:pointer;" onclick="submitEditCenterSchedule()">Submit</button> &nbsp&nbsp
+                <button id="Ecancel" onclick="document.getElementById('editWSBlock').style.display='none';" style="cursor:pointer;">Cancel</button>
+            </div>
+        </div>
+    </div><!--end div id="editWSBlock-->
     <!--</div>-->
 
     <!--</div>-->
