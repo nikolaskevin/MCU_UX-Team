@@ -581,7 +581,6 @@ function display_Detail(num){
   localStorage.setItem("taskN", taskN);
 
   goodPath = taskPath;
-  console.log(goodPath);
 
   //Start the process of loading the task
   if (goodPath != null) {
