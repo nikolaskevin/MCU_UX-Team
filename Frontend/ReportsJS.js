@@ -194,7 +194,9 @@ var startDate = document.getElementById("startDate").value;
 var endDate = document.getElementById("endDate").value;
 var patientID = document.getElementById("patientID").value; 
 var name = document.getElementById("selectPatName").value;
-var rURL = "http://acad.kutztown.edu/~nperu898/" + name + "_" + startDate + "_" + endDate + ".pdf"; 
+var rURL = "http://acad.kutztown.edu/~nperu898/" + name + "_" + startDate + "_" + endDate + ".pdf";
+var Success = "false";
+
 
 
 
@@ -202,14 +204,38 @@ var rURL = "http://acad.kutztown.edu/~nperu898/" + name + "_" + startDate + "_" 
   firebase.database().ref('Reports/EndDate/').set(endDate);
   firebase.database().ref('Reports/IDvalue/').set(patientID);
   firebase.database().ref('Reports/ReportLink/').set(rURL);
+  firebase.database().ref('Reports/Success/').set(Success);
 
   var stringURL = rURL;
   var HLReport = stringURL.link(rURL);
 
-  document.getElementById("ReportURL").innerHTML = HLReport;
-console.log(reportURL);
+
+  var successRef = firebase.database().ref('Reports');
 
 
+
+document.getElementById("ReportURL").innerHTML = "Please wait a moment while your report is generated.";
+
+
+
+console.log(Success);
+
+    function check() {
+
+      var rootRef = firebase.database().ref();
+      rootRef.once("value")
+        .then(function(snapshot) {
+          var Success = snapshot.child("Reports/Success").val(); // "ada"
+          console.log(Success);
+          if (Success == "true" ){
+            document.getElementById("ReportURL").innerHTML = HLReport;
+          }
+          else {
+            document.getElementById("ReportURL").innerHTML = "Report Generation Failed. Please try again or contact support.";
+          }});
+        };
+
+    setTimeout(check, 20000);
 
 }
 
