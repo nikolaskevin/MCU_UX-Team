@@ -191,7 +191,6 @@ fbCS.once('value',function(snapshot){
     weeks.push(weekOf);
   });
 
-  console.log(weeks);
   injectToDOM(weeks);
 });
 
@@ -443,10 +442,12 @@ function AddNewCS(){
   document.getElementById('newCSBlock').style.display ='block';
 }
 
+/*
 //Create new Working Schedule - Upload folder into firebase
 var uploader = document.getElementById('uploader');
 var fileButton = document.getElementById('fileButton');
 var submitfileButton = document.getElementById('btnSubmitWS')
+
 
 fileButton.addEventListener('change', handleuploadfile);
 submitfileButton.addEventListener('click', handleuploadfileSubmit);
@@ -503,7 +504,7 @@ function handleuploadfileSubmit(e) {
 }
 
 
-
+*/
 
 
 //WS deletion
@@ -543,6 +544,7 @@ function downloadWS(rowIndexWS){
   });
 }
 
+/*
 //Upload file
 var uploader2 = document.getElementById('uploader2');
 var fileButton2 = document.getElementById('fileButton2');
@@ -598,6 +600,7 @@ function handleuploadfileSubmit2(e) {
   }
   );
 }
+*/
 
 function showannouncement(){
   document.getElementById("data1").style.display = "block";

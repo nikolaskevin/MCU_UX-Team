@@ -573,7 +573,7 @@ function display_Detail(num){
   var tr = table.getElementsByTagName("tr");
   var cat = tr[num].cells[0].innerText;
   var taskN = tr[num].cells[1].innerText;
-  var taskID = tr[num].cells[7].innerText;
+  var taskID = tr[num].cells[8].innerText;
   var taskPath = "TaskInstruction/" + cat + "/" + taskID;
   //alert (taskPath);
   sessionStorage.setItem("taskPath", taskPath);
@@ -581,6 +581,7 @@ function display_Detail(num){
   localStorage.setItem("taskN", taskN);
 
   goodPath = taskPath;
+  console.log(goodPath);
 
   //Start the process of loading the task
   if (goodPath != null) {
