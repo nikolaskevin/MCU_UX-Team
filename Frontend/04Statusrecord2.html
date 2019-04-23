@@ -79,9 +79,11 @@
         left: 40%;
         text-align: center;
     }
-    span.hidden{
+
+    span.hidden {
         display: none;
     }
+
     table, th, td {
         padding: 10px;
         border: 1px solid black;
@@ -152,6 +154,39 @@
             -webkit-transform: translateY(-3px);
             transform: translateY(-3px);
         }
+    }
+
+    .placeholder {
+        position: absolute;
+        z-index: 5000;
+        display: inline;
+        width: 100%;
+        height: 100%;
+        background-color: gray;
+        opacity: 0.65;
+        filter: Alpha(opacity=65);
+        text-align: center;
+        padding-top: 30%;
+        transform: scaleX(50ex);
+    }
+
+    .placeholderFont {
+        display:inline;
+        z-index:5001;
+        position:absolute;
+        font-family: Tahoma, Geneva, sans-serif;
+        font-size: 22px;
+        letter-spacing: 0px;
+        word-spacing: 2px;
+        color: #000000;
+        font-weight: 700;
+        text-decoration: none solid rgb(68, 68, 68);
+        font-style: normal;
+        font-variant: normal;
+        text-transform: uppercase;
+        padding-left: 5ex;
+        padding-right: 5ex;
+        padding-top: 20%;
     }
 </style>
 <body>
@@ -305,6 +340,9 @@
                         <span id="scspan" onclick="showsc()" style="opacity:.8;cursor:pointer;">Special Care</span>
                         <span id="ecspan" onclick="showec()" style="opacity:.8;cursor:pointer;">Env. Condition</span>
                     </div>
+                    <span class="placeholderFont">This is a placeholder! Implementation of this feature will be added on in the future!</span>
+                    <div class="placeholder">
+                    </div>
                     <div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
                         <div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
                         <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;">&nbsp English<br></p>
@@ -312,6 +350,7 @@
                         <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
                     </div>
                     <div id="data1" style="position:relative;left:22%;width:78%;height:80%;background-color:#fff;border-left:2px solid black;overflow-x:hidden; overflow-y:scroll;">
+
                         <table id="DSR_table" class="daily_status_record" onclick="sortDSR()" style="position:relative;width:100%;border-style:hidden;">
                             <tr>
                                 <th colspan="3"> Daily Status Record </th>
@@ -401,6 +440,7 @@
                     </div>
 
                     <div style="position:relative; top:-80%; left:0%; background-color:#ddd;width:22%; height:80%;">
+
                         <h2 id="current_year" style="position:relative;top:-80%"></h2>
                         <h2 id='current_date' style="position:relative;"></h2>
                         <h2 id="current_month" style="position:relative;"></h2>

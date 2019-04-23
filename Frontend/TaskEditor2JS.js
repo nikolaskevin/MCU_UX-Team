@@ -324,16 +324,17 @@ function injectToDOM(){
 
      //Task Video
      htmlInjection += '<div style="text-align:center;"> Video URL: </div>';
-     htmlInjection += '<input style="text-align:center;" type="text" id="videoURLInput" value="' + taskDetails["videoURL"] + '"> </input>';
-
+     if (taskDetails["videoURL"] == "" || taskDetails["videoURL"] == null){
+        htmlInjection += '<input style="text-align:center;" type="text" id="videoURLInput" placeholder="Video URL"></input>';
+     } else {
+        htmlInjection += '<input style="text-align:center;" type="text" id="videoURLInput" value="' + taskDetails["videoURL"] + '"> </input>';
+     }
     //Task outline
     console.log(taskDetails["outline"]);
     htmlInjection += '<div style="text-align:center;"> Task Outline: </div>';
     if (taskDetails["outline"] == "Type an outline here" || taskDetails["outline"] == ""){
-        htmlInjection += '<div>' + '<textarea class="taskName" id="taskOutline"  value="" placeholder="Type an outline here"> </textarea>' + '</div>';
-        console.log("Fuck fucking fuckers");
+        htmlInjection += '<div>' + '<textarea class="taskName" id="taskOutline" placeholder="Type an outline here"></textarea>' + '</div>';
     } else {
-        console.log("frick fricking frickers.");
         htmlInjection += '<div>' + '<textarea class="taskName" id="taskOutline" >' + taskDetails["outline"] + ' </textarea>' + '</div>';
     }
     //Visibility
@@ -387,8 +388,8 @@ function injectToDOM(){
 
         //Step description
         htmlInjection += "<div class='inputFieldLeft' width='100%'>";
-        if (steps[i].description == "step description"){
-            htmlInjection += "Description: <div class='containerDiv'> <div class='desDiv'> <textarea class = 'stepDescriptionInput' id='" + i + "'>" + "</textarea></div>";
+        if (steps[i].description == "step description" || steps[i].description == "" || steps[i].description == "description"){
+            htmlInjection += "Description: <div class='containerDiv'> <div class='desDiv'> <textarea class = 'stepDescriptionInput' id='" + i + "' placeholder='Type a step description here.'></textarea></div>";
         } else {
             htmlInjection += "Description: <div class='containerDiv'> <div class='desDiv'> <textarea class = 'stepDescriptionInput' id='" + i + "'>"+ steps[i].description + "</textarea></div>";
         }
@@ -511,7 +512,7 @@ function getDetailedStepHTML(steps, stepNum){
             
             //Right side of detailed step
             detailHTML += '<div class="detailedStepRightContainer" id= "' + i + '">';
-            if (steps[i]["detailedSteps"][j] = "Detailed Step "){
+            if (steps[i]["detailedSteps"][j] == "Detailed Step " || steps[i]["detailedSteps"][j] == "Detailed Step"){
                 detailHTML += '<input type="text" class = "detailedStepInput" placeholder = "' + steps[i]["detailedSteps"][j] + ' " id= " ' + parseInt(j) +  '"> </input>';
             } else {
             detailHTML += '<input type="text" class = "detailedStepInput" value = "' + steps[i]["detailedSteps"][j] + ' " id= " ' + parseInt(j) +  '"> </input>';
@@ -561,6 +562,7 @@ function updateDetailedStepHandler(steps){
         var detailedNum = parseInt(event.target.id);
         var mainStepNum = parseInt(event.target.parentElement.id);
         steps[mainStepNum]["detailedSteps"][detailedNum] = $(event.target).val();
+        console.log(steps[mainStepNum]["detailedSteps"][detailedNum]);
     });
 }
 
@@ -874,8 +876,8 @@ function saveTask(steps, goodPath, taskData){
         //updates[goodPath] = insertToDatabase;
         updates[taskDetails["taskID"]] = insertToDatabase;
         console.log(updates);
-    
-        if (firebase.database().ref("TaskInstruction/"+taskDetails["category"]+"/"+taskDetails["taskID"]).update(insertToDatabase)){   //Actually uploads the task to the database
+        var tempRef = "TaskInstruction/"+taskDetails["category"]+"/"+taskDetails["taskID"];
+        if (firebase.database().ref(tempRef).update(insertToDatabase)){   //Actually uploads the task to the database
             localStorage.setItem("taskPath", "TaskInstruction/"+taskDetails["category"]+"/"+taskDetails["taskID"]);
             if (taskDetails["newTask"]){
                 addTaskToLibrary();
@@ -888,7 +890,7 @@ function saveTask(steps, goodPath, taskData){
                     console.log("deleted");
                     alert("Save succesful");
                     //Put the task into the library
-                    
+                    window.location.href = "./10Mytask2.html";
                 });
             } else {
                 alert("Save succesful");
@@ -896,6 +898,7 @@ function saveTask(steps, goodPath, taskData){
                 window.onbeforeunload = function() {
                     return;
                 };
+                window.location.href = "./10Mytask2.html";
             }
 
         } else {
@@ -980,5 +983,5 @@ function newStep(){
  */
 function newDetailedStep(stepNum){
     var num = steps[stepNum]["detailedSteps"].length;
-    steps[stepNum]["detailedSteps"][ num ] = "Detailed Step";
+    steps[stepNum]["detailedSteps"][ num ] = "Detailed Step ";
 }
