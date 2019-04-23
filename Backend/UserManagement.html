@@ -88,7 +88,6 @@
 	  height:500px;
 	}
 
-<!--usermessage-->
         *{
             margin: 0px;
             padding: 0px;
@@ -275,8 +274,6 @@
 			<div class="right">
 				<div class="tap">
 					<span id="User Management" onclick="showusermanagement()" style="cursor:pointer;">User Management</span>
-					<span id="LoginTime" onclick="showlogintime()" style="opacity:.8;cursor:pointer;">Browser Account</span>
-					<span id="LogoutTime" onclick="showlogouttime()" style="opacity:.8;cursor:pointer;">App Account</span>
 				</div>
 
 				<div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
@@ -303,52 +300,11 @@
 						</tbody>
 					</table>
 				</div>
-				<!--Browser tab-->
-				<div class="container" id="data2" style="display:none;position:relative; overflow: scroll;">
-					<p style="position:relative;left:270px;font-size:18px;font-weight:bold;color:#B53232;top:8px;">Latest Login</p>
-					<p style="position:relative;left:590px;top:-16px;font-size:18px;font-weight:bold;color:#B53232;">Latest Logout</p>
-						<table id="browseraccount" style="width:100%;border-style:hidden;position:relative;top:-10px;">
-							<thread>
-								<tr>
-									<th style="width:12%" onclick="sortDateandTime('browseraccountbody','0')">ID</th>
-									<th style="width:24%" onclick="sortDateandTime('browseraccountbody','1')">Date&Time</th>
-									<th style="width:24%" onclick="sortDateandTime('browseraccountbody','2')">Date&Time</th>
-									<th style="width:12%" >History</th>
-								</tr>
-							</thread>
-							<tbody id='browseraccountbody'>
-							</tbody>
-						</table>
 				<!-- END OF USER MANAGEMENT CONTAINTER -->		
 					
 				</div>
 
-				<div class="container" id="data3" style="display:none;position:relative; overflow: scroll;">
-					<p style="position:relative;left:270px;font-size:18px;font-weight:bold;color:#B53232;top:8px;">Latest Login</p>
-					<p style="position:relative;left:590px;top:-16px;font-size:18px;font-weight:bold;color:#B53232;">Latest Logout</p>
-						<table id="appaccount" style="width:100%;border-style:hidden;position:relative;top:-10px;">
-							<thread>
-								<tr>
-									<th style="width:12%"  onclick="sortDateandTime('appaccountbody','0')">ID</th>
-									<th style="width:24%"  onclick="sortDateandTime('appaccountbody','1')">Date&Time</th>
-									<th style="width:24%"  onclick="sortDateandTime('appaccountbody','2')">Date&Time</th>
-									<th style="width:12%">History</th>
-								</tr>
-							</thread>
-							<tbody id='appaccountbody'>
-							</tbody>
-
-	
-							
-
-						</table>
-				</div>
-
-				<div class="container" id="data4" style="display:none;position:relative;">
-					123
-				</div>
-
-
+				
 					<!-- Create PopUp Use -->
 					<div id="createNewAccountpop" style="display:none;">
 									  <div class="editformedit">
@@ -406,98 +362,6 @@
 					</div>
 				</div>
 				</div>
-
-
-				
-
-<div id = "browsaccountname" style="display:none;background-color:#336699;position:absolute;top:14%;left:5%;width:90%;height:6%;border-style: solid;
-		border-width: 2px;border-bottom:hidden;">
-	<h2 style="position:relative;left:3%;top:6px;color:white;">Browser - ID : </h2>
-	<h3 id="browsername" style="position:relative;left:17%;top:-22px;color:white;"></h3>
-	<p style="position:relative;left:98%;top:-48px;font-size:20px;color:white;" class="closerecord" onclick= "closeHistory()">X</p>
-</div>
-<div id="viewbacchistory" style="display:none;position:absolute;top:20%;left:5%;background-color:#F0F0EF;width:90%;height:60%;border-style: solid;
-		border-width: 2px;border-top:hidden;">
-	<div style="position:absolute;overflow-y:auto;overflow-x:hidden;width:33.3%;height:100%;border-style: solid;
-			border-width: 1px;border-left:hidden;border-bottom:hidden;border-top:hidden;">
-		<p style="font-weight:bold;position:relative;left:38%;top:10px;">Login Record</p>
-		<table style="border-style:hidden;position:relative;left:25px;top:18px;">
-		<thead>
-		<th style="width:100%" onclick="sortDateandTime('viewbrowserloginbody',0)">Date & Time </th>
-	</thead>
-		<tbody id="viewbrowserloginbody">
-		</tbody>
-	</table>
-	</div>
-	<div style="overflow-y:auto;overflow-x:hidden;width:33.3%;position:absolute;height:100%;top:0px;left:33.3%;border-style: solid;
-			border-width: 1px;border-left:hidden;border-bottom:hidden;border-top:hidden;">
-		<p style="font-weight:bold;position:relative;left:35%;top:10px;">Logout Record</p>
-	<table style="border-style:hidden;position:relative;left:25px;top:20px;">
-		<thead>
-		<th style="width:100%" onclick="sortDateandTime('viewbrowserlogoutbody',0)">Date & Time </th>
-	</thead>
-		<tbody id="viewbrowserlogoutbody">
-		</tbody>
-	</table>
-</div>
-<div style="overflow-y:auto;overflow-x:hidden;width:33.3%;position:absolute;height:100%;top:0px;left:66.6%;">
-	<p style="font-weight:bold;position:relative;left:35%;top:10px;">Password History</p>
-<table style="border-style:hidden;position:relative;left:25px;top:20px;">
-	<thead>
-	<th style="width:50%" onclick="sortDateandTime('viewbrowserpasswordhistory',0)">Date & Time </th>
-	<th style="width:50%">Password Record </th>
-</thead>
-	<tbody id="viewbrowserpasswordhistory">
-	</tbody>
-</table>
-</div>
-</div>
-
-
-
-<div id="appaccountname" style="display:none;background-color:#336699;position:absolute;top:14%;left:5%;width:90%;height:6%;border-style: solid;
-		border-width: 2px;border-bottom:hidden;">
-	<h2 style="position:relative;left:3%;top:6px;color:white;">App - ID : </h2>
-	<h3 id="appname" style="position:relative;left:13%;top:-22px;color:white;"></h3>
-	<p style="position:relative;left:98%;top:-48px;font-size:20px;color:white;" class="closerecord" onclick= "closeHistory()">X</p>
-</div>
-<div id="viewapphistory" style="display:none;position:absolute;top:20%;left:5%;background-color:#F0F0EF;width:90%;height:60%;border-style: solid;
-		border-width: 2px;border-top:hidden;">
-	<div style="position:absolute;overflow-y:auto;overflow-x:hidden;width:33.3%;height:100%;border-style: solid;
-			border-width: 1px;border-left:hidden;border-bottom:hidden;border-top:hidden;">
-		<p style="font-weight:bold;position:relative;left:38%;top:10px;">Login Record</p>
-		<table style="border-style:hidden;position:relative;left:25px;top:18px;">
-		<thead>
-		<th style="width:100%" onclick="sortDateandTime('viewapploginbody',0)">Date & Time </th>
-	</thead>
-		<tbody id="viewapploginbody">
-		</tbody>
-	</table>
-	</div>
-	<div style="overflow-y:auto;overflow-x:hidden;width:33.3%;position:absolute;height:100%;top:0px;left:33.3%;border-style: solid;
-			border-width: 1px;border-left:hidden;border-bottom:hidden;border-top:hidden;">
-		<p style="font-weight:bold;position:relative;left:35%;top:10px;">Logout Record</p>
-	<table style="border-style:hidden;position:relative;left:25px;top:20px;">
-		<thead>
-		<th style="width:100%" onclick="sortDateandTime('viewapplogoutbody','0')">Date & Time </th>
-	</thead>
-		<tbody id="viewapplogoutbody">
-		</tbody>
-	</table>
-</div>
-<div style="overflow-y:auto;overflow-x:hidden;width:33.3%;position:absolute;height:100%;top:0px;left:66.6%;">
-	<p style="font-weight:bold;position:relative;left:35%;top:10px;">Password History</p>
-<table style="border-style:hidden;position:relative;left:25px;top:20px;">
-	<thead>
-	<th style="width:50%" onclick="sortDateandTime('viewapppasswordhistory',0)">Date & Time </th>
-	<th style="width:50%">Password Record </th>
-</thead>
-	<tbody id="viewapppasswordhistory">
-	</tbody>
-</table>
-</div>
-</div>
-
 
 	</body>
 
