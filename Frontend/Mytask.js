@@ -573,7 +573,7 @@ function display_Detail(num){
   var tr = table.getElementsByTagName("tr");
   var cat = tr[num].cells[0].innerText;
   var taskN = tr[num].cells[1].innerText;
-  var taskID = tr[num].cells[7].innerText;
+  var taskID = tr[num].cells[8].innerText;
   var taskPath = "TaskInstruction/" + cat + "/" + taskID;
   //alert (taskPath);
   sessionStorage.setItem("taskPath", taskPath);
@@ -927,7 +927,7 @@ function directTask(num){
 function removeTaskMyList(num) {
   var table = document.getElementById("assigningTask");
   var tr = table.getElementsByTagName("tr");
-  var taskID = tr[num].cells[7].innerText; //taskID to be removed
+  var taskID = tr[num].cells[8].innerText; //taskID to be removed
 
   //get userid
   firebase.auth().onAuthStateChanged(function (firebaseUser){

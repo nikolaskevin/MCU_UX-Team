@@ -60,6 +60,8 @@ snapshot.forEach(function(childSnapshot1){
       var tr = table.getElementsByTagName("tr");
       childSnapshot1.forEach(function(childSnapshot2){
         var taskChild = childSnapshot2.key;
+        //$(tr).css("display","none");
+      
         //.table(taskID);
         taskID.push(taskChild);
         var filterTask = document.getElementById("filterTaskList");
@@ -79,7 +81,7 @@ snapshot.forEach(function(childSnapshot1){
         var row = assigningTask.insertRow(-1);
         c++;
         tr[c].style.display = "table-row";
-
+      
         var cellCategory = row.insertCell(-1);
         cellCategory.appendChild(document.createTextNode(childSnapshot1.key));
             
@@ -98,6 +100,12 @@ snapshot.forEach(function(childSnapshot1){
             
         var cellCheckbox = row.insertCell(-1);
         cellCheckbox.appendChild(checkBox);
+        if (childSnapshot2.val()["Info"]["Visible"] === false || childSnapshot2.val()["Info"]["Published"] === false){
+          $(tr[c]).html("");
+          $(tr[c]).css("display","none");
+        } else {
+          console.log(childSnapshot2.val());
+        }
       })
     })
   })

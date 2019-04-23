@@ -300,8 +300,11 @@ function injectToDOM(){
     htmlInjection = "";
     //Task name
     htmlInjection += '<div style="text-align:center;"> Task Name: </div>';
-    htmlInjection += '<input style="text-align:center;" type="text" id="nameInput" value="' + taskDetails["name"] + '"> </input>';
-
+    if (taskDetails["name"] == "New Task"){
+        htmlInjection += '<input style="text-align:center;" type="text" id="nameInput" placeholder="' + taskDetails["name"] + '"> </input>';
+    } else {
+        htmlInjection += '<input style="text-align:center;" type="text" id="nameInput" value="' + taskDetails["name"] + '"> </input>';
+    }
     //Task Category
     htmlInjection += '<div style="text-align:center;"> Category: </div>';
     htmlInjection += '<select id="category" name="category">';
@@ -324,9 +327,15 @@ function injectToDOM(){
      htmlInjection += '<input style="text-align:center;" type="text" id="videoURLInput" value="' + taskDetails["videoURL"] + '"> </input>';
 
     //Task outline
+    console.log(taskDetails["outline"]);
     htmlInjection += '<div style="text-align:center;"> Task Outline: </div>';
-    htmlInjection += '<div>' + '<textarea class="taskName" id="taskOutline" >' + taskDetails["outline"] + ' </textarea>' + '</div>';
-
+    if (taskDetails["outline"] == "Type an outline here" || taskDetails["outline"] == ""){
+        htmlInjection += '<div>' + '<textarea class="taskName" id="taskOutline"  value="" placeholder="Type an outline here"> </textarea>' + '</div>';
+        console.log("Fuck fucking fuckers");
+    } else {
+        console.log("frick fricking frickers.");
+        htmlInjection += '<div>' + '<textarea class="taskName" id="taskOutline" >' + taskDetails["outline"] + ' </textarea>' + '</div>';
+    }
     //Visibility
     htmlInjection += '<div style="text-align:center;"> Task Visibility: </div>';    
     htmlInjection += '<div class="radioField">';
@@ -373,12 +382,16 @@ function injectToDOM(){
         htmlInjection += "</div>";
         //Task name
         htmlInjection += "<div class='inputField'>";
-        htmlInjection += "<div>Step name:</div> <input width='80' class = 'stepNameInput' type = 'text' value = '" + steps[i].name + "'id = '" + i + "'</input>";
+        htmlInjection += "<div>Step name:</div> <input width='80' class = 'stepNameInput' type = 'text' placeholder = '" + steps[i].name + "'id = '" + i + "'</input>";
         htmlInjection += "</div>";
 
-        //Task description
+        //Step description
         htmlInjection += "<div class='inputFieldLeft' width='100%'>";
-        htmlInjection += "Description: <div class='containerDiv'> <div class='desDiv'> <textarea class = 'stepDescriptionInput' id='" + i + "'>"+ steps[i].description + "</textarea></div>";
+        if (steps[i].description == "step description"){
+            htmlInjection += "Description: <div class='containerDiv'> <div class='desDiv'> <textarea class = 'stepDescriptionInput' id='" + i + "'>" + "</textarea></div>";
+        } else {
+            htmlInjection += "Description: <div class='containerDiv'> <div class='desDiv'> <textarea class = 'stepDescriptionInput' id='" + i + "'>"+ steps[i].description + "</textarea></div>";
+        }
         htmlInjection += '<div class = "stepImageContainer">';
         //Add in image upload button and image preview
         htmlInjection += '<input type="file" class="uploadPic" name="'+i+'"/>';
@@ -498,7 +511,11 @@ function getDetailedStepHTML(steps, stepNum){
             
             //Right side of detailed step
             detailHTML += '<div class="detailedStepRightContainer" id= "' + i + '">';
+            if (steps[i]["detailedSteps"][j] = "Detailed Step "){
+                detailHTML += '<input type="text" class = "detailedStepInput" placeholder = "' + steps[i]["detailedSteps"][j] + ' " id= " ' + parseInt(j) +  '"> </input>';
+            } else {
             detailHTML += '<input type="text" class = "detailedStepInput" value = "' + steps[i]["detailedSteps"][j] + ' " id= " ' + parseInt(j) +  '"> </input>';
+            }
             detailHTML += '</div>';
 
             //delete button for detailed step
