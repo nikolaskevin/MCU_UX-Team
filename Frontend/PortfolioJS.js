@@ -320,13 +320,11 @@ function portfolio_Table(fb){
                   row.setAttribute("class","table-list-row");
                   var cellId = row.insertCell(0)
                   var cellName = row.insertCell(1);
-                  var cellNationalID = row.insertCell(2);
-                  var cellNationality = row.insertCell(3);
-                  var cellGender= row.insertCell(4);
-                  var cellContactno= row.insertCell(5);
-                  var cellEmail= row.insertCell(6);
-                  var cellRole= row.insertCell(7);
-                  var cellButton= row.insertCell(8);
+                  var cellGender= row.insertCell(2);
+                  var cellContactno= row.insertCell(3);
+                  var cellEmail= row.insertCell(4);
+                  var cellRole= row.insertCell(5);
+                  var cellButton= row.insertCell(6);
                   var button = document.createElement("button");
 
                   cellId.appendChild(document.createTextNode(childSnapshot.key));
@@ -361,31 +359,6 @@ function portfolio_Table(fb){
                       if(childKey == "Name"){
                           cellName.appendChild(document.createTextNode(childData));
                           console.log(childData);
-                      }
-                      if(childKey == "NationalID"){
-                          cellNationalID.appendChild(document.createTextNode(childData));
-                      }
-                      if(childKey == "Nationality"){
-                          cellNationality.appendChild(document.createTextNode(childData));
-                          row.setAttribute('data-nationality', childData);
-                          arr1.push(childData);
-                          console.log(childData);
-                           var y = document.getElementById("filterNationality");
-                           var option = document.createElement("option");
-                           var x = 0;
-                           for(var c = 0; c < index; c++){
-                             if(arr1[c] == arr1[index]){
-                               x = 1;
-                               break;
-                             }
-                           }
-                           if(x==0){
-                             option.text= arr1[c];
-                              y.add(option);
-                              console.log(index);
-                           }
-                           index=index+1;
-
                       }
                       if(childKey =="Gender"){
                           cellGender.appendChild(document.createTextNode(childData));
@@ -431,8 +404,6 @@ function viewP(){
       var photo = snapshot.child('pictureurl').val();
       var id = snapshot.child('ID').val();
       var Name = snapshot.child('Name').val();
-      var NationalID = snapshot.child('NationalID').val();
-      var Nationality = snapshot.child('Nationality').val();
       var Gender = snapshot.child('Gender').val();
       var DOB = snapshot.child('DOB').val();
       var Email = snapshot.child('Email').val();
@@ -453,14 +424,12 @@ function viewP(){
       document.getElementById('img1').src = photo;
       document.getElementById('PID').innerHTML= id;
       document.getElementById('Name').innerHTML= Name;
-      document.getElementById('NID').innerHTML= NationalID;
       document.getElementById('Gender').innerHTML= Gender;
       document.getElementById('Room').innerHTML= roomno;
       document.getElementById('Password').innerHTML= "*****";
 
      // document.getElementById('CNAnameV').innerHTML= CNAname;
       //document.getElementById('CNAIDV').innerHTML= CNAID;
-      document.getElementById('Nationality').innerHTML= Nationality ;
       document.getElementById('Email').innerHTML= Email;
       document.getElementById('DOB').innerHTML= DOB;
       document.getElementById('Contactno').innerHTML= Contact;
@@ -482,7 +451,8 @@ function viewP(){
     var id = $(this).closest('tr').children('td:first').text();
     console.log(id);
     if(td == "CNO"){
-        var fbV = firebase.database().ref('CNO/'+ id+"/Portfolio");
+        var fbV = firebase.database().ref('CNO/' + id + "/Portfolio");
+
     }
     if(td == "CNA"){
         var fbV = firebase.database().ref('CNA/'+ id+"/Portfolio");
@@ -495,8 +465,6 @@ function viewP(){
       var photo = snapshot.child('pictureurl').val();
       var id = snapshot.child('ID').val();
       var Name = snapshot.child('Name').val();
-      var NationalID = snapshot.child('NationalID').val();
-      var Nationality = snapshot.child('Nationality').val();
       var Gender = snapshot.child('Gender').val();
       var Password = snapshot.child('Password').val();
       console.log(Password);

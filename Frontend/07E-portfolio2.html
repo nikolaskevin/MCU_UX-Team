@@ -153,7 +153,6 @@ span.hidden{
     }
 
     .editformedit {
-        max-width: 900px;
         min-width: 250px;
         padding: 10px 50px;
         border: 2px solid black;
@@ -161,9 +160,9 @@ span.hidden{
         font-family: raleway;
         background-color: #fff;
         position: absolute;
-        top: 40px;
+        top: 15%;
+        width: 70%;
         left: 25%;
-        width: 960px;
         height: 800px;
     }
 
@@ -519,17 +518,6 @@ span.hidden{
                                     </select>
                                 </div>
                                 <br>
-                                <div id='Nationalhide' style='display:block;'>
-                                    <div class="portfolio_search_background">
-                                        <div class="portfolio_search_word">
-                                            <h3> Nationality </h3>
-                                        </div>
-                                    </div>
-                                    <select id="filterNationality">
-                                        <option value="all">All</option>
-                                    </select>
-                                </div>
-                                <br>
                                 <div id='Genderhide' style='display:block;'>
                                     <div class="portfolio_search_background">
                                         <div class="portfolio_search_word">
@@ -552,8 +540,6 @@ span.hidden{
                                 <tr>
                                     <th style="width:15%"> I.D. </th>
                                     <th style="width:20%"> Name </th>
-                                    <th style="width:20%"> National ID </th>
-                                    <th style="width:20%"> Nationality </th>
                                     <th style="width:3%"> Gender</th>
                                     <th style="width:25%"> Contact number</th>
                                     <th style="width:15%"> Email</th>
@@ -607,10 +593,6 @@ span.hidden{
                         <td> Initial Date: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffInitialDate" placeholder="Enter Date" required /></td>
                     </tr>
                     <tr>
-                        <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffNID" placeholder="National ID" required /></td>
-                        <td> Nationality: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffNationality" placeholder="Nationality" required /></td>
-                    </tr>
-                    <tr>
                         <td> Email Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffEmail" placeholder="Email" required /></td>
                         <td> Gender: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffGender" placeholder="M/F" required /></td>
                     </tr>
@@ -655,10 +637,6 @@ span.hidden{
                 <tr>
                     <td> Room number: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientRoomNo" placeholder="101.." required /></td>
                     <td> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="password" id="patientPassword" placeholder="give a password" required /></td>
-                </tr>
-                <tr>
-                    <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNID" placeholder="National ID" required /></td>
-                    <td> Nationality: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNationality" placeholder="Nationality" required /></td>
                 </tr>
                 <tr>
                     <td> Date of Birth:  &nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientDOB" placeholder="yyyy/mm/dd" required /></td>
@@ -723,12 +701,6 @@ span.hidden{
                     <td width="25%" id="Room"> Room No.</td>
                     <td width="25%"> Password </td>
                     <td width="25%" id="Password">Password</td>
-                </tr>
-                <tr>
-                    <td> National ID </td>
-                    <td id="NID"> National ID </td>
-                    <td> Nationality </td>
-                    <td id="Nationality"> Nationality</td>
                 </tr>
                 <tr>
                     <td> Date of Birth </td>
@@ -810,12 +782,6 @@ span.hidden{
                     <td id="sPosition"> </td>
                 </tr>
                 <tr>
-                    <td> National ID </td>
-                    <td id="sNID"> </td>
-                    <td> Nationality</td>
-                    <td id="sNationality"> </td>
-                </tr>
-                <tr>
                     <td> Email Address</td>
                     <td id="sEmail"> </td>
                     <td> Gender</td>
@@ -869,10 +835,6 @@ span.hidden{
                 <tr>
                     <td> Room number: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientRoomNo2" placeholder="101.." required /></td>
                     <td> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp    <input type="text" id="patientPassword2" placeholder="give a password" required /></td>
-                </tr>
-                <tr>
-                    <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNID2" placeholder="National ID" required /></td>
-                    <td> Nationality: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNationality2" placeholder="Nationality" required /></td>
                 </tr>
                 <tr>
                     <td> Date of Birth: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientDOB2" placeholder="yyyy/mm/dd" required /></td>
@@ -936,10 +898,6 @@ span.hidden{
                 <tr>
                     <td> Position: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffPosition2" placeholder="Position" required /></td>
                     <td> Date of Birth: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffDOB2" placeholder="yyyy/mm/dd" required /></td>
-                </tr>
-                <tr>
-                    <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffNID2" placeholder="National ID" required /></td>
-                    <td> Nationality: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffNationality2" placeholder="Nationality" required /></td>
                 </tr>
                 <tr>
                     <td> Email Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffEmail2" placeholder="Email" required /></td>
