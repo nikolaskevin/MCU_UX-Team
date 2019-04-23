@@ -292,7 +292,7 @@
 
             <div class="main container-fluid wrapper">
                 <!-- START OF MIDDLE CONTENT-->
-                <div class="right" style="transform:translateY(-13ex)">
+                <div class="right" style="transform:translateY(-9ex)">
 
                     <div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;">
                         <div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
@@ -300,10 +300,11 @@
                         <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Frontend-Chinese/05Library2.html'">&nbsp 中文<br></p>
                         <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
                     </div>
+                    <form>
                             <select class="library_filter" id="filterCategory" onchange="filter_Category()">
                                 <option>Category</option>
                             </select>
-                            <form>
+                            
                                 <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
                             </form>
                     <div class="container" id="data1"style="overflow:auto;">

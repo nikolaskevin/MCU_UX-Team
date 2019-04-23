@@ -49,8 +49,8 @@ var fbPatName = firebase.database().ref("Patient");
         document.getElementById("generate_report_button").disabled = false;
         document.getElementById("generate_report_button").style.backgroundColor ='#F5F5F5';
         }
-    }));
-});
+        }));
+     });
 
     if (document.getElementById("selectPatName").value == "Patient Name"){
              document.getElementById("patientID").value = "";
@@ -58,9 +58,24 @@ var fbPatName = firebase.database().ref("Patient");
              document.getElementById("generate_report_button").style.backgroundColor ='#A9A9A9';
 
     }
+}
 
+function validate(){
+  var patID = document.getElementById("patientID").value;
+  var startD = document.getElementById("startDate").value;
+  var endD = document.getElementById("endDate").value;
 
-   }
+  if(startD != "" &&  endD != "" && patID != ""){
+    document.getElementById("generate_report_button").disabled = false;
+    document.getElementById("generate_report_button").style.backgroundColor ='#F5F5F5';
+    }
+    else{
+         document.getElementById("generate_report_button").disabled = true;
+         document.getElementById("generate_report_button").style.backgroundColor ='#A9A9A9';
+  }
+}
+
+   
 
 	
 // clear box function
@@ -70,11 +85,13 @@ var fbPatName = firebase.database().ref("Patient");
     document.getElementById("startDate").value = "";
     document.getElementById("endDate").value = "";
     document.getElementById("selectPatName").value = "Patient Name";
+    document.getElementById("ReportURL").innerHTML = "";
+
+    validate();
 }
 
 // fast day report button function
 function fastDay() {
-  document.getElementById("day_button").onclick = function() {
       var startDate = new Date();
       startDate.setDate( startDate.getDate() - 1 );
 
@@ -107,12 +124,11 @@ function fastDay() {
       document.getElementById("startDate").value = completeStartDate;  // today
       document.getElementById("endDate").value = completeEndDate;  // today
 
- };
+      validate();
 }
 
 // fast week report button function
 function fastWeek() {
-    document.getElementById("week_button").onclick = function() {
         var startDate = new Date();
         startDate.setDate( startDate.getDate() - 7 );
   
@@ -144,13 +160,12 @@ function fastWeek() {
   
         document.getElementById("startDate").value = completeStartDate;  // today
         document.getElementById("endDate").value = completeEndDate;  // today
-  
-   };
+
+        validate();
   }
 
   // fast day report button function
 function fastMonth() {
-    document.getElementById("month_button").onclick = function() {
         var startDate = new Date();
         startDate.setDate( startDate.getDate() - 30 );
   
@@ -182,8 +197,8 @@ function fastMonth() {
   
         document.getElementById("startDate").value = completeStartDate;  // today
         document.getElementById("endDate").value = completeEndDate;  // today
-  
-   };
+
+        validate();
   }
 
 // Updates the database with the data used for the python script that
@@ -196,15 +211,15 @@ var patientID = document.getElementById("patientID").value;
 var name = document.getElementById("selectPatName").value;
 var rURL = "http://acad.kutztown.edu/~nperu898/" + name + "_" + startDate + "_" + endDate + ".pdf";
 var Success = "false";
-
-
-
+var randoDate = new Date();
+var randoTime = randoDate.getTime();
 
   firebase.database().ref('Reports/StartDate/').set(startDate);
   firebase.database().ref('Reports/EndDate/').set(endDate);
   firebase.database().ref('Reports/IDvalue/').set(patientID);
   firebase.database().ref('Reports/ReportLink/').set(rURL);
   firebase.database().ref('Reports/Success/').set(Success);
+  firebase.database().ref('Reports/Time/').set(randoTime);
 
   var stringURL = rURL;
   var HLReport = stringURL.link(rURL);
@@ -212,11 +227,7 @@ var Success = "false";
 
   var successRef = firebase.database().ref('Reports');
 
-
-
 document.getElementById("ReportURL").innerHTML = "Please wait a moment while your report is generated.";
-
-
 
 console.log(Success);
 
@@ -235,7 +246,7 @@ console.log(Success);
           }});
         };
 
-    setTimeout(check, 20000);
+    setTimeout(check, 30000);
 
 }
 
