@@ -60,23 +60,21 @@ let file3 = [];
 
 function handleuploadfile1(e) {
      file1=e.target.files[0];
-     console.log(file1.name);
+     console.log(file1.name); //insert photo
 } //end handleuploadfile1
 function handleuploadfile5(e) {
      file4=e.target.files[0];
-     console.log(file4.name);
+     console.log(file4.name); //insert license
 } //end handleuploadfile5
 function handleuploadfile3(e) {
        file3=e.target.files[0];
-       console.log(file3.name);
+       console.log(file3.name); //insert CV
 } //end hangleuploadfile3
 
 
 //Uploads staff portfolio
 function handleuploadfileSubmit(e) {
   var staffName = document.getElementById('staffName').value;
-  var staffNID = document.getElementById('staffNID').value;
-  var staffNationality = document.getElementById('staffNationality').value;
   var staffGender = document.getElementById('staffGender').value;
   var staffDOB = document.getElementById('staffDOB').value;
   var staffEmail = document.getElementById('staffEmail').value;
@@ -99,12 +97,12 @@ function handleuploadfileSubmit(e) {
     var StaffID = document.getElementById('StaffID').innerHTML;
   }
 
-  firebase.storage().ref('Staff/'+StaffID).child(file1.name).put(file1);
-  firebase.storage().ref('Staff/'+StaffID).child(file4.name).put(file4);
-  firebase.storage().ref('Staff/'+StaffID).child(file3.name).put(file3);
-  var storageRef1 = firebase.storage().ref('Staff/'+StaffID+'/'+file1.name)
-  var storageRef3 = firebase.storage().ref('Staff/'+StaffID+'/'+file3.name)
-  var storageRef4 = firebase.storage().ref('Staff/'+StaffID+'/'+file4.name)
+  firebase.storage().ref('Staff/'+StaffID).child(file1.name).put(file1); //photo
+  firebase.storage().ref('Staff/'+StaffID).child(file3.name).put(file3); //cv
+  firebase.storage().ref('Staff/'+StaffID).child(file4.name).put(file4); //license
+  var storageRef1 = firebase.storage().ref('Staff/'+StaffID+'/'+file1.name) //photo
+  var storageRef3 = firebase.storage().ref('Staff/'+StaffID+'/'+file3.name) //cv
+  var storageRef4 = firebase.storage().ref('Staff/'+StaffID+'/'+file4.name) //license
   //var storageRef = firebase.storage().ref('Sponsor/'+name+".png")
   
   var uploadtask = storageRef1.put(file1);
@@ -135,8 +133,6 @@ function handleuploadfileSubmit(e) {
           pictureurl : url,
           ID : StaffID,
           Name : staffName,
-          NationalID : staffNID,
-          Nationality : staffNationality,
           Gender : staffGender,
           DOB : staffDOB,
           Email : staffEmail,
@@ -212,8 +208,6 @@ function handleuploadfile6(e) {
 function handleuploadfileSubmit6(e) {
   var PatientID = document.getElementById('PatientID').innerHTML;
   var patientName = document.getElementById('patientName').value;
-  var patientNID = document.getElementById('patientNID').value;
-  var patientNationality = document.getElementById('patientNationality').value;
   var patientGender = document.getElementById('patientGender').value;
   var patientDOB = document.getElementById('patientDOB').value;
   var patientEmail = document.getElementById('patientEmail').value;
@@ -259,8 +253,6 @@ function handleuploadfileSubmit6(e) {
         ID : PatientID,
         pictureurl : url,
         Name : patientName,
-        NationalID : patientNID,
-        Nationality : patientNationality,
         Gender : patientGender,
         DOB : patientDOB,
         Email : patientEmail,
@@ -484,7 +476,7 @@ function viewP(){
             document.getElementById('sCV').src = CV;
             //console.log(document.getElementById('sCV').src)
 
-            testImage(CV);
+            //testImage(CV);
 
             document.getElementById('sLicense').innerHTML = license;
             document.getElementById('sAddress').innerHTML = AddressV;
@@ -506,6 +498,11 @@ function viewP(){
         });
     }
     if(td == "CNA"){
+      var htmlInjection = "";
+      htmlInjection += '<button id="btnEditSP" onclick="editSP()" style="display:inline;cursor:pointer;">Edit</button>';
+      htmlInjection += '<button id="btnDeleteSP" onclick="deleteSP()" style="display:inline;cursor:pointer;">Delete</button>';
+      $("#CNAbuttons").html(htmlInjection);
+
         var fbV = firebase.database().ref('CNA/' + id + "/Portfolio");
         fbV.on('value', function (snapshot) {
             var photo = snapshot.child('pictureurl').val();
@@ -635,7 +632,6 @@ function viewP(){
       document.getElementById('imgS').src = photo;
       document.getElementById('SID').innerHTML= id;
       document.getElementById('sName').innerHTML= Name;
-      //document.getElementById('sNID').innerHTML= NationalID;
       document.getElementById('sGender').innerHTML= Gender;
 
       document.getElementById("ssPassword").innerHTML= "*******";
@@ -646,7 +642,6 @@ function viewP(){
           birthDate.setAttribute("colspan","4");
 
       }
-      //document.getElementById('sNationality').innerHTML= Nationality ;
       document.getElementById('sEmail').innerHTML= Email;
       document.getElementById('sDOB').innerHTML= DOB;
       document.getElementById('sContact').innerHTML= Contact;
@@ -757,8 +752,6 @@ console.log(position);
     var photo = snapshot.child('pictureurl').val();
     var id = snapshot.child('ID').val();
     var Name = snapshot.child('Name').val();
-    var NationalID = snapshot.child('NationalID').val();
-    var Nationality = snapshot.child('Nationality').val();
     var Gender = snapshot.child('Gender').val();
     var DOB = snapshot.child('DOB').val();
     var Email = snapshot.child('Email').val();
@@ -795,7 +788,7 @@ console.log(position);
         birthDate2.setAttribute("colspan","4");
     }
     document.getElementById('staffCV2').innerHTML= CV;
-    document.getElementById('staffPosition2').value = Position;
+    document.getElementById('staffPosition2').innerHTML = Position;
     document.getElementById('staffInitialDate2').value= InitialDate;
     document.getElementById('staffEName2').value= EName;
     document.getElementById('staffERelationship2').value= ERelationship;
@@ -813,10 +806,8 @@ function SubmitPPPP(){
   var photo = document.getElementById('PictureP').innerHTML;
   var id = document.getElementById('PatientID2').innerHTML;
   var Name = document.getElementById('patientName2').value;
-  var NID = document.getElementById('patientNID2').value;
   var Gender = document.getElementById('patientGender2').value;
   var Room = document.getElementById('patientRoomNo2').value;
-  var Nationality = document.getElementById('patientNationality2').value;
   var Email = document.getElementById('patientEmail2').value;
   var DOB = document.getElementById('patientDOB2').value;
   var Contact = document.getElementById('patientContact2').value;
@@ -837,8 +828,6 @@ function SubmitPPPP(){
   ID : id,
   pictureurl : photo,
   Name : Name,
-  NationalID : NID,
-  Nationality : Nationality,
   Gender : Gender,
   DOB : DOB,
   Email :Email,
@@ -874,9 +863,7 @@ function submitSP(){
   var pic = document.getElementById('PictureS').innerHTML;
   var id = document.getElementById('StaffID2').innerHTML;
   var Name = document.getElementById('staffName2').value;
-  var NID = document.getElementById('staffNID2').value;
   var Gender = document.getElementById('staffGender2').value;
-  var Nationality = document.getElementById('staffNationality2').value;
   var Email = document.getElementById('staffEmail2').value;
   var DOB = document.getElementById('staffDOB2').value;
   var Contact = document.getElementById('staffContact2').value;
@@ -899,8 +886,6 @@ function submitSP(){
   pictureurl : pic,
   ID : id,
   Name : Name,
-  NationalID : NID,
-  Nationality : Nationality,
   Gender : Gender,
   DOB : DOB,
   Email : Email,
@@ -934,55 +919,27 @@ function submitSP(){
 function deletePP(){
   var fbPP = firebase.database().ref('Patient');
   var id = document.getElementById('PID').innerHTML;
+  console.log(id);
   var r = confirm("Are you sure you want to delete?");
     if (r == true) {
-      fbPP.child(id+"/Portfolio").on('value',function(snapshot){
-        var pic = snapshot.child('picFilename').val();
-        var room = snapshot.child('patientRoomNo').val();
-        var fbroomD = firebase.database().ref('Room/'+room);
-        var storageRef = firebase.storage().ref();
-        var file = storageRef.child('Patient/'+pic);
-        file.delete().then(function(){
-          fbPP.child(id).remove();
-          fbroomD.child(id).remove();
-
-          window.location.reload();
-        }).catch(function(error){
-          alert('failed to delete!');
-        });;
-      });
-        alert("successfully deleted!");
+      fbPP.child(id).remove();
+      alert("successfully deleted!");
+      window.location.reload();
     }
 }
 
 function deleteSP(){
- var position = document.getElementById('sPosition').innerHTML;
- var id = document.getElementById('SID').innerHTML;
- var fbSP = firebase.database().ref(position);
- var fbuAccount = firebase.database().ref('uAccount/');
- var r = confirm ("Are you sure you want to delete?");
+var position = document.getElementById('sPosition').innerHTML;
+var id = document.getElementById('SID').innerHTML;
+console.log(id);
+var fbSP = firebase.database().ref(position);
+var fbuAccount = firebase.database().ref('uAccount/');
+var r = confirm ("Are you sure you want to delete?");
   if (r == true) {
-    fbSP.child(id+'/Portfolio').on('value',function(snapshot){
-      var pic = snapshot.child('picFilename').val();
-      var cv = snapshot.child('cvFilename').val();
-      var license = snapshot.child('licenseFilename').val();
-
-      firebase.storage().ref('Staff/').child(cv).delete();
-      firebase.storage().ref('Staff/').child(license).delete();
-      firebase.storage().ref('Staff/').child(pic).delete().then(function(){
-        alert('successfully deleted the storage file!');
-         fbSP.child(id).remove();
-         if(position == 'CNO'){
-           fbuAccount.child(id).remove();
-         }
-        window.location.reload();
-      }).catch(function(error){
-        alert('failed to delete!');
-      });
-    });
-	    alert("Succesfully Deleted!");
-}
-
+    fbSP.child(id).remove();
+    alert("successfully deleted!");
+    window.location.reload();
+  }
 }
 //Keyword search
 $(document).ready(function(){
