@@ -320,13 +320,11 @@ function portfolio_Table(fb){
                   row.setAttribute("class","table-list-row");
                   var cellId = row.insertCell(0)
                   var cellName = row.insertCell(1);
-                  var cellNationalID = row.insertCell(2);
-                  var cellNationality = row.insertCell(3);
-                  var cellGender= row.insertCell(4);
-                  var cellContactno= row.insertCell(5);
-                  var cellEmail= row.insertCell(6);
-                  var cellRole= row.insertCell(7);
-                  var cellButton= row.insertCell(8);
+                  var cellGender= row.insertCell(2);
+                  var cellContactno= row.insertCell(3);
+                  var cellEmail= row.insertCell(4);
+                  var cellRole= row.insertCell(5);
+                  var cellButton= row.insertCell(6);
                   var button = document.createElement("button");
 
                   cellId.appendChild(document.createTextNode(childSnapshot.key));
@@ -361,31 +359,6 @@ function portfolio_Table(fb){
                       if(childKey == "Name"){
                           cellName.appendChild(document.createTextNode(childData));
                           console.log(childData);
-                      }
-                      if(childKey == "NationalID"){
-                          cellNationalID.appendChild(document.createTextNode(childData));
-                      }
-                      if(childKey == "Nationality"){
-                          cellNationality.appendChild(document.createTextNode(childData));
-                          row.setAttribute('data-nationality', childData);
-                          arr1.push(childData);
-                          console.log(childData);
-                           var y = document.getElementById("filterNationality");
-                           var option = document.createElement("option");
-                           var x = 0;
-                           for(var c = 0; c < index; c++){
-                             if(arr1[c] == arr1[index]){
-                               x = 1;
-                               break;
-                             }
-                           }
-                           if(x==0){
-                             option.text= arr1[c];
-                              y.add(option);
-                              console.log(index);
-                           }
-                           index=index+1;
-
                       }
                       if(childKey =="Gender"){
                           cellGender.appendChild(document.createTextNode(childData));
@@ -431,8 +404,6 @@ function viewP(){
       var photo = snapshot.child('pictureurl').val();
       var id = snapshot.child('ID').val();
       var Name = snapshot.child('Name').val();
-      var NationalID = snapshot.child('NationalID').val();
-      var Nationality = snapshot.child('Nationality').val();
       var Gender = snapshot.child('Gender').val();
       var DOB = snapshot.child('DOB').val();
       var Email = snapshot.child('Email').val();
@@ -453,14 +424,12 @@ function viewP(){
       document.getElementById('img1').src = photo;
       document.getElementById('PID').innerHTML= id;
       document.getElementById('Name').innerHTML= Name;
-      document.getElementById('NID').innerHTML= NationalID;
       document.getElementById('Gender').innerHTML= Gender;
       document.getElementById('Room').innerHTML= roomno;
       document.getElementById('Password').innerHTML= "*****";
 
      // document.getElementById('CNAnameV').innerHTML= CNAname;
       //document.getElementById('CNAIDV').innerHTML= CNAID;
-      document.getElementById('Nationality').innerHTML= Nationality ;
       document.getElementById('Email').innerHTML= Email;
       document.getElementById('DOB').innerHTML= DOB;
       document.getElementById('Contactno').innerHTML= Contact;
@@ -480,23 +449,169 @@ function viewP(){
     document.getElementById('form').style.display ='none';
     document.getElementById('portfoliofilter').style.display ='none';
     var id = $(this).closest('tr').children('td:first').text();
-    console.log(id);
+    console.log("Jordy" +id);
     if(td == "CNO"){
-        var fbV = firebase.database().ref('CNO/'+ id+"/Portfolio");
+        var fbV = firebase.database().ref('CNO/' + id + "/Portfolio");
+        fbV.on('value', function (snapshot) {
+            var photo = snapshot.child('pictureurl').val();
+            var id = snapshot.child('ID').val();
+            var Name = snapshot.child('Name').val();
+            var Gender = snapshot.child('Gender').val();
+            var DOB = snapshot.child('DOB').val();
+            var Email = snapshot.child('Email').val();
+            var Password = snapshot.child('Password').val();
+            var Contact = snapshot.child('Contact').val();
+            var EContact = snapshot.child('EContact').val();
+            var AddressV = snapshot.child('Address').val();
+            var roomno = snapshot.child('patientRoomNo').val();
+            var AdmissionDate = snapshot.child('AdmissionDate').val();
+            var EName = snapshot.child('EName').val();
+            var initialDate = snapshot.child('InitialDate').val();
+            var ERelationship = snapshot.child('ERelationship').val();
+            var AdmissionReason = snapshot.child('AdmissionReason').val();
+            var briefDesc = snapshot.child('BriefDescription').val();
+            var CV = snapshot.child('cvFilename').val();
+            var license = snapshot.child('licenseFilename').val();
+            var position = snapshot.child('Position').val();
+
+            console.log("Jordy JRDY" + id);
+
+            //TODO:image input and resize
+            document.getElementById('imgS').src = photo;
+            document.getElementById('ssPassword').innerHTML = "*****";
+            document.getElementById('sERelationship').innerHTML = ERelationship;
+            document.getElementById('sEContact').innerHTML = EContact;
+            document.getElementById('sBriefDescription').innerHTML = briefDesc;
+            document.getElementById('sCV').src = CV;
+            document.getElementById('sLicense').innerHTML = license;
+            document.getElementById('sAddress').innerHTML = AddressV;
+            document.getElementById('sPosition').innerHTML = position;
+            document.getElementById('SID').innerHTML = id;
+            document.getElementById('sName').innerHTML = Name;
+            document.getElementById('sGender').innerHTML = Gender;
+            document.getElementById('sInitialDate').innerHTML = initialDate;
+            document.getElementById('sDOB').innerHTML = DOB;
+            document.getElementById('sEmail').innerHTML = Email;
+            document.getElementById('sContact').innerHTML = Contact;
+            document.getElementById('sEName').innerHTML = EName;
+            document.getElementById('sRoom').innerHTML = roomno;
+
+            // document.getElementById('CNAnameV').innerHTML= CNAname;
+            //document.getElementById('CNAIDV').innerHTML= CNAID;
+
+
+        });
     }
     if(td == "CNA"){
-        var fbV = firebase.database().ref('CNA/'+ id+"/Portfolio");
+        var fbV = firebase.database().ref('CNA/' + id + "/Portfolio");
+        fbV.on('value', function (snapshot) {
+            var photo = snapshot.child('pictureurl').val();
+            var id = snapshot.child('ID').val();
+            var Name = snapshot.child('Name').val();
+            var Gender = snapshot.child('Gender').val();
+            var DOB = snapshot.child('DOB').val();
+            var Email = snapshot.child('Email').val();
+            var Password = snapshot.child('Password').val();
+            var Contact = snapshot.child('Contact').val();
+            var EContact = snapshot.child('EContact').val();
+            var AddressV = snapshot.child('Address').val();
+            var roomno = snapshot.child('patientRoomNo').val();
+            var AdmissionDate = snapshot.child('AdmissionDate').val();
+            var EName = snapshot.child('EName').val();
+            var initialDate = snapshot.child('InitialDate').val();
+            var ERelationship = snapshot.child('ERelationship').val();
+            var AdmissionReason = snapshot.child('AdmissionReason').val();
+            var briefDesc = snapshot.child('BriefDescription').val();
+            var CV = snapshot.child('cvFilename').val();
+            var license = snapshot.child('licenseFilename').val();
+            var position = snapshot.child('Position').val();
+
+            console.log("Jordy JRDY" + id);
+
+            //TODO:image input and resize
+            document.getElementById('imgS').src = photo;
+            document.getElementById('ssPassword').innerHTML = "*****";
+            document.getElementById('sERelationship').innerHTML = ERelationship;
+            document.getElementById('sEContact').innerHTML = EContact;
+            document.getElementById('sBriefDescription').innerHTML = briefDesc;
+            document.getElementById('sCV').src = CV;
+            document.getElementById('sLicense').innerHTML = license;
+            document.getElementById('sAddress').innerHTML = AddressV;
+            document.getElementById('sPosition').innerHTML = position;
+            document.getElementById('SID').innerHTML = id;
+            document.getElementById('sName').innerHTML = Name;
+            document.getElementById('sGender').innerHTML = Gender;
+            document.getElementById('sInitialDate').innerHTML = initialDate;
+            document.getElementById('sDOB').innerHTML = DOB;
+            document.getElementById('sEmail').innerHTML = Email;
+            document.getElementById('sContact').innerHTML = Contact;
+            document.getElementById('sEName').innerHTML = EName;
+            document.getElementById('sRoom').innerHTML = roomno;
+
+            // document.getElementById('CNAnameV').innerHTML= CNAname;
+            //document.getElementById('CNAIDV').innerHTML= CNAID;
+
+
+        });
+
     }
     if(td =="DIR"){
-        var fbV = firebase.database().ref('DIR/'+ id+"/Portfolio");
+        var fbV = firebase.database().ref('DIR/' + id + "/Portfolio");
+        fbV.on('value', function (snapshot) {
+            var photo = snapshot.child('pictureurl').val();
+            var id = snapshot.child('ID').val();
+            var Name = snapshot.child('Name').val();
+            var Gender = snapshot.child('Gender').val();
+            var DOB = snapshot.child('DOB').val();
+            var Email = snapshot.child('Email').val();
+            var Password = snapshot.child('Password').val();
+            var Contact = snapshot.child('Contact').val();
+            var EContact = snapshot.child('EContact').val();
+            var AddressV = snapshot.child('Address').val();
+            var roomno = snapshot.child('patientRoomNo').val();
+            var AdmissionDate = snapshot.child('AdmissionDate').val();
+            var EName = snapshot.child('EName').val();
+            var initialDate = snapshot.child('InitialDate').val();
+            var ERelationship = snapshot.child('ERelationship').val();
+            var AdmissionReason = snapshot.child('AdmissionReason').val();
+            var briefDesc = snapshot.child('BriefDescription').val();
+            var CV = snapshot.child('cvFilename').val();
+            var license = snapshot.child('licenseFilename').val();
+            var position = snapshot.child('Position').val();
+
+            console.log("Jordy JRDY" + id);
+
+            //TODO:image input and resize
+            document.getElementById('imgS').src = photo;
+            document.getElementById('ssPassword').innerHTML = "*****";
+            document.getElementById('sERelationship').innerHTML = ERelationship;
+            document.getElementById('sEContact').innerHTML = EContact;
+            document.getElementById('sBriefDescription').innerHTML = briefDesc;
+            document.getElementById('sCV').src = CV;
+            document.getElementById('sLicense').innerHTML = license;
+            document.getElementById('sAddress').innerHTML = AddressV;
+            document.getElementById('sPosition').innerHTML = position;
+            document.getElementById('SID').innerHTML = id;
+            document.getElementById('sName').innerHTML = Name;
+            document.getElementById('sGender').innerHTML = Gender;
+            document.getElementById('sInitialDate').innerHTML = initialDate;
+            document.getElementById('sDOB').innerHTML = DOB;
+            document.getElementById('sEmail').innerHTML = Email;
+            document.getElementById('sContact').innerHTML = Contact;
+            document.getElementById('sEName').innerHTML = EName;
+            document.getElementById('sRoom').innerHTML = roomno;
+
+            // document.getElementById('CNAnameV').innerHTML= CNAname;
+            //document.getElementById('CNAIDV').innerHTML= CNAID;
+
+
+        });
     }
     fbV.on('value', function(snapshot){
         console.log(fbV.path.pieces_[0]);
       var photo = snapshot.child('pictureurl').val();
       var id = snapshot.child('ID').val();
       var Name = snapshot.child('Name').val();
-      var NationalID = snapshot.child('NationalID').val();
-      var Nationality = snapshot.child('Nationality').val();
       var Gender = snapshot.child('Gender').val();
       var Password = snapshot.child('Password').val();
       console.log(Password);
@@ -558,8 +673,6 @@ function editPP(){
     var photo = snapshot.child('pictureurl').val();
     var id = snapshot.child('ID').val();
     var Name = snapshot.child('Name').val();
-    var NationalID = snapshot.child('NationalID').val();
-    var Nationality = snapshot.child('Nationality').val();
     var Gender = snapshot.child('Gender').val();
     var DOB = snapshot.child('DOB').val();
     var Email = snapshot.child('Email').val();
@@ -582,11 +695,9 @@ function editPP(){
     //TODO: picture can't be edit?
     document.getElementById('PictureP').innerHTML = photo;
     document.getElementById('PatientID2').innerHTML = id;
-    document.getElementById('patientName2').value= Name;
-    document.getElementById('patientNID2').value= NationalID;
-    document.getElementById('patientGender2').value= Gender;
+    document.getElementById('patientName2').value = Name;
+    document.getElementById('patientGender2').value = Gender;
     document.getElementById('patientRoomNo2').value= roomno;
-    document.getElementById('patientNationality2').value= Nationality ;
     document.getElementById('patientEmail2').value= Email;
     document.getElementById('patientDOB2').value= DOB;
     document.getElementById('patientContact2').value= Contact;
@@ -641,9 +752,7 @@ console.log(position);
     document.getElementById('PictureS').innerHTML = photo;
     document.getElementById('StaffID2').innerHTML= id;
     document.getElementById('staffName2').value= Name;
-    document.getElementById('staffNID2').value= NationalID;
     document.getElementById('staffGender2').value= Gender;
-    document.getElementById('staffNationality2').value= Nationality ;
     document.getElementById('staffEmail2').value= Email;
     document.getElementById('staffDOB2').value= DOB;
     document.getElementById('staffContact2').value= Contact;

@@ -253,6 +253,16 @@ $(document).ready(function(){
       });
     });
 
+    //Prevents page from reloading upon hitting enter button
+    $(document).ready(function() {
+      $("#searchInput").keydown(function(event){
+        if(event.keyCode == 13) {
+          event.preventDefault();
+          return false;
+        }
+      });
+    });
+
    /**
      * @function sortingCF
      * @description sorts the assignee table in Library > Assign Task
