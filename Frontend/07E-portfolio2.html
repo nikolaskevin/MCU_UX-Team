@@ -42,7 +42,8 @@
         width: 100%;
         height: 100px;
         border-style: hidden;
-                overflow-x: auto;
+        overflow-x: auto;
+        border: solid black 1px;
     }
 span.hidden{
         display: none;
@@ -168,7 +169,7 @@ span.hidden{
 
     .portfolio_table {
         text-align: center;
-        width: 800px;
+        width: 100%;
     }
 
     .add_button {
@@ -570,7 +571,7 @@ span.hidden{
         <div id="newStaffPortfolio">
             <div class="editformcreatestaff">
                 <br><center><h2>CNA Portfolio</h2></center><br>
-                <table class="portfolio_table">
+                <table>
                     <tr>
                         <td rowspan="3"> Insert Photo: <br><br><input id="btnPicture" type="file" accept="image/*" required /> </td>
                         <td>
@@ -754,10 +755,7 @@ span.hidden{
     <div id="viewStaffPortfolio">
         <div class="editformview" style="height:1020px;">
             <center><h2>Staff Portfolio</h2></center><br>
-            <div>
-                <button id="btnEditSP" onclick="editSP()" style="display:inline;cursor:pointer;">Edit</button>
-                <button id="btnDeleteSP" onclick="deleteSP()" style="display:inline;cursor:pointer;">Delete</button>
-            </div>
+            <div id = "CNAbuttons"></div>
             <br>
             <table id="viewStaffPortfolioTable">
                 <tr>
@@ -824,7 +822,7 @@ span.hidden{
     <div id="editPatientPortfolio">
         <div class="editformedit">
             <br><center><h2>Patient Portfolio</h2></center><br>
-            <table class="portfolio_table">
+            <table class="portfolio_table" >
                 <tr>
                     <td rowspan="2" width="50%"> Patient Picture URL:<p type="text" id="PictureP" required></p></td>
                     <td width="50%"> Patient ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id='PatientID2'></span></td>
@@ -883,54 +881,66 @@ span.hidden{
     <div id="editStaffPortfolio">
         <div class="editformedit">
             <br>	<center><h2>Staff Portfolio</h2></center><br>
-            <table class="portfolio_table">
+            <table style = "text-align: left" >
                 <tr>
-                    <td colspan="2"> Staff Picture URL:<p type="text" id="PictureS" required></p></td>
+                    <td colspan="4" style = "text-align: left"> Staff Picture URL: <span id = "PictureS"></span></td>
                 </tr>
                 <tr>
-                    <td width="50%">Name: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffName2" placeholder="Name" required /></td>
-                    <td width="50%"> Staff ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id="StaffID2"></span></td>
+                    <td width="25%" style = "text-align: left">Name: </td>
+                    <td width="25%"><input type="text" id="staffName2" placeholder="Name" required /></td>
+                    <td width="25%" style = "text-align: left">Staff ID: </td>
+                    <td width="25%" style = "text-align: left"><span id="StaffID2"></span></td>
                 </tr>
                 <tr>
-                    <td colspan="2" id="ssBD2"> Initial Date: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffInitialDate2" placeholder="Enter Date" required /></td>
-                    <td id="ssP2"> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffPassword2" placeholder="give a password" required /></td>
+                    <td id="ssBD2" style = "text-align: left"> Initial Date: </td>
+                    <td><input type="text" id="staffInitialDate2" placeholder="Enter Date" required /></td>
+                    <td id="ssP2" style = "text-align: left"> Password: </td>
+                    <td><input type="password" id="staffPassword2" placeholder="give a password" required /></td>
                 </tr>
                 <tr>
-                    <td> Position: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffPosition2" placeholder="Position" required /></td>
-                    <td> Date of Birth: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffDOB2" placeholder="yyyy/mm/dd" required /></td>
+                    <td style = "text-align: left"> Position: </span></td>
+                    <td style = "text-align: left"><span id = "staffPosition2"></span></td>
+                    <td style = "text-align: left">  Date of Birth: </td>
+                    <td><input type="text" id="staffDOB2" placeholder="yyyy/mm/dd" required /></td>
                 </tr>
                 <tr>
-                    <td> Email Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffEmail2" placeholder="Email" required /></td>
-                    <td> Gender: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffGender2" placeholder="M/F" required /></td>
+                    <td style = "text-align: left"> Email Address: </td>
+                    <td><input type="text" id="staffEmail2" placeholder="Email" required /></td>
+                    <td style = "text-align: left"> Gender: </td>
+                    <td><input type="text" id="staffGender2" placeholder="M/F" required /></td>
                 </tr>
                 <tr>
-                    <td> Contact No: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffContact2" placeholder="0123-456-780" required /></td>
-                    <td> Emergency Contact No: <input type="text" id="staffEContact2" placeholder="0123-456-780" required /></td>
+                    <td style = "text-align: left"> Contact No: </td>
+                    <td><input type="text" id="staffContact2" placeholder="0123-456-780" required /></td>
+                    <td style = "text-align: left"> Emergency Contact No: </td>
+                    <td><input type="text" id="staffEContact2" placeholder="0123-456-780" required /></td>
                 </tr>
                 <tr>
-                    <td> Emergency Contact Name: &nbsp&nbsp&nbsp<input type="text" id="staffEName2" placeholder="Enter Name" required /></td>
-                    <td> Emergency Contact Relationship: <input type="text" id="staffERelationship2" placeholder="Enter Relationship" required /></td>
+                    <td style = "text-align: left">Emergency Contact Name: </td>
+                    <td><input type="text" id="staffEName2" placeholder="Enter Name" required /></td>
+                    <td style = "text-align: left">Emergency Contact Relationship: </td>
+                    <td><input type="text" id="staffERelationship2" placeholder="Enter Relationship" required /></td>
                 </tr>
                 <tr>
-                    <td colspan="2"> Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffAddress2" placeholder="Address" size="80" required /></td>
+                    <td colspan="4" style = "text-align: left"> Address: <input type="text" id="staffAddress2" placeholder="Address" size="80" required /></td>
                 </tr>
                 <tr>
-                    <td colspan="2"> Brief Description: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffBriefDescription2" placeholder="Enter Here" size="90" /></td>
+                    <td colspan="4" style = "text-align: left"> Brief Description: <input type="text" id="staffBriefDescription2" placeholder="Enter Here" size="90" /></td>
                 </tr>
                 <tr>
-                    <td colspan='2'>CV: <span id='staffCV2'> </span></td>
+                    <td colspan='4' style = "text-align: left">CV: <span id='staffCV2'> </span></td>
                 </tr>
                 <tr>
-                    <td colspan='2'>License: <span id='stafflicense2'> </span></td>
+                    <td colspan='4' style = "text-align: left">License: <span id='stafflicense2'> </span></td>
                 </tr>
                 <tr>
-                    <td colspan='2'>Orginal Picture Folder: <span id='staffpicfilename'></span></td>
+                    <td colspan='4' style = "text-align: left">Orginal Picture Folder: <span id='staffpicfilename'></span></td>
                 </tr>
                 <tr>
-                    <td colspan='2'>Orginal CV Folder: <span id='staffcvfilename'></span></td>
+                    <td colspan='4' style = "text-align: left">Orginal CV Folder: <span id='staffcvfilename'></span></td>
                 </tr>
                 <tr>
-                    <td colspan='2'>Orginal License Folder: <span id='stafflicensefilename'></span></td>
+                    <td colspan='4' style = "text-align: left">Orginal License Folder: <span id='stafflicensefilename'></span></td>
                 </tr>
             </table><br>
             <center>
