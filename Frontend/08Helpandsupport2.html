@@ -9,6 +9,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    
     <title>LTC-TMS</title>
     <link rel="icon" type="image/jpg" href="image\logo.jpg">
     <link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
@@ -29,15 +30,15 @@
     <script type='text/javascript' src='Profile.js'></script>
 </head>
 <style>
+    span.hidden{
+        display: none;
+    }
     table, th, td {
         padding: 5px;
         border: 1px solid black;
         width: 400px;
         text-align: center;
         word-wrap: break-word;
-    }
-  span.hidden{
-        display: none;
     }
         table th {
             background-color: #B0C4DE;
@@ -205,19 +206,17 @@
 
     @keyframes bounce {
         0%, 20%, 60%, 100% {
-            -webkit-transform: translateY(0);
-            transform: translateY(0);
-        }
-
-        40% {
-            -webkit-transform: translateY(-5px);
-            transform: translateY(-5px);
-        }
-
-        80% {
-            -webkit-transform: translateY(-3px);
-            transform: translateY(-3px);
-        }
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+    40% {
+        -webkit-transform: translateY(-5px);
+        transform: translateY(-5px);
+    }
+    80% {
+        -webkit-transform: translateY(-3px);
+        transform: translateY(-3px);
+    }
     }
 </style>
 <body style="height:900px;">
@@ -363,20 +362,21 @@
 
             <div class="main container-fluid wrapper">
                 <!-- START OF MIDDLE CONTENT-->
-                <div class="row" style="display:block">
-                    <div class="right" style="transform:translateY(-9ex)">
+                <div class="right" style="width:800ex; transform:translateY(-9ex)">
                         <div class="tap">
+                            
                             <span id="stafffeedbackspan" onclick="showsf()" style="opacity:1;cursor:pointer;">Staff Feedback</span>
 
                             <span id="patientfeedbackspan" onclick="showpf()" style="opacity:.8;cursor:pointer;">Family Feedback</span>
                         </div>
-                        <div id="container" class="container" style="overflow-y:scroll;">
-                            <table id="staffFeedback" class="staffTable" border="1">
+                        <div id="container" class="container" style="overflow-y:scroll;overflow-x:scroll;">
+                            <table style="width:100%;border-style:hidden;" id="staffFeedback" class="staffTable" >
+                                
                                 <tr>
                                     <th style="width:20%" id="email"> UserEmail </th>
                                     <th style="width:10%" id="id"> User I.D </th>
                                     <th style="width:35%" id="feedback"> Feedback </th>
-                                    <th style="width:35%" id="reply""> Reply </th>
+                                    <th style="width:35%" id="reply"> Reply </th>
                                 </tr>
                                 <tr>
                                         <td>User Email(template)</td>
@@ -437,33 +437,32 @@
                     </div>
                 </div>
                 <div style="position:absolute;left:40px;bottom:0;">
-                            <p style="position:relative;font-size:10px;left:57%;z-index:3;top:10px;">*Please Contact Development Team for Further Assistance</p>
-                            <table id="Contact_information" style="width:80%">
-                                <tr>
-                                    <th colspan="4"> <h3 style="padding:10px 10px;"><i>Development Team Contact Information</i></h3></th>
-                                </tr>
-                                <tr>
-                                    <th style="padding:6px 6px;">Name </th>
-                                    <!--<td style="padding:6px 6px;">Ming Chuan AC IV </td>-->
-                                    <td style="padding:6px 6px;">Kutztown University </td>
-                                    <th style="padding:6px 6px;">Email Address </th>
-                                    <td style="padding:6px 6px;">ltctmscenter2018@gmail.com </td>
+                        <p style="position:relative;font-size:10px;">*Please Contact Development Team for Further Assistance</p>
+                        <table id="Contact_information" style="width:80%">
+                            <tr>
+                                <th colspan="4"> <h3 style="padding:10px 10px;"><i>Development Team Contact Information</i></h3></th>
                             </tr>
                             <tr>
-                                    <th style="padding:6px 6px;">Contact No </th>
-                                    <!--<td style="padding:6px 6px;">+886911223344 </td>-->
-                                    <td style="padding:6px 6px;">+1(610)-683-4000 </td>
-                                    <th style="padding:6px 6px;">Address </th>
-                                    <!--<td style="padding:6px 6px;">No. 5, Deming Road, Guishan District, Taoyuan City, 333 </td>-->
-                                    <td style="padding:6px 6px;">15200 Kutztown Rd, Kutztown, PA 19530 </td>
-                            </tr>
-                            </table>
-                </div>
+                                <th style="padding:6px 6px;">Name </th>
+                                <!--<td style="padding:6px 6px;">Ming Chuan AC IV </td>-->
+                                <td style="padding:6px 6px;">Kutztown University </td>
+                                <th style="padding:6px 6px;">Email Address </th>
+                                <td style="padding:6px 6px;">ltctmscenter2018@gmail.com </td>
+                        </tr>
+                        <tr>
+                                <th style="padding:6px 6px;">Contact No </th>
+                                <!--<td style="padding:6px 6px;">+886911223344 </td>-->
+                                <td style="padding:6px 6px;">+1(610)-683-4000 </td>
+                                <th style="padding:6px 6px;">Address </th>
+                                <!--<td style="padding:6px 6px;">No. 5, Deming Road, Guishan District, Taoyuan City, 333 </td>-->
+                                <td style="padding:6px 6px;">15200 Kutztown Rd, Kutztown, PA 19530 </td>
+                        </tr>
+                        </table>
             </div>
         </div>
+    </div>
 
 
-        
         <!-- START COPY FOR SIDEBAR JAVASCRIPT -->
         <!-- jQuery CDN - Slim version (=without AJAX) -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
