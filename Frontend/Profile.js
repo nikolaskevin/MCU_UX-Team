@@ -23,11 +23,12 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
 
                   var position = snapshotuAccount.val()["Position"];
                   console.log("role: " + position);
+                  document.getElementById('displayProfileposition').innerHTML = position;
+
                   if (position == "Director") {
                       document.getElementById("sponsoredspan").style.visibility = "visible";
                       console.log("YEE YEE");
                   }
-                  document.getElementById('displayProfileposition').innerHTML=position;
                 });
           
           document.getElementById('displayProfileid').innerHTML=userid;
