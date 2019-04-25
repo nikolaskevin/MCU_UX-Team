@@ -1,14 +1,14 @@
 firebase.auth().onAuthStateChanged(function (firebaseUser){
   if(firebaseUser){
-    console.log(firebaseUser);
+    //console.log(firebaseUser);
     //var userid = firebaseUser.uid;
     var userid = -1;
     var fbGet= firebase.database().ref('UID');
     fbGet.once('value',function(snapshot){
       var UIDS = snapshot;
       snapshot.forEach(function(newSnap){
-        console.log(newSnap.val());
-        console.log("key:" +newSnap.key);
+        //console.log(newSnap.val());
+        //console.log("key:" +newSnap.key);
         if (newSnap.key == firebaseUser.uid){
           userid = newSnap.val();
           //console.log("USER ID: "+userid);
@@ -18,11 +18,15 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
                   //console.log(snapshotuAccount.val());
                   
                   var displayName = snapshotuAccount.val()["Name"];
-                  console.log("displayName: "+displayName);
+                  //console.log("displayName: "+displayName);
                   document.getElementById('displayProfilename').innerHTML=displayName;
 
                   var position = snapshotuAccount.val()["Position"];
-                  console.log("role: "+position);
+                  console.log("role: " + position);
+                  if (position == "Director") {
+                      document.getElementById("sponsoredspan").style.visibility = "visible";
+                      console.log("YEE YEE");
+                  }
                   document.getElementById('displayProfileposition').innerHTML=position;
                 });
           
@@ -33,7 +37,7 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
     })
     var displayName = firebaseUser.displayName;
     var pic = firebaseUser.photoURL;
-    console.log(pic);
+    //console.log(pic);
     
     var fbP = firebase.database().ref('uAccount/'+userid).child('Position');
     fbP.once('value',function(snapshot){
@@ -42,13 +46,13 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
       //document.getElementById('displayProfileid').innerHTML=userid;
       //document.getElementById('displayProfileposition').innerHTML=position;
       document.getElementById('Profilepic').src=pic;
-      document.getElementById('viewpic').src=pic;
-      document.getElementById('editpic').src=pic;
+      //document.getElementById('viewpic').src=pic;
+      //document.getElementById('editpic').src=pic;
       Profilepic.setAttribute('value',pic);
     });
   }else{
    alert("You're Logged out now! Please Login again if you need to use this system!");
-   window.location.href = "/../Frontend/00Login2.html";
+   window.location.href = "/../Frontend-Chinese/00Login2.html";
   }
   });
   //console.log(document.getElementById('Profilepic').value);
@@ -88,7 +92,7 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
           user.updateEmail(email).then(function(){
             alert("Email Changed!");
           }).catch(function(error){
-            console.log(error.message);
+            //console.log(error.message);
           });
         }
         user.updateProfile({
@@ -97,7 +101,7 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
           alert("Profile have been updated!");
           window.location.reload();
         }).catch(function(error){
-          console.log('Profile update Failed'+ error.message);
+          //console.log('Profile update Failed'+ error.message);
         });
       }
     });
@@ -217,12 +221,12 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
     var fullTime = currentHour+':'+currentMinute+':'+currentSecond;
     var fullDateandTime = fullDate +'-'+ fullTime;
     var user = firebase.auth().currentUser;
-    console.log("==="+user.uid)
+    //console.log("==="+user.uid)
     firebase.database().ref('AccountStatus/Browser/'+user.uid+'/LogoutHistory/'+fullDate+'/'+ fullTime).set('True');
       firebase.database().ref('AccountStatus/Browser/'+user.uid+'/LatestLogout').set(fullDateandTime);
     firebase.auth().signOut();
-    console.log('logout');
-    window.location.href = "/../Frontend/00Login2.html";
+    //console.log('logout');
+    window.location.href = "/../Frontend-Chinese/00Login2.html";
   }
   
   function uploadPicProfile(){
@@ -233,12 +237,12 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
         function(){
   
         },function error(err){
-          console.log(err.message);
+          //console.log(err.message);
         },
         function complete(){
           storageRefProfile.getDownloadURL().then(function(url){
             var user = firebase.auth().currentUser;
-            console.log("==="+user.displayName);
+            //console.log("==="+user.displayName);
             user.updateProfile({
               photoURL: url
             }).then(function(){

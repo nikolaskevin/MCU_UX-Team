@@ -1,4 +1,4 @@
-<!--
+﻿j<!--
   @file 07E-portfolio2.html
   @author  MCU
   @author  Kutztown University
@@ -13,7 +13,6 @@
     <link rel="icon" type="image/jpg" href="image\logo.jpg">
     <link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="statics/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="statics/css/chat.css" />
     <!-- IMPORTING BOOTSTRAP!!-->
     <!-- Importing BOOTSTRAP!!! -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -31,7 +30,7 @@
         position: relative;
         top: -130px;
         left: 12px;
-        width: 975px;
+        width: 100%;
         height: 415px;
         overflow-x: auto;
         overflow-y: auto;
@@ -40,11 +39,15 @@
     }
 
     .portfolio_display_table {
-        width: 965px;
+        width: 100%;
         height: 100px;
         border-style: hidden;
+        overflow-x: auto;
+        border: solid black 1px;
     }
-
+span.hidden{
+        display: none;
+    }
     table, th, td {
         padding: 5px;
         border: 1px solid black;
@@ -70,7 +73,7 @@
 
     .portfolio_search_position {
         position: relative;
-        top: 40px;
+        top: 20px;
         left: 35px;
     }
 
@@ -95,8 +98,8 @@
         font-family: raleway;
         background-color: #fff;
         position: absolute;
-        left: 600px;
-        top: 200px;
+        left: 35%;
+        top: 15%;
     }
 
     .selectpatientorstaff {
@@ -113,7 +116,7 @@
         font-family: raleway;
         background-color: #fff;
         position: absolute;
-        top: 60px;
+        top: 15%;
         left: 25%;
         width: 960px;
         height: 650px;
@@ -128,10 +131,11 @@
         font-family: raleway;
         background-color: #fff;
         position: absolute;
-        top: 40px;
+        top: 15%;
+        padding-bottom:5ex;
         left: 25%;
         width: 960px;
-        height: 650px;
+        height: 100%;
     }
 
     .editformview {
@@ -143,14 +147,13 @@
         font-family: raleway;
         background-color: #fff;
         position: absolute;
-        top: 40px;
+        top: 15%;
         left: 25%;
         width: 960px;
         height: 840px;
     }
 
     .editformedit {
-        max-width: 900px;
         min-width: 250px;
         padding: 10px 50px;
         border: 2px solid black;
@@ -158,15 +161,15 @@
         font-family: raleway;
         background-color: #fff;
         position: absolute;
-        top: 40px;
+        top: 15%;
+        width: 70%;
         left: 25%;
-        width: 960px;
         height: 800px;
     }
 
     .portfolio_table {
         text-align: center;
-        width: 800px;
+        width: 100%;
     }
 
     .add_button {
@@ -357,6 +360,13 @@
                         Status Record
                     </a>
                 </li>
+
+                <li>
+                    <a href="../Frontend-Chinese/Reports.html">
+                        <i class="glyphicon glyphicon-file"></i>
+                        Reports
+                    </a>
+                </li>
                 <li>
                     <a href="../Frontend-Chinese/05Library2.html">
                         <i class="glyphicon glyphicon-book"></i>
@@ -419,7 +429,6 @@
                                     <div class="dropdown-content">
                                         <a href="/../Frontend/07E-portfolio2.html">English</a>
                                         <a href="#">Chinese</a>
-                                        
                                         <a onClick="Logout(); return false;" href="../Frontend-Chinese/00Login2.html">Logout</a>
                                     </div>
                                 </li>
@@ -433,7 +442,7 @@
                     <!--BACKGROUND PANEL IMAGE-->
                     <div class="container-fluid">
 
-                        <img class="panelimg img-responsive" src="statics/images/user_info_bg.jpg" />
+                        <img class="panelimg img-responsive" style="background-color: #fff5ee" />
 
                         <div class="container" style="transform:translateY(-8.5ex)">
                             <!-- CIRCLE IMAGE THING-->
@@ -450,11 +459,11 @@
                             <!-- TEXT NEXT TO THE CIRCLE IMAGE THING-->
                             <div class="user-account">
                                 <p class="tip" id="time123"></p><!-- DISPLAYS GOOD MORNING/AFTERNOON/EVENING MSG -->
-                                <img style="position:relative; left:125px;top:-25px;cursor:pointer;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
-                                <p class="account" style="position:relative; top:-20px;">
-                                    <span>Name : <span id="displayProfilename"></span></span>
-                                    <span>UserID : <span id="displayProfileid"></span></span>
-                                    <span>Role : <span id="displayProfileposition"></span></span>
+                                <p></p>
+                                <p class="account" style="position:relative; top:8px;">
+                                    <span style = "font-size: 20pt;" word-wrap: break-word;>Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
+                                    <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
+                                    <span style = "font-size: 20pt;" word-wrap: break-word;> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
                                 </p>
                             </div>
                         </div>
@@ -464,7 +473,7 @@
 
             <div class="main container-fluid wrapper">
                 <!-- START OF MIDDLE CONTENT-->
-                <div class="right" style="width:800ex; transform:translateY(-13ex)">
+                <div class="right" style="width:800ex; transform:translateY(-9ex)">
                     <div class="tap">
                         <span>E-Portfolio</span>
                     </div>
@@ -477,7 +486,9 @@
                     <div class="container">
 
                         <div style="position:relative;top:135px;left:0px;z-index:3;width:50px;" id="portfoliofilter">
-                            <button type="button" onclick="viewportfoliofilter()" style="width:20px; height:120px;background-color:white;border-top:5px solid gray;border-bottom:5px solid gray;border-left:hidden; border-right:hidden;cursor:pointer;"><p style="font-size:11px;font-weight:bold;position:relative;left:-0.5px;">F<br>I<br>L<br>T<br>E<br>R</p></button>
+                            <button type="button" onclick="viewportfoliofilter()" style="width:20px; height:120px;background-color:white;border-top:5px solid gray;border-bottom:5px solid gray;border-left:hidden; border-right:hidden;cursor:pointer;">
+                            <p style="transform:scaleX(1.5);font-size:11px;font-weight:bold;position:relative;left:-0.5px;color:lawngreen;">F<br>I<br>L<br>T<br>E<br>R</p>
+                            </button>
                         </div>
 
                         <div class="library_form" id="form">
@@ -508,17 +519,6 @@
                                     </select>
                                 </div>
                                 <br>
-                                <div id='Nationalhide' style='display:block;'>
-                                    <div class="portfolio_search_background">
-                                        <div class="portfolio_search_word">
-                                            <h3> Nationality </h3>
-                                        </div>
-                                    </div>
-                                    <select id="filterNationality">
-                                        <option value="all">All</option>
-                                    </select>
-                                </div>
-                                <br>
                                 <div id='Genderhide' style='display:block;'>
                                     <div class="portfolio_search_background">
                                         <div class="portfolio_search_word">
@@ -539,12 +539,10 @@
                         <div class="portfolio_display" id="shortportfolio">
                             <table class="portfolio_display_table">
                                 <tr>
-                                    <th style="width:12%"> I.D. </th>
-                                    <th style="width:16%"> Name </th>
-                                    <th style="width:12%"> National ID </th>
-                                    <th style="width:12%"> Nationality </th>
+                                    <th style="width:15%"> I.D. </th>
+                                    <th style="width:20%"> Name </th>
                                     <th style="width:3%"> Gender</th>
-                                    <th style="width:15%"> Contact number</th>
+                                    <th style="width:25%"> Contact number</th>
                                     <th style="width:15%"> Email</th>
                                     <th style="width:6%"> Role</th>
                                     <th style="width:6%"> <button id="newPortfolio" style="cursor:pointer;display:none;" type="button" onclick="addNewPortfolio()" class="add_button"><img src="statics\images\add.png" height="15px" width="15px" /></button> </th>
@@ -573,7 +571,7 @@
         <div id="newStaffPortfolio">
             <div class="editformcreatestaff">
                 <br><center><h2>CNA Portfolio</h2></center><br>
-                <table class="portfolio_table">
+                <table>
                     <tr>
                         <td rowspan="3"> Insert Photo: <br><br><input id="btnPicture" type="file" accept="image/*" required /> </td>
                         <td>
@@ -594,10 +592,6 @@
                     <tr>
                         <td> Date of Birth: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffDOB" placeholder="yyyy/mm/dd" required /></td>
                         <td> Initial Date: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffInitialDate" placeholder="Enter Date" required /></td>
-                    </tr>
-                    <tr>
-                        <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffNID" placeholder="National ID" required /></td>
-                        <td> Nationality: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffNationality" placeholder="Nationality" required /></td>
                     </tr>
                     <tr>
                         <td> Email Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffEmail" placeholder="Email" required /></td>
@@ -644,10 +638,6 @@
                 <tr>
                     <td> Room number: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientRoomNo" placeholder="101.." required /></td>
                     <td> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="password" id="patientPassword" placeholder="give a password" required /></td>
-                </tr>
-                <tr>
-                    <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNID" placeholder="National ID" required /></td>
-                    <td> Nationality: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNationality" placeholder="Nationality" required /></td>
                 </tr>
                 <tr>
                     <td> Date of Birth:  &nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientDOB" placeholder="yyyy/mm/dd" required /></td>
@@ -714,12 +704,6 @@
                     <td width="25%" id="Password">Password</td>
                 </tr>
                 <tr>
-                    <td> National ID </td>
-                    <td id="NID"> National ID </td>
-                    <td> Nationality </td>
-                    <td id="Nationality"> Nationality</td>
-                </tr>
-                <tr>
                     <td> Date of Birth </td>
                     <td id="DOB"> </td>
                     <td> Gender </td>
@@ -771,10 +755,7 @@
     <div id="viewStaffPortfolio">
         <div class="editformview" style="height:1020px;">
             <center><h2>Staff Portfolio</h2></center><br>
-            <div>
-                <button id="btnEditSP" onclick="editSP()" style="display:inline;cursor:pointer;">Edit</button>
-                <button id="btnDeleteSP" onclick="deleteSP()" style="display:inline;cursor:pointer;">Delete</button>
-            </div>
+            <div id = "CNAbuttons"></div>
             <br>
             <table id="viewStaffPortfolioTable">
                 <tr>
@@ -797,12 +778,6 @@
                     <td id="sDOB"> </td>
                     <td> Position </td>
                     <td id="sPosition"> </td>
-                </tr>
-                <tr>
-                    <td> National ID </td>
-                    <td id="sNID"> </td>
-                    <td> Nationality</td>
-                    <td id="sNationality"> </td>
                 </tr>
                 <tr>
                     <td> Email Address</td>
@@ -847,7 +822,7 @@
     <div id="editPatientPortfolio">
         <div class="editformedit">
             <br><center><h2>Patient Portfolio</h2></center><br>
-            <table class="portfolio_table">
+            <table class="portfolio_table" >
                 <tr>
                     <td rowspan="2" width="50%"> Patient Picture URL:<p type="text" id="PictureP" required></p></td>
                     <td width="50%"> Patient ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id='PatientID2'></span></td>
@@ -858,10 +833,6 @@
                 <tr>
                     <td> Room number: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientRoomNo2" placeholder="101.." required /></td>
                     <td> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp    <input type="text" id="patientPassword2" placeholder="give a password" required /></td>
-                </tr>
-                <tr>
-                    <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNID2" placeholder="National ID" required /></td>
-                    <td> Nationality: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="patientNationality2" placeholder="Nationality" required /></td>
                 </tr>
                 <tr>
                     <td> Date of Birth: &nbsp&nbsp&nbsp&nbsp<input type="text" id="patientDOB2" placeholder="yyyy/mm/dd" required /></td>
@@ -910,58 +881,66 @@
     <div id="editStaffPortfolio">
         <div class="editformedit">
             <br>	<center><h2>Staff Portfolio</h2></center><br>
-            <table class="portfolio_table">
+            <table style = "text-align: left" >
                 <tr>
-                    <td colspan="2"> Staff Picture URL:<p type="text" id="PictureS" required></p></td>
+                    <td colspan="4" style = "text-align: left"> Staff Picture URL: <span id = "PictureS"></span></td>
                 </tr>
                 <tr>
-                    <td width="50%">Name: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffName2" placeholder="Name" required /></td>
-                    <td width="50%"> Staff ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id="StaffID2"></span></td>
+                    <td width="25%" style = "text-align: left">Name: </td>
+                    <td width="25%"><input type="text" id="staffName2" placeholder="Name" required /></td>
+                    <td width="25%" style = "text-align: left">Staff ID: </td>
+                    <td width="25%" style = "text-align: left"><span id="StaffID2"></span></td>
                 </tr>
                 <tr>
-                    <td colspan="2" id="ssBD2"> Initial Date: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffInitialDate2" placeholder="Enter Date" required /></td>
-                    <td id="ssP2"> Password: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffPassword2" placeholder="give a password" required /></td>
+                    <td id="ssBD2" style = "text-align: left"> Initial Date: </td>
+                    <td><input type="text" id="staffInitialDate2" placeholder="Enter Date" required /></td>
+                    <td id="ssP2" style = "text-align: left"> Password: </td>
+                    <td><input type="password" id="staffPassword2" placeholder="give a password" required /></td>
                 </tr>
                 <tr>
-                    <td> Position: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffPosition2" placeholder="Position" required /></td>
-                    <td> Date of Birth: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffDOB2" placeholder="yyyy/mm/dd" required /></td>
+                    <td style = "text-align: left"> Position: </span></td>
+                    <td style = "text-align: left"><span id = "staffPosition2"></span></td>
+                    <td style = "text-align: left">  Date of Birth: </td>
+                    <td><input type="text" id="staffDOB2" placeholder="yyyy/mm/dd" required /></td>
                 </tr>
                 <tr>
-                    <td> National ID: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffNID2" placeholder="National ID" required /></td>
-                    <td> Nationality: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffNationality2" placeholder="Nationality" required /></td>
+                    <td style = "text-align: left"> Email Address: </td>
+                    <td><input type="text" id="staffEmail2" placeholder="Email" required /></td>
+                    <td style = "text-align: left"> Gender: </td>
+                    <td><input type="text" id="staffGender2" placeholder="M/F" required /></td>
                 </tr>
                 <tr>
-                    <td> Email Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffEmail2" placeholder="Email" required /></td>
-                    <td> Gender: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffGender2" placeholder="M/F" required /></td>
+                    <td style = "text-align: left"> Contact No: </td>
+                    <td><input type="text" id="staffContact2" placeholder="0123-456-780" required /></td>
+                    <td style = "text-align: left"> Emergency Contact No: </td>
+                    <td><input type="text" id="staffEContact2" placeholder="0123-456-780" required /></td>
                 </tr>
                 <tr>
-                    <td> Contact No: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="staffContact2" placeholder="0123-456-780" required /></td>
-                    <td> Emergency Contact No: <input type="text" id="staffEContact2" placeholder="0123-456-780" required /></td>
+                    <td style = "text-align: left">Emergency Contact Name: </td>
+                    <td><input type="text" id="staffEName2" placeholder="Enter Name" required /></td>
+                    <td style = "text-align: left">Emergency Contact Relationship: </td>
+                    <td><input type="text" id="staffERelationship2" placeholder="Enter Relationship" required /></td>
                 </tr>
                 <tr>
-                    <td> Emergency Contact Name: &nbsp&nbsp&nbsp<input type="text" id="staffEName2" placeholder="Enter Name" required /></td>
-                    <td> Emergency Contact Relationship: <input type="text" id="staffERelationship2" placeholder="Enter Relationship" required /></td>
+                    <td colspan="4" style = "text-align: left"> Address: <input type="text" id="staffAddress2" placeholder="Address" size="80" required /></td>
                 </tr>
                 <tr>
-                    <td colspan="2"> Address: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffAddress2" placeholder="Address" size="80" required /></td>
+                    <td colspan="4" style = "text-align: left"> Brief Description: <input type="text" id="staffBriefDescription2" placeholder="Enter Here" size="90" /></td>
                 </tr>
                 <tr>
-                    <td colspan="2"> Brief Description: &nbsp&nbsp&nbsp&nbsp<input type="text" id="staffBriefDescription2" placeholder="Enter Here" size="90" /></td>
+                    <td colspan='4' style = "text-align: left">CV: <span id='staffCV2'> </span></td>
                 </tr>
                 <tr>
-                    <td colspan='2'>CV: <span id='staffCV2'> </span></td>
+                    <td colspan='4' style = "text-align: left">License: <span id='stafflicense2'> </span></td>
                 </tr>
                 <tr>
-                    <td colspan='2'>License: <span id='stafflicense2'> </span></td>
+                    <td colspan='4' style = "text-align: left">Orginal Picture Folder: <span id='staffpicfilename'></span></td>
                 </tr>
                 <tr>
-                    <td colspan='2'>Orginal Picture Folder: <span id='staffpicfilename'></span></td>
+                    <td colspan='4' style = "text-align: left">Orginal CV Folder: <span id='staffcvfilename'></span></td>
                 </tr>
                 <tr>
-                    <td colspan='2'>Orginal CV Folder: <span id='staffcvfilename'></span></td>
-                </tr>
-                <tr>
-                    <td colspan='2'>Orginal License Folder: <span id='stafflicensefilename'></span></td>
+                    <td colspan='4' style = "text-align: left">Orginal License Folder: <span id='stafflicensefilename'></span></td>
                 </tr>
             </table><br>
             <center>
@@ -971,56 +950,9 @@
         </div>
     </div>
 
-    <div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA;border-style: solid;
-				border-width: 2px; z-index:3;">
-        <div style="background-color:#E4EACD;position:relative;height:75px;">
-            <h2 id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
-
-            <button onclick="editprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
-            <button onclick="closeprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
-            <button onclick="changePassword()" style="position:relative; left:520px;top:75px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;z-index:4;">Change Password</button>
-        </div>
-        <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
-        <div style="position:relative; left:220px;top:-110px;">
-            <p>Position: &nbsp<span id="positionProfile"></span> </p><br>
-            <p>User ID: &nbsp <span id="idProfile"></span></p><br>
-            <p>Display Name: &nbsp <span id="nameProfile"></span></p><br>
-            <p>Email Address: &nbsp <span id="emailProfile"></p><br>
-        </div>
-    </div>
-
-    <div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA; z-index:3;border-style: solid;
-				border-width: 2px;">
-        <div style="background-color:#E4EACD;position:relative;height:75px;">
-            <h2 id="nameProfileTE" style="position:relative; left:210px;top:20px;"></h2>
-            <h3 style="position:relative; left:300px;top:-10px;color:gray;">	</h3>
-            <button onclick="submitprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
-            <button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
-        </div>
-        <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="editpic">
-        <div style="position:relative; left:220px;top:-110px;">
-            <p>Position: &nbsp <span id=positionProfileE> </span> </p><br>
-            <p>User ID: &nbsp <span id="idProfileE"> </span>  </p><br>
-            <p>Display Name: <input type="text" id="nameProfileE" style="width:200px;"></p><br>
-            <p>Email Address: <input type="text" id="emailProfileE" style="width:300px;"></p><br>
-        </div>
-    </div>
-    <div id="changePass" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA; z-index:4;border-style: solid; border-width:2px;">
-        <div style="background-color:#E4EACD;position:relative;height:75px;">
-            <h2 style="position:relative; left:210px;top:20px;">Changing Password</h2>
-            <button onclick="submitNewPass()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
-            <button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
-        </div>
-        <div style="position:relative; left:220px;top:70px;">
-            <p>Current Password: <input type="password" id="oldPassword"></p><br>
-            <p>New Password: <input type="password" id="newPassword"></p><br>
-            <p>Confirm Password: <input type="password" id="confirmnewPassword"></p><br>
-        </div>
-    </div>
 
     <script type='text/javascript' src='Config.js'></script>
     <script type='text/javascript' src='PortfolioJS.js'></script>
-    <script type='text/javascript' src='chat.js'></script>
     <script type='text/javascript' src='Profile.js'></script>
     <!-- START COPY FOR SIDEBAR JAVASCRIPT -->
     <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -1036,7 +968,7 @@
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"
             });
-
+            
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');

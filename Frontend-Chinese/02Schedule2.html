@@ -14,7 +14,6 @@
     <link rel="icon" type="image/jpg" href="image\logo.jpg">
     <link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="statics/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="statics/css/chat.css" />
     <!-- IMPORTING BOOTSTRAP!!-->
     <!-- Importing BOOTSTRAP!!! -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -28,163 +27,175 @@
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 </head>
 <style>
-    table, th, td {
-        padding: 10px;
-        border: 1px solid black;
-        width: 600px;
-        text-align: center;
-        word-wrap: break-word;
+    span.hidden{
+    display: none;
+}
+table, th, td {
+    padding: 10px;
+    border: 1px solid black;
+    width: 600px;
+    text-align: center;
+    word-wrap: break-word;
+}
+    table th {
+        background-color: #B0C4DE;
+        color: #000;
     }
-
-        table th {
-            background-color: #B0C4DE;
-            color: #000;
-        }
-
-        table td {
-            text-shadow: 2px 2px #FFFFFF;
-        }
-
-    #newABlock {
-        width: 100%;
-        height: 100%;
-        opacity: .95;
-        right: 0;
-        top: 0;
-        padding: 40px, 60px;
-        display: none;
-        position: fixed;
-        background-color: #313131;
-        overflow: auto;
+    table td {
+        text-shadow: 2px 2px #FFFFFF;
     }
+#newABlock {
+    width: 100%;
+    height: 100%;
+    opacity: .95;
+    right: 0;
+    top: 0;
+    padding: 40px, 60px;
+    display: none;
+    position: fixed;
+    background-color: #313131;
+    overflow: auto;
+}
+#editABlock {
+    width: 100%;
+    height: 100%;
+    opacity: .95;
+    right: 0;
+    top: 0;
+    padding: 40px, 60px;
+    display: none;
+    position: fixed;
+    background-color: #313131;
+    overflow: auto;
+}
 
-    #editABlock {
-        width: 100%;
-        height: 100%;
-        opacity: .95;
-        right: 0;
-        top: 0;
-        padding: 40px, 60px;
-        display: none;
-        position: fixed;
-        background-color: #313131;
-        overflow: auto;
-    }
-
-    #newCSBlock {
-        width: 100%;
-        height: 100%;
-        opacity: .95;
-        right: 0;
-        top: 0;
-        padding: 40px, 60px;
-        display: none;
-        position: fixed;
-        background-color: #313131;
-        overflow: auto;
-    }
-
-    #newWSBlock {
-        width: 100%;
-        height: 100%;
-        opacity: .95;
-        top: 0;
-        left: 0;
-        display: none;
-        position: fixed;
-        background-color: #313131;
-        overflow: auto;
-    }
-
-    #newWHBlock {
-        width: 100%;
-        height: 100%;
-        opacity: .95;
-        top: 0;
-        left: 0;
-        display: none;
-        position: fixed;
-        background-color: #313131;
-        overflow: auto;
-    }
-
-    .editForm_create_announcement {
-        max-width: 600px;
-        min-width: 200px;
-        padding: 10px 50px border:2px solid gray;
-        border-radius: 10px;
-        font-family: raleway;
-        background-color: #fff;
-        position: absolute;
-        left: 500px;
-        top: 200px;
-        width: 500px;
-        height: 350px;
-    }
-
+#viewABlock {
+    width: 100%;
+    height: 100%;
+    opacity: .95;
+    right: 0;
+    top: 0;
+    padding: 40px, 60px;
+    display: none;
+    position: fixed;
+    background-color: #313131;
+    overflow: auto;
+}
+#newWSBlock {
+    width: 100%;
+    height: 100%;
+    opacity: .95;
+    right: 0;
+    top: 0;
+    padding: 40px, 60px;
+    display: none;
+    position: fixed;
+    background-color: #313131;
+    overflow: auto;
+}
+#newCSBlock {
+    width: 100%;
+    height: 100%;
+    opacity: .95;
+    top: 0;
+    left: 0;
+    display: none;
+    position: fixed;
+    background-color: #313131;
+    overflow: auto;
+}
+#newWHBlock {
+    width: 100%;
+    height: 100%;
+    opacity: .95;
+    top: 0;
+    left: 0;
+    display: none;
+    position: fixed;
+    background-color: #313131;
+    overflow: auto;
+}
+.editForm_create_announcement {
+    max-width: 600px;
+    min-width: 200px;
+    
+    border-radius: 10px;
+    font-family: raleway;
+    background-color: #fff;
+    position: absolute;
+    left: 500px;
+    top: 200px;
+    width: 500px;
+    height: 350px;
+}
     .editForm_edit_announcement {
-        max-width: 600px;
-        min-width: 200px;
-        padding: 10px 50px border:2px solid gray;
-        border-radius: 10px;
-        font-family: raleway;
-        background-color: #fff;
-        position: absolute;
-        left: 500px;
-        top: 200px;
-        width: 500px;
-        height: 370px;
+    max-width: 600px;
+    min-width: 200px;
+    
+    border-radius: 10px;
+    font-family: raleway;
+    background-color: #fff;
+    position: absolute;
+    left: 500px;
+    top: 200px;
+    width: 500px;
+    height: 370px;
+}
+.viewForm_edit_announcement {
+    max-width: 600px;
+    min-width: 200px;
+    
+    border-radius: 10px;
+    font-family: raleway;
+    background-color: #fff;
+    position: absolute;
+    left: 500px;
+    top: 200px;
+    width: 500px;
+    height: 450px;
+}
+.create_new_center_schedule_form {
+    border-radius: 10px;
+    font-family: raleway;
+    background-color: #fff;
+    position: absolute;
+    left: 25%;
+    top: 20%;
+    width: 50%;
+    height: 70%;
+    overflow:scroll;
+}
+.schedule_hr {
+    margin: 10px 0px;
+    border: 0;
+    border-top: 1px solid #ccc;
+}
+.schedule_textarea {
+    width: 82%;
+    height: 140px;
+    padding: 10px;
+    resize: none;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    font-family: raleway;
+    margin-bottom: 20px;
+    margin-left: 30px;
+}
+@keyframes bounce {
+    0%, 20%, 60%, 100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
     }
-
-    .editForm_upload_file {
-        max-width: 600px;
-        min-width: 200px;
-        padding: 10px 50px border:2px solid gray;
-        border-radius: 10px;
-        font-family: raleway;
-        background-color: #fff;
-        position: absolute;
-        left: 500px;
-        top: 300px;
-        width: 550px;
-        height: 200px;
+    40% {
+        -webkit-transform: translateY(-5px);
+        transform: translateY(-5px);
     }
-
-    .schedule_hr {
-        margin: 10px 0px;
-        border: 0;
-        border-top: 1px solid #ccc;
+    80% {
+        -webkit-transform: translateY(-3px);
+        transform: translateY(-3px);
     }
-
-    .schedule_textarea {
-        width: 82%;
-        height: 140px;
-        padding: 10px;
-        resize: none;
-        margin-top: 10px;
-        border: 1px solid #ccc;
-        font-size: 16px;
-        font-family: raleway;
-        margin-bottom: 20px;
-        margin-left: 30px;
-    }
-
-    @keyframes bounce {
-        0%, 20%, 60%, 100% {
-            -webkit-transform: translateY(0);
-            transform: translateY(0);
-        }
-
-        40% {
-            -webkit-transform: translateY(-5px);
-            transform: translateY(-5px);
-        }
-
-        80% {
-            -webkit-transform: translateY(-3px);
-            transform: translateY(-3px);
-        }
-    }
+}
 </style>
 <body>
 
@@ -215,6 +226,13 @@
                     <a href="../Frontend-Chinese/04Statusrecord2.html">
                         <i class="glyphicon glyphicon-heart-empty"></i>
                         Status Record
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../Frontend-Chinese/Reports.html">
+                        <i class="glyphicon glyphicon-file"></i>
+                        Reports
                     </a>
                 </li>
                 <li>
@@ -272,113 +290,99 @@
                                     <span class="white-text title"> LTC-TMS</span>
                                 </a>
 
-                            </div>
+                            </div> <!--end div class="navbar-header"-->
                             <ul class="nav navbar-nav navbar-right" style="margin-right:3px">
                                 <li class="dropdown">
                                     <a href="javascript:void(0)" class="dropbtn"><span class="glyphicon glyphicon-cog white-text"></span></a>
                                     <div class="dropdown-content">
                                         <a href="/../Frontend/02Schedule2.html">English</a>
                                         <a href="#">Chinese</a>
-                                        
                                         <a onClick="Logout(); return false;" href="../Frontend-Chinese/00Login2.html">Logout</a>
-                                    </div>
+                                    </div> <!--end div class="dropdown-content"-->
                                 </li>
                             </ul>
-                        </div>
+                        </div> <!--end div class="container-fluid"-->
                     </nav>
-                </div>
+                </div> <!--end div class="bar"-->
                 <!-- TOP BAR ENDS-->
                 <!-- Place Holder for header-->
                 <div class="user-info">
                     <!--BACKGROUND PANEL IMAGE-->
                     <div class="container-fluid">
-
-                        <img class="panelimg img-responsive" src="statics/images/user_info_bg.jpg" />
-
+                        <img class="panelimg img-responsive" style="background-color: #fff5ee" />
                         <div class="container" style="transform:translateY(-8.5ex)">
-                            <!-- CIRCLE IMAGE THING-->
-
-
+                        <!-- CIRCLE IMAGE THING-->
                             <div class="user-headface" onmouseover="imgBlur(this)" onmouseout="imgOrg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
                                 <img src="statics/images/edit.png" id="photoword"
-                                     style="position:relative;left:20px; text-align:center;
-                                display:none;width:40px;height:40px; white-space:nowrap;overflow: hidden;" onclick="document.getElementById('newPic').click();">
+                                    style="position:relative;left:20px; text-align:center;
+                                    display:none;width:40px;height:40px; white-space:nowrap;overflow: hidden;" onclick="document.getElementById('newPic').click();">
                                 <img id="Profilepic" onclick="document.getElementById('newPic').click();" style="cursor:pointer; white-space:nowrap;overflow: hidden;" />
                                 <input id="newPic" type='file' accept="image/*" onchange="uploadPicProfile()" required style="display:none; white-space:nowrap;overflow: hidden;" />
-                            </div>
+                            </div> <!--end div class="user-headface"-->
 
                             <!-- TEXT NEXT TO THE CIRCLE IMAGE THING-->
                             <div class="user-account">
                                 <p class="tip" id="time123"></p><!-- DISPLAYS GOOD MORNING/AFTERNOON/EVENING MSG -->
-                                <img style="position:relative; left:125px;top:-25px;cursor:pointer;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
-                                <p class="account" style="position:relative; top:-20px;">
-                                    <span>Name : <span id="displayProfilename"></span></span>
-                                    <span>UserID : <span id="displayProfileid"></span></span>
-                                    <span>Role : <span id="displayProfileposition"></span></span>
+                                <p class="account" style="position:relative; top:8px;">
+                                
+                                <span style = "font-size: 20pt;" word-wrap: break-word;>Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
+                                <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
+                                <span style = "font-size: 20pt;" word-wrap: break-word;> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
                                 </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- END OF THE TWO HEADER!! -->
+                            </div> <!--end div class="user-account"-->
+                        </div> <!--end div class="container" -->
+                    </div> <!--end div class="container-fluid"-->
+                </div> <!--end div class="user-info"-->
+            </div> <!-- END OF THE TWO HEADER!! --> <!--end div class="header"-->
 
             <div class="main container-fluid wrapper">
                 <!-- START OF MIDDLE CONTENT-->
-                <div class="right" style="width:800ex; transform:translateY(-13ex)">
+                <div class="right" style="width:800ex; transform:translateY(-8ex)">
                     <div class="tap">
                         <span id="announcementspan" onclick="showannouncement()" style="opacity:1;cursor:pointer;">Announcement</span>
-                        <span id="csspan" onclick="showcs()" style="opacity:.8;cursor:pointer;">Events</span>
-                        <span id="wsspan" onclick="showws()" style="opacity:.8;cursor:pointer;">Working Schedule</span>
-                        <span id="whspan" onclick="showwh()" style="opacity:.8;cursor:pointer;">Working Hour</span>
-                    </div>
+                        <span id="wsspan" onclick="showws()" style="opacity:.8;cursor:pointer;">Center Schedule</span>
+                    </div> <!--end div class="tap-->
                     <div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
-                        <div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
+                        <div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div> <!--end div style="position:relative;left:1%;-->
                         <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;">&nbsp English<br></p>
-                        <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Frontend-Chinese/02Schedule2.html'">&nbsp 中文<br></p>
+                        <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Frontend/02Schedule2.html'">&nbsp 中文<br></p>
                         <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
-                    </div>
+                    </div><!--end div id="menu"-->
                     <div class="container" id="data1">
                         <table id="table" style="width:100%;border-style:hidden;" class="announcement_table">
                             <thread>
                                 <tr>
                                     <th style="width:50%"> Announcement Title </th>
-                                    <th style="width:25%"></th>
-                                    <th style="width:25%"> <button id="btnAdd" class="add_button" type="button" onclick="AddNewA()" style="cursor:pointer;"><img src="statics\images\add.png" height="15px" width="15px" /></button> </th>
+                                    <th style="width:16%"></th>
+                                    <th style="width:16%"></th>
+                                    <th style="width:16%"> <button id="btnAdd" class="add_button" type="button" onclick="AddNewA()" style="cursor:pointer;"><img src="statics\images\add.png" height="15px" width="15px" /></button> </th>
                                 </tr>
                             </thread>
                         </table>
-                    </div>
-                    <div class="container" id="data2" style="display:none;">
-                        <table id='CStable' class="schedule_table" style="width:100%;border-style:hidden;">
+                    </div> <!--end div class="container" id="data1"-->
+                    <div class="container" id="data3" style="display:none;overflow:scroll;">
+                        <br>
+                        <button type="button" onclick="AddNewCS()" class="add_button" style="cursor:pointer;">Add New Schedule</button> 
+                        <br><br>
+                        <table id='WStable' style="width:100%; border: 1px solid black;">
                             <tr>
-                                <th style="width:50%"> Events </th>
-                                <th style="width:25%"><button type="button" onclick="DownloadNewCS()" class="add_button" style="background-color:#B0C4DE;width:120px;height:40px;cursor:pointer;">Download <br>New Form</button></th>
-                                <th style="width:25%"><button type="button" onclick="AddNewCS()" class="add_button" style="cursor:pointer;"><img src="statics\images\add.png" height="15px" width="15px" /></button> </th>
+                                <th style="width:10%">Week Of</th>
+                                <th style="width:10%">SUN</th>
+                                <th style="width:10%">MON</th>
+                                <th style="width:10%">TUE</th>
+                                <th style="width:10%">WED</th>
+                                <th style="width:10%">THU</th>
+                                <th style="width:10%">FRI</th>
+                                <th style="width:10%">SAT</th>
+                                <th style="width:20%" colspan="2"></th> 
                             </tr>
                         </table>
-                    </div>
-                    <div class="container" id="data3" style="display:none;">
-                        <table id='WStable' class="schedule_table" style="width:100%;border-style:hidden;">
-                            <tr>
-                                <th style="width:50%"> Working Schedule </th>
-                                <th style="width:25%"><button type="button" onclick="DownloadNewWS()" class="add_button" style="background-color:#B0C4DE;width:120px;height:40px;cursor:pointer;">Download <br>New Form</button></th>
-                                <th style="width:25%"><button type="button" onclick="AddNewWS()" class="add_button" style="cursor:pointer;"><img src="statics\images\add.png" height="15px" width="15px" /></button> </th>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="container" id="data4" style="display:none;">
-                        <table id=tableWH class="schedule_table" style="width:100%;border-style:hidden;">
-                            <tr>
-                                <th style="width:50%"> Working Hour </th>
-                                <th style="width:25%"><button type="button" onclick="DownloadNewWH()" class="add_button" style="background-color:#B0C4DE;width:120px;height:40px;cursor:pointer;">Download <br>New Form</button></th>
-                                <th style="width:25%"> <button type="button" class="add_button" style="cursor:pointer;"><img src="statics\images\add.png" onclick="AddNewWH()" height="15px" width="15px" /></button> </th>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div><!-- END OF MAIN DIV CONTAINER CLASS!!! -->
-    </div><!--End OF WRAPPER CLASS!!-->
+                        <div style="width:100%;" id="CenterScheduleInfo"></div><!--end div style="width:100%;" id="CenterScheduleInfo"-->
+                    </div> <!--end div class="container" id="data3" style="display:none;"-->
+                </div> <!--end div class="right" style="width:800ex; transform:translateY(-13ex)"-->
+            </div> <!--end div class="main container-fluid wrapper"-->
+        </div><!-- END OF MAIN DIV CONTAINER CLASS!!! --> <!--end div id="content"-->
+    </div><!--End OF WRAPPER CLASS!!--> <!--end div class="wrapper"-->
     <div id="newABlock">
         <div class="editForm_create_announcement">
             <h2><center><br>New Announcement</center></h2>
@@ -393,9 +397,9 @@
                 <button id="btnSubmitE" onclick="createNewAnnouncement()" style="cursor:pointer;">Submit</button> &nbsp&nbsp&nbsp&nbsp
                 <button id="Ecancel" onclick="document.getElementById('newABlock').style.display='none';" style="cursor:pointer;">Cancel</button>
             </center>
-        </div>
-    </div>
-    </div>
+        </div> <!--end div class="editForm_create_announcement"-->
+    </div> <!--end div id="newABlock-->
+    <!--</div>-->
     <div id="editABlock">
         <div class="editForm_edit_announcement">
             <h2><center><br>Editing Announcement</center></h2>
@@ -414,109 +418,137 @@
     </div>
     </div>
 
-    <div id="newCSBlock">
-        <div class="editForm_upload_file">
-            <h2><center>New Events</center></h2>
+<!--</div>-->
+    <div id="viewABlock">
+        <div class="viewForm_edit_announcement">
+            <h2><center><br>Viewing Announcement</center></h2>
             <hr class="schedule_hr">
-            &nbsp&nbsp File title/description:
-            <input id="fileTitle3" type=text maxlength="50"></input>
-            <br><br>
-            &nbsp&nbsp Upload File:
-            <input type="file" id="fileButton3" accept="image/*,application/pdf" />
-            <progress value="0" max="100" id="uploader3">0%</progress>
-            <br><br><br>
-            &nbsp&nbsp&nbsp<button id="btnSubmitCS" style="cursor:pointer;">Submit</button> &nbsp&nbsp
-            <button id="Ecancel" onclick="document.getElementById('newCSBlock').style.display='none';" style="cursor:pointer;">Cancel</button>
+            &nbsp&nbsp Announcement Title:<br>
+            <span id="AEtitle3"></span><br>
+            <br>
+            &nbsp&nbsp Announcement:<br>
+            <span id = "Amsg2"></span>
+            <br>
+            <center>
+                <button id="Ecancel" onclick="document.getElementById('viewABlock').style.display='none';" style="cursor:pointer;">Back</button>
+            </center>
         </div>
     </div>
     </div>
-
-
+    <!--</div>-->
 
     <div id="newWSBlock">
-        <div class="editForm_upload_file">
-            <h2><center>New Working Schedule</center></h2>
-            <hr class="schedule_hr">
-            &nbsp&nbsp File title:
-            <input id="fileTitle" type=text maxlength="50"></input>
-            <br><br>
-            &nbsp&nbsp Upload File:
-            <input type="file" id="fileButton" accept="image/*,application/pdf" />
-            <progress value="0" max="100" id="uploader">0%</progress>
-            <br><br><br>
-            &nbsp&nbsp&nbsp <button id="btnSubmitWS" style="cursor:pointer;">Submit</button> &nbsp&nbsp
+        <div class="create_new_center_schedule_form">
+            <input type="text" id="fileButton3"/>
+            
+            &nbsp&nbsp&nbsp<button id="btnSubmitCS" style="cursor:pointer;">Submit</button> &nbsp&nbsp
             <button id="Ecancel" onclick="document.getElementById('newWSBlock').style.display='none';" style="cursor:pointer;">Cancel</button>
         </div>
     </div>
-    </div>
+    <!--</div>-->
 
 
-    <div id="newWHBlock">
-        <div class="editForm_upload_file">
-            <h2><center>New Working Hour</center></h2>
+
+    <div id="newCSBlock">
+        <div class="create_new_center_schedule_form">
+            <h2><center>New Center Schedule</center></h2>
             <hr class="schedule_hr">
-            &nbsp&nbsp File title:
-            <input id="fileTitle2" type=text maxlength="50"></input>
-            <br><br>
-            &nbsp&nbsp Upload File:
-            <input type="file" id="fileButton2" accept="image/*,application/pdf" />
-            <progress value="0" max="100" id="uploader2">0%</progress>
-            <br><br><br>
-            &nbsp&nbsp&nbsp <button id="btnSubmitWH" style="cursor:pointer;">Submit</button> &nbsp&nbsp
-            <button id="Ecancel" onclick="document.getElementById('newWHBlock').style.display = 'none';" style="cursor:pointer;">Cancel</button>
-        </div>
-    </div>
-    </div>
+            <div style="padding:2%">
+                <table style="border:none; width: 50%;">
+                    <tr>
+                        <td style="border:none">Week Of:</td>
+                        <td style="border:none"><input type="date" id="selected_date" /><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Sunday</td>
+                        <td style="border:none"><input type="text" id="NewCSSun"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Monday</td>
+                        <td style="border:none"><input type="text" id="NewCSMon"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Tuesday</td>
+                        <td style="border:none"><input type="text" id="NewCSTue"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Wednesday</td>
+                        <td style="border:none"><input type="text" id="NewCSWed"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Thursday</td>
+                        <td style="border:none"><input type="text" id="NewCSThu"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Friday</td>
+                        <td style="border:none"><input type="text" id="NewCSFri"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Saturday</td>
+                        <td style="border:none"><input type="text" id="NewCSSat"><br></td>
+                    </tr>
+                </table>
+                <br>
 
-    <div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA;border-style: solid;
-				border-width: 2px; z-index:3;">
-        <div style="background-color:#E4EACD;position:relative;height:75px;">
-            <h2 id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;left:300px;top:-10px;">	</h3></h2>
+                <button id="btnSubmitWS" style="cursor:pointer;" onclick="createNewCenterSchedule()">Submit</button> &nbsp&nbsp
+                <button id="Ecancel" onclick="document.getElementById('newCSBlock').style.display='none';" style="cursor:pointer;">Cancel</button>
+            </div>
+        </div>
+    </div> <!--end div id="newWSBlock-->
 
-            <button onclick="editprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
-            <button onclick="closeprofile()" style="position:relative; left:620px;top:15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
-            <button onclick="changePassword()" style="position:relative; left:520px;top:75px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;z-index:4;">Change Password</button>        </div>
-        <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
-        <div style="position:relative; left:220px;top:-110px;">
-            <p>Position: &nbsp<span id="positionProfile"></span> </p><br>
-            <p>User ID: &nbsp <span id="idProfile"></span></p><br>
-            <p>Display Name: &nbsp <span id="nameProfile"></span></p><br>
-            <p>Email Address: &nbsp <span id="emailProfile"></p><br>
-        </div>
-    </div>
+    <div id="editWSBlock" style="display:none">
+        <div class="create_new_center_schedule_form">
+            <h2><center>New Center Schedule</center></h2>
+            <hr class="schedule_hr">
+            <div style="padding:2%">
+                <table style="border:none; width: 50%;">
+                    <tr>
+                        <td style="border:none">Week Of:</td>
+                        <td style="border:none" id = editWeekOf></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Sunday</td>
+                        <td style="border:none"><input type="text" id="editCSSun" value=""><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Monday</td>
+                        <td style="border:none"><input type="text" id="editCSMon"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Tuesday</td>
+                        <td style="border:none"><input type="text" id="editCSTue"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Wednesday</td>
+                        <td style="border:none"><input type="text" id="editCSWed"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Thursday</td>
+                        <td style="border:none"><input type="text" id="editCSThu"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Friday</td>
+                        <td style="border:none"><input type="text" id="editCSFri"><br></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none">Saturday</td>
+                        <td style="border:none"><input type="text" id="editCSSat"><br></td>
+                    </tr>
+                </table>
+                <br>
 
-    <div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA; z-index:3;border-style: solid;
-				border-width: 2px;">
-        <div style="background-color:#E4EACD;position:relative;height:75px;">
-            <h2 id="nameProfileTE" style="position:relative; left:210px;top:20px;"></h2>
-            <h3 style="position:relative; left:300px;top:-10px;color:gray;">	</h3>
-            <button onclick="submitprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
-            <button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
+                <button id="btnSubmitWS" style="cursor:pointer;" onclick="submitEditCenterSchedule()">Submit</button> &nbsp&nbsp
+                <button id="Ecancel" onclick="document.getElementById('editWSBlock').style.display='none';" style="cursor:pointer;">Cancel</button>
+            </div>
         </div>
-        <img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="editpic">
-        <div style="position:relative; left:220px;top:-110px;">
-            <p>Position: &nbsp <span id=positionProfileE> </span> </p><br>
-            <p>User ID: &nbsp <span id="idProfileE"> </span>  </p><br>
-            <p>Display Name: <input type="text" id="nameProfileE" style="width:200px;"></p><br>
-            <p>Email Address: <input type="text" id="emailProfileE" style="width:300px;"></p><br>
-        </div>
-    </div>
-    <div id="changePass" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:15%;background-color:#EFFACA; z-index:4;border-style: solid; border-width:2px;">
-        <div style="background-color:#E4EACD;position:relative;height:75px;">
-            <h2 style="position:relative; left:210px;top:20px;">Changing Password</h2>
-            <button onclick="submitNewPass()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
-            <button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
-        </div>
-        <div style="position:relative; left:220px;top:70px;">
-            <p>Current Password: <input type="password" id="oldPassword"></p><br>
-            <p>New Password: <input type="password" id="newPassword"></p><br>
-            <p>Confirm Password: <input type="password" id="confirmnewPassword"></p><br>
-        </div>
-    </div>
+    </div><!--end div id="editWSBlock-->
+    <!--</div>-->
+
+    <!--</div>-->
+
 
     <script type='text/javascript' src='Config.js'></script>
     <script type='text/javascript' src='Schedulejs.js'></script>
-    <script type='text/javascript' src='chat.js'></script>
     <script type='text/javascript' src='Profile.js'></script>
     <!-- START COPY FOR SIDEBAR JAVASCRIPT -->
     <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -537,10 +569,14 @@
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                if(document.getElementById("toggleSide").innerHTML=="Hide sidebar"){
+                if (document.getElementById("toggleSide").innerHTML == "Hide sidebar") {
                     document.getElementById("toggleSide").innerHTML = "Show sidebar";
+                    
+
                 } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
                     document.getElementById("toggleSide").innerHTML = "Hide sidebar";
+                
+
                 }
             });
         });
