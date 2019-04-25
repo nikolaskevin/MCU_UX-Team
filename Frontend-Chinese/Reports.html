@@ -1,5 +1,6 @@
-﻿<!--
-  @file 05Library2.html
+﻿
+<!--
+  @file Reports.html
   @author  MCU
   @author  Kutztown University
   @license
@@ -13,96 +14,94 @@
     <link rel="icon" type="image/jpg" href="image\logo.jpg">
     <link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="statics/css/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500" rel="stylesheet">
     <!-- IMPORTING BOOTSTRAP!!-->
     <!-- Importing BOOTSTRAP!!! -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
-    <!-- Our Custom SIDE/TOP BAR CSS -->
+    <!-- Our Custom SIDE/TOP Bar CSS -->
     <link rel="stylesheet" href="statics/css/skeleton.css">
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-
     <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-    <script type='text/javascript' src="Config.js"></script>
-    <script type='text/javascript' src='Library.js'></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type='text/javascript' src='Config.js'></script>
+    <script type='text/javascript' src='ReportsJS.js'></script>
     <script type='text/javascript' src='Profile.js'></script>
 </head>
 <style>
-    table, th, td {
-        padding: 5px;
-        border: 1px solid black;
-        width: 400px;
-        text-align: center;
-        word-wrap: break-word;
-    }
     span.hidden{
         display: none;
+    }
+    #current_date {
+        top: 7%;
+        left: 31%;
+        font-size: 60px;
+        color: #2F4F4F;
+    }
+    #current_month {
+        top: 7%;
+        left: 35%;
+        font-size: 25px;
+        color: #A0522D;
+    }
+    #current_year {
+        top: 7%;
+        left: 56%;
+        font-size: 15px;
+        color: #A0522D;
+    }
+    #current_week {
+        top: 8%;
+        left: 28%;
+        font-size: 25px;
+        color: #000;
+    }
+    .status_record_option {
+        position: relative;
+        top: 15%;
+        left: 0%;
+        text-align: center;
+    }
+    .status_record_date_option {
+        position: relative;
+        top: 15%;
+        left: 0%;
+        text-align: center;
+    }
+    .status_record_display_button {
+        position: relative;
+        left: 40%;
+        text-align: center;
+    }
+    table, th, td {
+        padding: 10px;
+        border: 1px solid black;
+        width: 600px;
+        text-align: center;
+        word-wrap: break-word;
     }
         table th {
             background-color: #B0C4DE;
             color: #000;
         }
-
         table td {
             text-shadow: 2px 2px #FFFFFF;
         }
-
-    .library_assigntask {
-        background-color: transparent;
-        width: 80px;
-        height: 60px;
-        border: hidden;
-        perspective: 1000px;
-        position: relative;
-        top: -850px;
-        left: 880px;
-    }
-
-    .library_assigntask-inner {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        transition: transform 0.6s;
-        transform-style: preserve-3d;
-    }
-
-    .library_assigntask:hover .library_assigntask-inner {
-        transform: rotateY(180deg);
-    }
-
-    .library_assigntask-front, .library_assigntask-back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        backface-visibility: hidden;
-    }
-
-    .library_assigntask-front {
-        color: black;
-        font-size: 14px;
-    }
-
-    .library_assigntask-back {
-        color: black;
-        transform: rotateY(180deg);
-    }
-
-    .library_form-popup {
+    .dvsr_form-popup {
         display: none;
-        position: absolute;
-        top: 20%;
-        left: 30%;
-        border: 5px solid gray;
+        position: fixed;
+        top: 45%;
+        left: 48%;
+        border: 5px solid #f1f1f1;
+        z-index: 9;
         padding: 10px;
         background-color: white;
-        height: 60%;
-        width: 45%;
-        overflow-y: auto;
+        height: 80%;
+        width: 80%;
     }
-
-        .library_form-popup .btn {
+        .dvsr_form-popup .btn {
             background-color: #4CAF50;
             color: white;
             padding: 16px 20px;
@@ -112,37 +111,27 @@
             margin-bottom: 10px;
             opacity: 0.8;
         }
-
-        .library_form-popup .cancel {
+        .dvsr_form-popup .cancel {
             background-color: red;
+            position: fixed;
+            top: 9.5%;
+            width: 0px;
+            z-index: 2;
+            left: 92.2%;
+            height: 0px;
         }
-
-        .library_form-popup .btn:hover, .open-button:hover {
+        .dvsr_form-popup .btn:hover, .open-button:hover {
             opacity: 1;
         }
-
-        .picPreview{
-            display: flex;
-            max-height: 100px;
-            max-width: 100px;
-            height: auto;
-            width: auto;
-            text-align: center;
-            align-content: center;
-            align-items: center;
-        }
-
     @keyframes bounce {
         0%, 20%, 60%, 100% {
             -webkit-transform: translateY(0);
             transform: translateY(0);
         }
-
         40% {
             -webkit-transform: translateY(-5px);
             transform: translateY(-5px);
         }
-
         80% {
             -webkit-transform: translateY(-3px);
             transform: translateY(-3px);
@@ -180,13 +169,13 @@
                     </a>
                 </li>
 
-                <li>
+                <li class="current">
                     <a href="../Frontend-Chinese/Reports.html">
                         <i class="glyphicon glyphicon-file"></i>
                         Reports
                     </a>
                 </li>
-                <li class="current">
+                <li>
                     <a href="../Frontend-Chinese/05Library2.html">
                         <i class="glyphicon glyphicon-book"></i>
                         Library
@@ -226,14 +215,14 @@
                         <!-- Bootstrap navigation bar -->
                         <div class="container-fluid">
 
-                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 3ex;padding-top:1.5ex;padding-bottom:1.5ex; background-color:green;outline-color:darkgreen">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info" style="float:left; margin-right: 1.5ex;padding-top:1.5ex;padding-bottom:1.5ex;padding-left:2px;padding-right:2px; background-color:green;outline-color:darkgreen">
                                 <i class="fas fa-align-left"></i>
                                 <span id="toggleSide">Hide sidebar</span>
                             </button>
 
                             <div class="navbar-header">
 
-                                <a href="../Frontend-Chinese/01Aboutus2.html" style="padding-left:4px">
+                                <a href="../Frontend-Chinese/01Aboutus2.html">
                                     <img src="statics/images/v2ltctmslogo.png" height="50" width="60" />
                                 </a>
 
@@ -246,7 +235,7 @@
                                 <li class="dropdown">
                                     <a href="javascript:void(0)" class="dropbtn"><span class="glyphicon glyphicon-cog white-text"></span></a>
                                     <div class="dropdown-content">
-                                        <a href="/../Frontend/05Library2.html">English</a>
+                                        <a href="/../Frontend/04Statusrecord2.html">English</a>
                                         <a href="#">Chinese</a>
                                         <a onClick="Logout(); return false;" href="../Frontend-Chinese/00Login2.html">Logout</a>
                                     </div>
@@ -267,7 +256,7 @@
                             <!-- CIRCLE IMAGE THING-->
 
 
-                            <div class="user-headface" onmouseover="imgBlur(this)" onmouseout="imgOrg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
+                            <div class="user-headface" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
                                 <img src="statics/images/edit.png" id="photoword"
                                      style="position:relative;left:20px; text-align:center;
                                 display:none;width:40px;height:40px; white-space:nowrap;overflow: hidden;" onclick="document.getElementById('newPic').click();">
@@ -279,10 +268,10 @@
                             <div class="user-account">
                                 <p class="tip" id="time123"></p><!-- DISPLAYS GOOD MORNING/AFTERNOON/EVENING MSG -->
                                 <p></p>
-                                <p class="account" style="position:relative; top:8px;">
-                                    <span style = "font-size: 20pt;" word-wrap: break-word;>Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
-                                    <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
-                                    <span style = "font-size: 20pt;" word-wrap: break-word;> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
+                                <p class="account" style="position:relative; top:-20px;">
+                                <span style = "font-size: 20pt">Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
+                                <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
+                                <span style = "font-size: 20pt"> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
                                 </p>
                             </div>
                         </div>
@@ -292,114 +281,139 @@
 
             <div class="main container-fluid wrapper">
                 <!-- START OF MIDDLE CONTENT-->
-                <div class="right" style="transform:translateY(-9ex)">
+                <div class="right" style="width:800ex; transform:translateY(-9ex)">
 
-                    <div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;">
+                    <div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
                         <div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
                         <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;">&nbsp English<br></p>
-                        <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Frontend-Chinese/05Library2.html'">&nbsp 中文<br></p>
+                        <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Frontend-Chinese/04Statusrecord2.html'">&nbsp 中文<br></p>
                         <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
                     </div>
-                    <form>
-                            <select class="library_filter" id="filterCategory" onchange="filter_Category()">
-                                <option>Category</option>
-                            </select>
-                            
-                                <input class="library_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
-                            </form>
-                    <div class="container" id="data1"style="overflow:auto;">
-                        <div class="library_tasktable" >
+                    <div id="data1" style="position:relative;left:10%;width:78%;height:80%;background-color:#fff;border-left:2px solid black;overflow-x:hidden; overflow-y:scroll;">
+                        <table id="DSR_table" class="daily_status_record" onclick="sortDSR()" style="position:relative;width:100%;border-style:hidden;">
+                            <tr>
+                                <th colspan="3"> Report Generation </th>
+                            </tr>
+                        </table>
+                        <div class="no-doc" id="no-doc1">   <!-- Reports field implimentation !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! --> 
                             <br><br>
-                            <div style="overflow:auto;">
-                                <table class="library_tasktable_display" id="assigningTask" style="border-style:hidden;width:100%;">
-                                    <tr>
-                                        <th style="width:25%" onclick="sortingTask(0)" class="library_table_firstbox"> Category </th>
-                                        <th style="width:55%" onclick="sortingTask(1)" class="library_table_secondbox"> Task Name  </th>
-                                        <th style="width:10%"></th>
-                                        <th style="width:10%"><input type="checkbox" id="all_checked" onclick="toggleTask(this)"></th>
-                                    </tr>
-                                </table>
+                            <center>
+							
+                        <div class="start_date_option"> <!-- start date -->
+								Start Date:
+                            <input type="date" id="startDate" onchange="validate();">
+                            <br><br>
+                        </div>
+						
+					   <div class="end_date_option">  <!-- end date -->
+								End Date:
+                            <input type="date" id="endDate" onchange="validate();">
+                            <br><br>
+                        </div>
+
+                       <!-- Fast Report Buttons-->
+                            Fast Report:
+                        <input class="day_button" type="button" value="Day Report" onclick="fastDay();" style="cursor:pointer;" id="day_button" />&nbsp &nbsp
+                        <input class="week_button" type="button" value="Week Report" onclick="fastWeek();" style="cursor:pointer;" id="week_button" />&nbsp &nbsp
+						<input class="month_button" type="button" value="Month Report" onclick="fastMonth();" style="cursor:pointer;" id="month_button" />
+
                         
+
+                        
+						<!-- Patient Name Option-->
+						 <div class="patient_name_option">
+                             <br>
+						 Patient Name:
+                            <select id="selectPatName"  onchange="selectPatientName()">
+								
+                                <option>Patient Name</option>
+                            </select>
+                            <br><br>
+                        </div>			
+
+
+                        <!-- Pantient ID Option-->
+                        <div class="patient_id_values">
+                            Patient ID:
+                               
+                                    <input type="text" name="patientID" onchange="validate();" value="" id="patientID" disabled>
+                                    
+                              
+                                <br><br>
                             </div>
+                        <!--Clear button--> 
+                            &nbsp &nbsp
+                            <input class="clear_button" type="button" value="Clear" onclick=" clearBox();" style="cursor:pointer;" />
+                            &nbsp &nbsp
+                        <!-- Generate Report Button-->             
+                        <input class="generate_report_button" type="button" value="Generate Report" onclick=" generateReport();" style="cursor:pointer; background-color:#A9A9A9 " id="generate_report_button" disabled/>
+
+                        <br><br>
+                            <p id = "ReportURL" style="color:black"></p>
+                            </center>
                         </div>
                     </div>
-                    <button id ="library_requestCopy" type="button" onclick="createTaskCopy()">Request Copy</button>
+					
+					
 
-                    <div class="container" id="data2" style="display:none;">
-                        <br>
-                        <select class="library_historyfiltername" id="filterNameList" onchange="filterNameList()" style="position:relative;left:2%;">
-                            <option>Name</option>
-                        </select>
-                        <select class="library_historyfiltertask" id="filterTaskList" onchange="filterTaskList()" style="position:relative;left:2%;">
-                            <option>Task Name</option>
-                        </select>
-                        <input class="library_historysearch" type="text" name="search" placeholder="Search" id="searchKeyword" style="position:relative;left:2%;">
-                        <div class="library_historyoverflow">
-                            <br>
-                            <div style="overflow:auto;height:300px;">
-
-                            </div>
+                            <!-- Outline for rest of the page (Style sidebar menu etc...) -->
+                    <div class="dvsr_form-popup" id="form" style="position:absolute;left:250px; top:100px;display:none;overflow-y:scroll;">
+                        <div style="position:absolute; left:10px;top:18px;">
+                            <table id="heartRateRecord" style="border-style:hidden;" onclick="sortHRR()">
+                                <tr>
+                                    <th colspan="3"> Heart Rate Record</th>
+                                </tr>
+                            </table>
                         </div>
+                        <div style="position:absolute; left:620px;top:18px;">
+                            <table id="VisitRecord" style="border-style:hidden;">
+                                <tr>
+                                    <th colspan="3" onclick="sortvisitrecord()"> Visit Record</th>
+                                </tr>
+                            </table>
+                        </div>
+                        <button type="button" class="btn cancel" onclick="close_form()"><p style="position:relative;top:-15px;left:-6px;font-size:20px;"> x </p></button>
+                    </div>
+
+                    <div style="position:relative; top:-90%; left:0%; background-color:#ddd;width:22%; height:86%;">
+                       <!-- <h2 id="current_year" style="position:relative;top:40%"></h2> -->
+                        <h2 id='current_date' style="position:relative;top:50%"></h2>
+                        <h2 id="current_month" style="position:relative;"></h2>
+                        <h2 id="current_week" style="position:relative;"></h2>
+
+
                     </div>
                 </div>
             </div>
         </div>
-        <div class="library_form-popup" id="form1">
-            <div id="taskHeader"> 
-            </div>
-            <div class="sortableContainer" id="sortableContainer">
-                <div class="sortable" id="sort"></div>
-                <div class = "taskEditorContent" id="taskFooter" style = "display: none"> </div>
-            </div>
-        </div>
+    </div>
 
-        
-        <!-- START COPY FOR SIDEBAR JAVASCRIPT -->
-        <!-- jQuery CDN - Slim version (=without AJAX) -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <!-- Popper.JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-        <!-- Bootstrap JS -->
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-        <!-- jQuery Custom Scroller CDN -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-        <script type="text/javascript">
+    <!-- START COPY FOR SIDEBAR JAVASCRIPT -->
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript">
         $(document).ready(function () {
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"
             });
-
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                if (document.getElementById("toggleSide").innerHTML == "Hide sidebar") {
+                if(document.getElementById("toggleSide").innerHTML=="Hide sidebar"){
                     document.getElementById("toggleSide").innerHTML = "Show sidebar";
                 } else if (document.getElementById("toggleSide").innerHTML == "Show sidebar") {
                     document.getElementById("toggleSide").innerHTML = "Hide sidebar";
                 }
             });
         });
-
-        function imgBlur(obj) {
-            var photoword = document.getElementById("photoword");
-            var Profilepic = document.getElementById("Profilepic");
-            photoword.style.display = "inline";
-            photoword.style.position = "absolute";
-            photoword.style.transform = "translate(2ex,2ex)";
-            photoword.style.zIndex = "2000";
-            Profilepic.style.filter = "blur(3px)";
-            Profilepic.style.display = "inline";
-        }
-
-        function imgOrg(obj) {
-            var photoword = document.getElementById("photoword");
-            var Profilepic = document.getElementById("Profilepic");
-            photoword.style.display = "none";
-            Profilepic.style.display = "inline";
-            Profilepic.style.filter = "blur(0px)";
-        }
-        </script>
-        <!-- END COPY FOR SIDEBAR JAVASCRIPT-->
+    </script>
+    <!-- END COPY FOR SIDEBAR JAVASCRIPT-->
 </body>
-</html>
+</html> 

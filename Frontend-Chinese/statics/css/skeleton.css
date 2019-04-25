@@ -4,11 +4,17 @@
 
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
+/*
+    Sets up for the body of the webpages to have common font.
+*/
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
 }
 
+/*
+    Sets up for any paragraph tag in the webpages to have common font style and size.
+*/
 p {
     font-family: 'Poppins', sans-serif;
     font-size: 1.1em;
@@ -25,6 +31,9 @@ a:focus {
     transition: all 0.3s;
 }
 
+/*
+    CSS for the TOP navigation bar that is constant throughout the frontend browser.
+*/
 .navbar {
     padding: 15px 10px;
     background: #fff;
@@ -48,7 +57,7 @@ a:focus {
 }
 
 /* ---------------------------------------------------
-    SIDEBAR STYLE
+    CSS for the SIDEBAR STYLE that is constant throughout the frontend browser
 ----------------------------------------------------- */
 
 .wrapper {
@@ -87,12 +96,17 @@ a:focus {
         padding: 10px;
     }
 
+    /*
+        CSS for the link texts inside the sidebar
+    */
     #sidebar ul li a {
         padding: 10px;
         font-size: 1.1em;
         display: block;
     }
-
+    /*
+        CSS for the when mouse is over the sidebar links 
+    */
         #sidebar ul li a:hover {
             color: mediumseagreen;
             background: #fff;
@@ -134,19 +148,11 @@ ul.CTAs {
         margin-bottom: 5px;
     }
 
-a.download {
-    background: #fff;
-    color: #7386D5;
-}
-
-a.article,
-a.article:hover {
-    background: #6d7fcc !important;
-    color: #fff !important;
-}
 
 /* ---------------------------------------------------
-    CONTENT STYLE
+    CONTENT STYLE: CSS that affects EVERYTHING in the webpage, except the sidebar! 
+    Purpose: To hold all the contents within a div so that the webpages are dynamically scalable 
+             depending on the width of the webpage. Helps with ease of view when browser is not on fullscreen.
 ----------------------------------------------------- */
 
 #content {
@@ -164,7 +170,7 @@ a.article:hover {
     }
 
 /* ---------------------------------------------------
-    MEDIAQUERIES
+    MEDIAQUERIES: CSS that deals with hiding the sidebar correctly and setting up the full width of the webpages that is inside the content id.
 ----------------------------------------------------- */
 
 @media (max-width: 768px) {
@@ -189,15 +195,23 @@ a.article:hover {
     }
 }
 
+/*
+    CSS dealing with the COLOR of the TOP nav bar
+*/
 .navbar-default {
     background-color: #62ab00;
     border-color: white;
 }
 
+/*
+    CSS to make the LTC-TMS font-color white on the top nav bar
+*/
 .white-text {
     color: white;
 }
-
+/*
+    CSS to make the LTC-TMS font-color green when hovered on the top nav bar
+*/
     .white-text:hover, a:hover {
         color: springgreen;
         text-decoration: none;
@@ -272,6 +286,7 @@ li.dropdown {
 .current {
     background-color: mediumseagreen;
 }
+
 @media screen and (max-width:768px) {
     .navbar-right {
         float: right !important;
@@ -296,7 +311,7 @@ li.dropdown {
             -webkit-transform: translateY(0);
             transform: translateY(0);
         }
-
+        
         40% {
             -webkit-transform: translateY(-5px);
             transform: translateY(-5px);

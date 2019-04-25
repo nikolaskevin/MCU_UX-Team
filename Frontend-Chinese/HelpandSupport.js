@@ -5,507 +5,217 @@
  * @license
  */
 
-    var fbFeedback = firebase.database().ref("Feedback/");
-    var num = 0;
-    fbFeedback.once("value")
-    .then(function(snapshot){
-        feedbackSnapshot.forEach(function(getIDSnapshot){
-            var id = getIDSnapshot.key;
-            match_id(id,fbFeedback);
-       });
+
+var feedback = [];
+var goodPath = "";
+var fbGet = firebase.database().ref('Feedback/unique_ID');
+var c = 0;
+
+
+/**
+ * @function getFeedback
+ * @description Finds all the data from the feedback node and stores it in an array called feedback[]
+ * @param categories - Array to be filled
+ * @param feedbackData - feedback (to put into the callback function, not strictly necessary, but makes the flow of data more apparent)
+ * @param callback Function to perform after finding all categories
+ */
+function getFeedback(callback){
+    var count = 0
+    fbGet.on('value',function(snapshot){
+        snapshot.forEach(function(snapshot){
+            feedback[count] = snapshot.key;
+            count++;
+            console.log(count);
+            console.log(feedback);
+            
+        })
+        //callback(feedback);
+        return;
     });
-
-/**
- * @function match_id
- * @description verifies wheter the user is a CNA or Patient/Family member
- * @param {*} id 
- * @param {*} fbFeedback 
- */
-function match_id(id,fbFeedback){
-
-    if (id.charAt(0) == "3"){
-        var fbCNA = firebase.database().ref("CNA/"+id+"/Portfolio");
-        fbCNA.once("value")
-           .then(function(CNAsnapshot){
-               var name;
-               var picture;
-               CNAsnapshot.forEach(function(CNAinfoSnapshot){
-                   if(CNAinfoSnapshot.key == "Name"){
-                       name = CNAinfoSnapshot.val();
-                   }
-                   if(CNAinfoSnapshot.key =="pictureurl"){
-                       picture = CNAinfoSnapshot.val();
-                       tableform(id,name,fbFeedback,picture);
-                   }
-               })
-           });
-    }
-    else{
-        var fbPAT = firebase.database().ref("Patient/"+id+"/Portfolio");
-        fbPAT.once("value")
-           .then(function(patientSnapshot){
-               var name;
-               var picture;
-               patientSnapshot.forEach(function(patientInfoSnapshot){
-                   if(patientInfoSnapshot.key == "Name"){
-                       name = patientInfoSnapshot.val();
-                   }
-                   if(patientInfoSnapshot.key =="pictureurl"){
-                       picture = patientInfoSnapshot.val();
-                       tableform(id,name,fbFeedback,picture);
-                   }
-               })
-           });
-    }
-
 }
-var index = 0;
+//console.log(getFeedback());
+
+
 /**
- * @function tableform
- * @description  fills the table for the feedback
- * @param {*} id 
- * @param {*} name 
- * @param {*} fbFeedback 
- * @param {*} picture 
+ * @function loadStaffFeedback
+ * @description Loads the information from the firebase array into the table. Var staff is assigned to the firebase values and then each following
+ * var is assigned to the subquential node
  */
-function tableform(id,name,fbFeedback,picture){
-    fbFeedback.child(id+"/Center/").once('value')
-    .then(function(childSnapshot2){//Center
-        childSnapshot2.forEach(function(childSnapshot3 ){//0
-            childSnapshot3.forEach(function(childSnapshot4){//Received
-              childSnapshot4.forEach(function(childSnapshot5){
-                childSnapshot5.forEach(function(childSnapshot6){
+function loadStaffFeedback(){
+    $(".staffTable").html("table");
 
-                  var m = childSnapshot3.key;
-                  var a = m.split("-");
-                  var m1 = m.split("-");
+    //var table = $('<table>').addClass('staffFeedback');
+    var fbGet = firebase.database().ref('Feedback/unique_ID');
+    fbGet.on('value', function(snapshot){
+        var staff = snapshot.val();
 
-                   m1 = m1[0]+"-"+m1[1]+"-"+m1[2];
-                  var feedbackID = childSnapshot4.key;
-                  var feedbackID = childSnapshot4.key;
-                  feedbackID = feedbackID.split("-");
-                  feedbackID = feedbackID[1];
-                  var t = childSnapshot6.key;
-                  var time = t.split(":");
-                  var tim1 = t.split(":");
-                  tim1 = tim1[0]+":"+tim1[1]+":"+tim1[2];
-                  var value = childSnapshot6.val();
-              //  document.getElementById("user-fa").src = "/images/user_info_bg.jpg";
-                  var container = document.getElementById('container');
-                  var div = document.createElement('div');
-                  var span0 = document.createElement("span");
-                  var span = document.createElement('span');
-                  var span1 = document.createElement('span');
-                  var i = document.createElement("i");
-                  var img = document.createElement("img");
-                  var div1 = document.createElement('div');
-                  var span2 = document.createElement('span');
-                  var span3 = document.createElement("span");
-                  var span4 = document.createElement("span");
-                  var staffReply = document.createElement("span");
+        var row = $('<tr>').addClass('staffFeedbackRow');
 
-                  var span5 = document.createElement("span");
+        var table = document.getElementById('staffFeedback');
 
-                  var div2 = document.createElement('div');
-                  var div3 = document.createElement('div');
-                  var input = document.createElement("input");
-                  var button = document.createElement("button");
-                  div.setAttribute("class", "liuyan");
-                  div.setAttribute("id", "liuyan["+index+"]");
-                  span0.setAttribute("id","time["+index+"]");
-                  span0.setAttribute("class","time");
-                  span.setAttribute("id", "user-fa["+index+"]");
-                  i.setAttribute("class", "fa fa-user");
-                  img.setAttribute("class", "user-fa");
-                  img.setAttribute("id", "photo["+index+"]");
+        var row = document.getElementsByTagName("td");
 
-                  div1.setAttribute("id","user["+index+"]");
-                  span2.setAttribute("id", "comment["+index+"]");
-                  span2.setAttribute("class", "comment");
-                  span1.setAttribute("id","username["+index+"]");
-                  span3.setAttribute("onclick","replyToggle("+index+")");
-                  span3.setAttribute("class", "reply");
-                  span3.setAttribute("id","reply["+index+"]")
-                  span4.setAttribute("id","replyComment["+index+"]");
-                  span4.setAttribute("class","replyComment");
+        var userEmail = staff["userEmail"];
+        var userId = staff["userId"];
+        var feedbackText = staff["feedbackText"];
+        var feedbackReply = staff["replyText"];
 
-                  div2.setAttribute("id" ,"usermessage");
-                  div2.setAttribute("class" ,"usermessage");
-                  div3.setAttribute("class" ,"content");
-                  div3.setAttribute("id" ,"div3ID["+index+"]");
+        var userEmailCell = $('<td>').addClass('staffFeedback');
+            userEmailCell.html(userEmail);
 
-                  input.setAttribute("id", "message["+index+"]");
-                  input.setAttribute("class", "text-success");
-                  input.setAttribute("type", "text");
-                  button.setAttribute("id","btn["+index+"]");
-                  button.setAttribute("class", "btn-success");
-
-                  span5.setAttribute("id","replyTime["+index+"]");
-                  span5.setAttribute("class","replyTime");
+        var userIdCell = $('<td>').addClass('staffFeedback');
+            userIdCell.html(userId);
 
 
-                  button.setAttribute("onclick", "sendMess("+id+","+a[0]+","+a[1]+","+index+","+a[2]+","+time[0]+","+time[1]+","+time[2]+","+feedbackID+")");
-                  button.innerHTML= "Enter";
-                  span3.innerHTML = "Reply";
+        var userTextCell = $('<td>').addClass('staffFeedback');
+            userTextCell.html(feedbackText);
+        
+        var userReplyCell = $('<td>').addClass('staffFeedback');
+            userReplyCell.html(feedbackReply).width("100%");
 
-                  if(childSnapshot5.key == "Received"){
-                      if(id.charAt(0) == "3"){
-                          container.appendChild(div);
+        //Add Each Cell to each row
+        row.append(userEmailCell, userIdCell, userTextCell, userReplyCell);
+        //row.append(userIdCell);
+        table.append(row);
+        var cell = row.insertCell(userEmailCell);
+        row.append(cell);
 
-                          div.appendChild(span);
-                          span.appendChild(i);
-                          i.appendChild(img);
-                          div.appendChild(div1);
-                          div1.appendChild(span1);
-                          div.appendChild(span2);
-                          div.appendChild(span3);
-                          div.appendChild(span0);
+        /* DO NOT DELETE MIGHT NEED FOR LATER USE
+        snapshot.forEach(function(snapshot){
+            var staff = snapshot.val();
+            console.log(staff);
+            var row = $('<tr>').addClass('staffFeedbackRow');
 
-                          div.appendChild(div2);
-                          div2.appendChild(div3);
-                          div2.appendChild(span4);
-                          div3.appendChild(input);
-                          div3.appendChild(button);
+            var userEmail = staff["Feedback"]["userEmail"];
+            var userId = staff["userId"];
 
-                          div.appendChild(span5);
+            var userEmailCell = $('<td>').addClass('staffFeedback');
+                userEmailCell.html(userEmail);
 
-
-
-                          document.getElementById("time["+index+"]").innerHTML = m1+"-"+tim1;
-                          document.getElementById("photo["+index+"]").src = picture;
-                          document.getElementById("username["+index+"]").innerHTML = name +"  said:";
-                          document.getElementById("comment["+index+"]").innerHTML = childSnapshot6.val();
-                          console.log(childSnapshot6.val());
-                          getReply(id, index, a[0], a[1], a[2], time[0], time[1], time[2], feedbackID);
-                          console.log(index);
-                          index++;
-                      }
-                      else{
-                          var container1 = document.getElementById("container1");
-                          container1.appendChild(div);
-                          div.appendChild(span);
-                          span.appendChild(i);
-                          i.appendChild(img);
-                          div.appendChild(div1);
-                          div1.appendChild(span1);
-                          div.appendChild(span2);
-                          div.appendChild(span3);
-                          div.appendChild(span0);
+            //Add Each Cell to each row
+            row.append(userEmailCell);
+            table.append(row);
+        console.log(userName);
+        });
+        */
 
 
-                          div.appendChild(div2);
-                          div2.appendChild(div3);
-                          div2.appendChild(span4);
-                          div3.appendChild(input);
-                          div3.appendChild(button);
-
-                         div.appendChild(span5);
-
-
-
-
-                          document.getElementById("time["+index+"]").innerHTML = m1+"-"+tim1;
-                          document.getElementById("photo["+index+"]").src = picture;
-                          document.getElementById("username["+index+"]").innerHTML = name +"  said:";
-                          document.getElementById("comment["+index+"]").innerHTML = childSnapshot6.val();
-
-                          getReply(id,index,a[0],a[1],a[2],time[0],time[1],time[2],feedbackID);
-                          console.log(index);
-
-                          index++;
-                      }
-                  }
-                  if (childSnapshot5.key == "Replied") {
-                      if (id.charAt(0) == "3") {
-
-                      } else {
-
-                      }
-                  }
-                })
-
-
-              })
-
-            })
-        })
+        $(".staffTable").html(table);
     });
-
 }
 
-/**
- * @function getReply
- * @description displays the reply to the feedback
- * @param {*} id 
- * @param {*} index 
- * @param {*} year 
- * @param {*} month 
- * @param {*} date 
- * @param {*} h 
- * @param {*} m 
- * @param {*} s 
- * @param {*} feedbackID 
- */
-function getReply(id,index,year,month,date,h,m,s,feedbackID){
-    var lastDate = year+"-"+month+"-"+date;
-    var time = h+":"+m+":"+s;
-    var fbReply = firebase.database().ref("Feedback/"+id+"/Center"+"/"+lastDate+"/"+feedbackID+"/Replied/");
-    fbReply.once('value').
-    then(function(snapshot){
-        snapshot.forEach(function(snapshot1){
-            var com = snapshot1.val();
-            com = com.replace (/[~]/g," ");
-            document.getElementById("replyComment["+index+"]").innerHTML = com;
-            console.log(snapshot1.key);
 
-            var tim = snapshot1.key;
-            tim = tim.replace (/[?]/g,"-");
-            document.getElementById("replyTime["+index+"]").innerHTML = tim;
-        })
-    })
+function loadFamilyFeedback(){
+    $(".familyTable").html("table");
+
+    var table = $('<table>').addClass('familyFeedback');
+    var fbGet = firebase.database().ref('Feedback/unique_ID');
+    fbGet.on('value', function(snapshot){
+
+        var staff = snapshot.val();
+
+        var row = $('<tr>').addClass('familyFeedbackRow');
+
+        var userEmail = staff["userEmail"];
+        var userId = staff["userId"];
+        var feedbackText = staff["feedbackText"];
+        var feedbackReply = staff["replyText"];
+
+        var userEmailCell = $('<td>').addClass('familyFeedback');
+            userEmailCell.html(userEmail);
+
+        var userIdCell = $('<td>').addClass('familyFeedback');
+            userIdCell.html(userId);
+
+        //var userTextCell = $('<td>').addClass('familyFeedback');
+            //userTextCell.html(feedbackText);
+        
+        var userReplyCell = $('<td>').addClass('familyFeedback');
+            userReplyCell.html(feedbackReply);
+
+        //Add Each Cell to each row
+        row.append(userEmailCell, userIdCell/*, userTextCell*/, userReplyCell);
+        //row.append(userIdCell);
+        table.append(row);
+
+        /* DO NOT DELETE MIGHT NEED FOR LATER USE
+        snapshot.forEach(function(snapshot){
+            var staff = snapshot.val();
+            console.log(staff);
+            var row = $('<tr>').addClass('familyFeedbackRow');
+
+            var userEmail = staff["Feedback"]["userEmail"];
+            var userId = staff["userId"];
+
+            var userEmailCell = $('<td>').addClass('familyFeedback');
+                userEmailCell.html(userEmail);
+
+            //Add Each Cell to each row
+            row.append(userEmailCell);
+            table.append(row);
+        console.log(userName);
+        });
+        */
+        $(".familyTable").html(table);
+    });
 }
 
-/**
- * @function getDirectorReply
- * @description displays the reply to staff feedback from teh director
- * @param {*} id 
- * @param {*} index 
- * @param {*} year 
- * @param {*} month 
- * @param {*} date 
- * @param {*} h 
- * @param {*} m 
- * @param {*} s 
- * @param {*} feedbackID 
- */
-function getDirectorReply(id, index, year, month, date, h, m, s, feedbackID) {
-    var lastDate = year + "-" + month + "-" + date;
-    var time = h + ":" + m + ":" + s;
-    var fbReply = firebase.database().ref("Feedback/" + id + "/Center" + "/" + lastDate + "/" + feedbackID + "/Replied/");
-    fbReply.once('value').
-    then(function (snapshot) {
-        snapshot.forEach(function (snapshot1) {
-            var com = snapshot1.val();
-            com = com.replace(/[~]/g, " ");
-            document.getElementById("replyComment[" + index + "]").innerHTML = com;
-            console.log(snapshot1.key);
 
-            var tim = snapshot1.key;
-            tim = tim.replace(/[?]/g, "-");
-            document.getElementById("replyTime[" + index + "]").innerHTML = tim;
-        })
-    })
-}
+
+
+
 
 /**
- * @function replyToggle
- * @description opens/closes the text box where the reply will be written
- * @param {*} index 
+ * @function populateArray
+ * @description Take data from a task snapshot and put it into an array. This is done so that changes to the database
+ *              don't cause the need for major change in the task editor code.
+ * @param {*} feedback Snapshot of the feedback to put into the editor.
  */
-function replyToggle(index){
-    if(document.getElementById("message["+index+"]").style.display =="inline"){
-        document.getElementById("message["+index+"]").style.display = "none";
-        document.getElementById("reply["+index+"]").innerHTML = "Reply";
-        document.getElementById("btn["+index+"]").style.display = "none";
-        console.log("skdfj");
-
-    }
-    else{
-        document.getElementById("message["+index+"]").style.display = "inline";
-        document.getElementById("reply["+index+"]").innerHTML = "Collapse";
-        document.getElementById("btn["+index+"]").style.display = "inline";
+function populateArray(feedback){
+    var counter = 1;
+    //var steps=[];
+    var feedbackData = {
+        feedbackText: feedback["unique_ID"]["feedbackText"],
+        feedbackType: feedback["unique_ID"]["feedbackType"],
+        replyId: feedback["unique_ID"]["replyId"],
+        replyText: feedback["unique_ID"]["replyText"],
+        userEmail: feedback["unique_ID"]["userEmail"],
+        userId: feedback["unique_ID"]["userId"]
     }
 }
 
+
+
+
+
 /**
- * @function sendMess
- * @description  send a reply to the feedback
- * @param {*} id 
- * @param {*} year 
- * @param {*} month 
- * @param {*} index 
- * @param {*} date 
- * @param {*} h 
- * @param {*} m 
- * @param {*} s 
- * @param {*} feedbackID 
+ * @function getFeedbackFromPathCallback
+ * @param {*} feedback 
  */
-function sendMess(id,year,month,index,date,h,m,s,feedbackID){
-
-  console.log(year,month,date);
-    var today = new Date();
-    var hour = today.getHours();
-    var minute = today.getMinutes();
-    var second = today.getSeconds();
-
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var nowYear = today.getFullYear();
-
-    var nowadays = nowYear +"-"+ mm+"-"+ dd;
-    var time = hour+":"+minute+":"+second;
-    var repliedTime = nowadays+"?"+time;
-    var repliedTime1 = nowadays+"-"+time;
-    var lateDate =year+"-"+month+"-"+date;
-
-
-    firebase.database().ref("Feedback/"+id+"/Center/"+lateDate+"/ID-"+feedbackID+"/Replied").remove();
-
-
-    document.getElementById("replyTime["+index+"]").innerHTML = repliedTime1;
-
-
-
-    var idre = "000001"; // Replyer's  ID
-    var comment = document.getElementById("message["+index+"]").value;
-    console.log(comment);
-    var comment1 = comment.replace(/[ ]/g, "~");
-
-    firebase.database().ref("Feedback/"+id+"/Center"+"/"+lateDate+"/ID-"+feedbackID+"/Replied/"+repliedTime).set(comment1);
-
-    document.getElementById("replyComment["+index+"]").innerHTML = comment;
-    replyToggle(index);
-
-}
-
-/**
-* @function reply
-* @description not sure it's needed, not deleting since it's so close to a sprint end
-* @param {*} id 
-*/
-function reply(id) {
-    
-}
-
-/**
-* @function setTimeout
-* @description sets a timer for inactivity of user
-*/
-setTimeout(function(){
-    pat = document.getElementById("container");
-    staff = document.getElementById("container1");
-    sorting(pat);
-    sorting(staff)
-}, 3000);
-
-/**
- * @function sorting
- * @description
- * @param {*} table 
- */
-function sorting(table){
-  var  rows, switching, i, x, y, s, shouldSwitch, dir, switchcount = 0;
-
-  switching = true;
-  dir = "asc";
-  rows = table.getElementsByTagName("div");
-  console.log(rows.length);
-
-  while (switching) {
-
-    switching = false;
-    for (i = 0; i < rows.length-4; i=i+4) {
-
-        shouldSwitch = false;
-
-        x = rows[i].getElementsByTagName("span")[4];
-        y = rows[i+4].getElementsByTagName("span")[4];
-
-      if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-            console.log(x);
-            console.log(y);
-          shouldSwitch= true;
-          console.log("jump out")
-          break;
-        }
-      }
-    }
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i+4], rows[i]);
-      console.log("suc");
-      switching = true;
-      switchcount ++;
-    }
-  }
+function getFeedbackFromPathCallback(feedback){
+    getFeedback(feedback, populateArray);
+    populateArray(feedback);
+    injectToDOM();
 }
 
 /**
  * @function showsf
- * @description gets the staff feedback
+ * @description gets the staff feedback via the tab
  */
 function showsf(){
-  document.getElementById("container").style.display = "block";
-  document.getElementById("container1").style.display = "none";
-  document.getElementById("stafffeedbackspan").style.opacity = "1";
-  document.getElementById("patientfeedbackspan").style.opacity = ".8";
-}
-
-/**
- * @function showpf
- * @description gets the family(patient) feedback
- */
-function showpf(){
-  document.getElementById("container").style.display = "none";
-  document.getElementById("container1").style.display = "block";
-  document.getElementById("stafffeedbackspan").style.opacity = ".8";
-  document.getElementById("patientfeedbackspan").style.opacity = "1";
-}
-
-/**
- * @function openmenu
- * @description allows user to open the menu that switches languages and logout (?)
- */
-function openmenu(){
-  if(document.getElementById("menu").style.display== "block"){
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("openmenu").style.opacity = "1";
+    document.getElementById("container").style.display = "block";
+    document.getElementById("container1").style.display = "none";
+    document.getElementById("stafffeedbackspan").style.opacity = "1";
+    document.getElementById("patientfeedbackspan").style.opacity = ".8";
   }
-  else{
-  document.getElementById("menu").style.display = "block";
-  document.getElementById("openmenu").style.opacity = ".6";
-}
-}
-
-/**
- * @function profile
- * @description gets the profile information of current user
- */
-function profile(){
-  document.getElementById("profile").style.display = "block";
-}
-
-/**
- * @function closeprofile
- * @description allows the user to close the profile information
- */
-function closeprofile(){
-  document.getElementById("profile").style.display = "none";
-  document.getElementById("editprofile").style.display = "none";
-}
-
-/**
- * @function editprofile
- * @description allows the user to edit their basic profile information
- */
-function editprofile(){
-  document.getElementById("profile").style.display = "none";
-  document.getElementById("editprofile").style.display = "block";
-}
-
-/**
- * @function cancelprofile
- * @description allows the user to cancel out of editing their information
-
- */
-function cancelprofile(){
-  window.location.reload()
-}
-
-/**
- * @function submitprofile
- * @description allows the user to submit the edits to their profile not completed, but not getting rid of until next sprint
- */
-function submitprofile(){
-
-}
+  
+  /**
+   * @function showpf
+   * @description gets the family(patient) feedback via tab
+   */
+  function showpf(){
+    document.getElementById("container").style.display = "none";
+    document.getElementById("container1").style.display = "block";
+    document.getElementById("stafffeedbackspan").style.opacity = ".8";
+    document.getElementById("patientfeedbackspan").style.opacity = "1";
+  }

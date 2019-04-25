@@ -139,7 +139,7 @@ function viewTable(value){
             var row = contextTable.insertRow(0);
             var celldate = row.insertCell(0);
             var celleventDate = row.insertCell(1);
-            //var cellButton = row.insertCell(2);
+            var cellButton = row.insertCell(2);
             var cellButton2 = row.insertCell(2)
 
             //$(row).css("border", "1px solid");
@@ -153,12 +153,12 @@ function viewTable(value){
             celleventDate.setAttribute("id","content_id["+num+"]");
             celleventDate.setAttribute("onclick","editha("+num+")");
             cellButton2.setAttribute("onclick","deleteha("+num+")");
-            //cellButton.setAttribute("onclick","editha("+num+")");
+            cellButton.setAttribute("onclick", "editha("+num+")");
             num++;
             celldate.appendChild(document.createTextNode(arr[0]));
             celleventDate.appendChild(document.createTextNode(childData));
             cellButton2.appendChild(button2);
-            //cellButton.appendChild(button);
+            cellButton.appendChild(button);
         })
     })
 

@@ -7,7 +7,7 @@
 //var admin = require("../node_modules/firebase-admin");
 /**
 * @function newAccount
-* @description allows the admin to make a new account
+* @description allows the admin to make a new account and automatically assigns an ID number
 */
 function newAccount(){
   var name = document.getElementById('Name').value;
@@ -69,7 +69,7 @@ else if(email.includes(".com") ==false){
         else{
             console.log("Didn't work, GG");
         }
-        //document.write(data);
+        
     }, function(error, commited, snapshot){
       if (commited){
         window.location.reload(true);
@@ -90,7 +90,7 @@ else if(email.includes(".com") ==false){
             updates2['UID/' + userID] = userInfo2.StaffID;
             firebase.database().ref().update(updates2);
             ref2.transaction(function(data){
-              // this increments lastCNOID, CANNOT start at 0
+              // this increments lastDirID, CANNOT start at 0
               if (data || (data != 0)){
                   data++;
                   return data;
@@ -98,7 +98,7 @@ else if(email.includes(".com") ==false){
               else{
                   console.log("Didn't work, GG");
               }
-              //document.write(data);
+              
           }, function(error, commited, snapshot){
             if (commited){
                 window.location.reload(true);
@@ -109,6 +109,7 @@ else if(email.includes(".com") ==false){
 })//end firebase.auth()
 .catch(function(error) {
     // Handle Errors here.
+    firebase.auth().signInWithEmailAndPassword("ltctmsapp2018@gmail.com", "admin123123")
     var errorCode = error.code;
     var errorMessage = error.message;
     if (errorCode == 'auth/weak-password') {
@@ -117,7 +118,6 @@ else if(email.includes(".com") ==false){
       alert(errorMessage);
     }
     console.log(error);
-    
   });//end .catch
 }//end second else
 }//end of newACcount
@@ -138,12 +138,41 @@ function deleteUserAccount(i){
   var position = tr[i].cells[3].innerHTML;
   var fbACCD = firebase.database().ref('uAccount').child(sid);
   var fbABCD = firebase.database().ref('No_Portfolio/'+position).child(sid);
-  var confirmation = confirm("Undoing is not available! Please make sure you would not need this account anymore!");
+  var currPassword = firebase.database().ref('uAccount/' + sid + '/' + 'Password');
+  var currEmail = firebase.database().ref('uAccount/' + sid + '/' + 'Email');
+  var email = "test@email.com"
+  var password = "321cba"
+  currPassword.once('value').then(function(snapshot){
+    oldPass = snapshot.val();
+    sendOldPass = oldPass;  
+})
+
+currEmail.once('value').then(function(snapshot){  
+  oldEmail = snapshot.val();
+  sendOldEmail = oldEmail;
+})
+// The vars need to be called before they can be removed. So instead of printing them, I'm displaying them in the console
+console.log(sendOldEmail);
+console.log(sendOldPass);
+console.log(email);
+console.log(password);
+  var confirmation = confirm("You are about to delete " + sendOldEmail + ". Once it's delted it cannot be unodne.");
   if(confirmation == true){
     fbACCD.remove();
     fbABCD.remove();
-    alert("successfully removed the account!");
-    location.reload();
+    firebase.auth().signInWithEmailAndPassword(sendOldEmail, sendOldPass)
+      .then(function (info){
+        var user = firebase.auth().currentUser;
+        user.delete();
+        firebase.auth().signInWithEmailAndPassword("ltctmsapp2018@gmail.com", "admin123123")  
+      },function(error, commited, snapshot){
+        if (commited){
+
+          alert("successfully removed the account!");
+          
+          location.reload();
+        }
+      });
   }
 }
 
@@ -185,52 +214,111 @@ function editedUserAccount(){
   var email= document.getElementById('EmailE').value;
   var position= document.getElementById('positionE').innerHTML;
   var pass= document.getElementById('passE').value;
-  //var currPassword = firebase.database().ref('uAccount/' + sid + '/' + 'Password');
+  var currPassword = firebase.database().ref('uAccount/' + sid + '/' + 'Password');
+  var currEmail = firebase.database().ref('uAccount/' + sid + '/' + 'Email');
   var userAccount = firebase.database().ref("uAccount/");
-  
-  userAccount.child(sid).once('value').then(function(snapshot){
-          var n = email.search(/[*+?^${}();|→TH:]/g);
-          for(var i = 0; i <sid.length;i++){
-              console.log(sid.charCodeAt(i));
-              if((sid.charCodeAt(i) <=57 && sid.charCodeAt(i) >=48 ) == false){
-                  var boolean = "false";
-              }
-          }
-        if(name == '' || email == '' || pass == '' || position == ''){
-          alert('Please fill in all the information!');
-        }
-        else if(boolean == "false"){
-            alert("ID should be number!");
-        }
-        else if(pass.length < 6){
-            alert("Password length should over than six digits!");
-        }
-        else if(n != "-1"){
-            alert("Email format can't have / ,*+?^${}()|→ []");
-        }
-  
-        else if(email.includes(".com") ==false){
-            alert("Please use @xxxxx.com format!!");
-        }
-        else{
-                var data = {
-                 Name : name,
-                 Email: email,
-                 Password : pass,
-                Position : position,
-                StaffID : sid
-                }
-                var updates={}
-                var updates1 ={}
-                updates['uAccount/'+ sid]=data;
-                updates['No_Portfolio/'+position+'/'+sid] =data;
-                firebase.database().ref().update(updates);
-                //currPassword.updatePassword(pass);
-                location.reload();
+
+  //Do not remove, this needs to be here to update the authentication portion of firebase
+  currEmail.once('value').then(function(snapshot){  
+    oldEmail = snapshot.val();
+    sendOldEmail = oldEmail;
+    firebase.auth().signInWithEmailAndPassword(sendOldEmail, sendOldPass)
+    .then(function (info){
+      var user = firebase.auth().currentUser;
+      user.updateEmail(email);
+    })
+  })
+
+  currPassword.once('value').then(function(snapshot){
+    oldPass = snapshot.val();
+    sendOldPass = oldPass;  
+    firebase.auth().signInWithEmailAndPassword(sendOldEmail, sendOldPass)
+.then(function (info){
+  var user = firebase.auth().currentUser;
+  user.updatePassword(pass);
+})
+})
+userAccount.child(sid).once('value').then(function(snapshot){
+  var n = email.search(/[*+?^${}();|→TH:]/g);
+  for(var i = 0; i <sid.length;i++){
+      console.log(sid.charCodeAt(i));
+      if((sid.charCodeAt(i) <=57 && sid.charCodeAt(i) >=48 ) == false){
+          var boolean = "false";
       }
-  });
   }
+if(name == '' || email == '' || pass == '' || position == ''){
+  alert('Please fill in all the information!');
+}
+else if(boolean == "false"){
+    alert("ID should be number!");
+}
+else if(pass.length < 6){
+    alert("Password length should over than six digits!");
+}
+else if(n != "-1"){
+    alert("Email format can't have / ,*+?^${}()|→ []");
+}
+
+else if(email.includes(".com") ==false){
+    alert("Please use @xxxxx.com format!!");
+}
+else{
+        var data = {
+         Name : name,
+         Email: email,
+         Password : pass,
+        Position : position,
+        StaffID : sid
+        }
+        var updates={}
+        var updates1 ={}
+        updates['uAccount/'+ sid]=data;
+        updates['No_Portfolio/'+position+'/'+sid] =data;
+        firebase.database().ref().update(updates);
+        
+}
+});
+
+}
+
+
+/**
+* @function editedUserAccount2
+* @description this is where the authentication version of firebase is updated.
+*/
+function editedUserAccount2(){
+  var sid = document.getElementById('SIDE').innerHTML;
+  var name= document.getElementById('NameE').value;
+  var email= document.getElementById('EmailE').value;
+  var position= document.getElementById('positionE').innerHTML;
+  var pass= document.getElementById('passE').value;
+  var currPassword = firebase.database().ref('uAccount/' + sid + '/' + 'Password');
+  var currEmail = firebase.database().ref('uAccount/' + sid + '/' + 'Email');
+  var userAccount = firebase.database().ref("uAccount/");
+
+  currEmail.once('value').then(function(snapshot){  
+    oldEmail = snapshot.val();
+    sendOldEmail = oldEmail;
+    firebase.auth().signInWithEmailAndPassword(sendOldEmail, sendOldPass)
+    .then(function (info){
+      var user = firebase.auth().currentUser;
+      user.updateEmail(email);
+      
+    })
+  })
+
+  currPassword.once('value').then(function(snapshot){
+    oldPass = snapshot.val();
+    sendOldPass = oldPass;  
+    firebase.auth().signInWithEmailAndPassword(sendOldEmail, sendOldPass)
+.then(function (info){
+  var user = firebase.auth().currentUser;
+  user.updatePassword(pass);
+})
+})
+}
   
+
 //Display UM table - UID, NAME, STATUS, EDIT button, DELETE button
 var rowIndex=0;
 var fbACC = firebase.database().ref('uAccount');

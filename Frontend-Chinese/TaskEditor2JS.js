@@ -12,13 +12,66 @@ var taskN = localStorage.getItem("taskN");
 var defImage = "https://i.imgur.com/d0H6zwB.png";
 taskPath = goodPath;
 //var goodPath = window.path;
-if (goodPath  == null){
-    alert("No valid task chosen from library");
-    location.href ="/../Frontend/05Library2.html";
-}
 
 //Start the process of loading the task
-getTaskFromPath(goodPath, getTaskPathCallback); 
+if (goodPath == null || goodPath == "newTask"){
+    //alert("Creating new task!");
+    createNewTask();
+} else {
+    getTaskFromPath(goodPath, getTaskPathCallback); 
+}
+
+function createNewTask(){
+    var postRef = firebase.database().ref('TaskInstruction/LastID');
+
+    postRef.transaction(function(data) {
+      //console.log("Transaction");
+      
+      if (data != null){
+          console.log("LAST TID: "+data)
+          return (data+1); //If everything is succesful, reinsert the data to the database
+      } else {
+          return 0; 
+      }
+    }, function(error, commited, snapshot){
+        //alert(snapshot.val());
+        var TID = snapshot.val();
+        var userid = localStorage.getItem("userID");
+        //alert(userid);
+        if (commited){
+            //alert(TID);
+        
+            var taskData = {
+                category: "Basic",
+                outline: "Type an outline here",
+                videoURL: "",
+                note: "task note",
+                name: "New Task",
+                owner: userid,
+                taskID: TID,
+                visible: false,
+                published: false,
+                startCategory: "Basic",
+                newTask: true
+            };
+            taskDetails = taskData;
+            console.log(taskData);
+            var stepsData = {
+                description: "step description",
+                name: "step name",
+                number: 1,
+                image: defImage,
+                imageChanged: false,
+            }
+            steps[0] = stepsData;
+            steps[0]["detailedSteps"] = [];
+            steps[0]["detailedSteps"][0] = "Detailed Step";
+            console.log(steps);
+        }
+        getCategories(categories,task="",function(){injectToDOM();})
+    }, true);
+}
+
 /**
  * @function getTaskPathCallback
  * @param {*} task 
@@ -49,7 +102,8 @@ function populateArray(task){
         taskID: task["TaskID"],
         visible: task["Info"]["Visible"],
         published: task["Info"]["Published"],
-        startCategory: task["Info"]["Category"]
+        startCategory: task["Info"]["Category"],
+        newTask: false
     }
     if (taskData["videoURL"] == "null") {
         taskData["videoURL"] = "";
@@ -209,9 +263,14 @@ function getTaskFromPath(taskPath, callback){
         if (taskDef != null){
             callback(taskDef);
         } else {
+            alert("Task Failed to load")
+            Window.location.href("./10Mytask2.html");
             //TODO: Failure routine
         }
         return;
+    }, function(error){
+        alert("Task failed to load.");
+        Window.location.href("./10Mytask2.html")
     });
 }
 
@@ -241,25 +300,43 @@ function injectToDOM(){
     htmlInjection = "";
     //Task name
     htmlInjection += '<div style="text-align:center;"> Task Name: </div>';
-    htmlInjection += '<input style="text-align:center;" type="text" id="nameInput" value="' + taskDetails["name"] + '"> </input>';
-
+    if (taskDetails["name"] == "New Task"){
+        htmlInjection += '<input style="text-align:center;" type="text" id="nameInput" placeholder="' + taskDetails["name"] + '"> </input>';
+    } else {
+        htmlInjection += '<input style="text-align:center;" type="text" id="nameInput" value="' + taskDetails["name"] + '"> </input>';
+    }
     //Task Category
     htmlInjection += '<div style="text-align:center;"> Category: </div>';
     htmlInjection += '<select id="category" name="category">';
     console.log(categories);
     for (var c = 0; c < categories.length; c++){
-        htmlInjection += '<option value = "' + categories[c] + '">'+ categories[c] + '</option>';
+        if (taskDetails.category == categories[c]){
+            htmlInjection += '<option value = "' + categories[c] + '" selected="selected">'+ categories[c] + '</option>';
+        } else {
+            htmlInjection += '<option value = "' + categories[c] + '">'+ categories[c] + '</option>';   
+        }
     }
+
+    htmlInjection += '<option value = "new">' + "New Category" + '</option>';
+
+
     htmlInjection += '</select>';    // End category input
 
      //Task Video
      htmlInjection += '<div style="text-align:center;"> Video URL: </div>';
-     htmlInjection += '<input style="text-align:center;" type="text" id="videoURLInput" value="' + taskDetails["videoURL"] + '"> </input>';
-
+     if (taskDetails["videoURL"] == "" || taskDetails["videoURL"] == null){
+        htmlInjection += '<input style="text-align:center;" type="text" id="videoURLInput" placeholder="Video URL"></input>';
+     } else {
+        htmlInjection += '<input style="text-align:center;" type="text" id="videoURLInput" value="' + taskDetails["videoURL"] + '"> </input>';
+     }
     //Task outline
+    console.log(taskDetails["outline"]);
     htmlInjection += '<div style="text-align:center;"> Task Outline: </div>';
-    htmlInjection += '<div>' + '<textarea class="taskName" id="taskOutline" >' + taskDetails["outline"] + ' </textarea>' + '</div>';
-
+    if (taskDetails["outline"] == "Type an outline here" || taskDetails["outline"] == ""){
+        htmlInjection += '<div>' + '<textarea class="taskName" id="taskOutline" placeholder="Type an outline here"></textarea>' + '</div>';
+    } else {
+        htmlInjection += '<div>' + '<textarea class="taskName" id="taskOutline" >' + taskDetails["outline"] + ' </textarea>' + '</div>';
+    }
     //Visibility
     htmlInjection += '<div style="text-align:center;"> Task Visibility: </div>';    
     htmlInjection += '<div class="radioField">';
@@ -306,12 +383,16 @@ function injectToDOM(){
         htmlInjection += "</div>";
         //Task name
         htmlInjection += "<div class='inputField'>";
-        htmlInjection += "<div>Step name:</div> <input width='80' class = 'stepNameInput' type = 'text' value = '" + steps[i].name + "'id = '" + i + "'</input>";
+        htmlInjection += "<div>Step name:</div> <input width='80' class = 'stepNameInput' type = 'text' placeholder = '" + steps[i].name + "'id = '" + i + "'</input>";
         htmlInjection += "</div>";
 
-        //Task description
+        //Step description
         htmlInjection += "<div class='inputFieldLeft' width='100%'>";
-        htmlInjection += "Description: <div class='containerDiv'> <div class='desDiv'> <textarea class = 'stepDescriptionInput' id='" + i + "'>"+ steps[i].description + "</textarea></div>";
+        if (steps[i].description == "step description" || steps[i].description == "" || steps[i].description == "description"){
+            htmlInjection += "Description: <div class='containerDiv'> <div class='desDiv'> <textarea class = 'stepDescriptionInput' id='" + i + "' placeholder='Type a step description here.'></textarea></div>";
+        } else {
+            htmlInjection += "Description: <div class='containerDiv'> <div class='desDiv'> <textarea class = 'stepDescriptionInput' id='" + i + "'>"+ steps[i].description + "</textarea></div>";
+        }
         htmlInjection += '<div class = "stepImageContainer">';
         //Add in image upload button and image preview
         htmlInjection += '<input type="file" class="uploadPic" name="'+i+'"/>';
@@ -431,7 +512,11 @@ function getDetailedStepHTML(steps, stepNum){
             
             //Right side of detailed step
             detailHTML += '<div class="detailedStepRightContainer" id= "' + i + '">';
+            if (steps[i]["detailedSteps"][j] == "Detailed Step " || steps[i]["detailedSteps"][j] == "Detailed Step"){
+                detailHTML += '<input type="text" class = "detailedStepInput" placeholder = "' + steps[i]["detailedSteps"][j] + ' " id= " ' + parseInt(j) +  '"> </input>';
+            } else {
             detailHTML += '<input type="text" class = "detailedStepInput" value = "' + steps[i]["detailedSteps"][j] + ' " id= " ' + parseInt(j) +  '"> </input>';
+            }
             detailHTML += '</div>';
 
             //delete button for detailed step
@@ -453,7 +538,7 @@ function getDetailedStepHTML(steps, stepNum){
  */
 function radioButtonHandler(taskDetails){
     $('input[type=radio]').click(function(){
-        alert(this.value);
+        //alert(this.value);
         var val = this.value;
         if (val == "visible"){
             taskDetails["visible"] = true;
@@ -477,6 +562,7 @@ function updateDetailedStepHandler(steps){
         var detailedNum = parseInt(event.target.id);
         var mainStepNum = parseInt(event.target.parentElement.id);
         steps[mainStepNum]["detailedSteps"][detailedNum] = $(event.target).val();
+        console.log(steps[mainStepNum]["detailedSteps"][detailedNum]);
     });
 }
 
@@ -663,6 +749,29 @@ function saveButtonHandler(steps){
  */
 function categoryEventHandler(steps, taskDetails){
     $("#category").change(function(event){
+        console.log(event.target.value);
+        if (event.target.value == "new"){
+            //alert("new");
+            $(".newCategoryPopup").css("display","flex");
+            $(".newCategoryPopup").css("flex-direction","column");
+            var newCategoryTextBox = $('<input>').addClass("catBox").attr("type","text").attr("maxlength","30");
+            $(".newCategoryContentContainer").html("Enter custom category name");
+
+            var finishButton = $("<button>").html("Finish").click(function(){
+             
+                categories[categories.length] = $(".catBox").val();
+                taskDetails["category"] = $(".catBox").val();
+                console.log(categories);
+                console.log(taskDetails);
+                $(".newCategoryPopup").css("display","none");
+                injectToDOM(steps);
+            });
+            $(".newCategoryContentContainer").append(newCategoryTextBox);
+            $(".newCategoryContentContainer").append(finishButton);
+        
+            //$(".newCategoryContentContainer").html("Hello world");
+            return;
+        }
         taskDetails["category"]=event.target.value;
         console.log(taskDetails);
     });
@@ -707,7 +816,7 @@ function saveTask(steps, goodPath, taskData){
  
     insertToDatabase["Info"]["Published"] = taskDetails["published"];
     insertToDatabase["Info"]["Visible"] = taskDetails["visible"];
-    
+    insertToDatabase["Info"]["Owner"] = taskDetails["owner"];
     //Generate the structure of the individual steps to insert into the database
     const promises = [];
     for (var i = 0; i < steps.length; i++){
@@ -767,16 +876,21 @@ function saveTask(steps, goodPath, taskData){
         //updates[goodPath] = insertToDatabase;
         updates[taskDetails["taskID"]] = insertToDatabase;
         console.log(updates);
-        if (firebase.database().ref("TaskInstruction/"+taskDetails["category"]+"/"+taskDetails["taskID"]).set(insertToDatabase)){
+        var tempRef = "TaskInstruction/"+taskDetails["category"]+"/"+taskDetails["taskID"];
+        if (firebase.database().ref(tempRef).update(insertToDatabase)){   //Actually uploads the task to the database
+            localStorage.setItem("taskPath", "TaskInstruction/"+taskDetails["category"]+"/"+taskDetails["taskID"]);
+            if (taskDetails["newTask"]){
+                addTaskToLibrary();
+            }
             if (taskDetails["category"] != taskDetails["startCategory"]){
                 console.log("TaskInstruction/" + taskDetails["startCategory"] + "/" + taskDetails["taskID"]);
+            
+                //If the category changed, delete the old database entry.
                 firebase.database().ref().child("TaskInstruction/" + taskDetails["startCategory"] + "/" + taskDetails["taskID"]).remove().then(function(error){
                     console.log("deleted");
                     alert("Save succesful");
-                    //Disable redirection warning
-                    window.onbeforeunload = function() {
-                        return;
-                     };
+                    //Put the task into the library
+                    window.location.href = "./10Mytask2.html";
                 });
             } else {
                 alert("Save succesful");
@@ -784,7 +898,8 @@ function saveTask(steps, goodPath, taskData){
                 window.onbeforeunload = function() {
                     return;
                 };
-                }
+                window.location.href = "./10Mytask2.html";
+            }
 
         } else {
             alert("Task failed to save");
@@ -795,8 +910,51 @@ function saveTask(steps, goodPath, taskData){
         }
 
     });
+}
 
+function addTaskToLibrary(){
     
+    //Put the task into tasklist
+    console.log("checkpoint");
+    //Task is duplicated at this point.  Now it needs to be added to the user's task list.
+    //Put the task into the user's task list
+    var userID = taskDetails["owner"];
+    var TID = taskDetails["taskID"];
+    console.log(userID);
+    var fbGet= firebase.database().ref("uAccount/"+userID);
+    console.log(fbGet);
+    fbGet.once("value",function(snapshot){
+        console.log(snapshot.val());
+        var uAccount = snapshot.val();
+
+        if (uAccount["MyTaskList"] == null){  //myTaskList doesn't yet exist
+            uAccount["MyTaskList"] = {};
+            uAccount["MyTaskList"]["MyListTID1"] = TID;
+            uAccount["MyTaskIndex"]={};
+            uAccount["MyTaskIndex"]["Number"]=1; 
+            console.log(uAccount);
+
+            //Insert task to my task list.
+            firebase.database().ref('uAccount/'+userID).update(uAccount);
+
+
+        } else {  //myTaskList already exists
+            console.log(Object.keys(uAccount["MyTaskList"]).length);
+            var num = uAccount["MyTaskIndex"]["Number"] + 1;
+            console.log("NUM"+num); 
+            uAccount["MyTaskIndex"]["Number"] = num;
+            uAccount["MyTaskList"]["MyListTID" + num] = TID;
+            console.log(uAccount);
+            firebase.database().ref('uAccount/'+userID).update(uAccount);
+            
+        } 
+    }).then(function(){
+        //Disable redirection warning
+        taskDetails["newTask"] = false;
+        window.onbeforeunload = function() {
+            return;
+        };
+    });
 }
 
 /**
@@ -825,5 +983,5 @@ function newStep(){
  */
 function newDetailedStep(stepNum){
     var num = steps[stepNum]["detailedSteps"].length;
-    steps[stepNum]["detailedSteps"][ num ] = "Detailed Step";
+    steps[stepNum]["detailedSteps"][ num ] = "Detailed Step ";
 }

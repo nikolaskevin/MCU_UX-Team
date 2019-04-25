@@ -1,4 +1,4 @@
-﻿<!--
+<!--
   @file Policy.html
   @author  MCU
   @author  Kutztown University
@@ -60,12 +60,12 @@
 					</div>
 					<div class="user-account">
 						<p class="tip" id="time123"></p>
-						<img style="position:relative; cursor:pointer;left:140px;top:-25px;" class="openprofile" onclick="profile()" src="statics/images/pencil.png">
-						<p class="account" style="position:relative; top:-20px;">
-							<span>Name : IT Admin<span id="displayProfilename"></span></span>
-							<span>Role : IT Admin<span id="displayProfileposition"></span></span>
+						<span></span>
+						<p class="account" style="position:relative; top:1px;">
+							<span style = "font-size: 20pt">Name : IT Admin<span style = "font-size: 20pt;" id="displayProfilename"></span></span>
+							<span style = "font-size: 20pt">Role : IT Admin<span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
 						</p>
-					</div>
+						</p>
 				</div>
 			</div>
 		</div>
@@ -94,21 +94,11 @@
 				</ul>
 			</div>
 			<div class="right">
-				<div class="tap">
-					<span id="span" >Policy Content</span>
-				</div>
-
-				<div class="container" style="height:260px;">
-<div>
-	<iframe id="policy"src="" style="position:relative;width:100%;height:250px;">
-	  <p>Policy</p>
-	</iframe>
-</div>
-</div>
+			
 </div>
 
 
-<div class="right" style="position:relative;left:18.5%;top:30px;">
+<div class="right" style="position:relative;width:100%;height:250px;">
 	<div class="tap">
 		<span id="span" style="width:160px;">Development Team</span>
 	</div>
@@ -116,6 +106,7 @@
 	<div id="menu" style="display:none;position:fixed;top:6%;left:74%;background-color:white;height:100px;width:200px;z-index:5;">
 				<div style="position:relative;left:1%;top:2%;background-color:#ddd;width:98%;margin-bottom:5px;">Language</div>
 				<p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Backend/Policy.html'">&nbsp English<br></p>
+
 				<p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" >&nbsp Chinese<br></p>
 
 				<p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;" onclick = "Logout()"></i>Logout</p>
@@ -130,72 +121,23 @@
 				</tr>
 				<tr>
 						<th style="padding:6px 6px;">Name </th>
-						<td style="padding:6px 6px;">Ming Chuan AC IV </td>
+						<!--<td style="padding:6px 6px;">Ming Chuan AC IV </td>-->
+						<td style="padding:6px 6px;">Kutztown University </td>
 						<th style="padding:6px 6px;">Email Address </th>
 						<td style="padding:6px 6px;">ltctmscenter2018@gmail.com </td>
 				</tr>
 				<tr>
 						<th style="padding:6px 6px;">Contact No </th>
-						<td style="padding:6px 6px;">+886911223344 </td>
+						<!--<td style="padding:6px 6px;">+886911223344 </td>-->
+						<td style="padding:6px 6px;">+1(610)-683-4000 </td>
 						<th style="padding:6px 6px;">Address </th>
-						<td style="padding:6px 6px;">No. 5, Deming Road, Guishan District, Taoyuan City, 333 </td>
+						<!--<td style="padding:6px 6px;">No. 5, Deming Road, Guishan District, Taoyuan City, 333 </td>-->
+						<td style="padding:6px 6px;">15200 Kutztown Rd, Kutztown, PA 19530 </td>
 				</tr>
 		</table>
 </div>
 </div>
 </div>
-
-
-
-			<div id="profile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA;border-style: solid;
-					border-width: 2px; z-index:3;">
-			<div style="background-color:#E4EACD;position:relative;height:75px;">
-				<h2  id="nameProfileT" style="position:relative; left:210px;top:20px;"><h3 style="position:relative;color:gray;">	</h3></h2>
-
-
-				<button onclick="editprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Edit</button>
-				<button onclick="closeprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Close</button>
-				<button onclick="changePassword()" style="position:relative; left:520px;top:45px;width:100px;height:45px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">Change Password</button>
-
-			</div>
-			<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="viewpic">
-			<div style="position:relative; left:220px;top:-110px;">
-				<p>Position: &nbsp IT Admin </p><br>
-				<p>Display Name: &nbsp <span id = "nameProfile"></span></p><br>
-				<p>Email Address: &nbsp <span id = "emailProfile"></p><br>
-			</div>
-			</div>
-
-
-
-			<div id="editprofile" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;">
-			<div style="background-color:#E4EACD;position:relative;height:75px;">
-				<h2 id="nameProfileTE"style="position:relative; left:210px;top:20px;"></h2>
-				<h3 style="position:relative; left:300px;top:-10px;color:gray;">	</h3>
-				<button onclick="submitprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
-				<button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
-			</div>
-			<img style="position:relative; left:20px; top:-40px; width:150px; height:150px;" id="editpic">
-			<div style="position:relative; left:220px;top:-110px;">
-				<p>Position: &nbsp IT Admin </span> </p><br>
-				<p>Display Name: <input type="text" id = "nameProfileE" style="width:200px;"></p><br>
-				<p>Email Address: <input type="text" id = "emailProfileE" style="width:300px;"></p><br>
-
-			</div>
-			</div>
-	<div id="changePass" style="display:none;position:absolute; width:800px; height:350px; left:375px; top:40px;background-color:#EFFACA; z-index:3;">
-		<div style="background-color:#E4EACD;position:relative;height:75px;">
-		<h2 style="position:relative; left:210px;top:20px;">Changing Password</h2>
-		<button onclick="submitNewPass()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:#3B94FA;color:white;border-radius:10px;cursor:pointer;">OK</button>
-		<button onclick="cancelprofile()" style="position:relative; left:620px;top:-15px;width:80px;height:35px;background-color:white;color:black;border-radius:10px;cursor:pointer;">Cancel</button>
-	</div>
-	<div style="position:relative; left:220px;top:110px;">
-		<p>Current Password: <input type="password" id = "oldPassword"></p><br>
-		<p>New Password: <input type="password" id = "newPassword"></p><br>
-		<p>Confirm Password: <input type="password" id = "confirmnewPassword"></p><br>
-
-	</div>
-	</div>
 	</body>
 
 </html>
