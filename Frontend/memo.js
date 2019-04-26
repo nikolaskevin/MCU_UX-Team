@@ -22,6 +22,7 @@ function start(){
                         userID = newSnap.val();
                         //viewTable(); viewTable is called in setTimeout
                         todayMemo(userID);
+                        greeting();
                     }
                 });
             });
@@ -264,10 +265,7 @@ setTimeout(function(){
     viewTable();
 }, 2000);
 
-var time123 = hour+":"+minute+":"+second;
-
-window.onload=function(){
-    console.log("HELLO");
+function greeting(){
       if(time123<"12:00:00" && time123>="04:00:00"){
       document.getElementById("time123").innerHTML = "Good Morning &nbsp ";
     }
@@ -277,5 +275,5 @@ window.onload=function(){
     if(time123>="18:00:00" || time123<"04:00:00"){
       document.getElementById("time123").innerHTML = "Good Evening &nbsp ";
     }
-  }
+}
   

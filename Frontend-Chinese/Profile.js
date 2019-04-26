@@ -23,11 +23,14 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
 
                   var position = snapshotuAccount.val()["Position"];
                   console.log("role: " + position);
+                  document.getElementById('displayProfileposition').innerHTML = position;
+
                   if (position == "Director") {
+                    if(document.getElementById("sponsoredspan") != null){
                       document.getElementById("sponsoredspan").style.visibility = "visible";
                       console.log("YEE YEE");
+                    }
                   }
-                  document.getElementById('displayProfileposition').innerHTML=position;
                 });
           
           document.getElementById('displayProfileid').innerHTML=userid;
@@ -52,7 +55,7 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
     });
   }else{
    alert("You're Logged out now! Please Login again if you need to use this system!");
-   window.location.href = "/../Frontend-Chinese/00Login2.html";
+   window.location.href = "/../Frontend/00Login2.html";
   }
   });
   //console.log(document.getElementById('Profilepic').value);
@@ -226,7 +229,7 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
       firebase.database().ref('AccountStatus/Browser/'+user.uid+'/LatestLogout').set(fullDateandTime);
     firebase.auth().signOut();
     //console.log('logout');
-    window.location.href = "/../Frontend-Chinese/00Login2.html";
+    window.location.href = "/../Frontend/00Login2.html";
   }
   
   function uploadPicProfile(){
@@ -277,14 +280,15 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
   var time123 = hour+":"+minute+":"+second;
   
   window.onload=function(){
+    console.log("HELLO");
       if(time123<"12:00:00" && time123>="04:00:00"){
       document.getElementById("time123").innerHTML = "Good Morning &nbsp ";
     }
     if(time123>="12:00:00" && time123<"18:00:00"){
-    document.getElementById("time123").innerHTML = "Good Afternoon &nbsp ";
-  }
+      document.getElementById("time123").innerHTML = "Good Afternoon &nbsp ";
+    }
     if(time123>="18:00:00" || time123<"04:00:00"){
-  document.getElementById("time123").innerHTML = "Good Evening &nbsp ";
-  }
+      document.getElementById("time123").innerHTML = "Good Evening &nbsp ";
+    }
   }
   

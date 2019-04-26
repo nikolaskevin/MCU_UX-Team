@@ -1,44 +1,4 @@
-    var today = new Date();
-    var dd = today.getDate();
-    var mm_index = today.getMonth(); //January is 0!
-    var year = today.getFullYear();
-    var weekday =  ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var Month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-     var wk_index = today.getDay();
-     var d = dd;
-
-     var mm = mm_index+1; // to make the month correct; For example: January is 0 , so add 1;
-     // in order to have same format with "bday". orignal is 2018-9-13
-     if(mm_index<9){
-         var mm = "0"+mm;
-     }
-     var nowadays = year +"-"+ mm+"-"+ dd; // 2018-09-13
-     if (dd<10){
-         dd = "0"+dd;
-     }
-
-
-     var date = mm_index+1;
-     var year_m = year+"-"+date;
-     var a = new Date();
-     var hour = a.getHours();
-     var minute = a.getMinutes();
-     var second = a.getSeconds();
-     var num = 0;
-     if(second<10){
-         second = "0"+second;
-     }
-     if(hour<10){
-         hour = "0"+hour;
-     }
-     if(minute<10){
-         minute = "0"+minute;
-     }
-    var time = hour+":"+minute+":"+second;
-     console.log(time);
-
-
+    
 function popup_form(){
     document.getElementById("memo_text").value = "";
     document.getElementById("selected_date").value = year+"-"+mm+"-"+dd;
@@ -48,232 +8,272 @@ function close_form(){
     document.getElementById("form").style.display = "none";
 }
 
+function start(){
+    var userID = document.getElementById("displayProfileid").innerHTML;
+    
+    firebase.auth().onAuthStateChanged(function (firebaseUser){
+        if(firebaseUser){
+            var userid = -1;
+            var fbGet= firebase.database().ref('UID');
+            fbGet.once('value',function(snapshot){
+                var UIDS = snapshot;
+                snapshot.forEach(function(newSnap){
+                    if (newSnap.key == firebaseUser.uid){
+                        userID = newSnap.val();
+                        //viewTable(); viewTable is called in setTimeout
+                        todayMemo(userID);
+                        greeting();
+                    }
+                });
+            });
+        }
+    });
+}
+window.onload=start;
+
+dateArray = [];
+function viewTable() {
+    var userID = document.getElementById("displayProfileid").innerHTML;
+    var fbCS = firebase.database().ref('MEMO/'+userID);
+    fbCS.once('value',function(snapshot){
+        snapshot.forEach(function(dates){
+            //console.log(dates.val());
+            date = dates.key;
+            if(date != "MemoIndex"){
+                dateArray.push(date);
+            }
+            //console.log(dateArray);
+        });
+        injectToDOM(dateArray,userID);
+    });
+}
+
+function injectToDOM(dateArray,userID){
+    var htmlInjection = "";
+    count = 0;
+  
+    //htmlInjection = '<table style="width:100%; border: 1px solid black;">';
+    for(var i=0; i<dateArray.length; i++) {
+        var fbMemo = firebase.database().ref('MEMO/'+userID+'/'+dateArray[i]);
+        fbMemo.once('value',function(snapshot){
+            numMemos = snapshot.numChildren();
+            var temp = [];
+            temp = snapshot.val();
+            
+            for (key in temp){
+                htmlInjection += '<tr>';
+                htmlInjection += '<td style="width:15%;">'+snapshot.key+'</td>';
+                htmlInjection += '<td style="width:55%;">'+temp[key]+'</td>';
+                htmlInjection += '<td style="width:15%"><button id="edit'+key+'" onclick="editMemo(\''+ snapshot.key+'\', \''+key +'\')" style="cursor:pointer;">Edit</button></td>';
+                htmlInjection += '<td style="width:15%"><button id="delete'+key+'" onclick="deleteMemo(\''+ snapshot.key+'\', \''+key +'\')" style="cursor:pointer;">Delete</button></td></tr>';
+
+            }
+            $("#table_data").html(htmlInjection); //Insert the HTML for the tasks into the DOM
+        }); 
+    }
+} //end injectToDOM
+
+function todayMemo(userID) {
+    var newDate = new Date();
+    var year = newDate.getFullYear();
+    var month = newDate.getMonth() + 1;
+    if (month < 10){month = '0'+month;}
+    var day = newDate.getDate();
+    var dateString = year+'-'+month+'-'+day;
+    var text = '';
+
+    //var userID = document.getElementById("displayProfileid").innerHTML;
+    var fbTM = firebase.database().ref('MEMO/'+userID+'/'+dateString+'/');
+    fbTM.once('value',function(snapshot){
+        var memos = snapshot.val();
+        //console.log('MEMO/'+userID+'/'+dateString+'/');
+        if (memos == null) {
+            text = "You have no memos for today.";
+        }
+        else {
+            //console.log(memos);
+            for(key in memos){
+                text += memos[key] + '<br>';
+            }
+        }
+        //console.log(text);
+        $("#today_memo").html(text);
+    });
+}
+
 function submit(){
     var userID = document.getElementById("displayProfileid").innerHTML;
-    var text = $("#memo_text").val();
     var ymd = $("#selected_date").val();
-    var a = ymd.split("-");
-    a[0] = parseInt(a[0]);
-    var maxYear = year+100;
-    if(a[1]<10){
-        a[1] = a[1].replace('0', '');
-    }
-    year_m = a[0]+"-"+a[1];
-    dd = a[2];
-    if(text == ""){
-      alert ("Please enter data");
-    }
-    if(a[0]>maxYear){
-        alert("The year entered has exceeded one hundred years!");
-    }
+    var memo_text = $("#memo_text").val();
 
+    //create alert message
+    var fields = "";
+    if(ymd == ""){fields += "Date\n";}
+    if(memo_text == ""){fields += "Memo Text\n";}
+
+    if(ymd == "" || memo_text == "" ) {
+        alert ("Please enter the following data:\n"+fields);
+    }
+    
     else {
-      var r = confirm("Are you sure you want to enter this data?");
-      if (r == true) {
-        firebase.database().ref("MEMO/"+userID+"/"+year_m+"/"+dd+"-"+time).set(text);
-        close_form();
-        location.reload();
-      }
-  }
-}
-
-
-
-function viewTable(value){
-    var userID = document.getElementById("displayProfileid").innerHTML;
-    document.getElementById("years").innerHTML = year;
-    var a = year_m.split("-");
-
-    if(value == "last"){
-        a[1] = a[1]-1;
-        if(a[1]== 0){
-            a[1] = 12;
-            a[0] = a[0]-1;
-        }
-        year_m = a[0]+"-"+a[1];
-        document.getElementById("context_table").innerHTML = "";
-
-    }
-    if(value == "next"){
-        a[1] =  parseInt(a[1]) +1;
-        if(a[1]==13){
-        a[1] = 1;
-        a[0] = parseInt(a[0]) +1;
-        }
-        year_m = a[0]+"-"+a[1];
-        document.getElementById("context_table").innerHTML = "";
-    }
-
-    document.getElementById("years").innerHTML = a[0];
-    document.getElementById("fullName_Month").innerHTML = Month[a[1]-1];
-
-
-    var fbMemo = firebase.database().ref("MEMO/"+userID+"/"+year_m);
-
-    fbMemo.once("value")
-    .then(function(snapshot){
-        var array = [];
-        var array_val = [];
-        var index = 0;
-        var ol = document.createElement("ol");
-        snapshot.forEach(function(childSnapshot){
-            var childKey = childSnapshot.key;
-            var childData = childSnapshot.val();
-            var button = document.createElement("button");
-            var button2 = document.createElement("button");
-            array.push(childKey);
-            button2.innerHTML="Delete";
-            button.innerHTML="Edit";
-            var arr = childKey.split("-");
-            if(value ==null){
-                if(arr[0]==dd){
-                    var todayMemo = document.getElementById("today_memo");
-                      var li = document.createElement("li");
-                     // li.setAttribute("type","I");
-                      li.appendChild(document.createTextNode(childData));
-                      ol.appendChild(li);
-                      todayMemo.appendChild(ol);
+        var fbGet= firebase.database().ref("MEMO/"+userID);
+        fbGet.once("value",function(snapshot){
+            var MEMO = snapshot.val();
+            console.log(MEMO);
+            if (MEMO == null){ //user doesn't have any memos
+                var MEMO = {};
+                var num = 1;
+                console.log(num);
+                MEMO["MemoIndex"] = num;
+                MEMO[ymd] = {};
+                MEMO[ymd]["Memo" + num] = memo_text;
+                console.log(MEMO);
+                result = firebase.database().ref('MEMO/'+userID).update(MEMO);
+                if(result) {location.href ="./03Memo2.html";}
+            } 
+            else {  //user has memos
+                console.log("NO");
+                var num = MEMO["MemoIndex"] + 1;
+                MEMO["MemoIndex"] = num;
+                if(MEMO[ymd] == null) {
+                    MEMO[ymd] = {};
+                    MEMO[ymd]["Memo" + num] = memo_text;
                 }
-            }
-            var contextTable = document.getElementById("context_table");
-            var row = contextTable.insertRow(0);
-            var celldate = row.insertCell(0);
-            var celleventDate = row.insertCell(1);
-            var cellButton = row.insertCell(2);
-            var cellButton2 = row.insertCell(2)
+                else {
+                    MEMO[ymd]["Memo" + num] = memo_text; 
+                }
+                
+                console.log(MEMO);
+                result = firebase.database().ref('MEMO/'+userID).update(MEMO);
+                if(result) {location.href ="./03Memo2.html";}
+            } 
+        });
+    }
+} //end function submit
 
-            //$(row).css("border", "1px solid");
-            //$(row).css("border-color", "black");
-            $(celldate).css("min-width", "80px");
-            //$(celldate).css("border-right", "1px solid");
-            $(celleventDate).css("word-wrap", "break-word");
-            $(celleventDate).css("max-width", "420px");
-            //$(celleventDate).css("border-right", "1px solid");
-            //$(cellButton).css("min-width", "40px");
-            celleventDate.setAttribute("id","content_id["+num+"]");
-            celleventDate.setAttribute("onclick","editha("+num+")");
-            cellButton2.setAttribute("onclick","deleteha("+num+")");
-            cellButton.setAttribute("onclick", "editha("+num+")");
-            num++;
-            celldate.appendChild(document.createTextNode(arr[0]));
-            celleventDate.appendChild(document.createTextNode(childData));
-            cellButton2.appendChild(button2);
-            cellButton.appendChild(button);
-        })
-    })
 
-}
+/**
+ * @function editMemo
+ * @description queries for selected center schedule, calls to fill form
+ * @param {*} date selected center schedule to be edited
+ */
 
-function deleteha(num){
+function editMemo(date, key) {
     var userID = document.getElementById("displayProfileid").innerHTML;
-    var fbCS= firebase.database().ref('MEMO/'+userID+"/"+year_m);
-    fbCS.once("value")
-        .then(function(mdelete){
-            mdelete.forEach(function(deletememo){
-                var memekey=deletememo.key;
-                var memodata= deletememo.val();
-                var content = document.getElementById('content_id['+num+']').innerHTML;
-                    if (memodata == content ){
-                        var r = confirm("Are you sure you want to delete a memo ?");
-                        if(r == true){
-                           fbCS.child(memekey).remove();
-                        alert("successfully deleted!");
-                            window.location.reload();
-                        }
-                    }
-        })
-    })
-}
+    document.getElementById('edit_form').style.display="block";
+    console.log(date);
+    var fbB= firebase.database().ref('MEMO/'+userID+'/'+date+'/'+key);
+    fbB.on('value', function(memoSnapshot){
+      var text = memoSnapshot.val();
+      var editButton = '<button onclick="submitEdit(\''+date +'\', \''+ key +'\')" type="button" class="btn">Submit</button>';
+      $("#editDate").html(date);
+      $("#memoedited").html(text);
+      $("#editButtons").html(editButton);
+    });
+  } //end editMemo
 
-function editha(num){
+ function submitEdit(date, key){
     var userID = document.getElementById("displayProfileid").innerHTML;
-    var Fbe= firebase.database().ref('MEMO/'+userID+"/"+year_m);
-    var path1 = 'MEMO/'+userID+"/"+year_m;
-    console.log(nowadays);
-
-    Fbe.once('value')
-    .then(function(medit){
-        medit.forEach(function(editmemo){
-            var editmemekey = editmemo.key;
-            var editmemodata = editmemo.val();
-            var content = document.getElementById('content_id['+num+']').innerHTML;
-            sessionStorage.setItem("key",editmemekey);
-            sessionStorage.setItem("path", path1);
-            if (editmemodata==content){
-                console.log(year_m);
-                var timeKey = editmemekey.split("-");
-                var editDate = year_m+"-"+timeKey[0];
-                 document.getElementById('edit_form').style.display="block";
-                 document.getElementById('memoedited').value=content;
-                 document.getElementById('edited_date').value = editDate;
-             }
-         })
-     })
- }
-
-
- function esubmit(){
-     var userID = document.getElementById("displayProfileid").innerHTML;
-     var text = $("#memoedited").val();
-     var ymd = $("#edited_date").val();
-     var fb = sessionStorage.getItem('path');
-     var key = sessionStorage.getItem('key');
-     var a = ymd.split("-");
-     if(a[1]<10){
-         a[1] = a[1].replace('0', '');
-     }
-
-     year_m = a[0]+"-"+a[1];
-     dd = a[2];
-
-     if(text == ""){
-       alert ("Please enter data");
-     }
-     else {
-       var r = confirm("Are you sure you want to enter this data?");
-       if (r == true) {
-         firebase.database().ref(fb).child(key).remove();
-         firebase.database().ref("MEMO/"+userID+"/"+year_m+"/"+dd+"-"+time).set(text);
-         close_form();
-         location.reload();
-       }
-   }
+    var text = $("#memoedited").val();
+    
+    if(text == ""){
+        alert ("Please enter data");
+    }
+    else {
+        var r = confirm("Are you sure you want to enter this data?");
+        if (r == true) {
+            var fbGet = firebase.database().ref("MEMO/"+userID+"/"+date+"/");
+            fbGet.once("value",function(snapshot){
+                var MEMO = snapshot.val();
+                MEMO[key] = text;
+                result = firebase.database().ref('MEMO/'+userID+"/"+date+"/").update(MEMO);
+                if(result) {
+                    close_form();
+                    location.href ="./03Memo2.html";
+                }
+            });   
+        }
+    }
 }
+
+function deleteMemo(date,key) {
+    var userID = document.getElementById("displayProfileid").innerHTML;
+    var fbB= firebase.database().ref('MEMO/'+userID+'/'+date);
+    console.log(date);
+    var r = confirm("Are you sure you want to delete this memo?");
+    if (r == true) {
+        fbB.child(key).remove();
+        location.href ="./03Memo2.html";
+    } //end if
+}
+
 function closeform(){
     document.getElementById("edit_form").style.display="none";
 }
 
 function openmenu(){
-  if(document.getElementById("menu").style.display== "block"){
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("openmenu").style.opacity = "1";
-  }
-  else{
-  document.getElementById("menu").style.display = "block";
-  document.getElementById("openmenu").style.opacity = ".6";
+    if(document.getElementById("menu").style.display== "block"){
+        document.getElementById("menu").style.display = "none";
+        document.getElementById("openmenu").style.opacity = "1";
+    }
+    else{
+        document.getElementById("menu").style.display = "block";
+        document.getElementById("openmenu").style.opacity = ".6";
+    }
 }
+
+var today = new Date();
+var dd = today.getDate();
+var mm_index = today.getMonth(); //January is 0!
+var year = today.getFullYear();
+var weekday =  ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+var Month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var wk_index = today.getDay();
+var d = dd;
+
+var mm = mm_index+1; // to make the month correct; For example: January is 0 , so add 1;
+// in order to have same format with "bday". orignal is 2018-9-13
+if(mm_index<9){
+    var mm = "0"+mm;
 }
-
-
-
+var nowadays = year +"-"+ mm+"-"+ dd; // 2018-09-13
+if (dd<10){
+    dd = "0"+dd;
+}
+var date = mm_index+1;
+var year_m = year+"-"+date;
 var a = new Date();
 var hour = a.getHours();
 var minute = a.getMinutes();
 var second = a.getSeconds();
+var num = 0;
 
-var time = hour+":"+minute+":"+second;
-
+var a = new Date();
+var hour = a.getHours();
+var mon = a.getMonth();
+var year = a.getFullYear();
 
 $(document).ready(function() {
-    document.getElementById("fullName_Month").innerHTML = Month[mm_index];
     document.getElementById('current_date').innerHTML = dd;
     document.getElementById("current_month").innerHTML = month[mm_index];
     document.getElementById("current_week").innerHTML = weekday[wk_index];
     document.getElementById("current_year").innerHTML = year;
     var userID = document.getElementById("displayProfileid").innerHTML;
-
-
 });
 setTimeout(function(){
     viewTable();
 }, 2000);
+
+function greeting(){
+      if(time123<"12:00:00" && time123>="04:00:00"){
+      document.getElementById("time123").innerHTML = "Good Morning &nbsp ";
+    }
+    if(time123>="12:00:00" && time123<"18:00:00"){
+      document.getElementById("time123").innerHTML = "Good Afternoon &nbsp ";
+    }
+    if(time123>="18:00:00" || time123<"04:00:00"){
+      document.getElementById("time123").innerHTML = "Good Evening &nbsp ";
+    }
+}
+  
