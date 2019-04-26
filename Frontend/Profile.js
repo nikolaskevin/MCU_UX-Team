@@ -26,8 +26,10 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
                   document.getElementById('displayProfileposition').innerHTML = position;
 
                   if (position == "Director") {
+                    if(document.getElementById("sponsoredspan") != null){
                       document.getElementById("sponsoredspan").style.visibility = "visible";
                       console.log("YEE YEE");
+                    }
                   }
                 });
           
@@ -278,14 +280,15 @@ firebase.auth().onAuthStateChanged(function (firebaseUser){
   var time123 = hour+":"+minute+":"+second;
   
   window.onload=function(){
+    console.log("HELLO");
       if(time123<"12:00:00" && time123>="04:00:00"){
       document.getElementById("time123").innerHTML = "Good Morning &nbsp ";
     }
     if(time123>="12:00:00" && time123<"18:00:00"){
-    document.getElementById("time123").innerHTML = "Good Afternoon &nbsp ";
-  }
+      document.getElementById("time123").innerHTML = "Good Afternoon &nbsp ";
+    }
     if(time123>="18:00:00" || time123<"04:00:00"){
-  document.getElementById("time123").innerHTML = "Good Evening &nbsp ";
-  }
+      document.getElementById("time123").innerHTML = "Good Evening &nbsp ";
+    }
   }
   
