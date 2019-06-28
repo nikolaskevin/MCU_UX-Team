@@ -483,6 +483,17 @@ span.hidden{
                         <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Frontend-Chinese/07E-portfolio2.html'">&nbsp 中文<br></p>
                         <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
                     </div>
+                    <form>
+                        <select class="position_filter" id="filterPosition" onchange="filter_Position()">
+                            <option>Position</option>
+                            </select>
+                        <select class="gender_filter" id="filterGender" onchange="filter_Gender()">
+                            <option>Gender</option>
+                            </select> 
+
+                            <input class="Position_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
+                    </form>
+                    
                     <div class="container">
 
                         <div style="position:relative;top:135px;left:0px;z-index:3;width:50px;" id="portfoliofilter">
