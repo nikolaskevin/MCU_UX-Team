@@ -8,12 +8,12 @@
  // contact firebase to varify and display admin information
 var firebase=require("firebase");
 var config = {
-    apiKey: "AIzaSyAMnEOZj1JB52QOEFPwbS274MX3wQWYCeM",
-    authDomain: "browserteam.firebaseapp.com",
-    databaseURL: "https://browserteam.firebaseio.com",
-    projectId: "browserteam",
-    storageBucket: "browserteam.appspot.com",
-    messagingSenderId: "917274264132"
+    apiKey: "AIzaSyBP1AdMjTWdba-hH_136OPeFODfurH3ENc",
+    authDomain: "mcultc4.firebaseapp.com",
+    databaseURL: "https://mcultc4.firebaseio.com",
+    projectId: "mcultc4",
+    storageBucket: "mcultc4.appspot.com",
+    messagingSenderId: "284533224750"
  };
  firebase.initializeApp(config);
 
@@ -24,7 +24,7 @@ var serviceAccount = require("/Users/Gama/Documents/GitHub/shared-LTC-TMS/LTCTMS
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://browserteam.firebaseio.com"
+  databaseURL: "https://mcultc4.firebaseio.com"
 });
 
 //Functions
