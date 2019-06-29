@@ -117,8 +117,30 @@
                             </div>
                             <ul class="nav navbar-nav navbar-right" style="margin-right:3px">
                                 <li class="dropdown">
-                                    <a href="javascript:void(0)" class="dropbtn"><span class="glyphicon glyphicon-cog white-text"></span></a>
+                                    <a href="javascript:void(0)" class="dropbtn">
+                                            <div class="user-headface" onmouseover="imgBlur(this)" onmouseout="imgOrg(this)">
+                                                    <img src="statics/images/edit.png" id="photoword" 
+                                                         style="position:relative;left:3px; text-align:center;
+                                                    display:none;width:19px;height:19px; white-space:nowrap;overflow: hidden;" onclick="document.getElementById('newPic').click();">
+                                                    <img id="Profilepic" onclick="document.getElementById('newPic').click();" style="cursor:pointer; white-space:nowrap;overflow: hidden;width:30px;height:30px;" />
+                                                    <input id="newPic" type='file' accept="image/*" onchange="uploadPicProfile()" required style="display:none; white-space:nowrap;overflow: hidden;" />
+                                                </div>
+                                    </a>
                                     <div class="dropdown-content">
+                                            <!-- Start of Account profile -->
+                                            
+                                                <div class="container" style="transform:translateY(-8.5ex)"></div>
+                                                <div class="user-account">
+                                                    <p></p>
+                                                    
+                                                    <p class="account" style="position:relative; top:10px;"><p class="tip" id="time123"></p><!-- DISPLAYS GOOD MORNING/AFTERNOON/EVENING MSG -->            
+                                                        <span style = "font-size: 12pt"> Name : <span style = "font-size: 12pt;" id="displayProfilename"></span></span>
+                                                        <span class="hidden" style = "font-size: 12pt">UserID : <span style = "font-size: 12pt;" id="displayProfileid"></span></span>
+                                                        <div class="container" style="transform:translateY(-8.5ex)"></div>
+                                                        <span style = "font-size: 12pt"> Role : <span style = "font-size: 12pt;" id="displayProfileposition"></span></span>
+                                                    </p>
+                                                    <!-- End of Account profile -->
+                                            </div>
                                         <a href="#">English</a>
                                         <a href="/../Frontend-Chinese/01Aboutus2.html">Chinese</a>
                                         <a onClick="Logout(); return false;" href="../Frontend/00Login2.html">Logout</a>
@@ -134,27 +156,16 @@
                     <!--BACKGROUND PANEL IMAGE-->
                     <div class="container-fluid">
 
-                        <img class="panelimg img-responsive" style="background-color: #fff5ee" />
+                        
 
                         <div class="container" style="transform:translateY(-8.5ex)">
                             <!-- CIRCLE IMAGE THING-->
-                            <div class="user-headface" onmouseover="imgBlur(this)" onmouseout="imgOrg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
-                                <img src="statics/images/edit.png" id="photoword"
-                                     style="position:relative;left:20px; text-align:center;
-                                display:none;width:40px;height:40px; white-space:nowrap;overflow: hidden;" onclick="document.getElementById('newPic').click();">
-                                <img id="Profilepic" onclick="document.getElementById('newPic').click();" style="cursor:pointer; white-space:nowrap;overflow: hidden;" />
-                                <input id="newPic" type='file' accept="image/*" onchange="uploadPicProfile()" required style="display:none; white-space:nowrap;overflow: hidden;" />
-                            </div>
+                           
 
                             <!-- TEXT NEXT TO THE CIRCLE IMAGE THING-->
                             <div class="user-account">
                                 <p class="tip" id="time123"></p><!-- DISPLAYS GOOD MORNING/AFTERNOON/EVENING MSG -->
-                                <p></p>
-                                <p class="account" style="position:relative; top:8px;">
-					<span style = "font-size: 20pt">Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
-                    <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
-				    <span style = "font-size: 20pt"> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
-                                </p>
+                                
                             </div>
                         </div>
                     </div>
