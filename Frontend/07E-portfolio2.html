@@ -28,10 +28,10 @@
 <style>
     .portfolio_display {
         position: relative;
-        top: -130px;
-        left: 12px;
-        width: 100%;
-        height: 415px;
+        top: -4px;
+        left: -20px;
+        width: 104%;
+        height: 388px;
         overflow-x: auto;
         overflow-y: auto;
         background-color: rgba(255, 255, 255, .8);
@@ -64,18 +64,6 @@ span.hidden{
         table td {
             text-shadow: 2px 2px #FFFFFF;
         }
-
-    .portfolio_keyword_search {
-        position: relative;
-        top: 25px;
-        left: 20px;
-    }
-
-    .portfolio_search_position {
-        position: relative;
-        top: 20px;
-        left: 35px;
-    }
 
     .portfolio_search_background {
         background-color: rgba(122, 122, 122,0.40);
@@ -302,17 +290,7 @@ span.hidden{
             left: 0%;
         }
     }
-
-    @keyframes portfolio_pop {
-        from {
-            left: 0%;
-        }
-
-        to {
-            left: -20%;
-        }
-    }
-
+    
     @keyframes bounce {
         0%, 20%, 60%, 100% {
             -webkit-transform: translateY(0);
@@ -425,11 +403,31 @@ span.hidden{
                             </div>
                             <ul class="nav navbar-nav navbar-right" style="margin-right:3px">
                                 <li class="dropdown">
-                                    <a href="javascript:void(0)" class="dropbtn"><span class="glyphicon glyphicon-cog white-text"></span></a>
+                                        <a href="javascript:void(0)" class="dropbtn">
+                                                <div class="user-headface" onmouseover="imgBlur(this)" onmouseout="imgOrg(this)">
+                                                        <img src="statics/images/edit.png" id="photoword" 
+                                                             style="position:relative;left:3px; text-align:center;
+                                                        display:none;width:19px;height:19px; white-space:nowrap;overflow: hidden;" onclick="document.getElementById('newPic').click();">
+                                                        <img id="Profilepic" onclick="document.getElementById('newPic').click();" style="cursor:pointer; white-space:nowrap;overflow: hidden;width:30px;height:30px;" />
+                                                        <input id="newPic" type='file' accept="image/*" onchange="uploadPicProfile()" required style="display:none; white-space:nowrap;overflow: hidden;" />
+                                                    </div>
+                                        </a>
                                     <div class="dropdown-content">
-                                        <a href="#">English</a>
-                                        <a href="/../Frontend-Chinese/07E-portfolio2.html">Chinese</a>
-                                        <a onClick="Logout(); return false;" href="../Frontend/00Login2.html">Logout</a>
+                                            <div class="container" style="transform:translateY(-8.5ex)"></div>
+                                            <div class="user-account">
+                                                <p></p>
+                                                <p class="account" style="position:relative; top:0px">         
+                                                    <span style = "font-size: 12pt"> Name : <span style = "font-size: 12pt" id="displayProfilename"></span></span>
+                                                    <span class="hidden" style = "font-size: 12pt">UserID : <span style = "font-size: 12pt;" id="displayProfileid"></span></span>
+                                                    <div class="container" style="transform:translateY(-8.5ex)"></div>
+                                                    <span style = "font-size: 12pt"> Role : <span style = "font-size: 12pt" id="displayProfileposition"></span></span>
+                                                    <a href="#" style="font-size: 12pt">English</a>
+                                                    <a href="/../Frontend-Chinese/07E-portfolio2.html" style="font-size: 12pt">Chinese</a>
+                                                    <a onClick="Logout(); return false;" href="/../Frontend/00Login2.html" style="font-size: 12pt">Logout</a>
+                                                </p>
+                                                <!-- End of Account profile -->
+                                        </div>
+                                        
                                     </div>
                                 </li>
                             </ul>
@@ -437,41 +435,9 @@ span.hidden{
                     </nav>
                 </div>
                 <!-- TOP BAR ENDS-->
-                <!-- Place Holder for header-->
-                <div class="user-info">
-                    <!--BACKGROUND PANEL IMAGE-->
-                    <div class="container-fluid">
-
-                        <img class="panelimg img-responsive" style="background-color: #fff5ee" />
-
-                        <div class="container" style="transform:translateY(-8.5ex)">
-                            <!-- CIRCLE IMAGE THING-->
-
-
-                            <div class="user-headface" onmouseover="imgBlur(this)" onmouseout="imgOrg(this)" style="background-color:white; white-space:nowrap;overflow: hidden;">
-                                <img src="statics/images/edit.png" id="photoword"
-                                     style="position:relative;left:20px; text-align:center;
-                                display:none;width:40px;height:40px; white-space:nowrap;overflow: hidden;" onclick="document.getElementById('newPic').click();">
-                                <img id="Profilepic" onclick="document.getElementById('newPic').click();" style="cursor:pointer; white-space:nowrap;overflow: hidden;" />
-                                <input id="newPic" type='file' accept="image/*" onchange="uploadPicProfile()" required style="display:none; white-space:nowrap;overflow: hidden;" />
-                            </div>
-
-                            <!-- TEXT NEXT TO THE CIRCLE IMAGE THING-->
-                            <div class="user-account">
-                                <p class="account" style="position:relative; top:8px;">
-                                    <span style = "font-size: 20pt;" word-wrap: break-word;>Name : <span style = "font-size: 20pt;" id="displayProfilename"></span></span>
-                                    <span class="hidden" style = "font-size: 20pt">UserID : <span style = "font-size: 20pt;" id="displayProfileid"></span></span>
-                                    <span style = "font-size: 20pt;" word-wrap: break-word;> Role : <span style = "font-size: 20pt;" id="displayProfileposition"></span></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- END OF THE TWO HEADER!! -->
-
             <div class="main container-fluid wrapper">
                 <!-- START OF MIDDLE CONTENT-->
-                <div class="right" style="width:800ex; transform:translateY(-9ex)">
+                <div class="right" style="width:120ex; transform:translate(-2ex,11%)">
                     <div class="tap">
                         <span>E-Portfolio</span>
                     </div>
@@ -481,7 +447,6 @@ span.hidden{
                         <p class="selected" style="margin-top:3px;margin-bottom:3px;cursor:pointer;" onclick="window.location.href='/../Frontend-Chinese/07E-portfolio2.html'">&nbsp 中文<br></p>
                         <p class="logoutselected" onclick="Logout()">&nbsp<i class="icon iconfont icon-dianyuan" style="margin-right:5px;"></i>Logout</p>
                     </div>
-                    
                     <form>
                         <select class="position_filter" id="filterPosition" onchange="filter_Position()">
                             <option value="all">Position</option>
@@ -499,9 +464,9 @@ span.hidden{
                         <input class="People_search" type="text" name="search" placeholder="Search" id="searchInput" autocomplete="off">
                     </form>
                         <div class="container">
-                            <div class="portfolio_table">
+                            <div class="portfolio_display">
                                 <div style="overflow:auto;">
-                                    <table class="portfolio_table_display" id="portfolio" style="border-style:hidden;width:100%;">
+                                    <table class="portfolio_display_table" id="portfolio">
                                         <tr>
                                             <th style="width:1%" onclick="sortingTask(0)" class="portfolio_table_firstbox"> I.D. </th>
                                             <th style="width:20%" onclick="sortingTask(1)" class="portfolio_table_secondbox"> Name </th>
